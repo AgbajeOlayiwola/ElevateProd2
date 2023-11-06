@@ -1,0 +1,80 @@
+.analytics {
+    display: flex;
+    justify-content: space-between;
+}
+.analytics > div {
+    padding: 32px;
+    background: white;
+    width: 47%;
+}
+.allTime {
+    width: 17%;
+    margin-top: 24px;
+}
+.total h1 {
+    margin: 0pc;
+}
+.total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+}
+.totalP {
+    margin-top: 0px;
+}
+.row {
+    padding: 2px;
+    border-radius: 3px;
+    background: rgba(84, 158, 4, 0.12);
+    display: flex;
+    padding: 2px;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    color: #549e04;
+    font-family: Lato;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    width: 18%;
+}
+
+.export {
+    display: flex;
+    gap: 3px;
+    border-radius: 4px;
+    background: rgba(16, 37, 114, 0.07);
+    padding: 12px;
+    height: fit-content;
+    color: #102572;
+    text-align: center;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.chann {
+    color: #102572;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+.paymentAnalytics {
+    color: #005b82;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}

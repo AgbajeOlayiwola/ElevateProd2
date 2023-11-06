@@ -4,10 +4,8 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
-import Levelup from '../../../components/ReusableComponents/LevelUp';
 import MakePaymentBtn from '../../../components/ReusableComponents/MakePayment';
 import PhoneSvg from '../../../components/ReusableComponents/PhoneSvg';
-import RecievePaymentBtn from '../../../components/ReusableComponents/RecievePaymnet';
 import styles from './styles.module.css';
 // import withAuth from '../../components/HOC/withAuth.js';
 import Link from 'next/link';
@@ -27,6 +25,7 @@ import BillSvg from '../../../components/ReusableComponents/ReusableSvgComponent
 import TotalPendingCollections from '../../../components/ReusableComponents/ReusableSvgComponents/TotalPendingCollectionsSvg';
 import TotalCollections from '../../../components/ReusableComponents/ReusableSvgComponents/Totalcollections';
 import TotlaCollctionsSvg from '../../../components/ReusableComponents/ReusableSvgComponents/TotlaCollectionsFailedSvg';
+import TransactionSvg from '../../../components/ReusableComponents/ReusableSvgComponents/TransactionSvg';
 import SingleTrans from '../../../components/ReusableComponents/SingleTransSvg';
 import {
     useCreateTransactionPinMutation,
@@ -104,6 +103,7 @@ const Dashboard = () => {
     const [outflow, setOutflow] = useState(formatter.format(0));
     const [totalMoney, setTotalMMoney] = useState(formatter.format(0));
     const [copyAcctInfo, setCopyAcctInfo] = useState();
+    const [alert, setAlert] = useState(false);
     //olayiwola agbje ola_199x
     const [
         getAcctBals,
@@ -199,6 +199,9 @@ const Dashboard = () => {
         setWidth(window.innerWidth);
         setHeight(window.innerHeight);
         console.log(width);
+    };
+    const types = (type) => {
+        setOutType(type);
     };
     useEffect(() => {
         setPinCondition(profile?.user?.hasSetTransactionPin);
@@ -304,7 +307,7 @@ const Dashboard = () => {
                     </form>
                 </div>
             ) : null}
-            <Levelup account={userProfileData} />
+            {/* <Levelup account={userProfileData} /> */}
             <div className={styles.cove}>
                 <section className={styles.sectionI}>
                     <div className={styles.Tpwh}>
@@ -312,17 +315,17 @@ const Dashboard = () => {
                             <div>
                                 <TotalCollections />
                                 <p>Total Outflow</p>
-                                <p className={styles.Success}>outflow</p>
+                                <p className={styles.Success}>0.00</p>
                             </div>
                             <div>
                                 <TotalPendingCollections />
                                 <p>Total Inflow</p>
-                                <p className={styles.pending}>inflow</p>
+                                <p className={styles.pending}>0.00</p>
                             </div>
                             <div>
                                 <TotlaCollctionsSvg />
                                 <p>Total Transaction</p>
-                                <p className={styles.filed}>totalMoney</p>
+                                <p className={styles.filed}>0.00</p>
                             </div>
                         </div>
                     </div>
@@ -360,7 +363,7 @@ const Dashboard = () => {
                         <Link
                             href={{
                                 pathname: '/Admin/Payment',
-                                query: { id: 'airtime or data' }
+                                query: { id: 'bills payment' }
                             }}
                         >
                             <div className={styles.dinCLass}>
@@ -389,12 +392,15 @@ const Dashboard = () => {
                             <h2 className={styles.transP}>
                                 Transactions Today
                             </h2>
-
+                            <div className={styles.transactionSvg}>
+                                <TransactionSvg />
+                                <p>No transactions have been done</p>
+                            </div>
                             {/* {dateState === false ? (
                                 <div className={styles.transactionBody}>
                                     <div>
                                         <div className={styles.transactionSvg}>
-                                            <TransactionSvg />
+                                        
                                         </div>
                                         <p>
                                             No transactions has been made today.
@@ -402,14 +408,19 @@ const Dashboard = () => {
                                     </div>
                                 </div>
                             ) : ( */}
+
                             <div>
                                 <div className={styles.transaction}>
-                                    <div className={styles.type}>
+                                    <p className={styles.noTrans}>
+                                        No Transactions Have Been Performed
+                                        Today
+                                    </p>
+                                    {/* <div className={styles.type}>
                                         <p>transactionType</p>
-                                    </div>
-                                    <div className={styles.money}>
+                                    </div> */}
+                                    {/* <div className={styles.money}>
                                         <p>formattedAmount</p>
-                                    </div>
+                                    </div> */}
                                     <div
                                     // className={
                                     //     item.transactionStatus ===
@@ -421,11 +432,12 @@ const Dashboard = () => {
                                     //         : styles.success
                                     // }
                                     >
-                                        <div className={styles.statusColor}>
+                                        {/* <div className={styles.statusColor}>
                                             <p>transactionStatus </p>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
+
                                 <hr className={styles.hr} />
                             </div>
                         </div>
@@ -441,19 +453,25 @@ const Dashboard = () => {
                                             <div className={styles.cardMone}>
                                                 {getSymbolFromCurrency(
                                                     countryToCurrency[
-                                                        `${affiliate.substring(
+                                                        `${affiliate?.substring(
                                                             1
                                                         )}`
                                                     ]
                                                 )}
-                                                <h1>
-                                                    {parseFloat(
-                                                        balance
-                                                    ).toLocaleString('en-US')}
-                                                </h1>
+                                                {outType ? (
+                                                    <h1>********</h1>
+                                                ) : (
+                                                    <h1>
+                                                        {parseFloat(
+                                                            balance
+                                                        ).toLocaleString(
+                                                            'en-US'
+                                                        )}
+                                                    </h1>
+                                                )}
                                                 <Visbility
                                                     color="green"
-                                                    // typeSet={types}
+                                                    typeSet={types}
                                                 />
                                             </div>
                                             <p className={styles.avail}>
@@ -482,21 +500,49 @@ const Dashboard = () => {
                                                         </div>
                                                     ) : null}
                                                 </div>
-                                                <div
-                                                    onClick={copyAccountNumber}
-                                                >
-                                                    <IoMdCopy
-                                                        className={
-                                                            styles.mdCopy
-                                                        }
-                                                    />
-                                                </div>
+                                                {alert ? (
+                                                    <p>Copied to Clipboard</p>
+                                                ) : (
+                                                    <div
+                                                        onClick={() => {
+                                                            {
+                                                                navigator.clipboard
+                                                                    .writeText(
+                                                                        `Account Name -${profile?.user?.lastName} ${profile?.user?.firstName}
+        Account No. - ${acctNumber}
+        Bank Name - Ecobank `
+                                                                    )
+                                                                    .then(
+                                                                        () => {
+                                                                            setAlert(
+                                                                                true
+                                                                            );
+                                                                            setTimeout(
+                                                                                () => {
+                                                                                    setAlert(
+                                                                                        false
+                                                                                    );
+                                                                                },
+                                                                                1500
+                                                                            );
+                                                                        }
+                                                                    );
+                                                            }
+                                                        }}
+                                                    >
+                                                        <IoMdCopy
+                                                            className={
+                                                                styles.mdCopy
+                                                            }
+                                                        />
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div className={styles.recMak}>
-                                    <RecievePaymentBtn />
+                                    {/* <RecievePaymentBtn /> */}
                                     <MakePaymentBtn />
                                 </div>
                             </div>
@@ -507,12 +553,7 @@ const Dashboard = () => {
 
                         <div className={styles.otherAccounts}>
                             <h2>Other Accounts</h2>
-                            <div
-                                className={styles.addAccount}
-                                // onClick={openAddAccountModal}
-                            >
-                                +
-                            </div>
+
                             <Overlay overlay={overlay}>
                                 <Addaccounts
                                     close={() => {
@@ -555,9 +596,36 @@ const Dashboard = () => {
                                                                     account?.accountNo
                                                                 }
                                                             </p>
-                                                            <p>
-                                                                {account?.availableBal.toLocaleString()}
-                                                            </p>
+
+                                                            <div
+                                                                className={
+                                                                    styles.symb
+                                                                }
+                                                            >
+                                                                <p>
+                                                                    {' '}
+                                                                    {getSymbolFromCurrency(
+                                                                        countryToCurrency[
+                                                                            `${affiliate?.substring(
+                                                                                1
+                                                                            )}`
+                                                                        ]
+                                                                    )}
+                                                                </p>
+                                                                {outType ? (
+                                                                    <p>
+                                                                        ******
+                                                                    </p>
+                                                                ) : (
+                                                                    <p>
+                                                                        {parseFloat(
+                                                                            account?.availableBal
+                                                                        ).toLocaleString(
+                                                                            'en-US'
+                                                                        )}
+                                                                    </p>
+                                                                )}
+                                                            </div>
                                                         </div>
                                                         <div
                                                             className={
@@ -576,6 +644,12 @@ const Dashboard = () => {
                                         <hr className={styles.accountHr} />
                                     </>
                                 )}
+                                <div
+                                    className={styles.addAccount}
+                                    // onClick={openAddAccountModal}
+                                >
+                                    Add Account
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -615,6 +689,10 @@ const Dashboard = () => {
                             <div className={styles.btmIIp}>
                                 <p>Recent Transactions</p>
                             </div>
+                            <div className={styles.transactionSvg}>
+                                <TransactionSvg />
+                                <p>No transactions have been done</p>
+                            </div>
                             {/* {isLoading ? (
                                 <Lottie
                                     options={socialOptions}
@@ -645,7 +723,7 @@ const Dashboard = () => {
                                 <div className={styles.transactionBody}>
                                     <div>
                                         <div className={styles.transactionSvg}>
-                                            <TransactionSvg />
+                                          
                                         </div>
                                         <p>
                                             No transactions has been made, click
@@ -852,6 +930,7 @@ const Dashboard = () => {
                                                         <p>formattedAmount</p>
                                                     </div>
                                                 </div>
+
                                                 {/* <MoreAction
                                                                         isaccountId={
                                                                             item.sourceAccountId
@@ -889,7 +968,7 @@ const Dashboard = () => {
                             )}
 
                             <div className={styles.seeAll}>
-                                <Link href="/Admin/Reports">See All</Link>
+                                {/* <Link href="/Admin/Reports">See All</Link> */}
                             </div>
                         </div>
                         {/* <div className={styles.btmIII}>

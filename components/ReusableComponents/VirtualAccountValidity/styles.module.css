@@ -1,0 +1,25 @@
+.countDown {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+.countDownP {
+    font-size: 20px;
+    font-weight: 600;
+    color: rgb(52, 83, 5);
+}
+
+.copy {
+    text-align: center;
+}
+.virtFlex {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.virtFlex p:nth-child(2) {
+    font-size: 18px;
+    font-weight: 600;
+}

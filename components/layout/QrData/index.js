@@ -25,7 +25,7 @@ const QrFirst = ({ overlay, moveToNext, closeAction }) => {
             reset: physicalQrReset
         }
     ] = usePhysicalQrMutation();
-    console.log(physicalQrData);
+
     return (
         <Overlay overlay={overlay}>
             <div className={styles.overlay}>
@@ -49,7 +49,7 @@ const QrFirst = ({ overlay, moveToNext, closeAction }) => {
                             <div className={styles.qrMain}>
                                 <img
                                     ref={exportRef}
-                                    src={`data:image/png;base64,${''}`}
+                                    src={`data:image/png;base64,${physicalQrData?.data?.qrBase64}`}
                                     width={156}
                                     height={156}
                                 />
@@ -58,11 +58,11 @@ const QrFirst = ({ overlay, moveToNext, closeAction }) => {
                         <div>
                             <div className={styles.ids}>
                                 <p>Merchant ID</p>
-                                <p>{''}</p>
+                                <p>{physicalQrData?.data?.merchantCode}</p>
                             </div>
                             <div className={styles.ids}>
                                 <p>Terminal ID</p>
-                                <p>{''}</p>
+                                <p>{physicalQrData?.data?.terminalId}</p>
                             </div>
                         </div>
                         <div className={styles.qrDecal}>

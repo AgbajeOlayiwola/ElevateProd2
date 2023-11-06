@@ -1,16 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
-import styles from './styles.module.css';
-import EditSvg from '../editSvg';
-import { MdCancel } from 'react-icons/md';
+import React, { useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import exportAsImage from '../../../utils/exportAsImage';
-import { useDispatch, useSelector } from 'react-redux';
+import EditSvg from '../editSvg';
+import styles from './styles.module.css';
 
-import OutsideClick from '../OutsideClick';
-import StorePopup from '../StorePopup';
+import { getDisputCategorySubGen } from '../../../redux/actions/getSubDisputeCategoryAction';
 import CloseBtnSvg from '../ClosebtnSvg';
 import Loader from '../Loader';
-import { getDisputCategorySubGen } from '../../../redux/actions/getSubDisputeCategoryAction';
-import { lodgeDisputeSubGen } from '../../../redux/actions/lodgeDisputeAction';
+import OutsideClick from '../OutsideClick';
+import StorePopup from '../StorePopup';
 
 const MoreAction = ({
     isDirection,
@@ -40,37 +38,11 @@ const MoreAction = ({
     const [disputeType, setDisputeType] = useState();
     const [selectedDisputeType, setSelectedDisputeType] = useState();
     const [isLoading, setIsLoading] = useState(false);
-    const [
-        selectedDisputSubCategory,
-        setSelectedDisputeSubCategory
-    ] = useState();
+    const [selectedDisputSubCategory, setSelectedDisputeSubCategory] =
+        useState();
     const [selectedDisputeCategory, setSelectedDisputeCategory] = useState();
     const [complaintCategory, setComplaintCategory] = useState();
     const exportRef = useRef();
-    const {
-        getDisputCategorySuccess,
-        getDisputCategoryErrorMessage
-    } = useSelector((state) => state.getDisputeCategoryReducer);
-    const {
-        getDisputCategorySubSuccess,
-        getDisputCategoryErrorSubMessage
-    } = useSelector((state) => state.getDisputeSubCategoryReducer);
-    const { lodgeDisputeSuccess, lodgeDisputeErrorSubMessage } = useSelector(
-        (state) => state.lodgeDisputeReducer
-    );
-
-    // useEffect(() => {
-    //     if (getDisputCategorySuccess !== null) {
-    //         setComplaintCategory(getDisputCategorySuccess);
-    //          //console.log(getDisputCategorySuccess);
-    //     }
-    // }, [getDisputCategorySuccess, getDisputCategoryErrorMessage]);
-    useEffect(() => {
-        if (getDisputCategorySubSuccess !== null) {
-            setSelectedDisputeSubCategory(getDisputCategorySubSuccess);
-            //  //console.log(getDisputCategorySubSuccess);
-        }
-    }, [getDisputCategorySubSuccess, getDisputCategoryErrorSubMessage]);
 
     const complaintSubVateFunction = (event) => {
         dispatch(getDisputCategorySubGen(event.target.value, 'Complaint'));
@@ -82,20 +54,7 @@ const MoreAction = ({
 
     const type = 'Complaint';
     const sub = 'TransferError';
-    // useEffect(() => {
-    //     if (isDirection?.toLowerCase() === 'debit') {
-    //         setSelectedDisputeCategory('Payments');
-    //     }
-    //     if (transactionTitle?.toLowerCase() === 'ussd') {
-    //         setSelectedDisputeCategory('Ussd');
-    //     }
-    //     if (transactionTitle?.toLowerCase() === 'payment_link') {
-    //         setSelectedDisputeCategory('Cards');
-    //     }
-    //     if (transactionTitle?.toLowerCase() === 'qr_payment') {
-    //         setSelectedDisputeCategory('Payments');
-    //     }
-    // }, [isDirection]);
+
     const lodgeTheComplaint = () => {
         setLoading(true);
         const data = {
@@ -106,19 +65,12 @@ const MoreAction = ({
             // caseType: type,
             description: `${type} from USER about ${selectedDisputeCategory} regarding ${selectedDisputeType}. With Transaction Id:  and Transaction Ref: . Amount involved: ${transactionAmount}. Futher Insight From User:${descriptions}`
         };
-        dispatch(lodgeDisputeSubGen(data));
         if (lodgeDisputeErrorSubMessage) {
             setLoading(false);
             setLodgeDisputeError(lodgeDisputeErrorSubMessage?.data?.message);
         }
     };
     const [lodgeSuccess, setLodgeSuccess] = useState();
-    useEffect(() => {
-        if (lodgeDisputeErrorSubMessage) {
-            setLoading(false);
-        } else if (lodgeDisputeSuccess)
-            setLodgeSuccess('Dispute Lodged Successfully');
-    }, [lodgeDisputeSuccess, lodgeDisputeErrorSubMessage]);
 
     let newDate = dates?.split('T');
     let newTranDate = dateTrans?.split('T');

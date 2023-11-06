@@ -322,6 +322,11 @@
     position: relative;
     height: 80vh;
     overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+}
+.secondBody::-webkit-scrollbar {
+    display: none;
 }
 .mainStatus {
     display: flex;
@@ -916,17 +921,17 @@
 }
 @media screen and (max-width: 1098px) {
     .secondBody {
-    width: 93%;
-    max-width: 600px;
-    background-color: white;
-    border-radius: 20px;
-    margin: 32px auto;
-    position: absolute;
-    top: 5%;
-    z-index: 10;
-    position: relative;
-    height: 80vh;
-    overflow: scroll;
+        width: 93%;
+        max-width: 600px;
+        background-color: white;
+        border-radius: 20px;
+        margin: 32px auto;
+        position: absolute;
+        top: 5%;
+        z-index: 10;
+        position: relative;
+        height: 80vh;
+        overflow: scroll;
     }
     .successcont {
         width: 92%;

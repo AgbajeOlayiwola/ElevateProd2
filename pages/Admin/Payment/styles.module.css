@@ -9,8 +9,8 @@
 }
 .statementCover {
     height: fit-content;
-    background: #fefefe;
-    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+    /* background: #fefefe;
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08); */
     border-radius: 15px;
     padding: 20px 15px;
 }
@@ -69,7 +69,15 @@
     justify-content: space-between;
     width: 50%;
     margin-top: 20px;
-    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+    /* box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08); */
+    height: 338px;
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+}
+.cov::-webkit-scrollbar {
+    display: none;
 }
 
 .whiteboard {

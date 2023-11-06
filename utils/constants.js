@@ -1,16 +1,16 @@
-export const BaseAPIURL = `http://localhost:9081/smile-id`;
+export const BaseAPIURL = `https://eidev.ecobank.com:7505/smeapp-service/smileid-token`;
 
-export const PRODUCTNAME = 'smartselfie';
+export const PRODUCTNAME = 'biometric_kyc';
 
 export const SmileIDPartnerId = 6349;
-// export const SmileIdApiKey = "e1e5596d-bc42-4d8a-8193-b58c484fb376";
-export const SmileIdApiKey = '2830d8f8-e604-465e-a4f1-51e5eaa9c5c9';
+export const SmileIdApiKey = 'e1e5596d-bc42-4d8a-8193-b58c484fb376';
+// export const SmileIdApiKey = '2830d8f8-e604-465e-a4f1-51e5eaa9c5c9';
 export const SmileIdCallbackUrl =
     'https://webhook.site/06650da6-993e-434d-8c37-b29f0ce95a10';
-// export const SmileIdSidServer = "https://testapi.smileidentity.com";
-export const SmileIdSidServer = 'https://api.smileidentity.com';
-// export const SmileIdEnvironment = "sandbox";
-export const SmileIdEnvironment = 'live';
+export const SmileIdSidServer = 'https://testapi.smileidentity.com';
+// export const SmileIdSidServer = 'https://api.smileidentity.com';
+export const SmileIdEnvironment = 'sandbox';
+// export const SmileIdEnvironment = 'live';
 export const SmileIdCompName = 'eco-smile-id';
 export const SmileIdLogoUrl =
     'https://imgd.aeplcdn.com/1280x720/n/cw/ec/44686/activa-6g-right-front-three-quarter.jpeg?q=80';

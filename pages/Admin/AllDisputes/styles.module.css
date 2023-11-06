@@ -1,7 +1,7 @@
 .statementCover {
     height: fit-content;
-    background: #fefefe;
-    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+    /* background: #fefefe;
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08); */
     border-radius: 15px;
     padding: 20px 15px;
 }
@@ -47,13 +47,13 @@
 .date {
     width: 14%;
 }
-.nodisputes{
+.nodisputes {
     text-align: center;
     font-size: 20px;
     margin-top: 30px;
     margin-bottom: 30px;
     font-weight: 500;
 }
-.nodisputesHeading{
+.nodisputesHeading {
     margin-bottom: 30px;
 }

@@ -4,11 +4,21 @@
     border-radius: 16px;
     margin-bottom: 20px;
     padding: 32px 36px;
-    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+    /* box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08); */
+}
+.accntP {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline !important;
 }
 .otherAccounts {
     align-items: center;
     overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.otherAccounts::-webkit-scrollbar {
+    display: none;
 }
 .otherAccounts div {
     display: flex;

@@ -100,7 +100,7 @@ const MakePaymentSecond = ({
         });
         setTimeout(() => {
             // closeAction();
-            // dispatch(clearTransfer());
+            dispatch(clearTransfer());
         }, 7000);
     };
     useEffect(() => {
@@ -142,7 +142,7 @@ const MakePaymentSecond = ({
             className: 'toast-message'
         });
         setTimeout(() => {
-            closeAction();
+            // closeAction();
             dispatch(clearTransfer());
         }, 7000);
     };
@@ -183,13 +183,28 @@ const MakePaymentSecond = ({
 
                                 <RegistrationStatus>
                                     <SuccessMainHeading>
-                                        Payment Successful
+                                        Transfer Successful
                                     </SuccessMainHeading>
 
-                                    {/* <h6 className={styles.elevateSuccess}>
-                                        Success
-                                    </h6> */}
-
+                                    {title === 'Bulk Payments' ? null : (
+                                        <p styls={{ textAlign: 'center' }}>
+                                            {getSymbolFromCurrency(
+                                                countryToCurrency[
+                                                    `${affiliate?.substring(1)}`
+                                                ]
+                                            )}
+                                            {parseFloat(
+                                                transfer?.transactionAmount
+                                            )
+                                                .toFixed(2)
+                                                .replace(
+                                                    /\B(?=(\d{3})+(?!\d))/g,
+                                                    ','
+                                                )}{' '}
+                                            will be transferred to{' '}
+                                            {transfer?.beneficiaryName}
+                                        </p>
+                                    )}
                                     <ButtonComp
                                         disabled={true}
                                         active={'active'}
@@ -236,8 +251,20 @@ const MakePaymentSecond = ({
                                                 ]
                                             )}
                                             {title === 'Bulk Payments'
-                                                ? totalAmount
-                                                : transfer?.transactionAmount}
+                                                ? parseFloat(totalAmount)
+                                                      .toFixed(2)
+                                                      .replace(
+                                                          /\B(?=(\d{3})+(?!\d))/g,
+                                                          ','
+                                                      )
+                                                : parseFloat(
+                                                      transfer?.transactionAmount
+                                                  )
+                                                      .toFixed(2)
+                                                      .replace(
+                                                          /\B(?=(\d{3})+(?!\d))/g,
+                                                          ','
+                                                      )}
                                         </h3>
                                     </div>
                                 )}

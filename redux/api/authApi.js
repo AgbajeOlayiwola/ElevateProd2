@@ -263,10 +263,11 @@ export const authApi = createApi({
             }
         }),
         billerPayment: builder.mutation({
-            query: () => {
+            query: (body) => {
                 return {
                     url: 'biller-payment',
-                    method: 'post'
+                    method: 'post',
+                    body
                 };
             }
         }),
@@ -604,11 +605,23 @@ export const authApi = createApi({
                     body
                 };
             }
+        }),
+        enrollQr: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'enroll-qr',
+                    method: 'post',
+                    body
+                };
+            }
         })
     })
 });
 
 export const {
+    useVirtualAccountStatusMutation,
+    useOrdrVirtualAccountMutation,
+    useEnrollQrMutation,
     useFacematchithAccountnumberMutation,
     useAccountMiniStatementMutation,
     useAccountFullStatementMutation,

@@ -1,0 +1,10 @@
+.cate {
+    cursor: pointer;
+}
+.categor {
+    border: solid;
+    border-color: #d3d3d3;
+    padding: 10px;
+    padding-left: 34px;
+    border-radius: 20px;
+}

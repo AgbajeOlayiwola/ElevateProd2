@@ -118,7 +118,7 @@ const AirtimeOrData = ({
     }, [airNetworksSuccess]);
     const { allAccountInfo } = useSelector((store) => store);
     const showErrorToastMessage = () => {
-        toast.error('Airtime payment Error', {
+        toast.error(airtimeTopupErr?.data?.message, {
             position: toast.POSITION.TOP_RIGHT,
             className: 'toast-message'
         });
@@ -175,7 +175,8 @@ const AirtimeOrData = ({
                                         `${affiliate.substring(1)}`
                                     ],
                                 mobileNumber: values?.phoneNumbr,
-                                transactionPin: otpValue
+                                transactionPin: otpValue,
+                                description: 'jhgfd'
                             };
                             console.log(data);
                             airtimeTopup(data);
@@ -365,7 +366,7 @@ const AirtimeOrData = ({
                                                             );
                                                         }}
                                                         type="text"
-                                                        placeholder="data"
+                                                        placeholder="0.00"
                                                     />
                                                 </div>
                                             </div>

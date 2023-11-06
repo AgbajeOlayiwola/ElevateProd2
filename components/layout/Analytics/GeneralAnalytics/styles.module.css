@@ -1,0 +1,206 @@
+.analytics h1 {
+    font-family: Inter;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 29px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #005b82;
+    margin-bottom: 10px;
+}
+.analytics p {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #545454;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.analPaymentZCov {
+    background: white;
+    padding: 28px 24px;
+    width: 47%;
+    height: fit-content;
+    border-radius: 8px;
+    border: 1px solid #e4e4e4;
+}
+
+.analPaymentZCovDiv {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.anlFlex {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+.paySelect {
+    width: 45%;
+    display: flex;
+    gap: 12px;
+}
+
+.inflowOutflowDiv {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.payment {
+    color: #2b4551;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.pays {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 16px;
+}
+.pays h1 {
+    color: #000;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.paysDiv {
+    gap: 16px;
+    width: 100%;
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    align-self: stretch;
+    border-radius: 8px;
+    background: #f8f8f8;
+}
+.row {
+    padding: 2px;
+    border-radius: 3px;
+    background: rgba(84, 158, 4, 0.12);
+    display: flex;
+    padding: 2px;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    color: #549e04;
+    font-family: Lato;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    width: 10%;
+}
+.rcPayment {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.analDiv {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+.div1 {
+    height: 20px;
+    width: 162px;
+    border-radius: 100px;
+    background: #3a5207;
+    z-index: 5;
+}
+
+.div2 {
+    height: 20px;
+    width: 140px;
+    border-radius: 100px;
+    background: #69940d;
+    margin-left: -15px;
+    z-index: 4;
+}
+
+.div3 {
+    height: 20px;
+    width: 240px;
+    border-radius: 100px;
+    border-radius: 100px;
+    background: #6ccf00;
+    margin-left: -15px;
+    z-index: 3;
+}
+
+.div4 {
+    height: 20px;
+    width: 340px;
+    border-radius: 100px;
+    background: #c4d344;
+    margin-left: -15px;
+    z-index: 2;
+}
+.store {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.divAnalytics {
+    background: #fff;
+    padding: 20px;
+}
+.dropDiv {
+    display: flex;
+    gap: 12px;
+    width: 50%;
+}
+.dropDivs {
+    display: flex;
+    gap: 12px;
+    width: 30%;
+}
+.analyticsDiv {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.viewMor {
+    display: flex;
+    justify-content: flex-end;
+    cursor: pointer;
+}
+.viewMor > div {
+    border-radius: 8px;
+    border: 1px solid #102572;
+    background: rgba(16, 37, 114, 0.07);
+    padding: 18px 40px;
+}
+.viewMor > div > p {
+    color: #005b82;
+    text-align: center;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0px;
+}
+.recH4 {
+    color: #2b4551;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}

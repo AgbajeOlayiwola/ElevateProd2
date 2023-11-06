@@ -1,5 +1,5 @@
 import { Formik } from 'formik';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     useAccountInquiryMutation,
@@ -23,7 +23,9 @@ const BulkTransfer = ({
     isLoading,
     forwardPage
 }) => {
+    const formRef = useRef();
     const [activeBtn, setActiveBtn] = useState(false);
+    const [indx, setIndx] = useState();
     const [diffAmount, setDiffAmount] = useState(false);
     const [fileError, setFileError] = useState('');
     const [csvUpload, setCsvUpload] = useState(false);
@@ -201,6 +203,26 @@ const BulkTransfer = ({
                 amount: ''
             }
         ]);
+
+        // Create a new transaction object
+        const newTransaction = {
+            accountId: formRef?.current?.values?.ecoAccountId,
+            accountNumber: formRef?.current?.values?.ecoSourceAccount,
+            beneficiaryName: accountInquiryData?.data?.accountName,
+            currency: formRef?.current?.values?.ecoCurrency,
+            destinationAccountNo: formRef?.current?.values?.ecoAccountNumber,
+            isEcobankToEcobankTransaction: type === 'Ecobank' ? true : false,
+            transactionAmount: formRef?.current?.values?.ecoEnterAmount,
+            destinationBank:
+                type === 'Ecobank' ? 'ECOBANK' : selectedBank?.institutionName,
+            destinationBankCode:
+                type === 'Ecobank' ? 'ECOBANK' : selectedBank?.institutionId
+        };
+
+        setTransactionsArray((prevTransactions) => [
+            ...prevTransactions,
+            newTransaction
+        ]);
     };
     useEffect(() => {
         localStorage.setItem('number', JSON.stringify(number));
@@ -208,8 +230,13 @@ const BulkTransfer = ({
 
     const handleAccountNumberChange = (index) => {
         const updatedFormFields = [...formFields];
+        // console.log(updatedFormFields);
         updatedFormFields[index].accountName =
             accountInquiryData?.data?.accountName;
+        formRef?.current?.setFieldValue(
+            'accountName',
+            accountInquiryData?.data?.accountName
+        );
         setFormFields(updatedFormFields);
     };
     const removeFormFields = (index) => {
@@ -223,65 +250,29 @@ const BulkTransfer = ({
     const handleBankSelect = (bank) => {
         setSelectedBank(bank);
     };
-    useEffect(() => {
-        if (formValues) {
-            // Extract values from formValues
-            const {
-                ecoAccountId,
-                ecoSourceAccount,
-                ecoCurrency,
-                ecoAccountNumber,
-                ecoChooseBank,
-                destinationBankCode,
-                ecoEnterAmount
-            } = formValues;
-
-            // Create a new transaction object
-            const newTransaction = {
-                accountId: ecoAccountId,
-                accountNumber: ecoSourceAccount,
-                beneficiaryName: accountInquiryData?.data?.accountName,
-                currency: ecoCurrency,
-                destinationAccountNo: ecoAccountNumber,
-                isEcobankToEcobankTransaction:
-                    type === 'Ecobank' ? true : false,
-                transactionAmount: ecoEnterAmount,
-                destinationBank:
-                    type === 'Ecobank'
-                        ? 'ECOBANK'
-                        : selectedBank?.institutionName,
-                destinationBankCode:
-                    type === 'Ecobank' ? 'ECOBANK' : selectedBank?.institutionId
-            };
-            setTransactionsArray(
-                (prevTransactions) => [...prevTransactions, newTransaction],
-                () => {
-                    console.log(
-                        'Updated transactionsArray:',
-                        transactionsArray
-                    );
-                }
-            );
-        }
-    }, [formValues, transactionsArray]);
     console.log(transactionsArray);
 
+    const { allAccountInfo } = useSelector((store) => store);
+    const handleBlur = (val) => {
+        accountInquiry({
+            destinationBankCode: selectedBank?.institutionId
+                ? selectedBank?.institutionId
+                : 'ECOBANK',
+            accountNumber: val
+        });
+    };
     useEffect(() => {
+        if (accountInquirySuccess) {
+            handleAccountNumberChange(indx);
+        }
+    }, [accountInquirySuccess]);
+    const transferMoney = () => {
         if (transactionsArray.length > 0) {
             // Dispatch the action after transactionsArray has been updated
             dispatch(setTransfer(transactionsArray));
             forwardPage();
             console.log(transactionsArray);
         }
-    }, [transactionsArray]);
-    const { allAccountInfo } = useSelector((store) => store);
-    const handleBlur = () => {
-        accountInquiry({
-            destinationBankCode: selectedBank?.institutionId
-                ? selectedBank?.institutionId
-                : 'ECOBANK',
-            accountNumber: accountNumber
-        });
     };
     return (
         <div>
@@ -323,6 +314,7 @@ const BulkTransfer = ({
                 <Formik
                     // validationSchema={initSchema}
                     // validateOnChange={true}
+                    innerRef={formRef}
                     initialValues={initialValues}
                     onSubmit={(values, { setSubmitting }) => {
                         setFormValues(values);
@@ -337,156 +329,83 @@ const BulkTransfer = ({
                         setFieldValue,
                         handleSubmit
                     }) => (
-                        <form onSubmit={handleSubmit}>
-                            <div className={styles.narration}>
-                                <label className={styles.bulkLabel}>
-                                    Source Account
-                                </label>
-                                <select
-                                    name="ecoSourceAccount"
-                                    onChange={(e) => {
-                                        const selectedAccount =
-                                            allAccountInfo.find(
-                                                (account) =>
-                                                    account?.accountNo ===
-                                                    e.target.value
-                                            );
-                                        if (selectedAccount) {
-                                            setFieldValue(
-                                                'ecoSourceAccount',
-                                                selectedAccount?.accountNo
-                                            );
-                                            setFieldValue(
-                                                'ecoAccountId',
-                                                selectedAccount?.accountId
-                                            );
-                                            setFieldValue(
-                                                'ecoCurrency',
-                                                selectedAccount?.currency
-                                            );
-                                        }
-                                    }}
-                                >
-                                    <option value="">
-                                        Select Account To Use
-                                    </option>
-                                    {allAccountInfo
-                                        .filter((account) => account?.accountNo)
-                                        .map((account) => {
-                                            return (
-                                                <>
-                                                    <option
-                                                        className={
-                                                            styles.accntP
-                                                        }
-                                                        value={
-                                                            account?.accountNo
-                                                        }
-                                                    >
-                                                        {account?.accountNo}
-                                                    </option>
-                                                </>
-                                            );
-                                        })}
-                                </select>
-                                <p className={styles.error}>
-                                    {/* {errors?.sourceAccount?.message} */}
-                                </p>
-                            </div>
-                            <br />
-                            <br />
-
-                            <p className={styles.beneTitle}>
-                                Beneficiary Details
-                            </p>
-                            {csvUpload ? (
-                                <p>File Successfully uploaded!!!</p>
-                            ) : (
-                                <div>
-                                    {formFields.map((field, index) => (
-                                        <div key={index}>
-                                            {paymentbanklistLoad ? (
-                                                <Loader />
-                                            ) : (
-                                                <div
-                                                    className={styles.formBank}
-                                                >
-                                                    <label
-                                                        className={
-                                                            styles.bulkLabel
-                                                        }
-                                                    >
-                                                        Choose Bank
-                                                    </label>
-                                                    <input
-                                                        type="text"
-                                                        value="ECOBANK"
-                                                        disabled
-                                                    />
-                                                </div>
-                                            )}
-                                            <br />
-                                            <div className={styles.formNumber}>
-                                                <label
-                                                    className={styles.bulkLabel}
-                                                >
-                                                    Account Number
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    placeholder="Enter Account Number"
-                                                    onInput={(e) => {
-                                                        handleAccountNumberChange(
-                                                            index
-                                                        );
-                                                        setFieldValue(
-                                                            'ecoAccountNumber',
-                                                            e.target.value
-                                                        );
-                                                        setAccountNumber(
-                                                            e.target.value
-                                                        );
-                                                    }}
-                                                    onBlur={handleBlur}
-                                                    name="ecoAccountNumber"
-                                                />
-                                            </div>
-                                            {accountInquiryLoad ? (
-                                                <Loader />
-                                            ) : (
-                                                <div
-                                                    className={styles.narration}
-                                                >
-                                                    <label> Account Name</label>
-                                                    <input
-                                                        type="text"
-                                                        value={
-                                                            field.accountName
-                                                        } // Set the account name
-                                                        disabled
-                                                        required
-                                                    />
-                                                    {accountInquiryErr ? (
-                                                        <p
+                        <>
+                            <form onSubmit={handleSubmit}>
+                                <div className={styles.narration}>
+                                    <label className={styles.bulkLabel}>
+                                        Source Account
+                                    </label>
+                                    <select
+                                        name="ecoSourceAccount"
+                                        onChange={(e) => {
+                                            const selectedAccount =
+                                                allAccountInfo.find(
+                                                    (account) =>
+                                                        account?.accountNo ===
+                                                        e.target.value
+                                                );
+                                            if (selectedAccount) {
+                                                setFieldValue(
+                                                    'ecoSourceAccount',
+                                                    selectedAccount?.accountNo
+                                                );
+                                                setFieldValue(
+                                                    'ecoAccountId',
+                                                    selectedAccount?.accountId
+                                                );
+                                                setFieldValue(
+                                                    'ecoCurrency',
+                                                    selectedAccount?.currency
+                                                );
+                                            }
+                                        }}
+                                    >
+                                        <option value="">
+                                            Select Account To Use
+                                        </option>
+                                        {allAccountInfo
+                                            .filter(
+                                                (account) => account?.accountNo
+                                            )
+                                            .map((account) => {
+                                                return (
+                                                    <>
+                                                        <option
                                                             className={
-                                                                styles.error
+                                                                styles.accntP
+                                                            }
+                                                            value={
+                                                                account?.accountNo
                                                             }
                                                         >
-                                                            {
-                                                                accountInquiryErr
-                                                                    ?.data
-                                                                    ?.message
-                                                            }
-                                                        </p>
-                                                    ) : null}
-                                                </div>
-                                            )}
-                                            <br />
-                                            {diffAmount ? (
-                                                <>
+                                                            {account?.accountNo}
+                                                        </option>
+                                                    </>
+                                                );
+                                            })}
+                                    </select>
+                                    <p className={styles.error}>
+                                        {/* {errors?.sourceAccount?.message} */}
+                                    </p>
+                                </div>
+                                <br />
+                                <br />
+
+                                <p className={styles.beneTitle}>
+                                    Beneficiary Details
+                                </p>
+                                {csvUpload ? (
+                                    <p>File Successfully uploaded!!!</p>
+                                ) : (
+                                    <div>
+                                        {formFields.map((field, index) => (
+                                            <div key={index}>
+                                                {paymentbanklistLoad ? (
+                                                    <Loader />
+                                                ) : (
                                                     <div
                                                         className={
-                                                            styles.amountDiv
+                                                            styles.formBank
                                                         }
                                                     >
                                                         <label
@@ -494,72 +413,141 @@ const BulkTransfer = ({
                                                                 styles.bulkLabel
                                                             }
                                                         >
-                                                            Amount
+                                                            Choose Bank
                                                         </label>
                                                         <input
-                                                            onChange={(e) => {
-                                                                setFieldValue(
-                                                                    'ecoEnterAmount',
-                                                                    e.target
-                                                                        .value
-                                                                );
-                                                                if (
-                                                                    e.target
-                                                                        .value
-                                                                        .length ===
-                                                                    0
-                                                                ) {
-                                                                    setActiveBtn(
-                                                                        false
-                                                                    );
-                                                                } else if (
-                                                                    e.target
-                                                                        .value
-                                                                        .length >
-                                                                    0
-                                                                ) {
-                                                                    setActiveBtn(
-                                                                        true
-                                                                    );
-                                                                }
-                                                            }}
                                                             type="text"
-                                                            placeholder="0.00"
+                                                            value="ECOBANK"
+                                                            disabled
                                                         />
                                                     </div>
-                                                    <br />
-                                                    <br />
-                                                </>
-                                            ) : null}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-
-                            <div className={styles.narration}>
-                                <div className={styles.uploadCsv}>
-                                    {/* <p>Tap to carry out up to 5 transactions</p> */}
-                                    {csvUpload ? null : (
-                                        <div className={styles.actionButtons}>
-                                            <div
-                                                className={styles.plus}
-                                                onClick={addFormFields}
-                                            >
-                                                <PlusSvg />
+                                                )}
+                                                <br />
+                                                <div
+                                                    className={
+                                                        styles.formNumber
+                                                    }
+                                                >
+                                                    <label
+                                                        className={
+                                                            styles.bulkLabel
+                                                        }
+                                                    >
+                                                        Account Number
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Enter Account Number"
+                                                        onChange={(e) => {
+                                                            setIndx(index);
+                                                            setFieldValue(
+                                                                'ecoAccountNumber',
+                                                                e.target.value
+                                                            );
+                                                            setAccountNumber(
+                                                                e.target.value
+                                                            );
+                                                            // handleBlur();
+                                                        }}
+                                                        onBlur={(e) =>
+                                                            handleBlur(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        name="ecoAccountNumber"
+                                                    />
+                                                </div>
+                                                {accountInquiryLoad ? (
+                                                    <Loader />
+                                                ) : (
+                                                    <div
+                                                        className={
+                                                            styles.narration
+                                                        }
+                                                    >
+                                                        <label>
+                                                            {' '}
+                                                            Account Name
+                                                        </label>
+                                                        <input
+                                                            type="text"
+                                                            value={
+                                                                field.accountName
+                                                            } // Set the account name
+                                                            disabled
+                                                            required
+                                                        />
+                                                        {accountInquiryErr ? (
+                                                            <p
+                                                                className={
+                                                                    styles.error
+                                                                }
+                                                            >
+                                                                {
+                                                                    accountInquiryErr
+                                                                        ?.data
+                                                                        ?.message
+                                                                }
+                                                            </p>
+                                                        ) : null}
+                                                    </div>
+                                                )}
+                                                <br />
+                                                {diffAmount ? (
+                                                    <>
+                                                        <div
+                                                            className={
+                                                                styles.amountDiv
+                                                            }
+                                                        >
+                                                            <label
+                                                                className={
+                                                                    styles.bulkLabel
+                                                                }
+                                                            >
+                                                                Amount
+                                                            </label>
+                                                            <input
+                                                                onChange={(
+                                                                    e
+                                                                ) => {
+                                                                    setFieldValue(
+                                                                        'ecoEnterAmount',
+                                                                        e.target
+                                                                            .value
+                                                                    );
+                                                                    if (
+                                                                        e.target
+                                                                            .value
+                                                                            .length ===
+                                                                        0
+                                                                    ) {
+                                                                        setActiveBtn(
+                                                                            false
+                                                                        );
+                                                                    } else if (
+                                                                        e.target
+                                                                            .value
+                                                                            .length >
+                                                                        0
+                                                                    ) {
+                                                                        setActiveBtn(
+                                                                            true
+                                                                        );
+                                                                    }
+                                                                }}
+                                                                type="text"
+                                                                placeholder="0.00"
+                                                            />
+                                                        </div>
+                                                        <br />
+                                                        <br />
+                                                    </>
+                                                ) : null}
                                             </div>
-                                            <div
-                                                className={styles.minus}
-                                                onClick={() =>
-                                                    removeFormFields(
-                                                        formFields.length - 1
-                                                    )
-                                                }
-                                            >
-                                                -
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
+                                        ))}
+                                    </div>
+                                )}
                                 {csvUpload ? null : diffAmount ? null : (
                                     <div className={styles.amountDiv}>
                                         <label className={styles.bulkLabel}>
@@ -587,34 +575,65 @@ const BulkTransfer = ({
                                         />
                                     </div>
                                 )}
+                                <br />
+                                <br />
+                                <div className={styles.narration}>
+                                    <div className={styles.uploadCsv}>
+                                        {/* <p>Tap to carry out up to 5 transactions</p> */}
+                                        {csvUpload ? null : (
+                                            <div
+                                                className={styles.actionButtons}
+                                            >
+                                                <div
+                                                    className={styles.plus}
+                                                    onClick={addFormFields}
+                                                >
+                                                    <PlusSvg />
+                                                </div>
+                                                <div
+                                                    className={styles.minus}
+                                                    onClick={() =>
+                                                        removeFormFields(
+                                                            formFields.length -
+                                                                1
+                                                        )
+                                                    }
+                                                >
+                                                    -
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
 
-                                <div className={styles.saveBene}>
-                                    <label className={styles.beneCheck}>
-                                        <input
-                                            type="checkbox"
-                                            onChange={(e) => {
-                                                if (e.target.checked) {
-                                                    setDiffAmount(true);
-                                                    setActiveBtn(true);
-                                                } else if (!e.target.checked) {
-                                                    setDiffAmount(false);
-                                                    setActiveBtn(false);
-                                                }
-                                            }}
-                                        />
-                                        <span>
-                                            <i></i>
-                                        </span>
-                                    </label>
-                                    <p>Input Different Amount</p>
-                                </div>
-                                <div className={styles.amountDiv}>
-                                    <p className={styles.beneTitle}>
-                                        For more than 5 transaction
-                                    </p>
-                                    <div className={styles.uploadCsvs}>
-                                        <p>
-                                            <label>
+                                    <div className={styles.saveBene}>
+                                        <label className={styles.beneCheck}>
+                                            <input
+                                                type="checkbox"
+                                                onChange={(e) => {
+                                                    if (e.target.checked) {
+                                                        setDiffAmount(true);
+                                                        setActiveBtn(true);
+                                                    } else if (
+                                                        !e.target.checked
+                                                    ) {
+                                                        setDiffAmount(false);
+                                                        setActiveBtn(false);
+                                                    }
+                                                }}
+                                            />
+                                            <span>
+                                                <i></i>
+                                            </span>
+                                        </label>
+                                        <p>Input Different Amount</p>
+                                    </div>
+                                    <div className={styles.amountDiv}>
+                                        <p className={styles.beneTitle}>
+                                            For more than 5 transaction
+                                        </p>
+                                        <div className={styles.uploadCsvs}>
+                                            <p>
+                                                {/* <label>
                                                 Tap to
                                                 <input
                                                     type="file"
@@ -678,42 +697,46 @@ const BulkTransfer = ({
                                                     }}
                                                 />
                                                 <span> Upload CSV File</span>
-                                            </label>
-                                        </p>
-                                        <p>{fileError}</p>
-                                        <p>
-                                            <a
-                                                href="../../../Assets/CSV.xlsm"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                download="CSV Template"
-                                            >
-                                                <span>Download CSV File</span>
-                                            </a>
-                                        </p>
+                                            </label> */}
+                                            </p>
+                                            <p>{fileError}</p>
+                                            <p>
+                                                <a
+                                                    href="../../../Assets/CSV.xlsm"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    download="CSV Template"
+                                                >
+                                                    <span>
+                                                        Download CSV File
+                                                    </span>
+                                                </a>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <ButtonComp
-                                    disabled={activeBtn}
-                                    active={activeBtn ? 'active' : 'inactive'}
-                                    text={buttonText}
-                                    type="submit"
-                                    // err={errorMessageInterBankEnquiry}
-                                />
-                            </div>
-                        </form>
+                            </form>
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                text={buttonText}
+                                type="submit"
+                                onClick={transferMoney}
+                                // err={errorMessageInterBankEnquiry}
+                            />
+                        </>
                     )}
                 </Formik>
             ) : (
                 <Formik
                     // validationSchema={initSchema}
                     // validateOnChange={true}
+                    innerRef={formRef}
                     initialValues={initialValues}
                     onSubmit={(values, { setSubmitting }) => {
-                        // console.log(values);
+                        console.log(values);
                         setFormValues(values);
-
+                        transferMoney();
                         setSubmitting(false);
                     }}
                 >
@@ -725,160 +748,83 @@ const BulkTransfer = ({
                         setFieldValue,
                         handleSubmit
                     }) => (
-                        <form onSubmit={handleSubmit}>
-                            <div className={styles.narration}>
-                                <label className={styles.bulkLabel}>
-                                    Source Account
-                                </label>
-                                <select
-                                    name="ecoSourceAccount"
-                                    onChange={(e) => {
-                                        const selectedAccount =
-                                            allAccountInfo.find(
-                                                (account) =>
-                                                    account?.accountNo ===
-                                                    e.target.value
-                                            );
-                                        if (selectedAccount) {
-                                            setFieldValue(
-                                                'ecoSourceAccount',
-                                                selectedAccount?.accountNo
-                                            );
-                                            setFieldValue(
-                                                'ecoAccountId',
-                                                selectedAccount?.accountId
-                                            );
-                                            setFieldValue(
-                                                'ecoCurrency',
-                                                selectedAccount?.currency
-                                            );
-                                        }
-                                    }}
-                                >
-                                    <option value="">
-                                        Select Account To Use
-                                    </option>
-                                    {allAccountInfo
-                                        .filter((account) => account?.accountNo)
-                                        .map((account) => {
-                                            return (
-                                                <>
-                                                    <option
-                                                        className={
-                                                            styles.accntP
-                                                        }
-                                                        value={
-                                                            account?.accountNo
-                                                        }
-                                                    >
-                                                        {account?.accountNo}
-                                                    </option>
-                                                </>
-                                            );
-                                        })}
-                                </select>
-                                <p className={styles.error}>
-                                    {/* {errors?.sourceAccount?.message} */}
-                                </p>
-                            </div>
-                            <br />
-                            <br />
-
-                            <p className={styles.beneTitle}>
-                                Beneficiary Details
-                            </p>
-                            {csvUpload ? (
-                                <p>File Successfully uploaded!!!</p>
-                            ) : (
-                                <div>
-                                    {formFields.map((field, index) => (
-                                        <div key={index}>
-                                            {paymentbanklistLoad ? (
-                                                <Loader />
-                                            ) : (
-                                                <div
-                                                    className={styles.formBank}
-                                                >
-                                                    <label
-                                                        className={
-                                                            styles.bulkLabel
-                                                        }
-                                                    >
-                                                        Choose Bank
-                                                    </label>
-                                                    <Search
-                                                        array={
-                                                            paymentbanklistData
-                                                        }
-                                                        placeholder="Search for bank"
-                                                        onBankSelect={
-                                                            handleBankSelect
-                                                        }
-                                                    />
-                                                </div>
-                                            )}
-                                            <br />
-                                            <div className={styles.formNumber}>
-                                                <label
-                                                    className={styles.bulkLabel}
-                                                >
-                                                    Account Number
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    placeholder="Enter Account Number"
-                                                    onInput={(e) => {
-                                                        handleAccountNumberChange(
-                                                            index
-                                                        );
-                                                        setFieldValue(
-                                                            'ecoAccountNumber',
-                                                            e.target.value
-                                                        );
-                                                        setAccountNumber(
-                                                            e.target.value
-                                                        );
-                                                    }}
-                                                    onBlur={handleBlur}
-                                                    name="ecoAccountNumber"
-                                                />
-                                            </div>
-                                            {accountInquiryLoad ? (
-                                                <Loader />
-                                            ) : (
-                                                <div
-                                                    className={styles.narration}
-                                                >
-                                                    <label> Account Name</label>
-                                                    <input
-                                                        type="text"
-                                                        value={
-                                                            field.accountName
-                                                        } // Set the account name
-                                                        disabled
-                                                        required
-                                                    />
-                                                    {accountInquiryErr ? (
-                                                        <p
+                        <>
+                            <form onSubmit={handleSubmit}>
+                                <div className={styles.narration}>
+                                    <label className={styles.bulkLabel}>
+                                        Source Account
+                                    </label>
+                                    <select
+                                        name="ecoSourceAccount"
+                                        onChange={(e) => {
+                                            const selectedAccount =
+                                                allAccountInfo.find(
+                                                    (account) =>
+                                                        account?.accountNo ===
+                                                        e.target.value
+                                                );
+                                            if (selectedAccount) {
+                                                setFieldValue(
+                                                    'ecoSourceAccount',
+                                                    selectedAccount?.accountNo
+                                                );
+                                                setFieldValue(
+                                                    'ecoAccountId',
+                                                    selectedAccount?.accountId
+                                                );
+                                                setFieldValue(
+                                                    'ecoCurrency',
+                                                    selectedAccount?.currency
+                                                );
+                                            }
+                                        }}
+                                    >
+                                        <option value="">
+                                            Select Account To Use
+                                        </option>
+                                        {allAccountInfo
+                                            .filter(
+                                                (account) => account?.accountNo
+                                            )
+                                            .map((account) => {
+                                                return (
+                                                    <>
+                                                        <option
                                                             className={
-                                                                styles.error
+                                                                styles.accntP
+                                                            }
+                                                            value={
+                                                                account?.accountNo
                                                             }
                                                         >
-                                                            {
-                                                                accountInquiryErr
-                                                                    ?.data
-                                                                    ?.message
-                                                            }
-                                                        </p>
-                                                    ) : null}
-                                                </div>
-                                            )}
-                                            <br />
-                                            {diffAmount ? (
-                                                <>
+                                                            {account?.accountNo}
+                                                        </option>
+                                                    </>
+                                                );
+                                            })}
+                                    </select>
+                                    <p className={styles.error}>
+                                        {/* {errors?.sourceAccount?.message} */}
+                                    </p>
+                                </div>
+                                <br />
+                                <br />
+
+                                <p className={styles.beneTitle}>
+                                    Beneficiary Details
+                                </p>
+                                {csvUpload ? (
+                                    <p>File Successfully uploaded!!!</p>
+                                ) : (
+                                    <div>
+                                        {formFields.map((field, index) => (
+                                            <div key={index}>
+                                                {paymentbanklistLoad ? (
+                                                    <Loader />
+                                                ) : (
                                                     <div
                                                         className={
-                                                            styles.amountDiv
+                                                            styles.formBank
                                                         }
                                                     >
                                                         <label
@@ -886,72 +832,146 @@ const BulkTransfer = ({
                                                                 styles.bulkLabel
                                                             }
                                                         >
-                                                            Amount
+                                                            Choose Bank
                                                         </label>
-                                                        <input
-                                                            onChange={(e) => {
-                                                                setFieldValue(
-                                                                    'ecoEnterAmount',
-                                                                    e.target
-                                                                        .value
-                                                                );
-                                                                if (
-                                                                    e.target
-                                                                        .value
-                                                                        .length ===
-                                                                    0
-                                                                ) {
-                                                                    setActiveBtn(
-                                                                        false
-                                                                    );
-                                                                } else if (
-                                                                    e.target
-                                                                        .value
-                                                                        .length >
-                                                                    0
-                                                                ) {
-                                                                    setActiveBtn(
-                                                                        true
-                                                                    );
-                                                                }
-                                                            }}
-                                                            type="text"
-                                                            placeholder="0.00"
+                                                        <Search
+                                                            array={
+                                                                paymentbanklistData
+                                                            }
+                                                            placeholder="Search for bank"
+                                                            onBankSelect={
+                                                                handleBankSelect
+                                                            }
                                                         />
                                                     </div>
-                                                    <br />
-                                                    <br />
-                                                </>
-                                            ) : null}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-
-                            <div className={styles.narration}>
-                                <div className={styles.uploadCsv}>
-                                    {/* <p>Tap to carry out up to 5 transactions</p> */}
-                                    {csvUpload ? null : (
-                                        <div className={styles.actionButtons}>
-                                            <div
-                                                className={styles.plus}
-                                                onClick={addFormFields}
-                                            >
-                                                <PlusSvg />
+                                                )}
+                                                <br />
+                                                <div
+                                                    className={
+                                                        styles.formNumber
+                                                    }
+                                                >
+                                                    <label
+                                                        className={
+                                                            styles.bulkLabel
+                                                        }
+                                                    >
+                                                        Account Number
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Enter Account Number"
+                                                        onChange={(e) => {
+                                                            setIndx(index);
+                                                            setFieldValue(
+                                                                'ecoAccountNumber',
+                                                                e.target.value
+                                                            );
+                                                            setAccountNumber(
+                                                                e.target.value
+                                                            );
+                                                            // handleBlur();
+                                                        }}
+                                                        onBlur={(e) =>
+                                                            handleBlur(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        name="ecoAccountNumber"
+                                                    />
+                                                </div>
+                                                {accountInquiryLoad ? (
+                                                    <Loader />
+                                                ) : (
+                                                    <div
+                                                        className={
+                                                            styles.narration
+                                                        }
+                                                    >
+                                                        <label>
+                                                            {' '}
+                                                            Account Name
+                                                        </label>
+                                                        <input
+                                                            type="text"
+                                                            value={
+                                                                values?.accountName ||
+                                                                field.accountName
+                                                            } // Set the account name
+                                                            disabled
+                                                            required
+                                                        />
+                                                        {accountInquiryErr ? (
+                                                            <p
+                                                                className={
+                                                                    styles.error
+                                                                }
+                                                            >
+                                                                {
+                                                                    accountInquiryErr
+                                                                        ?.data
+                                                                        ?.message
+                                                                }
+                                                            </p>
+                                                        ) : null}
+                                                    </div>
+                                                )}
+                                                <br />
+                                                {diffAmount ? (
+                                                    <>
+                                                        <div
+                                                            className={
+                                                                styles.amountDiv
+                                                            }
+                                                        >
+                                                            <label
+                                                                className={
+                                                                    styles.bulkLabel
+                                                                }
+                                                            >
+                                                                Amount
+                                                            </label>
+                                                            <input
+                                                                onChange={(
+                                                                    e
+                                                                ) => {
+                                                                    setFieldValue(
+                                                                        'ecoEnterAmount',
+                                                                        e.target
+                                                                            .value
+                                                                    );
+                                                                    if (
+                                                                        e.target
+                                                                            .value
+                                                                            .length ===
+                                                                        0
+                                                                    ) {
+                                                                        setActiveBtn(
+                                                                            false
+                                                                        );
+                                                                    } else if (
+                                                                        e.target
+                                                                            .value
+                                                                            .length >
+                                                                        0
+                                                                    ) {
+                                                                        setActiveBtn(
+                                                                            true
+                                                                        );
+                                                                    }
+                                                                }}
+                                                                type="text"
+                                                                placeholder="0.00"
+                                                            />
+                                                        </div>
+                                                        <br />
+                                                        <br />
+                                                    </>
+                                                ) : null}
                                             </div>
-                                            <div
-                                                className={styles.minus}
-                                                onClick={() =>
-                                                    removeFormFields(
-                                                        formFields.length - 1
-                                                    )
-                                                }
-                                            >
-                                                -
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
+                                        ))}
+                                    </div>
+                                )}
                                 {csvUpload ? null : diffAmount ? null : (
                                     <div className={styles.amountDiv}>
                                         <label className={styles.bulkLabel}>
@@ -979,34 +999,65 @@ const BulkTransfer = ({
                                         />
                                     </div>
                                 )}
+                                <br />
+                                <br />
+                                <div className={styles.narration}>
+                                    <div className={styles.uploadCsv}>
+                                        {/* <p>Tap to carry out up to 5 transactions</p> */}
+                                        {csvUpload ? null : (
+                                            <div
+                                                className={styles.actionButtons}
+                                            >
+                                                <div
+                                                    className={styles.plus}
+                                                    onClick={addFormFields}
+                                                >
+                                                    <PlusSvg />
+                                                </div>
+                                                <div
+                                                    className={styles.minus}
+                                                    onClick={() =>
+                                                        removeFormFields(
+                                                            formFields.length -
+                                                                1
+                                                        )
+                                                    }
+                                                >
+                                                    -
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
 
-                                <div className={styles.saveBene}>
-                                    <label className={styles.beneCheck}>
-                                        <input
-                                            type="checkbox"
-                                            onChange={(e) => {
-                                                if (e.target.checked) {
-                                                    setDiffAmount(true);
-                                                    setActiveBtn(true);
-                                                } else if (!e.target.checked) {
-                                                    setDiffAmount(false);
-                                                    setActiveBtn(false);
-                                                }
-                                            }}
-                                        />
-                                        <span>
-                                            <i></i>
-                                        </span>
-                                    </label>
-                                    <p>Input Different Amount</p>
-                                </div>
-                                <div className={styles.amountDiv}>
-                                    <p className={styles.beneTitle}>
-                                        For more than 5 transaction
-                                    </p>
-                                    <div className={styles.uploadCsvs}>
-                                        <p>
-                                            <label>
+                                    <div className={styles.saveBene}>
+                                        <label className={styles.beneCheck}>
+                                            <input
+                                                type="checkbox"
+                                                onChange={(e) => {
+                                                    if (e.target.checked) {
+                                                        setDiffAmount(true);
+                                                        setActiveBtn(true);
+                                                    } else if (
+                                                        !e.target.checked
+                                                    ) {
+                                                        setDiffAmount(false);
+                                                        setActiveBtn(false);
+                                                    }
+                                                }}
+                                            />
+                                            <span>
+                                                <i></i>
+                                            </span>
+                                        </label>
+                                        <p>Input Different Amount</p>
+                                    </div>
+                                    <div className={styles.amountDiv}>
+                                        <p className={styles.beneTitle}>
+                                            For more than 5 transaction
+                                        </p>
+                                        <div className={styles.uploadCsvs}>
+                                            <p>
+                                                {/* <label>
                                                 Tap to
                                                 <input
                                                     type="file"
@@ -1070,31 +1121,34 @@ const BulkTransfer = ({
                                                     }}
                                                 />
                                                 <span> Upload CSV File</span>
-                                            </label>
-                                        </p>
-                                        <p>{fileError}</p>
-                                        <p>
-                                            <a
-                                                href="../../../Assets/CSV.xlsm"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                download="CSV Template"
-                                            >
-                                                <span>Download CSV File</span>
-                                            </a>
-                                        </p>
+                                            </label> */}
+                                            </p>
+                                            <p>{fileError}</p>
+                                            <p>
+                                                <a
+                                                    href="../../../Assets/CSV.xlsm"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    download="CSV Template"
+                                                >
+                                                    <span>
+                                                        Download CSV File
+                                                    </span>
+                                                </a>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <ButtonComp
-                                    disabled={activeBtn}
-                                    active={activeBtn ? 'active' : 'inactive'}
-                                    text={buttonText}
-                                    type="submit"
-                                    // err={errorMessageInterBankEnquiry}
-                                />
-                            </div>
-                        </form>
+                            </form>
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                text={buttonText}
+                                type="submit"
+                                onClick={transferMoney}
+                                // err={errorMessageInterBankEnquiry}
+                            />
+                        </>
                     )}
                 </Formik>
             )}

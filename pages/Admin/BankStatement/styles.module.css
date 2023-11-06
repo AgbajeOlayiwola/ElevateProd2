@@ -5,8 +5,8 @@
 }
 .statementCover {
     height: fit-content;
-    background: #fefefe;
-    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+    /* background: #fefefe;
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08); */
     border-radius: 15px;
     padding: 20px 15px;
 }
@@ -80,6 +80,7 @@
     justify-content: flex-end;
     align-items: flex-end;
     cursor: pointer;
+    margin-bottom: 64px;
 }
 
 .formGroup {
@@ -232,9 +233,14 @@
     width: 15%;
     text-align: center;
 }
+.error {
+    width: 14%;
+    color: red !important;
+}
 
 .bank {
     width: 14%;
+    color: green !important;
 }
 
 .date {
@@ -347,7 +353,7 @@
     width: 20%;
 }
 .date {
-    width: 12%;
+    width: 30%;
 }
 
 .noRecent {

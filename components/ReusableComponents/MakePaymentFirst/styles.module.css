@@ -6,7 +6,7 @@
     margin: 0px auto;
     display: flex;
     position: absolute;
-    height: 80vh;
+    height: 90vh;
     top: 3.7%;
     left: 25%;
     z-index: 10;
@@ -161,6 +161,9 @@
     overflow: scroll;
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
+}
+.beneficiaryBody::-webkit-scrollbar {
+    display: none;
 }
 
 .beneficiaryBodyNo {
@@ -344,6 +347,7 @@
     border: 1px solid #dbdbdb;
     border-radius: 12px;
     color: #3e3e3e;
+    padding-left: 50px;
 }
 
 .firstBody input::placeholder {
@@ -944,6 +948,7 @@
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
+    position: relative;
 }
 .successPage {
     display: flex;
@@ -969,6 +974,9 @@
 }
 .ammt p {
     /* margin-right: -40px; */
+    position: absolute;
+    left: 14px;
+    z-index: 10000;
 }
 .billBody {
     margin-top: 10%;
@@ -1005,6 +1013,11 @@
     overflow: scroll;
     text-align: start;
     justify-content: flex-start;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+}
+.mainDv::-webkit-scrollbar {
+    display: none;
 }
 
 .mainDvtwo {
@@ -1025,6 +1038,11 @@
     text-align: start;
     justify-content: flex-start;
     cursor: pointer;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+}
+.mainDvtwo::-webkit-scrollbar {
+    display: none;
 }
 
 .mainDv::-webkit-scrollbar {
@@ -1041,7 +1059,7 @@
         position: absolute;
         top: 5%;
         left: 3%;
-        height: 80vh;
+        height: 90vh;
         z-index: 10;
     }
     .firstBody,

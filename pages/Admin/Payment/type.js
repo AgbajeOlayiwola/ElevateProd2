@@ -184,15 +184,7 @@ const PaymentTypes = () => {
             }, 0)
         );
     }, [csvData]);
-    useEffect(() => {
-        const {
-            query: { id }
-        } = router;
-        setLink({ id }.id);
-        if (link) {
-            setFormType(link.toLowerCase());
-        }
-    }, [link]);
+
     console.log(formType);
     const renderForm = () => {
         switch (formType) {

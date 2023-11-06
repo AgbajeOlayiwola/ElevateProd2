@@ -1,31 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import TableDetail from '../TableDetail';
-import styles from './styles.module.css';
-import ReactPaginate from 'react-paginate';
-import TransactionStatus from '../TransactionStatus';
-import Lottie from 'react-lottie';
-import socialdata from '../../ReusableComponents/Lotties/loading.json';
-import { getTransactionHistory } from '../../../redux/actions/transactionHistoryAction';
-import { getDisputCategoryGen } from '../../../redux/actions/getDisputeInfoAction';
 import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
+import ReactPaginate from 'react-paginate';
+import socialdata from '../../ReusableComponents/Lotties/loading.json';
+import styles from './styles.module.css';
 const PaymentTable = ({ title, page }) => {
-    const { transactionElevate, errorMessageTransactionElevate } = useSelector(
-        (state) => state.transactionElevateReducer
-    );
-    const { transactionHistory, errorMessageTransactionHistory } = useSelector(
-        (state) => state.transactionHistoryReducer
-    );
-    const {
-        getDisputCategOryTypeSuccess,
-        getDisputCategOryTypeErrorMessage
-    } = useSelector((state) => state.getDisputeTypeReducer);
-
-    const {
-        getDisputCategorySuccess,
-        getDisputCategoryErrorMessage
-    } = useSelector((state) => state.getDisputeCategoryReducer);
     const [pageSrchIndex, setPageSrchIndex] = useState(0);
     const [numOfRecords, setNumOfRecords] = useState(1000);
     const [tableDetails, setTableDetails] = useState([]);
@@ -40,9 +20,6 @@ const PaymentTable = ({ title, page }) => {
     let pending = 0;
     let success = 0;
     let failed = 0;
-    useEffect(() => {
-        setDisputes(getDisputCategorySuccess);
-    }, [getDisputCategorySuccess]);
 
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -94,23 +71,7 @@ const PaymentTable = ({ title, page }) => {
     }, [searchValue, newTableDetails]);
     const pageCount = Math.ceil(newestTableDetails.length / usersPerPage);
     const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getTransactionHistory(pageSrchIndex, numOfRecords));
-    }, []);
 
-    useEffect(() => {
-        dispatch(getDisputCategoryGen('Complaint'));
-    }, []);
-
-    useEffect(() => {
-        if (transactionHistory !== null) {
-            setNewestTableDetails([]);
-            setTableDetails(transactionHistory.transactions);
-            if (transactionHistory !== null) {
-                setIsLoading(false);
-            }
-        }
-    }, [transactionHistory]);
     useEffect(() => {
         if (searchType === 'transactionType') {
             setDisplayType('Type');
@@ -330,7 +291,7 @@ const PaymentTable = ({ title, page }) => {
                     </button> */}
                 </div>
             </div>
-            {newestTableDetails?.map((item) => {
+            {/* {newestTableDetails?.map((item) => {
                 if (item.transactionStatus === 'SUCCESS') {
                     success += 1;
                 } else if (item.transactionStatus === 'PENDING') {
@@ -338,12 +299,12 @@ const PaymentTable = ({ title, page }) => {
                 } else if (item.transactionStatus === 'FAILED') {
                     failed += 1;
                 }
-            })}
-            <TransactionStatus
+            })} */}
+            {/* <TransactionStatus
                 success={success}
                 failed={failed}
                 pending={pending}
-            />
+            /> */}
             <div className={styles.tableMain}>
                 <div className={styles.TableDetailHeader}>
                     <p className={styles.beneficiary}>Beneficiary </p>
@@ -355,82 +316,29 @@ const PaymentTable = ({ title, page }) => {
                     <div className={styles.more}></div>
                 </div>
                 <div className={styles.tableDetails}>
-                    {isLoading ? (
-                        <Lottie
-                            options={socialOptions}
-                            height={200}
-                            width={200}
-                        />
-                    ) : !newestTableDetails.length ? (
-                        <p className={styles.noRecent}>No Recent transaction</p>
-                    ) : (
-                        newestTableDetails
-                            ?.sort((x, y) => {
-                                let a = new Date(x.transactionDate),
-                                    b = new Date(y.transactionDate);
-                                return b - a;
-                            })
-                            ?.filter((item) => {
-                                if (searchValue === '') {
-                                    return item;
-                                } else if (filterCondition(item, searchType)) {
-                                    return item;
-                                }
-                            })
-                            ?.slice(pagesVisited, pagesVisited + usersPerPage)
-                            ?.map((items, index) => {
-                                return (
-                                    <TableDetail
-                                        key={index}
-                                        // date={items.transactionDate}
-                                        title={items.transactionTitle}
-                                        Beneficiary={
-                                            items.paymentDirection === 'CREDIT'
-                                                ? items.transactionTitle
-                                                : items.receiver
-                                        }
-                                        Type={items.transactionType.replace(
-                                            '_',
-                                            ' '
-                                        )}
-                                        Amount={formatter.format(
-                                            items.transactionAmount
-                                        )}
-                                        accountId={items.sourceAccountId}
-                                        Bank={items.destinationBank}
-                                        Dates={items.transactionDate}
-                                        Status={items.transactionStatus}
-                                        accountNumber={
-                                            items.destinationAccountNumber
-                                        }
-                                        network={items.billerCode}
-                                        disputes={disputes}
-                                        direction={items.paymentDirection}
-                                        sender={items.sender}
-                                        senderBank={items.sendersBank}
-                                        narration={items.narration}
+                    {/* <TableDetail
+                        // date={items.transactionDate}
+                        Beneficiary={''}
+                        disputes={disputes}
 
-                                        //   phoneNumber={}
-                                    />
-                                );
-                            })
-                    )}
+                        //   phoneNumber={}
+                    /> */}
+                    <p className={styles.notrans}>No Transaction Available</p>
                 </div>
             </div>
-            {newestTableDetails.length === 0 ? null : (
-                <ReactPaginate
-                    previousLabel={<AiOutlineLeft />}
-                    nextLabel={<AiOutlineRight />}
-                    pageCount={pageCount}
-                    onPageChange={({ selected }) => {
-                        setPageNumber(selected);
-                    }}
-                    containerClassName={styles.paginationBtns}
-                    previousClassName={styles.previousBtns}
-                    nextLinkClassName={styles.nextBtns}
-                    activeClassName={styles.paginationActive}
-                />
-            )}
+
+            <ReactPaginate
+                previousLabel={<AiOutlineLeft />}
+                nextLabel={<AiOutlineRight />}
+                pageCount={pageCount}
+                onPageChange={({ selected }) => {
+                    setPageNumber(selected);
+                }}
+                containerClassName={styles.paginationBtns}
+                previousClassName={styles.previousBtns}
+                nextLinkClassName={styles.nextBtns}
+                activeClassName={styles.paginationActive}
+            />
         </div>
     );
 };

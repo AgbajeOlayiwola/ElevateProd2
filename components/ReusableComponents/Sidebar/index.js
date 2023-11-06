@@ -14,6 +14,7 @@ import { SidebarData } from '../Data';
 import LogoutSvg from '../LogoutSvg';
 import SideBarDrop from './sidebarcont';
 import styles from './styles.module.css';
+import ElevateLogo from '../Ellevate';
 const Sidebar = ({ showSubnav }) => {
     const dispatch = useDispatch();
     // const { logout } = useSelector((state) => state.logoutReducer);
@@ -66,14 +67,7 @@ const Sidebar = ({ showSubnav }) => {
             <div className={styles.top}>
                 <Link href="/Admin/Dashboard">
                     <div className={styles.ellevate}>
-                        {/* <ElevateLogo /> */}
-
-                        <Image
-                            src="/MY_SME_LOGO_GREEN_RGB@4x1.png"
-                            width={64}
-                            height={46}
-                            alt="logo"
-                        />
+                        <ElevateLogo />
                     </div>
                 </Link>
                 <div className={styles.track}>

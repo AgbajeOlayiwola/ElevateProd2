@@ -20,7 +20,6 @@ const settings = {
 };
 const AccountsInfoCard = ({ userProfileData }) => {
     const dispatch = useDispatch();
-
     const [senderDetails, setSenderDetails] = useState({});
     const [acctNummber, setAcctNumber] = useState('');
     const [outType, setOutType] = useState();
@@ -35,6 +34,7 @@ const AccountsInfoCard = ({ userProfileData }) => {
     const [acctInfoNum, setAcctInfoNum] = useState();
     const [copyAcctInfo, setCopyAcctInfo] = useState();
     const affiliate = localStorage.getItem('affiliateCode');
+    const [alert, setAlert] = useState(false);
     const types = (type) => {
         setOutType(type);
     };
@@ -47,6 +47,7 @@ const AccountsInfoCard = ({ userProfileData }) => {
     }
     const [newAccuntId, setNewAccountId] = useState();
     const { allAccountInfo } = useSelector((store) => store);
+    const { profile } = useSelector((store) => store);
     console.log(allAccountInfo);
     useEffect(() => {
         setAcctNumber(
@@ -74,12 +75,14 @@ const AccountsInfoCard = ({ userProfileData }) => {
                                         {' '}
                                         {getSymbolFromCurrency(
                                             countryToCurrency[
-                                                `${affiliate.substring(1)}`
+                                                `${affiliate?.substring(1)}`
                                             ]
                                         )}{' '}
-                                        {parseFloat(balance).toLocaleString(
-                                            'en-US'
-                                        )}
+                                        {outType
+                                            ? '********'
+                                            : parseFloat(
+                                                  balance
+                                              ).toLocaleString('en-US')}
                                     </h1>
                                     <Visbility color="green" typeSet={types} />
                                 </div>
@@ -106,9 +109,34 @@ const AccountsInfoCard = ({ userProfileData }) => {
                                         ) : null}
                                     </div>
                                     <div className={styles.mdCopy}>
-                                        <IoMdCopy
-                                        // onClick={copyAccountNumber}
-                                        />
+                                        {alert ? (
+                                            <p>Copied to Clipboard</p>
+                                        ) : (
+                                            <IoMdCopy
+                                                onClick={() => {
+                                                    {
+                                                        navigator.clipboard
+                                                            .writeText(
+                                                                `Account Name -${profile?.user?.lastName} ${profile?.user?.firstName}
+        Account No. - ${acctNummber}
+        Bank Name - Ecobank `
+                                                            )
+                                                            .then(() => {
+                                                                setAlert(true);
+                                                                setTimeout(
+                                                                    () => {
+                                                                        setAlert(
+                                                                            false
+                                                                        );
+                                                                    },
+                                                                    1500
+                                                                );
+                                                            });
+                                                    }
+                                                }}
+                                                // onClick={copyAccountNumber}
+                                            />
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -145,8 +173,18 @@ const AccountsInfoCard = ({ userProfileData }) => {
                                         >
                                             {account?.accountNo}
                                         </p>
+
                                         <p>
-                                            {account?.availableBal.toLocaleString()}
+                                            {getSymbolFromCurrency(
+                                                countryToCurrency[
+                                                    `${affiliate?.substring(1)}`
+                                                ]
+                                            )}
+                                            {outType
+                                                ? '********'
+                                                : parseFloat(
+                                                      account?.availableBal
+                                                  ).toLocaleString('en-US')}
                                         </p>
                                     </div>
                                     <div

@@ -3,8 +3,7 @@ import { useBillerDetailsMutation } from '../../../redux/api/authApi';
 import Loader from '../Loader';
 import styles from './styles.module.css';
 
-const SlectBiller = ({ biller, loads, loadBillerForm }) => {
-    // const [isOpen, setIsOpen] = useState(false);
+const SlectBiller = ({ biller, loads, load, loadBillerForm }) => {
     console.log(biller);
 
     // const toggleDropdown = () => {
@@ -28,6 +27,7 @@ const SlectBiller = ({ biller, loads, loadBillerForm }) => {
 
     const loadBillerdetails = (val) => {
         billerDetails({ billerCode: val });
+        load(billerDetailsLoad);
     };
     useEffect(() => {
         if (billerDetailsSuccess) {

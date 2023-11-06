@@ -3,11 +3,12 @@ import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useOrdrVirtualAccountMutation } from '../../../redux/api/authApi';
 import ButtonComp from '../Button';
 import CloseButton from '../CloseButtonSvg';
-import Loader from '../Loader';
 import OtpInput from '../Otpinput';
 import Overlay from '../Overlay';
+import VirtualAccountValidity from '../VirtualAccountValidity';
 import styles from './styles.module.css';
 // import axios from 'axios';
 
@@ -34,18 +35,30 @@ const VirtualAccountFirst = ({
             setActiveBtn(true);
         }
     };
+    const { profile } = useSelector((store) => store);
     const { allAccountInfo } = useSelector((store) => store);
     const initialValues = {
         ecoAccountId: '',
         ecoSourceAccount: '',
-        ecoCurrency: '',
+        productName: '',
         accountNumber: '',
         amount: '',
         paymentTitle: '',
         phoneNumbr: '',
-        description: ''
+        description: '',
+        phoneNumber: ''
     };
-
+    const [
+        ordrVirtualAccount,
+        {
+            data: ordrVirtualAccountData,
+            isLoading: ordrVirtualAccountLoad,
+            isSuccess: ordrVirtualAccountSuccess,
+            isError: ordrVirtualAccountFalse,
+            error: ordrVirtualAccountErr,
+            reset: ordrVirtualAccountReset
+        }
+    ] = useOrdrVirtualAccountMutation();
     return (
         <Overlay overlay={overlay}>
             <ToastContainer />
@@ -56,6 +69,15 @@ const VirtualAccountFirst = ({
                         <Formik
                             initialValues={initialValues}
                             onSubmit={(values, { setSubmitting }) => {
+                                const data = {
+                                    amount: values?.amount,
+                                    customerId: values?.phoneNumber,
+                                    serviceDescription: values?.narration,
+                                    smeAccountNumber: values?.ecoSourceAccount,
+                                    smeMerchantName: `${profile?.user?.firstName} ${profile?.user?.lastName}`,
+                                    transactionPin: otpValue
+                                };
+                                ordrVirtualAccount(data);
                                 setSubmitting(false);
                             }}
                         >
@@ -66,145 +88,158 @@ const VirtualAccountFirst = ({
                                 handleChange,
                                 setFieldValue,
                                 handleSubmit
-                            }) => (
-                                <form onSubmit={handleSubmit}>
-                                    <div className={styles.narration}>
-                                        <label>Source Account</label>
-                                        <select
-                                            name="ecoSourceAccount"
-                                            onChange={(e) => {
-                                                const selectedAccount =
-                                                    allAccountInfo.find(
+                            }) =>
+                                ordrVirtualAccountData ? (
+                                    <VirtualAccountValidity
+                                        data={ordrVirtualAccountData}
+                                    />
+                                ) : (
+                                    <form onSubmit={handleSubmit}>
+                                        <div className={styles.narration}>
+                                            <label>Source Account</label>
+                                            <select
+                                                name="ecoSourceAccount"
+                                                onChange={(e) => {
+                                                    const selectedAccount =
+                                                        allAccountInfo.find(
+                                                            (account) =>
+                                                                account?.accountNo ===
+                                                                e.target.value
+                                                        );
+                                                    if (selectedAccount) {
+                                                        setFieldValue(
+                                                            'ecoSourceAccount',
+                                                            selectedAccount?.accountNo
+                                                        );
+                                                        setFieldValue(
+                                                            'ecoAccountId',
+                                                            selectedAccount?.accountId
+                                                        );
+                                                        setFieldValue(
+                                                            'ecoCurrency',
+                                                            selectedAccount?.currency
+                                                        );
+                                                    }
+                                                }}
+                                            >
+                                                <option value="">
+                                                    Select Account To Use
+                                                </option>
+                                                {allAccountInfo
+                                                    .filter(
                                                         (account) =>
-                                                            account?.accountNo ===
-                                                            e.target.value
-                                                    );
-                                                if (selectedAccount) {
-                                                    setFieldValue(
-                                                        'ecoSourceAccount',
-                                                        selectedAccount?.accountNo
-                                                    );
-                                                    setFieldValue(
-                                                        'ecoAccountId',
-                                                        selectedAccount?.accountId
-                                                    );
-                                                    setFieldValue(
-                                                        'ecoCurrency',
-                                                        selectedAccount?.currency
-                                                    );
-                                                }
-                                            }}
-                                        >
-                                            <option value="">
-                                                Select Account To Use
-                                            </option>
-                                            {allAccountInfo
-                                                .filter(
-                                                    (account) =>
-                                                        account.accountNo
-                                                )
-                                                .map((account) => {
-                                                    return (
-                                                        <>
-                                                            <option
-                                                                className={
-                                                                    styles.accntP
-                                                                }
-                                                                value={
-                                                                    account?.accountNo
-                                                                }
-                                                            >
-                                                                <p>
-                                                                    {
+                                                            account.accountNo
+                                                    )
+                                                    .map((account) => {
+                                                        return (
+                                                            <>
+                                                                <option
+                                                                    className={
+                                                                        styles.accntP
+                                                                    }
+                                                                    value={
                                                                         account?.accountNo
                                                                     }
-                                                                </p>
-                                                            </option>
-                                                        </>
+                                                                >
+                                                                    <p>
+                                                                        {
+                                                                            account?.accountNo
+                                                                        }
+                                                                    </p>
+                                                                </option>
+                                                            </>
+                                                        );
+                                                    })}
+                                            </select>
+                                            <p className={styles.error}>
+                                                {errors ? (
+                                                    <>
+                                                        {
+                                                            errors?.ecoSourceAccount
+                                                        }
+                                                    </>
+                                                ) : null}
+                                            </p>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div>
+                                            <label>Merchant Name</label>
+                                            <input
+                                                placeholder="Name"
+                                                onChange={(e) => {
+                                                    setFieldValue(
+                                                        'productName',
+                                                        e.target.value
                                                     );
-                                                })}
-                                        </select>
+                                                }}
+                                            />
+                                        </div>
                                         <br />
-                                    </div>
-                                    <br />
-                                    <div className={styles.formGroup}>
-                                        <label>Enter Amount</label>
-                                        <input
-                                            type="number"
-                                            name="amount"
-                                            placeholder="0.00"
-                                            onChange={(e) => {
-                                                setFieldValue(
-                                                    'amount',
-                                                    e.target.value
-                                                );
-                                            }}
-                                        />
-                                    </div>
-                                    <br />
-                                    <div className={styles.formGroup}>
-                                        <label>Enter Amount</label>
-                                        <input
-                                            type="number"
-                                            name="phoneNumbr"
-                                            placeholder="0.00"
-                                            onChange={(e) => {
-                                                setFieldValue(
-                                                    'phoneNumbr',
-                                                    e.target.value
-                                                );
-                                            }}
-                                        />
-                                    </div>
-                                    <br />
-                                    <div className={styles.formGroup}>
-                                        <label>Payment title</label>
-
-                                        <input
-                                            type="text"
-                                            placeholder="Enter Payment Name"
-                                            onChange={(e) => {
-                                                setFieldValue(
-                                                    'paymentTitle',
-                                                    e.target.value
-                                                );
-                                            }}
-                                        />
-                                        <p className={styles.error}>
-                                            {errors?.accountName?.message}
-                                        </p>
-                                    </div>
-                                    <div className={styles.otps}>
-                                        <label>Transaction PIN.</label>
                                         <br />
-                                        <OtpInput
-                                            onOtpChange={handleOtpChange}
-                                            otpfields={6}
-                                        />
-                                    </div>
-                                    {error ? (
-                                        <p className={styles.error}>{error}</p>
-                                    ) : null}
-                                    {isLoading ? (
-                                        <Loader />
-                                    ) : (
+                                        <div>
+                                            <label>Amount</label>
+                                            <input
+                                                placeholder="Amount"
+                                                onChange={(e) => {
+                                                    setFieldValue(
+                                                        'amount',
+                                                        e.target.value
+                                                    );
+                                                }}
+                                            />
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div>
+                                            <label>Phone Number</label>
+                                            <input
+                                                placeholder="Narration"
+                                                onChange={(e) => {
+                                                    setFieldValue(
+                                                        'phoneNumber',
+                                                        e.target.value
+                                                    );
+                                                }}
+                                            />
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div>
+                                            <label>Narration</label>
+                                            <input
+                                                placeholder="Narration"
+                                                onChange={(e) => {
+                                                    setFieldValue(
+                                                        'narration',
+                                                        e.target.value
+                                                    );
+                                                }}
+                                            />
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div>
+                                            <div className={styles.transaction}>
+                                                <label>Transaction Pin</label>
+                                                <OtpInput
+                                                    onOtpChange={
+                                                        handleOtpChange
+                                                    }
+                                                    otpfields={6}
+                                                />
+                                            </div>
+                                        </div>
                                         <ButtonComp
-                                            disabled={activeBtn}
-                                            active={
-                                                activeBtn
-                                                    ? 'active'
-                                                    : 'inactive'
-                                            }
-                                            // loads={
-                                            //     dynamicQrLoad ||
-                                            //     ussdRefferenceLoad
-                                            // }
-                                            text={buttonText}
+                                            disabled={true}
+                                            active={'active'}
+                                            text={'Pay via account'}
                                             type="submit"
+                                            loads={ordrVirtualAccountLoad}
                                         />
-                                    )}
-                                </form>
-                            )}
+                                    </form>
+                                )
+                            }
                         </Formik>
                     </div>
                 </div>

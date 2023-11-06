@@ -26,6 +26,7 @@
 .ellevate {
     margin-left: 32px;
     cursor: pointer;
+    width: 30%;
 }
 
 .track {

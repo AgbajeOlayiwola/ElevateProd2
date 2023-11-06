@@ -8,6 +8,7 @@ import {
     usePaymentbanklistMutation,
     useUssdRefferenceMutation
 } from '../../../redux/api/authApi';
+import { setDynamicQrData } from '../../../redux/slices/dynamicQrSlice';
 import ButtonComp from '../Button';
 import CloseButton from '../CloseButtonSvg';
 import Loader from '../Loader';
@@ -71,6 +72,12 @@ const ReceivePaymentFirst = ({
             reset: dynamicQrReset
         }
     ] = useDynamicQrMutation();
+    useEffect(() => {
+        if (dynamicQrSuccess) {
+            dispatch(setDynamicQrData(dynamicQrData));
+            action();
+        }
+    }, [dynamicQrSuccess]);
     const handleOtpChange = (otp) => {
         setOtpValue(otp);
         if (otpValue.length === 5) {
@@ -244,7 +251,7 @@ const ReceivePaymentFirst = ({
                                     transactionPin: otpValue
                                 };
                                 if (firstTitle === 'Create USSD Payment Code') {
-                                    ussdRefference(data);
+                                    ussdRefference(ussdData);
                                 } else {
                                     dynamicQr(data);
                                 }

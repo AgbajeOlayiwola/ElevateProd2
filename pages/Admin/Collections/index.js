@@ -1,9 +1,12 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import AccountsInfoCard from '../../../components/ReusableComponents/AccountInfoCard';
 import { PaymentData } from '../../../components/ReusableComponents/Data';
 import Overlay from '../../../components/ReusableComponents/Overlay';
+import PaymentTable from '../../../components/ReusableComponents/PayementTable';
 import PaymentCard from '../../../components/ReusableComponents/PaymentCard';
 import PaymentSingleBody from '../../../components/ReusableComponents/PaymentSingleBody';
 import ReceivePaymentFirst from '../../../components/ReusableComponents/ReceivePaymentFirst';
@@ -14,16 +17,15 @@ import Share from '../../../components/ReusableComponents/Share';
 import UssdFirst from '../../../components/ReusableComponents/UssdFirst';
 import VirtualAccountFirst from '../../../components/ReusableComponents/VirtualAccount';
 import QrFirst from '../../../components/layout/QrData';
-import { generateQrCodeDetails } from '../../../redux/actions/generateQrCodeAction';
 import { loadpaylinkGen } from '../../../redux/actions/paylinkAction';
 import { loadussdGen } from '../../../redux/actions/ussdGenAction';
+import { useEnrollQrMutation } from '../../../redux/api/authApi';
 import styles from './styles.module.css';
-
 const Collections = () => {
     const router = useRouter();
     const affiliate = localStorage.getItem('affiliateCode');
     const dispatch = useDispatch();
-    const [formType, setFormType] = useState('ussd only');
+    const [formType, setFormType] = useState();
     // const [formData, setFormdata] = useState({ accountNum: '' });
     // const [ecobank, setEcobank] = useState('true');
     const [overlay, setOverlay] = useState(false);
@@ -45,6 +47,9 @@ const Collections = () => {
     // const [acctNummber, setAcctNumber] = useState('');
     const [codes, setCodes] = useState('');
     const [errorQr, setErrorQr] = useState('');
+    const { profile } = useSelector((store) => store);
+    const [acctNummber, setAcctNumber] = useState('');
+    const { allAccountInfo } = useSelector((store) => store);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -71,6 +76,54 @@ const Collections = () => {
         }
         return result;
     }
+
+    const [
+        enrollQr,
+        {
+            data: enrollQrData,
+            isLoading: enrollQrLoad,
+            isSuccess: enrollQrSuccess,
+            isError: enrollQrFalse,
+            error: enrollQrErr,
+            reset: enrollQrReset
+        }
+    ] = useEnrollQrMutation();
+    useEffect(() => {
+        setAcctNumber(
+            allAccountInfo
+                .filter((account) => account?.isPrimaryAccount === 'Y') // Filter by primary flag
+                .map((account) => account.accountNo)
+                .filter(Boolean)
+        );
+    }, []);
+    // console.log(acctNummber[0].toString());
+    useEffect(() => {
+        const data = {
+            email: profile?.user?.email,
+            mobileNumber: profile?.user?.phoneNumber,
+            merchantName: profile?.user?.firstName,
+            merchantAddress: profile?.user?.address,
+            area: '',
+            city: '',
+            accountNumber: acctNummber[0],
+            nameOnQrCode: profile?.user?.firstName,
+
+            referalCode: ''
+        };
+        enrollQr(data);
+    }, [acctNummber]);
+    const showSuccessToastMessage = () => {
+        toast.success('Successfully Enrolled for QR Payments', {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+        // closeAction();
+    };
+    useEffect(() => {
+        if (enrollQrSuccess) {
+            showSuccessToastMessage();
+        }
+    }, [enrollQrSuccess]);
 
     const bankCode = [
         {
@@ -186,7 +239,15 @@ const Collections = () => {
             });
         }
     }, [count]);
+    useEffect(() => {
+        const {
+            query: { id }
+        } = router;
+        setLink({ id }.id);
 
+        setFormType(link.toLowerCase());
+        console.log(formType);
+    }, []);
     const [merchantInf, setMerchantInfo] = useState();
     const handleFormChange = (formTitle) => {
         // if (userProfileData.hasSetTransactionPin === false) {
@@ -229,6 +290,7 @@ const Collections = () => {
             setErrorQr([]);
         }
     };
+
     const renderForm = () => {
         switch (formType) {
             case 'Paylink':
@@ -448,22 +510,7 @@ const Collections = () => {
                                 firstTitle="Create Ecobank QR Code"
                                 buttonText="Generate Ecobank QR Codes"
                                 closeAction={handleClose}
-                                action={(data) => {
-                                    // //console.logdata);
-                                    const generateQrCodeData = {
-                                        amount: `${data.amount}`,
-                                        productName: `${data.accountName}`,
-                                        nameOfPayment: `${data.accountName}`,
-                                        productCode: `${generateRandomString()}`,
-                                        description: `${data.description}`
-                                    };
-                                    setIsLoading(true);
-                                    dispatch(
-                                        generateQrCodeDetails(
-                                            generateQrCodeData
-                                        )
-                                    );
-                                }}
+                                action={() => setCount(count + 1)}
                                 error={errorQr}
                             />
                         );
@@ -474,19 +521,15 @@ const Collections = () => {
                                 title="Ecobank QR Code"
                                 action={buttonHandleClose}
                                 buttonText="Complete"
-                                merchantCode={merchantInf?.merchantCode}
-                                terminalId={merchantInf?.terminalId}
                                 allLink={(data) => {
-                                    // //console.logdata);
                                     setCount(count + 1);
                                 }}
                                 share={() => {
                                     setCount(count + 2);
                                 }}
-                                data={generateQrCodeSuccess}
                                 type=" Ecobank QR Code"
                                 closeAction={buttonHandleClose}
-                                primary={accountPrimarys.accountId}
+                                primary={acctNummber}
                             />
                         );
                     case 3:
@@ -516,13 +559,13 @@ const Collections = () => {
                             />
                         );
                 }
-            case 'virtual account':
+            case 'pay via account':
                 switch (count) {
                     case 0:
                         return (
                             <VirtualAccountFirst
                                 overlay={overlay}
-                                firstTitle="Virtual Account"
+                                firstTitle="Pay via account"
                                 buttonText="Next"
                                 closeAction={handleClose}
                                 action={(data) => {
@@ -534,7 +577,7 @@ const Collections = () => {
                         return (
                             <ReceivePaymentFirst
                                 overlay={overlay}
-                                firstTitle="Virtual Account"
+                                firstTitle="Pay via account"
                                 buttonText="Next"
                                 closeAction={handleClose}
                                 action={(data) => {
@@ -586,6 +629,7 @@ const Collections = () => {
     };
     return (
         <div className={styles.statementCover}>
+            <ToastContainer />
             <div className={styles.allTypes}>
                 <div className={styles.cov}>
                     <AccountsInfoCard userProfileData={userProfileData} />
@@ -614,11 +658,11 @@ const Collections = () => {
                     </PaymentCard>
                 </div>
             </div>
-            {/* <PaymentTable
+            <PaymentTable
                 title="Payment History"
                 test={count}
                 page="Collections"
-            /> */}
+            />
 
             {renderForm()}
         </div>

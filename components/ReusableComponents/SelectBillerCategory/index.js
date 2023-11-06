@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useBillersMutation } from '../../../redux/api/authApi';
+import Loader from '../Loader';
 import SlectBiller from '../SelectBiller';
-import SelectBillerForms from '../SelectBillerForms';
+import styles from './styles.module.css';
 
-const SelectBillerCategory = ({ item }) => {
+const SelectBillerCategory = ({ item, load, loadBillerForm }) => {
     const [loads, setLoads] = useState(true);
+    const [isLoading, setIsLoading] = useState();
     const [billerDatails, setBillerDetails] = useState();
     const [
         billers,
@@ -20,27 +22,29 @@ const SelectBillerCategory = ({ item }) => {
     const arrowAction = (val) => {
         billers({ category: val });
     };
-    const loadBillerForm = (val) => {
-        console.log(val);
-        setBillerDetails(val?.data);
-        setLoads(false);
+    const loading = (val) => {
+        setIsLoading(val);
     };
     return (
         <>
-            {loads ? (
-                <div>
-                    <h4 onClick={() => arrowAction(item.categoryCode)}>
-                        {item.categoryName}
-                    </h4>
+            <div className={styles.categor}>
+                <h4
+                    className={styles.cate}
+                    onClick={() => arrowAction(item.categoryCode)}
+                >
+                    {item.categoryName}
+                </h4>
+                {isLoading ? (
+                    <Loader />
+                ) : (
                     <SlectBiller
                         loadBillerForm={loadBillerForm}
                         biller={billersData}
                         loads={billersLoad}
+                        load={loading}
                     />
-                </div>
-            ) : (
-                <SelectBillerForms billerDatails={billerDatails} />
-            )}
+                )}
+            </div>
         </>
     );
 };

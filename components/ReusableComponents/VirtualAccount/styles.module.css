@@ -3,15 +3,22 @@
     max-width: 781px;
     background-color: white;
     border-radius: 50px;
-    margin: 32px auto;
+    /* margin: 32px auto; */
     display: flex;
     position: absolute;
     top: 5%;
     left: 25%;
-    height: 80vh;
+    height: fit-content;
+    max-height: 90vh;
 
     z-index: 10;
 }
+.transaction div {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+}
+
 .otps div {
     display: flex;
     justify-content: space-between;
@@ -41,6 +48,11 @@
 .firstBody {
     width: 70%;
     overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+}
+.firstBody::-webkit-scrollbar {
+    display: none;
 }
 
 .firstBody > div {
@@ -181,12 +193,17 @@
         position: absolute;
         top: 5%;
         left: 3%;
-        height: 80vh;
+        height: 90vh;
         z-index: 10;
     }
     .firstBody {
         width: 100%;
         overflow: scroll;
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none;
+    }
+    .firstBody::-webkit-scrollbar {
+        display: none;
     }
     .firstBody h2 {
         font-style: normal;

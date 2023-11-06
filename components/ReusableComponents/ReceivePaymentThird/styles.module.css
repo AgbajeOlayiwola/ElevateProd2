@@ -10,9 +10,13 @@
     position: relative;
     height: 80vh;
     overflow: scroll;
-
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
 }
-.mainStatus{
+.secondBody::-webkit-scrollbar {
+    display: none;
+}
+.mainStatus {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -21,12 +25,12 @@
     width: 67%;
     margin: 4px auto 64px;
 }
-.amountTrans{
+.amountTrans {
     display: flex;
     gap: 10px;
     flex-direction: column;
 }
-.amountTrans p{
+.amountTrans p {
     font-size: 15px !important;
 }
 .closeCont {
@@ -35,21 +39,20 @@
     width: 100%;
     padding: 32px 32px 0px 0px;
 }
-.paid{
+.paid {
     display: flex;
     align-items: center;
     gap: 38px;
 }
-.paid p{
+.paid p {
     font-family: 'Inter';
-font-style: normal;
-font-weight: 500;
-font-size: 12px;
-line-height: 15px;
-/* identical to box height */
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    /* identical to box height */
 
-
-/* color: #102572; */
+    /* color: #102572; */
 }
 .closeBtn {
     display: block;
@@ -140,7 +143,6 @@ line-height: 15px;
     justify-content: space-between;
     width: 100%;
     padding: 16px 24px;
-  
 }
 
 .deadline p {
@@ -158,17 +160,17 @@ line-height: 15px;
     width: 100%;
     padding: 12px 14px;
     border-bottom: 1px solid #dbdbdb;
-    background: #FFFFFF;
-box-shadow: 0px 0px 27px 4px rgba(204, 204, 204, 0.2);
-border-radius: 12px;
-margin-top: 20px;
-position: relative;
+    background: #ffffff;
+    box-shadow: 0px 0px 27px 4px rgba(204, 204, 204, 0.2);
+    border-radius: 12px;
+    margin-top: 20px;
+    position: relative;
 }
-.dates{
+.dates {
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
-    line-height: 15px;  
+    line-height: 15px;
     color: #7f7f7f;
     padding-top: 15px;
     padding-bottom: 15px;
@@ -308,167 +310,158 @@ position: relative;
     line-height: 22px;
     color: #3e3e3e;
     margin: 32px 0px;
-
 }
-.acceptedOrCancelled{
+.acceptedOrCancelled {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 30%;
 }
 
-.cancel{
+.cancel {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 12px !important;
     line-height: 15px;
-    color: #FF2E00 !important;
+    color: #ff2e00 !important;
 }
-.errors{
-    color: #FF2E00 !important;
+.errors {
+    color: #ff2e00 !important;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 12px;
     line-height: 15px;
     /* identical to box height */
-    
 }
-.paid p{
+.paid p {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 12px;
     line-height: 15px;
     /* identical to box height */
-    
-    
+
     /* color: #FFDE00; */
 }
-.edit{
+.edit {
     cursor: pointer;
 }
-.paidUnpaid{
+.paidUnpaid {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 12px;
     line-height: 15px;
     /* identical to box height */
-    
-    color: #102572 !important;
 
+    color: #102572 !important;
 }
-.nameDate{
+.nameDate {
     display: flex;
     justify-content: space-between;
     gap: 4px;
     flex-direction: column;
 }
-.nameDate p:nth-child(1){
+.nameDate p:nth-child(1) {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
     line-height: 17px;
     /* identical to box height */
-    
-    
-    color: #102572;
-    
 
+    color: #102572;
 }
-.nameDate p:nth-child(2){
+.nameDate p:nth-child(2) {
     font-family: 'Inter';
     font-style: italic;
     font-weight: 500;
     font-size: 12px;
     line-height: 15px;
     /* identical to box height */
-    
-    
-    color: #CCCCCC;
-    
+
+    color: #cccccc;
 }
-.pending{
+.pending {
     font-family: 'Inter';
-font-style: normal;
-font-weight: 500;
-font-size: 12px;
-line-height: 15px;
-/* identical to box height */
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    /* identical to box height */
 
-
-color: #FFDE00;
+    color: #ffde00;
 }
-.accepted{
+.accepted {
     font-family: 'Inter';
-font-style: normal;
-font-weight: 500;
-font-size: 12px;
-line-height: 15px;
-/* identical to box height */
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    /* identical to box height */
 
-text-align: center;
+    text-align: center;
 
-color: #6CCF00;
+    color: #6ccf00;
 }
-.red{
+.red {
     width: 9px;
     background-color: red;
     height: 9px;
     border-radius: 50%;
-
 }
-.blue{
-    background-color: #FFDE00;
+.blue {
+    background-color: #ffde00;
     width: 9px;
     height: 9px;
     border-radius: 50%;
 }
-.pendingReciept{
-    background-color: #FFDE00;
+.pendingReciept {
+    background-color: #ffde00;
     padding-top: 20px;
     padding-bottom: 20px;
     border-top-right-radius: 50px;
-border-top-left-radius: 50px;
-}.pendingReciept h1{
+    border-top-left-radius: 50px;
+}
+.pendingReciept h1 {
     text-align: center;
     color: black;
     font-weight: 600;
- }
- .success{
-    background-color: #6CCF00;
+}
+.success {
+    background-color: #6ccf00;
     padding-top: 20px;
     padding-bottom: 20px;
     border-top-right-radius: 20px;
-border-top-left-radius: 20px;
-}.success h1{
+    border-top-left-radius: 20px;
+}
+.success h1 {
     text-align: center;
     color: white;
     font-weight: 600;
- }
- .senderInfo{
+}
+.senderInfo {
     display: flex;
     justify-content: space-between;
     align-items: center;
- }
- .senderInfo p{
+}
+.senderInfo p {
     color: #3e3e3e;
- }
-.green{
-    background-color: #5DBE3F;
+}
+.green {
+    background-color: #5dbe3f;
     width: 9px;
     height: 9px;
-    border-radius: 50%; 
+    border-radius: 50%;
 }
-.accepted{
-    color: #5DBE3F !important;
+.accepted {
+    color: #5dbe3f !important;
 }
 
-.successReciept{
-    background-color: #A2FAA3;
+.successReciept {
+    background-color: #a2faa3;
     padding-top: 20px;
     padding-bottom: 20px;
     border-top-right-radius: 50px;
@@ -479,8 +472,8 @@ border-top-left-radius: 20px;
     color: black;
     font-weight: 600;
 }
-.failedReciept{
-    background-color: #F4A5AE;
+.failedReciept {
+    background-color: #f4a5ae;
     padding-top: 20px;
     padding-bottom: 20px;
     border-top-right-radius: 49px;
@@ -498,7 +491,7 @@ border-top-left-radius: 20px;
     border-top-right-radius: 50px;
     border-top-left-radius: 50px;
 }
-.disputTextArea{
+.disputTextArea {
     border-radius: 20px;
     padding: 20px;
 }
@@ -507,25 +500,25 @@ border-top-left-radius: 20px;
     color: black;
     font-weight: 600;
 }
-.statusText{
+.statusText {
     text-transform: capitalize;
     display: flex;
     justify-content: center;
     color: #000 !important;
 }
-.failedText{
-    text-transform: capitalize;
-    display: flex;
-    justify-content: center;
-color:#000;
-}
-.successText{
+.failedText {
     text-transform: capitalize;
     display: flex;
     justify-content: center;
     color: #000;
 }
-.disput{
+.successText {
+    text-transform: capitalize;
+    display: flex;
+    justify-content: center;
+    color: #000;
+}
+.disput {
     padding-top: 20px;
     padding-left: 20px;
     padding-bottom: 20px;
@@ -543,7 +536,7 @@ color:#000;
     box-shadow: 0px 0px 27px 4px rgba(204, 204, 204, 0.2);
 }
 
-.showDispute{
+.showDispute {
     box-shadow: 0px 0px 27px 4px rgba(204, 204, 204, 0.2);
     background: white;
     padding: 50px 70px;
@@ -556,44 +549,43 @@ color:#000;
     gap: 20px;
 }
 
-.recieptPad{
+.recieptPad {
     padding: 5px 70px;
 }
-.recieptPad h1{
+.recieptPad h1 {
     text-align: center;
     font-size: 20px;
 }
-.dounloadReciept{
+.dounloadReciept {
     margin-top: 30px !important;
     margin-bottom: 20px !important;
-  
 }
-.diclaimer{
+.diclaimer {
     display: flex;
     justify-content: center;
 }
-.recieptDiv{
+.recieptDiv {
     padding-bottom: 0px;
 }
-.diclaimer p{
+.diclaimer p {
     width: 80%;
     color: #3e3e3e;
 }
-.btnDiv{
-   padding-left: 30px;
-   padding-right: 30px;
+.btnDiv {
+    padding-left: 30px;
+    padding-right: 30px;
 }
-.typeSub{
+.typeSub {
     color: black !important;
 }
-.cancelDispute{
-    display:flex;
+.cancelDispute {
+    display: flex;
     justify-content: flex-end;
 }
-.errors{
+.errors {
     color: red !important;
 }
-.showReciept{
+.showReciept {
     padding: 0px;
     border-radius: 50px;
     box-shadow: 0px 0px 27px 4px rgba(204, 204, 204, 0.2);
@@ -608,12 +600,12 @@ color:#000;
     width: 500px;
     gap: 20px;
 }
-.cancel{
+.cancel {
     display: flex;
     justify-content: flex-end;
     font-size: 50px;
 }
-.cancelReciept{
+.cancelReciept {
     display: flex;
     justify-content: flex-end;
     font-size: 30px;
@@ -624,7 +616,7 @@ color:#000;
     color: red;
 }
 
-.dispute{
+.dispute {
     color: black;
     font-style: normal;
     font-weight: 500;
@@ -637,62 +629,62 @@ color:#000;
     color: white;
     border-radius: 5px;
 }
-.maindispute{
+.maindispute {
     color: black;
     font-style: normal;
     font-weight: 500;
     font-size: 12px;
     line-height: 15px;
-    border-radius: 5px; 
+    border-radius: 5px;
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
-.reciept:hover{
-    background: #6CCF00;
+.reciept:hover {
+    background: #6ccf00;
     color: white;
 }
-.reciept{
+.reciept {
     padding: 10px 30px;
     color: white;
     font-style: normal;
     font-weight: 500;
     font-size: 12px;
-    line-height: 15px;  
+    line-height: 15px;
     border-radius: 5px;
     width: 100%;
     text-align: center;
-    background: #6CCF00;
+    background: #6ccf00;
 }
 @media screen and (max-width: 1098px) {
     .secondBody {
-    width: 93%;
-    max-width: 600px;
-    background-color: white;
-    border-radius: 20px;
-    margin: 32px auto;
-    position: absolute;
-    top: 5%;
-    z-index: 10;
-    position: relative;
-    height: 80vh;
-    overflow: scroll;
+        width: 93%;
+        max-width: 600px;
+        background-color: white;
+        border-radius: 20px;
+        margin: 32px auto;
+        position: absolute;
+        top: 5%;
+        z-index: 10;
+        position: relative;
+        height: 80vh;
+        overflow: scroll;
     }
 }
 @media screen and (max-width: 1098px) {
-    .showReciept{
-padding: 0px;
-    border-radius: 50px;
-    box-shadow: 0px 0px 27px 4px rgba(204, 204, 204, 0.2);
-    position: relative;
-    background: white;
-    position: absolute;
-    top: -76px;
-    left: -58px;
-    z-index: 19999;
-    display: flex;
-    flex-direction: column;
-    width: 415px;
-    gap: 20px;
+    .showReciept {
+        padding: 0px;
+        border-radius: 50px;
+        box-shadow: 0px 0px 27px 4px rgba(204, 204, 204, 0.2);
+        position: relative;
+        background: white;
+        position: absolute;
+        top: -76px;
+        left: -58px;
+        z-index: 19999;
+        display: flex;
+        flex-direction: column;
+        width: 415px;
+        gap: 20px;
     }
 }

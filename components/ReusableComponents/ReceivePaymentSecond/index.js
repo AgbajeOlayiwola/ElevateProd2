@@ -1,11 +1,12 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { EmailShareButton } from 'react-share';
+import exportAsImage from '../../../utils/exportAsImage';
 import CloseButton from '../CloseButtonSvg';
+import ElevateLogo from '../Ellevate';
 import Overlay from '../Overlay';
 import LinkSvg from '../ReusableSvgComponents/LinkSvg';
 import styles from './styles.module.css';
-import { EmailShareButton } from 'react-share';
-import exportAsImage from '../../../utils/exportAsImage';
-import ElevateLogo from '../Ellevate';
 
 const ReceivePaymentSecond = ({
     title,
@@ -32,6 +33,8 @@ const ReceivePaymentSecond = ({
     const [addnew, setAddnew] = useState(false);
     const [newAmount, setNewAmount] = useState('');
     const Ref = useRef(null);
+    const { dynamicQrData } = useSelector((store) => store);
+
     const [timer, setTimer] = useState('00:30:00');
 
     const getTimeRemaining = (e) => {
@@ -143,7 +146,7 @@ const ReceivePaymentSecond = ({
                 }, 1500);
             })
             .catch((err) => {
-                 //console.log(err);
+                //console.log(err);
             });
     };
 
@@ -170,7 +173,7 @@ const ReceivePaymentSecond = ({
                 }, 1500);
             })
             .catch((err) => {
-                 //console.log(err);
+                //console.log(err);
             });
     };
     const [qrUrlData, setQrUrlData] = useState(
@@ -193,7 +196,7 @@ const ReceivePaymentSecond = ({
                 }, 1500);
             })
             .catch((err) => {
-                 //console.log(err);
+                //console.log(err);
             });
     };
     const formatter = new Intl.NumberFormat('en-US', {
@@ -224,15 +227,18 @@ const ReceivePaymentSecond = ({
                                 <div className={styles.secondCopyCode}>
                                     <div>
                                         <img
-                                            src={`data:image/png;base64,${data.data.data.dynamicQRBase64}`}
-                                            alt=""
+                                            src={`data:image/png;base64,${dynamicQrData?.data?.dynamicQRBase64}`}
+                                            alt="Qr"
                                         />
                                     </div>
                                 </div>
                                 <p
                                     className={styles.download}
                                     onClick={() =>
-                                        exportAsImage(exportRef.current, 'test')
+                                        exportAsImage(
+                                            exportRef.current,
+                                            'Dynamic QR'
+                                        )
                                     }
                                 >
                                     Download
@@ -242,17 +248,17 @@ const ReceivePaymentSecond = ({
                                 <p>Valid Till</p>
                                 <p>{timer}</p>
                             </div>
-                            <div className={styles.qrData}>
+                            {/* <div className={styles.qrData}>
                                 <div onClick={copyQr}>
                                     <p> {isCopied ? 'Copied!' : 'Copy'}</p>
                                 </div>
                                 <div className={styles.createdQr}>
-                                    <input type="text" value={qrUrlData} />
+                                    <input type="text" value={''} />
                                 </div>
                                 <div className={styles.share} onClick={share}>
                                     <p>Share</p>
                                 </div>
-                            </div>
+                            </div> */}
                         </>
                     ) : title === 'Payment Link Generated' ? (
                         <>
@@ -320,7 +326,7 @@ const ReceivePaymentSecond = ({
                                     : title === 'Payment Link Generated'
                                     ? formatter.format(amountPaylink)
                                     : formatter.format(
-                                          data.data.data.transactionAmount
+                                          dynamicQrData?.data?.transactionAmount
                                       )}
                             </p>
                         </div>
@@ -333,7 +339,8 @@ const ReceivePaymentSecond = ({
                                     ? type
                                     : title === 'Payment Link Generated'
                                     ? payLinkData?.status
-                                    : data.data.data.transactionDescription}
+                                    : dynamicQrData?.data
+                                          ?.transactionDescription}
                             </p>
                         </div>
                     </div>
@@ -345,7 +352,7 @@ const ReceivePaymentSecond = ({
                                 ? track
                                 : title === 'Payment Link Generated'
                                 ? null
-                                : data.data.data.ref}
+                                : dynamicQrData?.data?.ref}
                         </p>
                         <p className={styles.copy}>
                             <span>
@@ -355,7 +362,7 @@ const ReceivePaymentSecond = ({
                                             ? track
                                             : title === 'Payment Link Generated'
                                             ? 'jhfdjs'
-                                            : data.data.data.dynamicQRBase64
+                                            : null
                                     }
                                     alt=""
                                 />
@@ -508,8 +515,17 @@ const ReceivePaymentSecond = ({
                     //     </p>
                     // </>
                     null}
-
-                    <button onClick={action}>{buttonText}</button>
+                    {title === 'Ecobank QR Code' ? (
+                        <button
+                            onClick={() =>
+                                exportAsImage(exportRef.current, 'test')
+                            }
+                        >
+                            Download
+                        </button>
+                    ) : (
+                        <button onClick={action}>{buttonText}</button>
+                    )}
                     {title === 'USSD' ? (
                         <button onClick={ussdStatusClick}>
                             View USSD Status

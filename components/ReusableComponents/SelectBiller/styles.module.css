@@ -1,3 +1,6 @@
 .billerCategory p {
     font-size: 12px;
 }
+.billerCategory {
+    cursor: pointer;
+}

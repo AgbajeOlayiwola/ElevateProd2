@@ -7,15 +7,17 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CloseButton from '../../../components/ReusableComponents/CloseButtonSvg';
 import Loader from '../../../components/ReusableComponents/Loader';
-import PaymentSuccess from '../../../components/ReusableComponents/PaymentSuccess';
 import StorePopup from '../../../components/ReusableComponents/StorePopup';
 import {
     useAccountFullStatementMutation,
     useAccountMiniStatementMutation
 } from '../../../redux/api/authApi';
 import styles from './styles.module.css';
+const getSymbolFromCurrency = require('currency-symbol-map');
+const countryToCurrency = require('country-to-currency');
 
 const BankStatments = () => {
+    const affiliate = localStorage.getItem('affiliateCode');
     const dispatch = useDispatch();
     const printRef = useRef();
     const formatter = new Intl.NumberFormat('en-US', {
@@ -110,7 +112,19 @@ const BankStatments = () => {
             reset: accountFullStatementReset
         }
     ] = useAccountFullStatementMutation();
-
+    const showErrorSucToastMessage = () => {
+        toast.success('Your Request Has Been Submitted For Processing', {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+        // closeAction();
+    };
+    useEffect(() => {
+        if (accountFullStatementSuccess) {
+            setOverlay(false);
+            showErrorSucToastMessage();
+        }
+    }, [accountFullStatementSuccess]);
     const showErrorPassToastMessage = () => {
         toast.error(accountFullStatementErr?.data?.message, {
             position: toast.POSITION.TOP_RIGHT,
@@ -126,6 +140,38 @@ const BankStatments = () => {
     useEffect(() => {
         accountMiniStatement({ accountNumber: acctNum });
     }, []);
+    const [acctNummber, setAcctNumber] = useState('');
+    useEffect(() => {
+        setAcctNumber(
+            allAccountInfo
+                .filter((account) => account?.isPrimaryAccount === 'Y') // Filter by primary flag
+                .map((account) => account.accountNo)
+                .filter(Boolean)
+        );
+        setBalance(
+            allAccountInfo
+                .filter((account) => account?.isPrimaryAccount === 'Y') // Filter by primary flag
+                .map((account) => account?.availableBal)
+                .filter(Boolean)
+        );
+    }, []);
+    useEffect(() => {
+        if (accountMiniStatementData) {
+            const outflowValue = accountMiniStatementData.data
+                .filter((item) => item.crDr === 'D')
+                .reduce((total, item) => total + item.amount, 0);
+
+            const inflowValue = accountMiniStatementData.data
+                .filter((item) => item.crDr === 'C')
+                .reduce((total, item) => total + item.amount, 0);
+
+            setOutflow(outflowValue);
+            setInflow(inflowValue);
+        }
+    }, [accountMiniStatementData]);
+
+    console.log(inflow, outflow);
+    console.log(accountMiniStatementData);
     return (
         <div className={styles.statementCover}>
             <ToastContainer />
@@ -152,7 +198,6 @@ const BankStatments = () => {
                         }
                     }}
                 >
-                    <option value="">Select Account To Use</option>
                     {allAccountInfo
                         .filter((account) => account.accountNo)
                         .map((account) => {
@@ -177,22 +222,7 @@ const BankStatments = () => {
                     <p>Request Full Statement</p>
                 </div>
             </div>
-            {accountFullStatementSuccess ? (
-                <PaymentSuccess
-                    overlay={overlay}
-                    type="profile"
-                    statusbar={error}
-                    heading="Statement Generated Successfully"
-                    body="Statement generated has been sent to your email"
-                    action={() => {
-                        setOverlay(false);
-                        setEndDate('');
-                        setStartDate('');
-                        setSuccess(false);
-                    }}
-                    error={accountFullStatementErr?.data?.message}
-                />
-            ) : null}
+
             {date ? (
                 <StorePopup overlay={overlay}>
                     <div className={styles.generateCover}>
@@ -255,6 +285,9 @@ const BankStatments = () => {
                                     }}
                                 />
                             </div>
+                            <br />
+                            <br />
+                            <br />
                             {accountFullStatementLoad ? (
                                 <Loader />
                             ) : (
@@ -275,19 +308,58 @@ const BankStatments = () => {
                         </div>
                     </div>
                 </StorePopup>
+            ) : accountFullStatementSuccess ? (
+                <PaymentSuccess
+                    overlay={overlay}
+                    type="profile"
+                    statusbar={error}
+                    heading="Statement Generated Successfully"
+                    body="Statement generated has been sent to your email"
+                    action={() => {
+                        setOverlay(false);
+                        setEndDate('');
+                        setStartDate('');
+                        setSuccess(false);
+                    }}
+                    error={accountFullStatementErr?.data?.message}
+                />
             ) : null}
             <div className={styles.balanceStatement}>
                 <div>
                     <p>Balance</p>
-                    <h2>{balance}</h2>
+                    <h2>
+                        {getSymbolFromCurrency(
+                            countryToCurrency[`${affiliate?.substring(1)}`]
+                        )}
+                        {parseFloat(balance)
+                            .toFixed(2)
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                    </h2>
                 </div>
                 <div>
                     <p>Total Inflow</p>
-                    <h2>{inflow}</h2>
+                    <h2>
+                        {' '}
+                        {getSymbolFromCurrency(
+                            countryToCurrency[`${affiliate?.substring(1)}`]
+                        )}
+                        {parseFloat(inflow)
+                            .toFixed(2)
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                    </h2>
                 </div>
+
                 <div>
                     <p>Total Outflow</p>
-                    <h2>{outflow}</h2>
+                    <h2>
+                        {' '}
+                        {getSymbolFromCurrency(
+                            countryToCurrency[`${affiliate?.substring(1)}`]
+                        )}
+                        {parseFloat(outflow)
+                            .toFixed(2)
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                    </h2>
                 </div>
             </div>
             <div className={styles.table}>
@@ -394,43 +466,44 @@ const BankStatments = () => {
                 </table>
                 <div className={styles.tableMain} ref={printRef}>
                     <div className={styles.TableDetailHeader}>
-                        <p className={styles.date}>Date</p>
-                        <p className={styles.bank}>Account</p>
-                        <p className={styles.beneficiary}>Beneficiary </p>
+                        <p className={styles.date}>Transaction Ref</p>
+                        <p className={styles.bank}>Type</p>
+                        <p className={styles.beneficiary}>Narration </p>
                         <p className={styles.amount}>Amount</p>
-                        <p className={styles.type}>Type</p>
+                        {/* <p className={styles.type}>Naration</p> */}
                         {/* <div className={styles.more}></div> */}
                     </div>
                     <div className={styles.tableDivs}>
                         {accountMiniStatementLoad ? (
                             <Loader />
-                        ) : !tableDetails.length ? (
+                        ) : accountMiniStatementErr ? (
                             <p className={styles.error}>
                                 {accountMiniStatementErr?.data?.message}
                             </p>
                         ) : (
-                            tableDetails
-                                ?.sort((x, y) => {
-                                    let a = new Date(x.transactionDate),
-                                        b = new Date(y.transactionDate);
-                                    return b - a;
-                                })
-                                ?.filter((item) => {
-                                    if (searchValue === '') {
-                                        return item;
-                                    } else if (
-                                        filterCondition(item, searchType)
-                                    ) {
-                                        return item;
-                                    }
-                                })
-                                ?.slice(
-                                    pagesVisited,
-                                    pagesVisited + usersPerPage
-                                )
-                                ?.map((items, index) => {
-                                    const newDate =
-                                        items?.transactionTime?.split(' ');
+                            // ?.sort((x, y) => {
+                            //     let a = new Date(x.transactionDate),
+                            //         b = new Date(y.transactionDate);
+                            //     return b - a;
+                            // })
+                            // ?.filter((item) => {
+                            //     if (searchValue === '') {
+                            //         return item;
+                            //     } else if (
+                            //         filterCondition(item, searchType)
+                            //     ) {
+                            //         return item;
+                            //     }
+                            // })
+                            // ?.slice(
+                            //     pagesVisited,
+                            //     pagesVisited + usersPerPage
+                            // )
+                            accountMiniStatementData?.data?.map(
+                                (items, index) => {
+                                    console.log(items);
+                                    // const newDate =
+                                    //     items?.transactionTime?.split(' ');
                                     return (
                                         <>
                                             {width > 950 ? (
@@ -441,10 +514,18 @@ const BankStatments = () => {
                                                     key={index}
                                                 >
                                                     <p className={styles.date}>
-                                                        {newDate[0]}
+                                                        {items?.tranRefNo}
                                                     </p>
-                                                    <p className={styles.bank}>
-                                                        {items.accountNo}
+                                                    <p
+                                                        className={
+                                                            items?.crDr == 'D'
+                                                                ? styles.error
+                                                                : styles.bank
+                                                        }
+                                                    >
+                                                        {items?.crDr == 'D'
+                                                            ? 'Debit'
+                                                            : 'Credit'}
                                                     </p>
                                                     <div
                                                         className={styles.benes}
@@ -466,13 +547,13 @@ const BankStatments = () => {
                                                             items.amount
                                                         )}
                                                     </p>
-                                                    <p
+                                                    {/* <p
                                                         className={
                                                             styles.transfer
                                                         }
                                                     >
-                                                        {items.channel}
-                                                    </p>
+                                                        {items.narration}
+                                                    </p> */}
                                                     {/* <div className={styles.more}>
                                                 <MoreAction
                                                     type={items.channel}
@@ -505,7 +586,7 @@ const BankStatments = () => {
                                                                     styles.date
                                                                 }
                                                             >
-                                                                {newDate[0]}
+                                                                {items?.amount}
                                                             </p>
                                                         </div>
                                                         <div>
@@ -538,7 +619,8 @@ const BankStatments = () => {
                                             )}
                                         </>
                                     );
-                                })
+                                }
+                            )
                         )}
                     </div>
                 </div>

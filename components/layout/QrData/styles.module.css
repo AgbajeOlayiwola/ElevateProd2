@@ -12,7 +12,7 @@
     display: flex;
     justify-content: flex-end;
 }
-.qrDecal{
+.qrDecal {
     display: flex;
     justify-content: space-between;
     border-radius: 12px;
@@ -117,6 +117,11 @@
     height: 80vh;
     overflow: scroll;
     max-height: 804px;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.cver::-webkit-scrollbar {
+    display: none;
 }
 .cver h1 {
     font-family: 'Inter';

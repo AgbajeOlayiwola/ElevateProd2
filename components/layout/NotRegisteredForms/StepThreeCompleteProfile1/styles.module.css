@@ -322,7 +322,14 @@
 .cov {
     height: 100vh;
     width: 100%;
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }
+.cov::-webkit-scrollbar {
+    display: none;
+}
+
 .prog {
     display: flex;
     justify-content: space-between;

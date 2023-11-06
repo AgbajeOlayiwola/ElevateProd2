@@ -9,7 +9,6 @@ import DigitalAccountSvg from '../DigitalAccountSvg';
 import EInvoicingSvg from '../EInvoicing';
 import EasyPaymentSvg from '../EasyPaymentSvg';
 import EcobankQRSvg from '../EcobankQRSvg';
-import FxTrans from '../FxtransSvg';
 import InventorySvg from '../InventorySvg';
 import NairaSvg from '../NairaSvg';
 import Paylink2 from '../PaylinkSvg/paylink';
@@ -89,32 +88,32 @@ export const SidebarData = [
         // ]
     },
 
-    {
-        title: 'Transaction Reports',
-        path: '/Admin/Reports',
-        // modal: 'show',
-        icon: <PaymentSvg />,
-        iconActive: <PaymentActiveSvg />,
-        iconClosed: <RiIcons.RiArrowDownSLine />,
-        iconOpened: <RiIcons.RiArrowUpSLine />
-        // subNav: [
-        //     {
-        //         title: 'Collections',
-        //         path: '/Admin/Collections',
-        //         icon: <BiIcons.BiTransfer />
-        //     },
-        //     {
-        //         title: 'Payment',
-        //         path: '/Admin/Payment',
-        //         icon: <BiIcons.BiTransfer />
-        //     },
-        //     {
-        //         title: 'Reports',
-        //         path: '/Admin/Reports',
-        //         icon: <BiIcons.BiTransfer />
-        //     }
-        // ]
-    },
+    // {
+    //     title: 'Transaction Reports',
+    //     path: '/Admin/Reports',
+    //     // modal: 'show',
+    //     icon: <PaymentSvg />,
+    //     iconActive: <PaymentActiveSvg />,
+    //     iconClosed: <RiIcons.RiArrowDownSLine />,
+    //     iconOpened: <RiIcons.RiArrowUpSLine />
+    // subNav: [
+    //     {
+    //         title: 'Collections',
+    //         path: '/Admin/Collections',
+    //         icon: <BiIcons.BiTransfer />
+    //     },
+    //     {
+    //         title: 'Payment',
+    //         path: '/Admin/Payment',
+    //         icon: <BiIcons.BiTransfer />
+    //     },
+    //     {
+    //         title: 'Reports',
+    //         path: '/Admin/Reports',
+    //         icon: <BiIcons.BiTransfer />
+    //     }
+    // ]
+    // },
     {
         title: 'Bank Statement',
         path: '/Admin/BankStatement',
@@ -282,8 +281,8 @@ export const RecievePayment = [
         icon: <StarSharp />
     },
     {
-        title: 'Virtual Account',
-        path: 'Virtual Account',
+        title: 'Pay via account',
+        path: 'Pay via account',
         icon: <StarSharp />
     }
     // {
@@ -345,10 +344,10 @@ export const PaymentData = {
             summary: 'Send money to multiple nigerian banks at once'
         },
 
-        {
-            icon: <FxTrans />,
-            text: 'FX Transfer'
-        },
+        // {
+        //     icon: <FxTrans />,
+        //     text: 'FX Transfer'
+        // },
         {
             icon: <BillTransfer />,
             text: 'Airtime or Data',
@@ -383,7 +382,7 @@ export const PaymentData = {
         },
         {
             icon: <Paylink2 />,
-            text: 'Virtual Account',
+            text: 'Pay via account',
             summary: 'Generate a virtual account.'
         }
     ]

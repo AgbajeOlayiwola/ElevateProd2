@@ -1,31 +1,37 @@
-.modalCover{
+.modalCover {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
-.date{
+.date {
     display: flex;
     justify-content: space-between;
-    gap:20px;
+    gap: 20px;
 }
-.leftCancel{    display: flex;
+.leftCancel {
+    display: flex;
     justify-content: space-between;
     flex-direction: row-reverse;
     align-items: center;
-    }
-    .leftCancel svg{
-        cursor: pointer;
-    }
-.accounts{
+}
+.leftCancel svg {
+    cursor: pointer;
+}
+.accounts {
     border-radius: 25px;
     background: white;
     overflow: scroll;
     padding: 10px 20px;
     width: 30%;
     height: 60%;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }
-.add{
+.accounts::-webkit-scrollbar {
+    display: none;
+}
+.add {
     display: flex;
     justify-content: center;
 }
@@ -35,7 +41,7 @@
 .ecoButton{
 
 } */
-.accounts div{
+.accounts div {
     margin-top: 50px;
     padding: 20px 25px;
     background-color: #6bcf0050;

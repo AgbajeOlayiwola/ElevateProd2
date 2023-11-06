@@ -39,6 +39,7 @@ import { postInterBankEnquiry } from '../../../redux/actions/interbankEnquieryAc
 import { postBeneficiariesData } from '../../../redux/actions/postBeneficiariesAction';
 import { loadunfreezeTransactions } from '../../../redux/actions/unfreezeTransactionAction';
 import {
+    useGetProfileMutation,
     useGetRelationshipManagerMutation,
     useVerifyTransactionPinMutation
 } from '../../../redux/api/authApi';
@@ -50,7 +51,7 @@ const Profile = () => {
     const [loading, setLoading] = useState(false);
     const [outcome, setOutcome] = useState(false);
     const [freeze, setFreeze] = useState();
-    const [text, setText] = useState('');
+    const [text, setText] = useState('View Profile');
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');
     const [statusbar, setStatusbar] = useState('');
@@ -138,6 +139,17 @@ const Profile = () => {
 
         return bankList.map((bank) => bank);
     };
+    const [
+        getProfile,
+        {
+            data: getProfileData,
+            isLoading: getProfileLoad,
+            isSuccess: getProfileSuccess,
+            isError: getProfileFalse,
+            error: getProfileErr,
+            reset: getProfileReset
+        }
+    ] = useGetProfileMutation();
 
     const profileData = [
         {
@@ -184,11 +196,11 @@ const Profile = () => {
         //     icon: <ManageSignSvg />,
         //     color: '#7A7978'
         // },
-        {
-            text: 'All Disputes',
-            icon: <ShareSvg color="#102572" />,
-            color: '#7A7978'
-        },
+        // {
+        //     text: 'All Disputes',
+        //     icon: <ShareSvg color="#102572" />,
+        //     color: '#7A7978'
+        // },
         {
             text: 'Contact us',
             icon: <ContactSvg />,
@@ -297,8 +309,10 @@ const Profile = () => {
         formState: { errors }
     } = useForm();
     const { profile } = useSelector((store) => store);
-
-    console.log(profile);
+    useEffect(() => {
+        getProfile();
+    }, []);
+    console.log(getProfileData);
     const [openDelete, setOpenDelete] = useState(false);
     const renderForm = () => {
         switch (text) {
@@ -308,9 +322,11 @@ const Profile = () => {
                         <h2 className={styles.title}>View Profile</h2>
                         <div className={styles.profileBodyHead}>
                             <div className={styles.profileBodyHeadImg}>
-                                {!profileImg.image ? null : (
+                                {getProfileLoad ? (
+                                    <Loader />
+                                ) : (
                                     <Image
-                                        src={`data:image/png;base64,${profileImg.image}`}
+                                        src={`data:image/png;base64,${getProfileData?.user?.faceMatchSelfieBase64}`}
                                         width="100%"
                                         height="100%"
                                     />
@@ -1745,9 +1761,11 @@ const Profile = () => {
                     <>
                         <div className={styles.profileHeaderHead}>
                             <div className={styles.profileHeaderImg}>
-                                {!profileImg.image ? null : (
+                                {getProfileLoad ? (
+                                    <Loader />
+                                ) : (
                                     <Image
-                                        src={`data:image/png;base64,${profileImg.image}`}
+                                        src={`data:image/png;base64, ${getProfileData?.user?.faceMatchSelfieBase64}`}
                                         width="100%"
                                         height="100%"
                                     />

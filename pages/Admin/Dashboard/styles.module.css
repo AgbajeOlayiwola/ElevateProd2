@@ -13,6 +13,9 @@
     background: #0000001a;
     z-index: 10;
 }
+.noTrans {
+    text-align: center;
+}
 .inner {
     width: 50%;
     height: 50%;
@@ -72,6 +75,11 @@
     overflow: scroll;
     display: flex;
     gap: 30px;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+}
+.accountsALl::-webkit-scrollbar {
+    display: none;
 }
 .accountDetails {
     margin: 0px;
@@ -100,7 +108,7 @@
 }
 .assctDrop {
     display: flex;
-    gap: 10px;
+    gap: 5px;
     align-items: center;
 }
 
@@ -112,6 +120,12 @@
 
 .mdCopy {
     cursor: pointer;
+    font-size: 20px;
+}
+.symb {
+    display: flex;
+    gap: 5px;
+    align-items: baseline;
 }
 .filed {
     font-family: 'Inter';
@@ -191,15 +205,21 @@
 }
 .accountsALl {
     display: flex;
-    overflow: scroll;
     gap: 30px;
     /* justify-content: space-between; */
     align-items: center;
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
 }
+.accountsALl::-webkit-scrollbar {
+    display: none;
+}
+
 .statementCover {
     height: fit-content;
-    background: #fefefe;
-    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+    /* background: #fefefe;
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08); */
     border-radius: 15px;
     padding: 20px 15px;
 }
@@ -581,7 +601,7 @@
     background: #ffffff;
     box-shadow: 4px 14px 34px -11px #ededed;
     border-radius: 16px;
-    padding: 0rem 1.25rem 1.5rem 1.25rem;
+    padding: 3rem 1.25rem 1.5rem 1.25rem;
     overflow: scroll;
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
@@ -779,7 +799,7 @@
     margin-bottom: 20px;
     border-radius: 16px;
     padding: 24px 36px;
-    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+    /* box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08); */
 }
 .coppied {
     position: absolute;
@@ -848,6 +868,14 @@
     justify-content: center;
     align-items: center;
     margin: 0px auto;
+}
+.transactionSvg {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
 }
 
 .transactionBody .transactionSvg {

@@ -69,6 +69,7 @@
     width: 58%;
     max-width: 677px;
     justify-content: flex-end;
+    gap: 20px;
 }
 .srch {
     background-color: rgba(201, 201, 201, 0.13);

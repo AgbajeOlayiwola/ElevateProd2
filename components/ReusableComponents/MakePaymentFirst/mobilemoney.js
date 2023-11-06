@@ -183,6 +183,7 @@ const MobileMoney = ({ firstTitle, closeAction }) => {
                                         transactionAmount: values?.ammount,
                                         accountNumber: values?.ecoSourceAccount,
                                         paymentDescription: values?.naration,
+                                        description: 'jhgfd',
                                         billerCode:
                                             billerDetailsData?.data
                                                 ?.billerDetail?.billerCode,

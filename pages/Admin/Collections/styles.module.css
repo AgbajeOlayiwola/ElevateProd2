@@ -7,12 +7,12 @@
     align-items: center;
     justify-content: space-between;
 }
-.statementCover{
+.statementCover {
     height: fit-content;
-    background: #FEFEFE;
-box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
-border-radius: 15px;
-padding: 20px 15px;
+    /* background: #fefefe;
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08); */
+    border-radius: 15px;
+    padding: 20px 15px;
 }
 .greencard h3 {
     font-family: 'Inter', sans-serif;
@@ -23,7 +23,7 @@ padding: 20px 15px;
     color: #102572;
     margin: 0px;
 }
-.allTypes{
+.allTypes {
     display: flex;
     justify-content: space-between;
     gap: 30px;
@@ -69,17 +69,25 @@ padding: 20px 15px;
 
 .cov {
     display: flex;
+    height: 338px;
     justify-content: space-between;
     width: 100%;
     margin-top: 20px;
-    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+    overflow: scroll;
+    border-radius: 20px;
+    /* box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08); */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+}
+.cov::-webkit-scrollbar {
+    display: none;
 }
 
 .whiteboard {
     height: 310px;
     overflow: scroll;
     -ms-overflow-style: none;
-        scrollbar-width: none; 
+    scrollbar-width: none;
     padding: 39px 32px 39px 48px;
     background-color: #69940d;
     width: 100%;
@@ -132,11 +140,10 @@ padding: 20px 15px;
     margin-right: 8px;
 }
 
-
 @media screen and (max-width: 1366px) {
-    .allTypes{
+    .allTypes {
         display: block;
         justify-content: space-between;
         gap: 30px;
     }
-    }
+}
