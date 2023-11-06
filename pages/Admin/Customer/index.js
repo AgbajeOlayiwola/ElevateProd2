@@ -21,7 +21,7 @@ const Customer = () => {
     const profileData = [
         {
             text: 'Manage Cards',
-            icon: <CardsSvg />,
+            icon: <CardsSvg color="#102572" />,
             color: '#7A7978'
         },
         {

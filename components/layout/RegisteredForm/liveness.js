@@ -61,7 +61,6 @@ const Liveness = ({ formData, type, action, back }) => {
     ] = useGetMoreAccountNumberDetailsMutation();
     const { existingUserDetails } = useSelector((store) => store);
     const { faceMatchDetails } = useSelector((store) => store);
-
     console.log(faceMatchDetails);
     useEffect(() => {
         getMoreAccountNumberDetails({

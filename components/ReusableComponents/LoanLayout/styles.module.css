@@ -1,0 +1,34 @@
+.loanLayout {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 524px;
+}
+
+.loanLayoutHead {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.loanLayoutHead svg {
+    cursor: pointer;
+}
+
+.loanLayoutHead h2 {
+    margin: 0px;
+    color: #005b82;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.loanLayoutBody {
+    width: 100%;
+    padding: 32px 24px;
+    box-sizing: border-box;
+    border-radius: 12px;
+    background: #fff;
+}

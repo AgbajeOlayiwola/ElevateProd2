@@ -1,0 +1,154 @@
+.loansHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 8px;
+    background: #fff;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.loansHeader > div:first-child {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.loansHeader > div:first-child h2 {
+    margin: 0px;
+    color: #2b4551;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.loansHeader > div:first-child p {
+    color: #42453a;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin: 0px;
+}
+
+.loansHeader > button {
+    width: 168px;
+    border-radius: 8px;
+    border: 1px solid #102572;
+    background: rgba(16, 37, 114, 0.1);
+    padding: 18px 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    color: #235b7f;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.loansHeaderButton {
+    display: flex;
+    gap: 20px;
+    width: 25%;
+}
+
+.loansHeaderButton button {
+    padding: 18px 0px;
+    box-sizing: border-box;
+    margin: 0px;
+}
+
+.loansHeaderButton button:first-child {
+    width: 131px;
+    border-radius: 8px;
+    border: 1px solid #102572;
+    background: rgba(16, 37, 114, 0.1);
+    color: #235b7f;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.loansHeaderButton button:last-child {
+    width: 144px;
+}
+
+.loanEligible {
+    width: 100%;
+    padding: 16px 24px 40px 24px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.loanEligibleHead {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loanEligibleHead div {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.loanEligibleHead div svg {
+    cursor: pointer;
+}
+
+.loanEligible > h2 {
+    color: var(--color-black-500, #000b0f);
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0px;
+}
+
+.loanEligible > p {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    color: #2f2f2f;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    gap: 8px;
+}
+
+.loanEligible > p input {
+    width: fit-content;
+}
+
+.loanEligibleButtons {
+    display: flex;
+    gap: 20px;
+}
+
+.loanEligibleButtons button {
+    margin: 0px;
+}
+
+.loanEligibleButtons button:first-child {
+    border-radius: 8px;
+    border: 1px solid #102572;
+    background: rgba(16, 37, 114, 0.1);
+    color: #235b7f;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}

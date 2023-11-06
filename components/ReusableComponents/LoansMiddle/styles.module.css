@@ -1,0 +1,173 @@
+.loansMiddle {
+    display: flex;
+    gap: 28px;
+}
+
+.loansBalance {
+    width: 40%;
+    border-radius: 8px;
+    background: #69940d;
+    display: flex;
+    flex-direction: column;
+    padding: 40px 24px;
+    box-sizing: border-box;
+}
+
+.loansBalance > p {
+    text-align: right;
+    margin: 0px;
+    color: #efffcc;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.loansBalance > p span {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.loansBalanceBody {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.loansBalanceBody .circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loansBalanceBody .text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.loansBalanceBody .text h2 {
+    margin: 0px;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.loansBalanceBody .text h2 span {
+    color: #efffcc;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.loansBalanceBody .text p {
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    margin: 0px;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.loansDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-radius: 8px;
+    background: #fdfdfd;
+    box-shadow: 0px 0px 30px 0px rgba(224, 224, 224, 0.71);
+    padding: 40px 24px;
+    justify-content: center;
+    align-items: flex-start;
+    box-sizing: border-box;
+    width: 58%;
+}
+
+.loansDetailsHead {
+    width: 100%;
+}
+
+.loansDetails .click {
+    margin: 0px;
+    color: var(--primary-deep-blue, #102572);
+    text-align: right;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-decoration-line: underline;
+    cursor: pointer;
+}
+
+.loansDetailsHead div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.loansDetailsHead div h2 {
+    margin: 0px;
+    color: #102572;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.loansDetailsHead div p {
+    margin: 0px;
+    color: #42453a;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.loansDetailsBody {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 20px;
+}
+
+.loansDetailsBody div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.loansDetailsBody div p {
+    color: #455a64;
+    font-family: 'Inter', sans-serif;
+    margin: 0px;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.loansDetailsBody div h2 {
+    color: #5f8214;
+    font-family: 'Inter', sans-serif;
+    margin: 0px;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}

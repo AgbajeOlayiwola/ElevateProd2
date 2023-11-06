@@ -3,17 +3,14 @@
     max-width: 600px;
     background-color: white;
     border-radius: 50px;
-    margin: 32px auto;
     position: absolute;
-    top: 3%;
-    left: 33%;
     z-index: 100;
 }
 
 .innerDiv {
     margin: 0px;
     padding: 0px;
-    height: 80vh;
+    /* height: 80vh; */
     overflow: scroll;
     width: 100%;
     -ms-overflow-style: none; /* IE and Edge */
@@ -22,6 +19,28 @@
 .innerDiv::-webkit-scrollbar {
     display: none;
 }
+
+.storefrontPopups {
+    width: 30%;
+    max-width: 428px;
+    background-color: white;
+    border-radius: 16px;
+    position: absolute;
+    z-index: 100;
+}
+
+.innerDivs {
+    margin: 0px;
+    padding: 0px;
+    /* height: 80vh; */
+    /* overflow: scroll; */
+    width: 100%;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+/* .innerDivs::-webkit-scrollbar {
+    display: none;
+} */
 
 @media screen and (max-width: 500px) {
     .storefrontPopup {
