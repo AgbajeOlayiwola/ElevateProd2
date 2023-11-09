@@ -8,7 +8,6 @@ import {
     useVerifyEmailMutation
 } from '../../../redux/api/authApi';
 import { setProfile } from '../../../redux/slices/profile';
-import { setToken } from '../../../redux/slices/tokenSlice';
 import styles from './styles.module.css';
 const Loading = () => {
     const router = useRouter();
@@ -71,7 +70,6 @@ const Loading = () => {
     const [loading, setLoading] = useState(false);
     const handleProceed = async (val) => {
         await dispatch(setProfile(val?.data));
-        dispatch(setToken(val?.data?.token));
         router.push('/Onboarding/ProfileSetup');
     };
 
