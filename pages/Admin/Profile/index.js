@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Iframe from 'react-iframe';
 import Lottie from 'react-lottie';
@@ -34,15 +34,16 @@ import StorePopup from '../../../components/ReusableComponents/StorePopup';
 import ProfileLayout from '../../../components/layout/ProfileLayout';
 import { deleteAirtimeBeneficiariesData } from '../../../redux/actions/deleteAirtimeBeneficiariesAction';
 import { deleteBeneficiariesData } from '../../../redux/actions/deleteBeneficiariesAction';
-import { loadfreezeTransactions } from '../../../redux/actions/freezeTransactionAction';
 import { postInterBankEnquiry } from '../../../redux/actions/interbankEnquieryAction';
 import { postBeneficiariesData } from '../../../redux/actions/postBeneficiariesAction';
-import { loadunfreezeTransactions } from '../../../redux/actions/unfreezeTransactionAction';
 import {
+    useFreezeAcctMutation,
     useGetProfileMutation,
     useGetRelationshipManagerMutation,
+    useUnfreezeAcctMutation,
     useVerifyTransactionPinMutation
 } from '../../../redux/api/authApi';
+import { setProfile } from '../../../redux/slices/profile';
 import styles from './styles.module.css';
 const Profile = () => {
     const router = useRouter();
@@ -84,7 +85,7 @@ const Profile = () => {
     const [countryCodes, setCountryCodes] = useState([]);
     const [flags, setFlags] = useState([]);
     const dispatch = useDispatch();
-
+    const iframeRef = useRef();
     const socialOptions = {
         loop: true,
         autoplay: true,
@@ -278,6 +279,52 @@ const Profile = () => {
             reset: getRelationshipManagerReset
         }
     ] = useGetRelationshipManagerMutation();
+    const [
+        freezeAcct,
+        {
+            data: freezeAcctData,
+            isLoading: freezeAcctLoad,
+            isSuccess: freezeAcctSuccess,
+            isError: freezeAcctFalse,
+            error: freezeAcctErr,
+            reset: freezeAcctReset
+        }
+    ] = useFreezeAcctMutation();
+    const [
+        unfreezeAcct,
+        {
+            data: unfreezeAcctData,
+            isLoading: unfreezeAcctLoad,
+            isSuccess: unfreezeAcctSuccess,
+            isError: unfreezeAcctFalse,
+            error: unfreezeAcctrErr,
+            reset: unfreezeAcctReset
+        }
+    ] = useUnfreezeAcctMutation();
+
+    useEffect(() => {
+        if (freezeAcctSuccess) {
+            getProfile(null);
+        }
+    }, [freezeAcctSuccess]);
+    useEffect(() => {
+        if (getProfileSuccess) {
+            setFreeze(profile?.user?.freezeTransactions);
+            dispatch(setProfile(getProfileData));
+        }
+    }, [getProfileSuccess]);
+
+    useEffect(() => {
+        if (unfreezeAcctSuccess) {
+            getProfile(null);
+        }
+    }, [unfreezeAcctSuccess]);
+    useEffect(() => {
+        if (getProfileSuccess) {
+            setFreeze(profile?.user?.freezeTransactions);
+            dispatch(setProfile(getProfileData?.data));
+        }
+    }, [getProfileSuccess]);
 
     useEffect(() => {
         getRelationshipManager({ accountNo: allAccountInfo[0]?.accountNo });
@@ -322,15 +369,11 @@ const Profile = () => {
                         <h2 className={styles.title}>View Profile</h2>
                         <div className={styles.profileBodyHead}>
                             <div className={styles.profileBodyHeadImg}>
-                                {getProfileLoad ? (
-                                    <Loader />
-                                ) : (
-                                    <Image
-                                        src={`data:image/png;base64,${getProfileData?.user?.faceMatchSelfieBase64}`}
-                                        width="100%"
-                                        height="100%"
-                                    />
-                                )}
+                                <Image
+                                    src={`data:image/png;base64,${profile?.user?.faceMatchSelfieBase64}`}
+                                    width="100%"
+                                    height="100%"
+                                />
                             </div>
                             <div className={styles.groupForm}>
                                 <div className={styles.formGroup}>
@@ -1761,15 +1804,11 @@ const Profile = () => {
                     <>
                         <div className={styles.profileHeaderHead}>
                             <div className={styles.profileHeaderImg}>
-                                {getProfileLoad ? (
-                                    <Loader />
-                                ) : (
-                                    <Image
-                                        src={`data:image/png;base64, ${getProfileData?.user?.faceMatchSelfieBase64}`}
-                                        width="100%"
-                                        height="100%"
-                                    />
-                                )}
+                                <Image
+                                    src={`data:image/png;base64, ${profile?.user?.faceMatchSelfieBase64}`}
+                                    width="100%"
+                                    height="100%"
+                                />
                             </div>
                             <div className={styles.profileBodyHeaderCont}>
                                 {/* <h2>Marvelous Solutions</h2> */}
@@ -1782,31 +1821,42 @@ const Profile = () => {
                             <div className={styles.freezeAccount}>
                                 <p>Freeze Account</p>
                                 <div className={styles.saveBene}>
-                                    <label
-                                        className={
-                                            freeze
-                                                ? styles.beneChecked
-                                                : styles.beneCheck
-                                        }
-                                    >
-                                        <input
-                                            type="checkbox"
-                                            onChange={(e) => {
-                                                if (!freeze) {
-                                                    dispatch(
-                                                        loadfreezeTransactions()
-                                                    );
-                                                } else if (freeze) {
-                                                    dispatch(
-                                                        loadunfreezeTransactions()
-                                                    );
-                                                }
-                                            }}
-                                        />
-                                        <span>
-                                            <i></i>
-                                        </span>
-                                    </label>
+                                    {getProfileLoad ||
+                                    freezeAcctLoad ||
+                                    unfreezeAcctLoad ? (
+                                        <Loader />
+                                    ) : (
+                                        <label
+                                            className={
+                                                profile?.user
+                                                    ?.freezeTransactions === 'Y'
+                                                    ? styles.beneChecked
+                                                    : styles.beneCheck
+                                            }
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                onChange={(e) => {
+                                                    if (
+                                                        profile?.user
+                                                            ?.freezeTransactions ===
+                                                        'N'
+                                                    ) {
+                                                        freezeAcct();
+                                                    } else if (
+                                                        profile?.user
+                                                            ?.freezeTransactions ===
+                                                        'Y'
+                                                    ) {
+                                                        unfreezeAcct();
+                                                    }
+                                                }}
+                                            />
+                                            <span>
+                                                <i></i>
+                                            </span>
+                                        </label>
+                                    )}
                                 </div>
                             </div>
                             <div className={styles.accountNumber}>

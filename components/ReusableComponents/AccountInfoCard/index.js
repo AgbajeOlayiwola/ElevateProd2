@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './styles.module.css';
 
 import { AiFillCheckCircle } from 'react-icons/ai';
@@ -45,6 +45,7 @@ const AccountsInfoCard = ({ userProfileData }) => {
             return document.execCommand('copy', true, text);
         }
     }
+
     const [newAccuntId, setNewAccountId] = useState();
     const { allAccountInfo } = useSelector((store) => store);
     const { profile } = useSelector((store) => store);

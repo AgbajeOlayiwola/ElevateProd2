@@ -1,15 +1,41 @@
-import React, { useState } from 'react';
-import styles from './styles.module.css';
-import LoansSvg from '../../../components/ReusableComponents/LoansSvg';
-import { formatter } from '../../../utils/formatter/formatter';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import EmptyState from '../../../components/ReusableComponents/EmptyState';
 import LoansHeader from '../../../components/ReusableComponents/LoansHeader';
 import LoansMiddle from '../../../components/ReusableComponents/LoansMiddle';
 import LoansTable from '../../../components/ReusableComponents/LoansTable';
+import { useLoanBalanceMutation } from '../../../redux/api/authApi';
+import styles from './styles.module.css';
 
 const Loans = () => {
     const [status, setStatus] = useState('default');
     const [state, setState] = useState(false);
+    const [acctNummber, setAcctNumber] = useState('');
+    const { allAccountInfo } = useSelector((store) => store);
+    const [
+        loanBalance,
+        {
+            data: loanBalanceData,
+            isLoading: loanBalanceLoad,
+            isSuccess: loanBalanceSuccess,
+            isError: loanBalanceFalse,
+            error: loanBalanceErr,
+            reset: loanBalanceReset
+        }
+    ] = useLoanBalanceMutation();
+    useEffect(() => {
+        setAcctNumber(
+            allAccountInfo
+                .filter((account) => account?.isPrimaryAccount === 'Y') // Filter by primary flag
+                .map((account) => account.accountNo)
+                .filter(Boolean)
+        );
+        loanBalance({
+            account: acctNummber[0],
+            prod_token: 'ECO-ZE9EGP'
+        });
+    }, []);
+
     return (
         <div className={styles.loansContainer}>
             <h2>Loans</h2>

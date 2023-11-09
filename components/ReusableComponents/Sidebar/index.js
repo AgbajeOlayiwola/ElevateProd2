@@ -40,8 +40,6 @@ const Sidebar = ({ showSubnav }) => {
         await dispatch(clearAllAccountInfo());
         await dispatch(clearDynamicQrData());
         await dispatch(clearanalyticsData());
-        await dispatch(clearResetPassword());
-        await dispatch(clearPinned());
         // Redirect the user to the login page (you may use React Router for this)
         router.push('/Auth/Login');
     };

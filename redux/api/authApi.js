@@ -714,11 +714,71 @@ export const authApi = createApi({
                     body
                 };
             }
+        }),
+        loanScoring: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'loan-scoring',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        loanRepaymnt: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'loan-repayment',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        loanBooking: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'loan-booking',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        loanBalance: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'loan-balance',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        freezeAcct: builder.mutation({
+            query: () => {
+                return {
+                    url: 'user-freeze-transactions',
+                    method: 'post',
+                    body: {}
+                };
+            }
+        }),
+        unfreezeAcct: builder.mutation({
+            query: () => {
+                return {
+                    url: 'users-unfreeze-transactions',
+                    method: 'post',
+                    body: {}
+                };
+            }
         })
     })
 });
 
 export const {
+    useFreezeAcctMutation,
+    useUnfreezeAcctMutation,
+    useLoanScoringMutation,
+    useLoanRepaymntMutation,
+    useLoanBalanceMutation,
+    useLoanBookingMutation,
     usePaymentFetchtransactionfeeMutation,
     useTransactionsSummaryMutation,
     useTransactionHistoryMutation,

@@ -287,16 +287,23 @@ const Dashboard = () => {
             position: toast.POSITION.TOP_RIGHT
         });
     };
-
+    useEffect(() => {
+        getProfile(null);
+    }, []);
+    useEffect(() => {
+        if (getProfileSuccess) {
+            dispatch(setProfile(getProfileData));
+        }
+    }, [getProfileSuccess]);
     useEffect(() => {
         if (createTransactionPinSuccess) {
             setPinCondition('Y');
-            getProfile();
+            getProfile(null);
         }
     }, [createTransactionPinSuccess]);
     useEffect(() => {
         if (getProfileSuccess) {
-            dispatch(setProfile(getProfileData?.data));
+            dispatch(setProfile(getProfileData));
             showToastTransactionPinSuccessMessage();
         }
     }, [getProfileSuccess]);
