@@ -2,12 +2,13 @@ import 'chart.js/auto';
 import React, { useState } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 
-const DoughNut = ({ edit }) => {
+const DoughNut = ({ data1, data2, data3, data4 }) => {
+    console.log(data1, data2, data3, data4);
     const [chartData, setChartData] = useState({
         datasets: [
             {
                 // label: ['red', 'amber', 'green'],
-                data: [15.3, 11.5, 13.1, 13],
+                data: [data1, data2, data3, data4],
                 backgroundColor: ['#3A5207', '#C4D344', '#6CCF00', '#69940D'],
                 weight: '16',
                 borderWidth: '1',

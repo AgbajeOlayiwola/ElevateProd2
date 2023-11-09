@@ -232,6 +232,7 @@ const PaymentTypes = () => {
                                 overlay={overlay}
                                 backAction={() => {
                                     setCount(count - 1);
+                                    dispatch(clearTransfer());
                                 }}
                             />
                         );
@@ -327,6 +328,7 @@ const PaymentTypes = () => {
                                 }
                                 backAction={() => {
                                     setCount(count - 1);
+                                    dispatch(clearTransfer());
                                 }}
                             />
                         );

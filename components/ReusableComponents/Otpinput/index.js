@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import styles from './styles.module.css';
 
-const OtpInput = ({ onOtpChange, otpfields }) => {
+const OtpInput = ({ onOtpChange, otpfields, pin }) => {
     const otpLength = otpfields;
     const [otpValues, setOtpValues] = useState(Array(otpLength).fill(''));
     const otpInputs = useRef([]);
@@ -39,7 +39,22 @@ const OtpInput = ({ onOtpChange, otpfields }) => {
         }
     };
 
-    return (
+    return pin ? (
+        <div className={styles.pinInputs}>
+            {otpValues.map((value, index) => (
+                <input
+                    key={index}
+                    type="password"
+                    className={styles.otpinput}
+                    maxLength={1}
+                    value={value}
+                    onInput={(e) => handleInputChange(index, e.target.value)}
+                    onKeyDown={(e) => handleInputKeyPress(e, index)}
+                    ref={(input) => input && (otpInputs.current[index] = input)}
+                />
+            ))}
+        </div>
+    ) : (
         <div className={styles.divInputs}>
             {otpValues.map((value, index) => (
                 <input

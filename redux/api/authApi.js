@@ -614,11 +614,115 @@ export const authApi = createApi({
                     body
                 };
             }
+        }),
+        disputeHistory: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'dispute-history',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+
+        transactionHistory: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'transactions-history',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        createUserBeneficiary: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'create-user-beneficiary',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        deleteUserBeneficiary: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'delete-user-beneficiary',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        deleteUserBeneficiary: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'delete-user-beneficiary',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        getUserBeneficiary: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'get-user-beneficiary',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        logisticsGigStations: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'logistics-gig-stations',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        logisticsGigCaptureShipment: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'logistics-gig-capture-shipment',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        logisticsGigShipmentPrice: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'logistics-gig-shipment-price',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        transactionsSummary: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'transactions-summary',
+                    method: 'post',
+                    body: {}
+                };
+            }
+        }),
+        paymentFetchtransactionfee: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'payment-fetchtransactionfee',
+                    method: 'post',
+                    body
+                };
+            }
         })
     })
 });
 
 export const {
+    usePaymentFetchtransactionfeeMutation,
+    useTransactionsSummaryMutation,
+    useTransactionHistoryMutation,
+    useDisputeHistoryMutation,
     useVirtualAccountStatusMutation,
     useOrdrVirtualAccountMutation,
     useEnrollQrMutation,

@@ -1,12 +1,15 @@
 import { Formik } from 'formik';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Lottie from 'react-lottie';
 import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import * as yup from 'yup';
 import { loadbank } from '../../../redux/actions/bankAction';
 import {
     useAccountInquiryMutation,
+    usePaymentFetchtransactionfeeMutation,
     usePaymentbanklistMutation
 } from '../../../redux/api/authApi';
 import { setTransfer } from '../../../redux/slices/transferSlice';
@@ -44,7 +47,9 @@ const SingleTransfer = ({
     const [accountName, setAccountName] = useState(
         payload.accountName !== '' ? payload.accountName : ''
     );
+    const formRef = useRef();
     const [currency, setCurrency] = useState();
+    const [transfers, setTransfers] = useState([]);
     const [isLoadinggg, setIsLoadinggg] = useState(false);
     const [accountNumber, setAccountNumber] = useState(
         payload.accountNumber !== ''
@@ -194,6 +199,8 @@ const SingleTransfer = ({
 
     let beneficiaryName;
     const { allAccountInfo } = useSelector((store) => store);
+    const { profile } = useSelector((store) => store);
+    console.log(profile);
     // paymentbanklist;
     const [
         paymentbanklist,
@@ -217,6 +224,32 @@ const SingleTransfer = ({
             reset: accountInquiryReset
         }
     ] = useAccountInquiryMutation();
+
+    const [
+        paymentFetchtransactionfee,
+        {
+            data: paymentFetchtransactionfeeData,
+            isLoading: paymentFetchtransactionfeeLoad,
+            isSuccess: paymentFetchtransactionfeeSuccess,
+            isError: paymentFetchtransactionfeeFalse,
+            error: paymentFetchtransactionfeeErr,
+            reset: paymentFetchtransactionfeeReset
+        }
+    ] = usePaymentFetchtransactionfeeMutation();
+    const showBulkErrorToastMessage = () => {
+        toast.error('Error Fetching Transaction Fee', {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+        // closeAction();
+    };
+    const { transfer } = useSelector((store) => store);
+    useEffect(() => {
+        if (paymentFetchtransactionfeeErr) {
+            showBulkErrorToastMessage();
+        }
+    }, [paymentFetchtransactionfeeErr]);
+
     useEffect(() => {
         paymentbanklist();
     }, []);
@@ -225,7 +258,28 @@ const SingleTransfer = ({
             console.log(paymentbanklistData);
         }
     }, [paymentbanklistSuccess]);
-    console.log(accountNumber);
+
+    useEffect(() => {
+        if (paymentFetchtransactionfeeSuccess) {
+            const data = {
+                isEcobankToEcobankTransaction: false,
+                currency: formRef?.current?.values?.ecoCurrency,
+                destinationBank: formRef?.current?.values?.ecoChooseBank,
+
+                beneficiaryName: accountInquiryData?.data?.accountName,
+                destinationBank: selectedBank?.institutionName,
+                destinationBankCode: selectedBank?.institutionId,
+                transactionAmount: formRef?.current?.values?.ecoEnterAmount,
+                narration: formRef?.current?.values?.ecoEnterAmount,
+                accountId: formRef?.current?.values?.ecoAccountId,
+                accountNumber: formRef?.current?.values?.ecoSourceAccount,
+                totalCharge: paymentFetchtransactionfeeData?.data?.totalCharge
+            };
+
+            dispatch(setTransfer(data));
+            nextPage();
+        }
+    }, [paymentFetchtransactionfeeSuccess]);
     const handleBlur = () => {
         accountInquiry({
             destinationBankCode: selectedBank?.institutionId
@@ -256,6 +310,7 @@ const SingleTransfer = ({
     };
     return (
         <div>
+            <ToastContainer />
             <h2 className={styles.firstTitle}>{firstTitle}</h2>
 
             <div className={styles.other}>
@@ -304,6 +359,7 @@ const SingleTransfer = ({
                     <Formik
                         validationSchema={initSchema}
                         // validateOnChange={true}
+                        innerRef={formRef}
                         initialValues={initialValues}
                         onSubmit={(values, { setSubmitting }) => {
                             // console.log(values);
@@ -320,9 +376,10 @@ const SingleTransfer = ({
                                 accountId: values?.ecoAccountId,
                                 accountNumber: values?.ecoSourceAccount
                             };
+                            nextPage();
                             console.log(data);
                             dispatch(setTransfer(data));
-                            nextPage();
+
                             setSubmitting(false);
                         }}
                     >
@@ -559,26 +616,24 @@ const SingleTransfer = ({
                         validationSchema={initSchema}
                         // validateOnChange={true}
                         initialValues={initialValues}
+                        innerRef={formRef}
                         onSubmit={(values, { setSubmitting }) => {
                             // console.log(values);
-                            const data = {
-                                isEcobankToEcobankTransaction: false,
-                                currency: values?.ecoCurrency,
-                                destinationBank: values?.ecoChooseBank,
 
-                                beneficiaryName:
-                                    accountInquiryData?.data?.accountName,
-                                destinationBank: selectedBank?.institutionName,
-                                destinationBankCode:
-                                    selectedBank?.institutionId,
-                                transactionAmount: values?.ecoEnterAmount,
-                                narration: values?.ecoEnterAmount,
-                                accountId: values?.ecoAccountId,
-                                accountNumber: values?.ecoSourceAccount
+                            const transferFee = {
+                                transactionType: 'INTERBANK',
+                                amount: values?.ecoEnterAmount,
+                                sourceAccount: values?.ecoSourceAccount,
+                                sourceAccountType: 'A',
+                                receiverAccountNumber: values?.ecoAccountNumber,
+                                senderPhoneNumber: profile?.user?.phoneNumber,
+                                sourceAccountCcy: values?.ecoCurrency,
+                                udf1: selectedBank?.institutionId,
+                                udf2: '',
+                                udf3: ''
                             };
-                            console.log(data);
-                            dispatch(setTransfer(data));
-                            nextPage();
+                            paymentFetchtransactionfee(transferFee);
+                            setTransfers(data);
                             setSubmitting(false);
                         }}
                     >
@@ -771,6 +826,7 @@ const SingleTransfer = ({
                                     disabled={activeBtn}
                                     active={activeBtn ? 'active' : 'inactive'}
                                     text={buttonText}
+                                    loads={paymentFetchtransactionfeeLoad}
                                     type="submit"
                                 />
                             </form>

@@ -8,6 +8,9 @@
     color: #005b82;
     margin-bottom: 10px;
 }
+.index {
+    margin: 0px;
+}
 .analytics p {
     font-family: Inter;
     font-size: 14px;
@@ -84,7 +87,15 @@
     align-self: stretch;
     border-radius: 8px;
     background: #f8f8f8;
+    overflow: scroll;
+    height: 196px;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
 }
+.paysDiv::-webkit-scrollbar {
+    display: none;
+}
+
 .row {
     padding: 2px;
     border-radius: 3px;
@@ -116,7 +127,7 @@
 }
 .div1 {
     height: 20px;
-    width: 162px;
+    width: 70px;
     border-radius: 100px;
     background: #3a5207;
     z-index: 5;
@@ -146,6 +157,42 @@
     width: 340px;
     border-radius: 100px;
     background: #c4d344;
+    margin-left: -15px;
+    z-index: 2;
+}
+
+.div1I {
+    height: 20px;
+    width: 70px;
+    border-radius: 100px;
+    color: #3a5207;
+    z-index: 5;
+}
+
+.div2II {
+    height: 20px;
+    width: 140px;
+    border-radius: 100px;
+    color: #69940d;
+    margin-left: -15px;
+    z-index: 4;
+}
+
+.div3III {
+    height: 20px;
+    width: 240px;
+    border-radius: 100px;
+    border-radius: 100px;
+    color: #6ccf00;
+    margin-left: -15px;
+    z-index: 3;
+}
+
+.div4IV {
+    height: 20px;
+    width: 340px;
+    border-radius: 100px;
+    color: #c4d344;
     margin-left: -15px;
     z-index: 2;
 }

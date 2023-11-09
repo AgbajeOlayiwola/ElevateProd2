@@ -129,6 +129,8 @@ const Navbar = ({
                             <h2 className={styles.name}>Collections</h2>
                         ) : router.pathname == '/Admin/BankStatement' ? (
                             <h2 className={styles.name}>Bank Statement</h2>
+                        ) : router.pathname == '/Admin/AllDisputes' ? (
+                            <h2 className={styles.name}>All Disputes</h2>
                         ) : null}
                     </div>
 

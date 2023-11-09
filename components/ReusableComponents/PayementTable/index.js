@@ -3,8 +3,11 @@ import { useDispatch } from 'react-redux';
 
 import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 import ReactPaginate from 'react-paginate';
+import { useTransactionHistoryMutation } from '../../../redux/api/authApi';
 import socialdata from '../../ReusableComponents/Lotties/loading.json';
 import styles from './styles.module.css';
+const getSymbolFromCurrency = require('currency-symbol-map');
+const countryToCurrency = require('country-to-currency');
 const PaymentTable = ({ title, page }) => {
     const [pageSrchIndex, setPageSrchIndex] = useState(0);
     const [numOfRecords, setNumOfRecords] = useState(1000);
@@ -17,10 +20,34 @@ const PaymentTable = ({ title, page }) => {
     const [searchType, setSearchType] = useState('');
     const [disputes, setDisputes] = useState();
     const [isLoading, setIsLoading] = useState(true);
+    const affiliate = localStorage.getItem('affiliateCode');
     let pending = 0;
     let success = 0;
     let failed = 0;
-
+    const [
+        transactionHistory,
+        {
+            data: transactionHistoryData,
+            isLoading: transactionHistoryLoad,
+            isSuccess: transactionHistorySuccess,
+            isError: transactionHistoryFalse,
+            error: transactionHistoryErr,
+            reset: transactionHistoryReset
+        }
+    ] = useTransactionHistoryMutation();
+    useEffect(() => {
+        transactionHistory({
+            limit: 12,
+            fromDate: '',
+            toDate: '',
+            order: 'DESC',
+            filter: {
+                type: '',
+                field: '',
+                value: ''
+            }
+        });
+    }, []);
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'NGN',
@@ -316,14 +343,54 @@ const PaymentTable = ({ title, page }) => {
                     <div className={styles.more}></div>
                 </div>
                 <div className={styles.tableDetails}>
-                    {/* <TableDetail
-                        // date={items.transactionDate}
-                        Beneficiary={''}
-                        disputes={disputes}
-
-                        //   phoneNumber={}
-                    /> */}
-                    <p className={styles.notrans}>No Transaction Available</p>
+                    {transactionHistoryErr ? (
+                        <p className={styles.notrans}>
+                            No Transaction Available
+                        </p>
+                    ) : (
+                        transactionHistoryData?.data.map((item, index) => {
+                            return (
+                                <div className={styles.TableDetailHeaders}>
+                                    <p className={styles.beneficiary}>
+                                        {item?.beneficiary}
+                                    </p>
+                                    <p className={styles.type}>
+                                        {item?.transactionType.replace(
+                                            '_',
+                                            ' '
+                                        )}
+                                    </p>
+                                    <p className={styles.amount}>
+                                        {getSymbolFromCurrency(
+                                            countryToCurrency[
+                                                `${affiliate?.substring(1)}`
+                                            ]
+                                        )}{' '}
+                                        {parseFloat(
+                                            item.transactionAmount
+                                        ).toLocaleString('en-US')}
+                                    </p>
+                                    {/* <p className={styles.bank}>Bank/Network</p> */}
+                                    <p className={styles.date}>
+                                        {item?.transactionDate}
+                                    </p>
+                                    <p
+                                        className={
+                                            item?.transactionStatus === 'FAILED'
+                                                ? styles.failed
+                                                : item?.transactionStatus ===
+                                                  'PENDING'
+                                                ? styles.pending
+                                                : styles.success
+                                        }
+                                    >
+                                        {item?.transactionStatus}
+                                    </p>
+                                    <div className={styles.more}></div>
+                                </div>
+                            );
+                        })
+                    )}
                 </div>
             </div>
 

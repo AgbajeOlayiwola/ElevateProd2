@@ -19,6 +19,8 @@ import { docsApi } from '../api/docsApi';
 import { usersApi } from '../api/usersApi';
 import accountNumberReducer from '../slices/accountNumberSlice';
 import allAccountInfoReducr from '../slices/allAccountInfoSlice';
+import analyticsDataReducer from '../slices/analyticsData';
+import dynamiQrDataReeducer from '../slices/dynamicQrSlice';
 import existingUserDetailsReducer from '../slices/existingUserData';
 import faceMatchDetailsReducr from '../slices/facematchSlice';
 import languageReducer from '../slices/language';
@@ -28,7 +30,6 @@ import profileReducer from '../slices/profile';
 import resetPasswordReducer from '../slices/resetpasswordslice';
 import tokenReducer from '../slices/tokenSlice';
 import transferReducer from '../slices/transferSlice';
-import dynamiQrDataReeducer from '../slices/dynamicQrSlice';
 const reducers = combineReducers({
     [authApi.reducerPath]: authApi.reducer,
     [docsApi.reducerPath]: docsApi.reducer,
@@ -45,7 +46,8 @@ const reducers = combineReducers({
     transfer: transferReducer,
     resetPasswordslice: resetPasswordReducer,
     token: tokenReducer,
-    dynamicQrData: dynamiQrDataReeducer
+    dynamicQrData: dynamiQrDataReeducer,
+    analyticsData: analyticsDataReducer
 });
 
 const persistConfig = {
@@ -63,7 +65,8 @@ const persistConfig = {
         'transfer',
         'resetPasswordslice',
         'token',
-        'dynamicQrData'
+        'dynamicQrData',
+        'analyticsData'
     ]
 };
 

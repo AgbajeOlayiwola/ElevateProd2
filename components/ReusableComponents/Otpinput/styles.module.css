@@ -1,9 +1,9 @@
-.otpInps {
+.divInputs {
     display: flex;
     justify-content: space-between;
     width: 100%;
 }
-.otpInps input {
+.divInputs input {
     width: 15%;
     font-size: 52px;
     text-align: center;
@@ -16,7 +16,7 @@
     color: #102572;
     padding: 0px;
 }
-.otpInps input:focus {
+.divInputs input:focus {
     border: 1px solid #6ccf00;
     transition: all 0.2s ease-in-out;
 }
@@ -24,3 +24,21 @@
     display: flex;
     gap: 15px;
 }
+/* .pinInputs {
+    width: 34%;
+    margin: 0px auto;
+    display: flex;
+    gap: 16px;
+    background-color: #fff;
+    /* padding: 16px 24px; */
+/* box-sizing: border-box; */
+/* } */
+
+/* .pinInputs input {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    padding: 0px !important;
+    font-size: 55px;
+    color: #6ccf00 !important;
+}  */

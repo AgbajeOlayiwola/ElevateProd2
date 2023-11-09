@@ -1,27 +1,20 @@
-import Image from 'next/image';
-import React from 'react';
-import { useState } from 'react';
-import DashLayout from '../../../components/layout/Dashboard';
-import ProfileLayout from '../../../components/layout/ProfileLayout';
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
 import ArrowBackSvg from '../../../components/ReusableComponents/ArrowBackSvg';
 import BvnSvg from '../../../components/ReusableComponents/BvnSvg';
 import CustomerSingle from '../../../components/ReusableComponents/CustomerSingle';
-import LeftArrowSvg from '../../../components/ReusableComponents/LeftArrowSvg';
-import Overlay from '../../../components/ReusableComponents/Overlay';
-import CartSvg from '../../../components/ReusableComponents/ReusableSvgComponents/CartSvg';
 import CustomizeSvg from '../../../components/ReusableComponents/ReusableSvgComponents/CustomizeSvg';
 import EmailSvg from '../../../components/ReusableComponents/ReusableSvgComponents/EmailSvg';
 import FacebookSvg from '../../../components/ReusableComponents/ReusableSvgComponents/FacebookSvg';
 import FavoriteSvg from '../../../components/ReusableComponents/ReusableSvgComponents/FavoriteSvg';
 import InstagramSvg from '../../../components/ReusableComponents/ReusableSvgComponents/InstagramSvg';
 import PhoneSvg from '../../../components/ReusableComponents/ReusableSvgComponents/PhoneSvg';
-import ShareSvg from '../../../components/ReusableComponents/ReusableSvgComponents/ShareSvg';
-import StoreIconSvg from '../../../components/ReusableComponents/ReusableSvgComponents/StoreIconSvg';
 import StoreLogisticsSvg from '../../../components/ReusableComponents/ReusableSvgComponents/StoreLogisticsSvg';
 import StoreOrdersSvg from '../../../components/ReusableComponents/ReusableSvgComponents/StoreOrdersSvg';
-import SuccessCheckSvg from '../../../components/ReusableComponents/ReusableSvgComponents/SuccessCheckSvg';
 import WhatsappSvg from '../../../components/ReusableComponents/ReusableSvgComponents/WhatsappSvg';
 import StorePopup from '../../../components/ReusableComponents/StorePopup';
+import ProfileLayout from '../../../components/layout/ProfileLayout';
+import Stores from '../../../components/layout/Storefront/Stores';
 import styles from './styles.module.css';
 
 const Storefront = () => {
@@ -38,24 +31,8 @@ const Storefront = () => {
     const [title, setTitle] = useState('');
     const [orderType, setOrderType] = useState('Open');
     const [headTitle, setHeadTitle] = useState('Storefront');
+    const router = useRouter();
 
-    const stores = [
-        {
-            storeName: 'Babatunde Stores',
-            orders: '21',
-            link: 'Click to Preview'
-        },
-        {
-            storeName: 'Marvelous Solutions',
-            orders: '21',
-            link: 'Click to Preview'
-        },
-        {
-            storeName: 'Babatunde Stores',
-            orders: '21',
-            link: 'Click to Preview'
-        }
-    ];
     const storeAction = [
         {
             title: 'Customize Storefront',
@@ -108,68 +85,7 @@ const Storefront = () => {
     const multi = () => {
         switch (page) {
             case 0:
-                return (
-                    <div className={styles.storeBody}>
-                        <div className={styles.storeBodyHeader}>
-                            <div className={styles.tableFilter}>
-                                <div>
-                                    <img
-                                        src="../Assets/Svgs/search.svg"
-                                        alt=""
-                                    />
-                                    <input
-                                        type="text"
-                                        placeholder="Search by Type"
-                                        onChange={(e) => {
-                                            setSearchValue(e.target.value);
-                                        }}
-                                    />
-                                </div>
-                                <select name="" id="">
-                                    <option value="" defaultValue="Filter">
-                                        Filter
-                                    </option>
-                                    <option
-                                        value="Bvn"
-                                        onClick={(e) => {
-                                            alert(e.target.value);
-                                        }}
-                                    >
-                                        Bvn
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                        <div className={styles.tableBody}>
-                            <TableDetail header="Header" />
-                            {stores?.map((store, index) => {
-                                return (
-                                    <TableDetail
-                                        accountId={store?.accountId}
-                                        storeName={store.storeName}
-                                        orders={store.orders}
-                                        link={store.link}
-                                        key={index}
-                                        action={() => {
-                                            setPage(page + 1);
-                                            setTitle(store.storeName);
-                                            setHeadTitle('text');
-                                        }}
-                                    />
-                                );
-                            })}
-                        </div>
-                        <div className={styles.storeButton}>
-                            <button
-                                onClick={() => {
-                                    setPage(page - 2);
-                                }}
-                            >
-                                Create Storefront
-                            </button>
-                        </div>
-                    </div>
-                );
+                return <Stores />;
             case 1:
                 return (
                     <ProfileLayout

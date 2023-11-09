@@ -1,20 +1,22 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { clearAccountNumber } from '../../../redux/slices/accountNumberSlice';
+import { clearAllAccountInfo } from '../../../redux/slices/allAccountInfoSlice';
+import { clearanalyticsData } from '../../../redux/slices/analyticsData';
+import { clearDynamicQrData } from '../../../redux/slices/dynamicQrSlice';
 import { clearExistingUserDetails } from '../../../redux/slices/existingUserData';
 import { clearfaceMatchDetails } from '../../../redux/slices/facematchSlice';
 import { clearMoreAccountNumberDetails } from '../../../redux/slices/moreAccountNumberDetails';
 import { clearProfile } from '../../../redux/slices/profile';
 import { clearToken } from '../../../redux/slices/tokenSlice';
 import { SidebarData } from '../Data';
+import ElevateLogo from '../Ellevate';
 import LogoutSvg from '../LogoutSvg';
 import SideBarDrop from './sidebarcont';
 import styles from './styles.module.css';
-import ElevateLogo from '../Ellevate';
 const Sidebar = ({ showSubnav }) => {
     const dispatch = useDispatch();
     // const { logout } = useSelector((state) => state.logoutReducer);
@@ -35,6 +37,11 @@ const Sidebar = ({ showSubnav }) => {
         await dispatch(clearAccountNumber());
         await dispatch(clearExistingUserDetails());
         await dispatch(clearToken());
+        await dispatch(clearAllAccountInfo());
+        await dispatch(clearDynamicQrData());
+        await dispatch(clearanalyticsData());
+        await dispatch(clearResetPassword());
+        await dispatch(clearPinned());
         // Redirect the user to the login page (you may use React Router for this)
         router.push('/Auth/Login');
     };

@@ -1,0 +1,15 @@
+.createStore {
+    display: flex;
+    flex-direction: column !important;
+}
+.saveAnd {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row !important;
+}
+.saveAnd button {
+    width: 30%;
+}
+.hr {
+    width: 100%;
+}

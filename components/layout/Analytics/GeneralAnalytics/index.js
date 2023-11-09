@@ -1,10 +1,80 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BsArrowDownRight, BsArrowUpRight } from 'react-icons/bs';
+import { useDispatch } from 'react-redux';
+import { useTransactionsSummaryMutation } from '../../../../redux/api/authApi';
+import { setanalyticsData } from '../../../../redux/slices/analyticsData';
+import { abbreviateNumber } from '../../../../utils/abreviateNumber';
 import AnalyticsData from '../../../ReusableComponents/AnalyticsData';
 import DropDown from '../../../ReusableComponents/DropDown';
 import styles from './styles.module.css';
-
+const getSymbolFromCurrency = require('currency-symbol-map');
+const countryToCurrency = require('country-to-currency');
 const GeneralAnalytics = ({ nextPage, nextStore }) => {
+    const dispatch = useDispatch();
+    const [filterData, setFilterData] = useState();
+    const [secFilterData, setSecFilterData] = useState();
+    const affiliate = localStorage.getItem('affiliateCode');
+    const [
+        transactionsSummary,
+        {
+            data: transactionsSummaryData,
+            isLoading: transactionsSummaryLoad,
+            isSuccess: transactionsSummarySuccess,
+            isError: transactionsSummaryFalse,
+            error: transactionsSummaryErr,
+            reset: transactionsSummaryReset
+        }
+    ] = useTransactionsSummaryMutation();
+    useEffect(() => {
+        transactionsSummary(null);
+    }, []);
+    useEffect(() => {
+        if (transactionsSummarySuccess) {
+            dispatch(setanalyticsData(transactionsSummaryData.data));
+            // filteredData();
+            const selectedProperties = [
+                'single_transfer',
+                'bulk_transfer',
+                'bills'
+            ];
+            const selectCollection = ['qr', 'ussd', 'paylink'];
+
+            setFilterData(
+                selectedProperties.map((property) => {
+                    const value = transactionsSummaryData.data[property];
+                    const totalTransactionAmount =
+                        transactionsSummaryData.data.total_transaction_amount ||
+                        0;
+                    const percentage = (
+                        (value / totalTransactionAmount) *
+                        100
+                    ).toFixed(2);
+                    return {
+                        [property]: value,
+                        percentage: percentage
+                    };
+                })
+            );
+            setSecFilterData(
+                selectCollection.map((property) => {
+                    const value = transactionsSummaryData.data[property];
+                    const totalTransactionAmount =
+                        transactionsSummaryData.data.total_transaction_amount ||
+                        0;
+                    const percentage = (
+                        (value / totalTransactionAmount) *
+                        100
+                    ).toFixed(2);
+                    return {
+                        [property]: value,
+                        percentage: percentage
+                    };
+                })
+            );
+        }
+    }, [transactionsSummarySuccess]);
+    const colors = ['#3A5207', '#69940D', '#6CCF00', '#C4D344'];
+
     return (
         <div>
             <div className={styles.analytics}>
@@ -26,17 +96,24 @@ const GeneralAnalytics = ({ nextPage, nextStore }) => {
                     <div className={styles.inflowOutflowDiv}>
                         <AnalyticsData
                             symbol={<BsArrowUpRight />}
+                            loads={transactionsSummaryLoad}
                             upOrDown="up"
                             percentage="5%"
                             inflowOrOutflow="Total Inflow"
-                            amount="#567k"
+                            isMoney={true}
+                            amount={transactionsSummaryData?.data?.total_inflow}
                         />
+
                         <AnalyticsData
                             symbol={<BsArrowDownRight />}
+                            loads={transactionsSummaryLoad}
                             upOrDown="down"
                             percentage="5%"
                             inflowOrOutflow="Total Outflow"
-                            amount="#567k"
+                            isMoney={true}
+                            amount={
+                                transactionsSummaryData?.data?.total_outflow
+                            }
                         />
                     </div>
                     <div className={styles.pays}>
@@ -50,27 +127,145 @@ const GeneralAnalytics = ({ nextPage, nextStore }) => {
                                 </p>
                             </div>
                             <div className={styles.analDiv}>
-                                <div className={styles.div1}></div>
-                                <div className={styles.div2}></div>
-                                <div className={styles.div3}></div>
-                                <div className={styles.div4}></div>
+                                {filterData?.map((item, index) => {
+                                    console.log(item);
+                                    return (
+                                        <div
+                                            key={index}
+                                            // className={styles.div1}
+                                            style={{
+                                                width: `${item?.percentage}%`,
+                                                height: '15px',
+                                                backgroundColor:
+                                                    colors[
+                                                        index % colors.length
+                                                    ],
+                                                borderTopRightRadius: '20px',
+                                                borderBottomRightRadius: '20px'
+                                            }}
+                                        ></div>
+                                    );
+                                })}
+                            </div>
+                            <div className={styles.analDiv}>
+                                {filterData?.map((item, index) => {
+                                    if (item?.percentage > 0) {
+                                        return (
+                                            <div
+                                                key={index}
+                                                // className={styles.div1}
+                                                style={{
+                                                    width: `${item?.percentage}%`,
+                                                    height: '15px',
+                                                    color: colors[
+                                                        index % colors.length
+                                                    ],
+                                                    display: 'flex',
+                                                    gap: '7px',
+                                                    flexDirection: 'column',
+                                                    width: '100%'
+                                                }}
+                                            >
+                                                <p className={styles.index}>
+                                                    {Object.keys(
+                                                        item
+                                                    )[0].replace('_', ' ')}
+                                                </p>
+                                                <p className={styles.index}>
+                                                    {getSymbolFromCurrency(
+                                                        countryToCurrency[
+                                                            affiliate?.substring(
+                                                                1
+                                                            )
+                                                        ]
+                                                    )}{' '}
+                                                    {abbreviateNumber(
+                                                        Object.values(item)[0]
+                                                    )}
+                                                </p>
+                                            </div>
+                                        );
+                                    }
+                                })}
                             </div>
                         </div>
                         <div>
-                            <div className={styles.paysDiv}>
+                            {/* <div className={styles.paysDiv}>
                                 <div className={styles.rcPayment}>
-                                    <h4>Received payments</h4>
+                                    <h4>Sent payments</h4>
                                     <p className={styles.row}>
                                         <BsArrowUpRight /> 5%
                                     </p>
                                 </div>
                                 <div className={styles.analDiv}>
-                                    <div className={styles.div1}></div>
-                                    <div className={styles.div2}></div>
-                                    <div className={styles.div3}></div>
-                                    <div className={styles.div4}></div>
+                                    {secFilterData?.map((item, index) => {
+                                        console.log(item);
+                                        return (
+                                            <div
+                                                key={index}
+                                                // className={styles.div1}
+                                                style={{
+                                                    width: `${item?.percentage}%`,
+                                                    height: '15px',
+                                                    backgroundColor:
+                                                        colors[
+                                                            index %
+                                                                colors.length
+                                                        ],
+                                                    borderTopRightRadius:
+                                                        '20px',
+                                                    borderBottomRightRadius:
+                                                        '20px'
+                                                }}
+                                            ></div>
+                                        );
+                                    })}
                                 </div>
-                            </div>
+                                <div className={styles.analDiv}>
+                                    {secFilterData?.map((item, index) => {
+                                        if (item?.percentage > 0) {
+                                            return (
+                                                <div
+                                                    key={index}
+                                                    // className={styles.div1}
+                                                    style={{
+                                                        width: `${item?.percentage}%`,
+                                                        height: '15px',
+                                                        color: colors[
+                                                            index %
+                                                                colors.length
+                                                        ],
+                                                        display: 'flex',
+                                                        gap: '7px',
+                                                        flexDirection: 'column',
+                                                        width: '100%'
+                                                    }}
+                                                >
+                                                    <p className={styles.index}>
+                                                        {Object.keys(
+                                                            item
+                                                        )[0].replace('_', ' ')}
+                                                    </p>
+                                                    <p className={styles.index}>
+                                                        {getSymbolFromCurrency(
+                                                            countryToCurrency[
+                                                                affiliate?.substring(
+                                                                    1
+                                                                )
+                                                            ]
+                                                        )}{' '}
+                                                        {abbreviateNumber(
+                                                            Object.values(
+                                                                item
+                                                            )[0]
+                                                        )}
+                                                    </p>
+                                                </div>
+                                            );
+                                        }
+                                    })}
+                                </div> */}
+                            {/* </div> */}
                             <br />
                             <div
                                 className={styles.viewMor}
@@ -97,34 +292,42 @@ const GeneralAnalytics = ({ nextPage, nextStore }) => {
                         <div className={styles.inflowOutflowDiv}>
                             <AnalyticsData
                                 symbol={<BsArrowUpRight />}
+                                loads={transactionsSummaryLoad}
                                 upOrDown="up"
                                 percentage="5%"
-                                inflowOrOutflow="Total Inflow"
-                                amount="#567k"
+                                isMoney={false}
+                                inflowOrOutflow="Storefront Visits"
+                                amount={0}
                             />
                             <AnalyticsData
                                 symbol={<BsArrowDownRight />}
+                                loads={transactionsSummaryLoad}
                                 upOrDown="down"
                                 percentage="5%"
-                                inflowOrOutflow="Total Outflow"
-                                amount="#567k"
+                                inflowOrOutflow="Inventories Added"
+                                isMoney={false}
+                                amount={0}
                             />
                         </div>
                         <br />
                         <div className={styles.inflowOutflowDiv}>
                             <AnalyticsData
                                 symbol={<BsArrowUpRight />}
+                                loads={transactionsSummaryLoad}
                                 upOrDown="up"
                                 percentage="5%"
-                                inflowOrOutflow="Total Inflow"
-                                amount="#567k"
+                                isMoney={false}
+                                inflowOrOutflow="Total Orders"
+                                amount="0"
                             />
                             <AnalyticsData
                                 symbol={<BsArrowDownRight />}
+                                loads={transactionsSummaryLoad}
                                 upOrDown="down"
+                                isMoney={false}
                                 percentage="5%"
-                                inflowOrOutflow="Total Outflow"
-                                amount="#567k"
+                                inflowOrOutflow="Completed Orders"
+                                amount="0"
                             />
                         </div>
                         <br />
@@ -151,17 +354,27 @@ const GeneralAnalytics = ({ nextPage, nextStore }) => {
                             <div className={styles.inflowOutflowDiv}>
                                 <AnalyticsData
                                     symbol={<BsArrowUpRight />}
+                                    loads={transactionsSummaryLoad}
                                     upOrDown="up"
                                     percentage="5%"
-                                    inflowOrOutflow="Total Inflow"
-                                    amount="#567k"
+                                    isMoney={false}
+                                    inflowOrOutflow="Total Transaction"
+                                    amount={
+                                        transactionsSummaryData?.data
+                                            ?.total_transaction
+                                    }
                                 />
                                 <AnalyticsData
                                     symbol={<BsArrowDownRight />}
+                                    loads={transactionsSummaryLoad}
                                     upOrDown="down"
                                     percentage="5%"
+                                    isMoney={true}
                                     inflowOrOutflow="Total Outflow"
-                                    amount="#567k"
+                                    amount={
+                                        transactionsSummaryData?.data
+                                            ?.total_transaction_amount
+                                    }
                                 />
                             </div>
 

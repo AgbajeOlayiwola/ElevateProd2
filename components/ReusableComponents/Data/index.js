@@ -140,36 +140,51 @@ export const SidebarData = [
         //     }
         // ]
     },
-    // {
-    //     title: 'Tools',
-    //     path: '/Admin/Tools',
-    //     icon: <ToolSvg />,
-    //     iconActive: <ToolsActiveSvg />,
-    //     iconClosed: <RiIcons.RiArrowDownSLine />,
-    //     iconOpened: <RiIcons.RiArrowUpSLine />,
-    //     subNav: [
-    //         {
-    //             title: 'Analysis',
-    //             path: '/Admin/Analysis',
-    //             icon: <BiIcons.BiTransfer />
-    //         },
-    //         {
-    //             title: 'Inventory',
-    //             path: '/Admin/Inventory',
-    //             icon: <BulkTransfer />
-    //         },
-    //         {
-    //             title: 'e invoice',
-    //             path: '/Admin/invoice',
-    //             icon: <NairaSvg />
-    //         },
-    //         {
-    //             title: 'Others',
-    //             path: '/Admin/others',
-    //             icon: <FaIcons.FaHandHoldingUsd />
-    //         }
-    //     ]
-    // },
+    {
+        title: 'My tools',
+        path: '',
+        icon: <BsFillCollectionFill />,
+        iconActive: <BsFillCollectionFill style={{ color: '#69940d' }} />,
+        iconClosed: <RiIcons.RiArrowDownSLine />,
+        iconOpened: <RiIcons.RiArrowUpSLine />,
+        subNav: [
+            {
+                title: 'Loans',
+                path: '/Admin/Loans'
+                // icon: <BiIcons.BiTransfer />
+            },
+            {
+                title: 'Storefront',
+                path: '/Admin/Storefront'
+                // icon: <BiIcons.BiTransfer />
+            },
+            {
+                title: 'Logistics',
+                path: '/Admin/Logistics'
+                // icon: <BulkTransfer />
+            },
+            {
+                title: 'eInvoice and eReceipt',
+                path: '/Admin/invoice'
+                // icon: <NairaSvg />
+            },
+            {
+                title: 'Analytics',
+                path: '/Admin/Analytics'
+                // icon: <FaIcons.FaHandHoldingUsd />
+            },
+            {
+                title: 'Cards',
+                path: '/Admin/Cards'
+                // icon: <FaIcons.FaHandHoldingUsd />
+            },
+            {
+                title: 'Business Registration',
+                path: '/Admin/Business'
+                // icon: <FaIcons.FaHandHoldingUsd />
+            }
+        ]
+    },
     // {
     //     title: 'Storefront',
     //     path: '/Admin/Storefront',
@@ -178,14 +193,14 @@ export const SidebarData = [
     //     iconClosed: <RiIcons.RiArrowDownSLine />,
     //     iconOpened: <RiIcons.RiArrowUpSLine />
     // },
-    // {
-    //     title: 'Dispute ',
-    //     path: '/Admin/Dispute',
-    //     icon: <StorefrontSvg />,
-    //     iconActive: <StorefrontActiveSvg />,
-    //     iconClosed: <RiIcons.RiArrowDownSLine />,
-    //     iconOpened: <RiIcons.RiArrowUpSLine />
-    // },
+    {
+        title: 'Dispute ',
+        path: '/Admin/AllDisputes',
+        icon: <DashboardSvg fill="none" stroke="black" />,
+        iconActive: <DashboardSvg fill="#6CCF00" stroke="none" />,
+        iconClosed: <RiIcons.RiArrowDownSLine />,
+        iconOpened: <RiIcons.RiArrowUpSLine />
+    },
 
     {
         title: 'Settings',
@@ -2546,5 +2561,99 @@ export const lgasArr = [
             'Umuahia South',
             'Umu Nneochi'
         ]
+    }
+];
+
+export const loansTransactions = [
+    {
+        date: '12/12/2021',
+        title: 'Loan liquidation',
+        amount: '2000000',
+        type: 'Cash transfer',
+        id: 'TNX-1782628612',
+        action: 'credit',
+        status: 'Pending'
+    },
+    {
+        date: '12/12/2021',
+        title: 'Loan repayment',
+        amount: '300000',
+        type: 'Cash transfer',
+        id: 'TNX-1782628612',
+        action: 'debit',
+        status: 'Success'
+    },
+    {
+        date: '12/12/2021',
+        title: 'Loan disbursement',
+        amount: '2000000',
+        type: 'Cash transfer',
+        id: 'TNX-1782628612',
+        action: 'credit',
+        status: 'Success'
+    },
+    {
+        date: '12/12/2021',
+        title: 'Loan liquidation',
+        amount: '2000000',
+        type: 'Cash transfer',
+        id: 'TNX-1782628612',
+        action: 'credit',
+        status: 'Failed'
+    },
+    {
+        date: '12/12/2021',
+        title: 'Loan disbursement',
+        amount: '2000000',
+        type: 'Cash transfer',
+        id: 'TNX-1782628612',
+        action: 'credit',
+        status: 'Success'
+    }
+];
+
+export const loansDetails = [
+    {
+        title: 'Request date',
+        text: '12/12/2021'
+    },
+    {
+        title: 'Loan interest',
+        text: '1.5%'
+    },
+    {
+        title: 'Repayment period',
+        text: '12 months'
+    },
+    {
+        title: 'Repayment schedule',
+        text: 'Monthly'
+    },
+    {
+        title: 'Day of the month',
+        text: '24th of every month'
+    },
+    {
+        title: 'Monthly payment',
+        text: '₵230,982.82'
+    }
+];
+
+export const bank = [
+    {
+        title: 'Amount',
+        value: '1000000'
+    },
+    {
+        title: 'Bank',
+        value: 'Ecobank'
+    },
+    {
+        title: 'Account Number',
+        value: '4204311092'
+    },
+    {
+        title: 'Beneficiary’s name',
+        value: 'Ecobank Loan Services'
     }
 ];
