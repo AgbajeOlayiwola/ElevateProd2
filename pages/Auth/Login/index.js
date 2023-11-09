@@ -83,15 +83,18 @@ const Login = () => {
             dispatch(setProfile(loginAccountData));
             if (loginAccountData?.data?.user?.hasSetTransactionPin === 'N') {
                 dispatch(setPinned(false));
+                dispatch(setToken(loginAccountData?.data?.token));
                 dispatch(setProfile(loginAccountData?.data));
             } else if (
                 loginAccountData?.data?.user?.hasSetTransactionPin === 'Y'
             ) {
                 dispatch(setPinned(true));
+                dispatch(setToken(loginAccountData?.data?.token));
                 dispatch(setProfile(loginAccountData?.data));
             }
             if (loginAccountData?.data?.user?.hasVerifiedEmail === 'N') {
                 dispatch(setProfile(loginAccountData?.data));
+                dispatch(setToken(loginAccountData?.data?.token));
                 router.push({
                     pathname: '/Verify',
                     query: { id: 4 }
@@ -102,6 +105,7 @@ const Login = () => {
                 loginAccountData?.data?.user?.createdFromEcobankCred === 'N'
             ) {
                 dispatch(setProfile(loginAccountData?.data));
+                dispatch(setToken(loginAccountData?.data?.token));
                 router.push({
                     pathname: '/Verify',
                     query: { id: 0 }
@@ -115,6 +119,7 @@ const Login = () => {
                         'N')
             ) {
                 dispatch(setProfile(loginAccountData?.data));
+                dispatch(setToken(loginAccountData?.data?.token));
                 router.push({
                     pathname: '/Onboarding/ProfileSetup',
                     query: { id: 1 }
@@ -125,6 +130,7 @@ const Login = () => {
                 loginAccountData?.data?.user?.createdFromEcobankCred === 'N'
             ) {
                 dispatch(setProfile(loginAccountData?.data));
+                dispatch(setToken(loginAccountData?.data?.token));
                 router.push({
                     pathname: '/Onboarding/ProfileSetup',
                     query: { id: 2 }
@@ -134,6 +140,7 @@ const Login = () => {
                     'PROFILE_SETUP_COMPLETED' &&
                 loginAccountData?.data?.user?.createdFromEcobankCred === 'Y'
             ) {
+                dispatch(setToken(loginAccountData?.data?.token));
                 router.push({
                     pathname: '/Onboarding/ProfileSetup',
                     query: { id: 3 }
@@ -145,6 +152,7 @@ const Login = () => {
                 loginAccountData?.data?.user?.phoneNumber === null
             ) {
                 dispatch(setProfile(loginAccountData?.data));
+                dispatch(setToken(loginAccountData?.data?.token));
                 router.push({
                     pathname: '/Onboarding/ProfileSetup',
                     query: { id: 0 }
@@ -159,6 +167,7 @@ const Login = () => {
                     loginAccountData?.data?.user?.phoneNumber !== null)
             ) {
                 dispatch(setProfile(loginAccountData?.data));
+                dispatch(setToken(loginAccountData?.data?.token));
                 router.push({
                     pathname: '/Onboarding/ProfileSetup',
                     query: { id: 3 }
@@ -169,6 +178,7 @@ const Login = () => {
                 loginAccountData?.data?.user?.createdFromEcobankCred === 'Y'
             ) {
                 dispatch(setProfile(loginAccountData?.data));
+                dispatch(setToken(loginAccountData?.data?.token));
                 router.push({
                     pathname: '/Onboarding/ExistingProfileSetup',
                     query: { id: 4 }
@@ -178,6 +188,7 @@ const Login = () => {
                     'PROFILE_SETUP' &&
                 loginAccountData?.data?.user?.createdFromEcobankCred === 'Y'
             ) {
+                dispatch(setToken(loginAccountData?.data?.token));
                 router.push({
                     pathname: '/Onboarding/ExistingProfileSetup',
                     query: { id: 2 }
@@ -186,6 +197,7 @@ const Login = () => {
                 loginAccountData?.data?.user?.profileSetupStatus ===
                 'AWAITING_ACCOUNT_NUMBER'
             ) {
+                dispatch(setToken(loginAccountData?.data?.token));
                 router.push({
                     pathname: '/Verify/Account',
                     query: { id: 2 }
@@ -208,6 +220,7 @@ const Login = () => {
                     'ACCOUNT_CREATED'
             ) {
                 handleNavIn(loginAccountData);
+                dispatch(setToken(loginAccountData?.data?.token));
             }
             console.log(loginAccountData, 'check check');
         }

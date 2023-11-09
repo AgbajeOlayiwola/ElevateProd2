@@ -114,7 +114,7 @@ const SelectBillerForms = ({ billerDatails }) => {
                     billerId: billerDatails?.billerDetail?.billerID.toString(),
                     accountNumber: accountNo,
                     productCode: prodCode,
-                    description: 'jhgfd',
+                    description: `${billerDatails?.billerDetail?.billerCode} ${profile?.user?.lastName}`,
                     transactionAmount: formRef?.current?.values?.ammount,
                     // productCode ||
                     // billerInfo?.billerProductInfo?.[0]?.productCode?.toString() ||
@@ -335,7 +335,68 @@ const SelectBillerForms = ({ billerDatails }) => {
                                 ) : null
                             )}
 
-                            {selectedAmountType === 'V' ? (
+                            {billerDatails?.billerProductInfo ? (
+                                <div>
+                                    <label>Select network</label>
+                                    <select
+                                        onChange={(e) => {
+                                            setProdCode(e.target.value);
+                                            console.log(prodCode);
+                                            const selBiller =
+                                                billerDatails?.billerProductInfo.find(
+                                                    (item) =>
+                                                        e.target.value ===
+                                                        item?.productCode
+                                                );
+                                            if (selBiller) {
+                                                // console.log(selBiller?.prod);
+                                                setCurrency(selBiller?.ccy);
+                                                console.log(
+                                                    selBiller?.amountType
+                                                );
+                                                if (selBiller?.amount) {
+                                                    setArryAmaount(
+                                                        selBiller?.amount.split(
+                                                            ','
+                                                        )
+                                                    );
+                                                }
+                                                setSelectedAmountType(
+                                                    selBiller?.amountType
+                                                );
+                                            }
+                                            // setShowOtherFields(true);
+                                        }}
+                                    >
+                                        <option>Choose Product</option>
+                                        {billerDatails?.billerProductInfo?.map(
+                                            (data, index) => {
+                                                return (
+                                                    <option
+                                                        key={index}
+                                                        value={
+                                                            data?.productCode
+                                                        }
+                                                    >
+                                                        {data?.productName}
+                                                    </option>
+                                                );
+                                            }
+                                        )}
+                                    </select>
+                                    <br />
+                                    <br />
+                                </div>
+                            ) : null}
+
+                            {billerValidationLoad ? (
+                                <>
+                                    <p style={{ textAlign: 'center' }}>
+                                        Bills Payment Is Being Validated
+                                    </p>
+                                    <Loader />
+                                </>
+                            ) : selectedAmountType === 'V' ? (
                                 <div>
                                     <label>Ammount</label>
                                     <div className={styles.ammt}>
@@ -413,9 +474,10 @@ const SelectBillerForms = ({ billerDatails }) => {
                                                 );
                                             }}
                                             name="ammount"
+                                            disbled
                                             value={
-                                                billerDatails?.billerProductInfo
-                                                    ?.maxAmount
+                                                billerValidationData?.data
+                                                    ?.totalDRAmount
                                             }
                                             type="text"
                                             placeholder="Amount"
@@ -425,67 +487,7 @@ const SelectBillerForms = ({ billerDatails }) => {
                                     <br />
                                 </div>
                             )}
-                            {billerDatails?.billerProductInfo ? (
-                                <div>
-                                    <label>Select network</label>
-                                    <select
-                                        onChange={(e) => {
-                                            setProdCode(e.target.value);
-                                            console.log(prodCode);
-                                            const selBiller =
-                                                billerDatails?.billerProductInfo.find(
-                                                    (item) =>
-                                                        e.target.value ===
-                                                        item?.productCode
-                                                );
-                                            if (selBiller) {
-                                                // console.log(selBiller?.prod);
-                                                setCurrency(selBiller?.ccy);
-                                                console.log(
-                                                    selBiller?.amountType
-                                                );
-                                                if (selBiller?.amount) {
-                                                    setArryAmaount(
-                                                        selBiller?.amount.split(
-                                                            ','
-                                                        )
-                                                    );
-                                                }
-                                                setSelectedAmountType(
-                                                    selBiller?.amountType
-                                                );
-                                            }
-                                            // setShowOtherFields(true);
-                                        }}
-                                    >
-                                        <option>Choose Product</option>
-                                        {billerDatails?.billerProductInfo?.map(
-                                            (data, index) => {
-                                                return (
-                                                    <option
-                                                        key={index}
-                                                        value={
-                                                            data?.productCode
-                                                        }
-                                                    >
-                                                        {data?.productName}
-                                                    </option>
-                                                );
-                                            }
-                                        )}
-                                    </select>
-                                    <br />
-                                    <br />
-                                </div>
-                            ) : null}
-                            {billerValidationLoad ? (
-                                <>
-                                    <p style={{ textAlign: 'center' }}>
-                                        Bills Payment Is Being Validated
-                                    </p>
-                                    <Loader />
-                                </>
-                            ) : null}
+                            <br />
                             <label>Transaction Pin</label>
                             <div className={styles.transaction}>
                                 <OtpInput
@@ -493,6 +495,8 @@ const SelectBillerForms = ({ billerDatails }) => {
                                     otpfields={6}
                                 />
                             </div>
+                            <br />
+                            <br />
                             <ButtonComp
                                 disabled={activeBtn}
                                 active={activeBtn ? 'active' : 'inactive'}
