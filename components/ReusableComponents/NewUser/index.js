@@ -92,6 +92,7 @@ const NewUser = ({ selectCountry, selectedOption, onSelectChange }) => {
         dispatch(setToken(val?.data?.token));
         router.push('/Verify');
     };
+    //Fixd reg
 
     useEffect(() => {
         if (registerSuccess) {
