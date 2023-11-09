@@ -12,6 +12,7 @@ import 'react-tooltip/dist/react-tooltip.css';
 import * as yup from 'yup';
 import { useRegisterMutation } from '../../../redux/api/authApi';
 import { setProfile } from '../../../redux/slices/profile';
+import { setToken } from '../../../redux/slices/tokenSlice';
 import ButtonComp from '../Button';
 import Visbility from '../Eyeysvg';
 import TermsConditions from '../TermmsConditions';
