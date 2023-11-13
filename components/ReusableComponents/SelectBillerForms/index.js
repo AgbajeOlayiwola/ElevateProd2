@@ -20,7 +20,7 @@ import SuccessCheckSvg from '../ReusableSvgComponents/SuccessCheckSvg';
 import styles from './styles.module.css';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
-const SelectBillerForms = ({ billerDatails }) => {
+const SelectBillerForms = ({ billerDatails, closeAction }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     const { profile } = useSelector((store) => store);
     const [showOtherFields, setShowOtherFields] = useState(false);
@@ -107,6 +107,7 @@ const SelectBillerForms = ({ billerDatails }) => {
                     billerDatails?.billFormData
                 );
                 const data = {
+                    transactionAmount: 0,
                     customerName: `${profile?.user?.firstName} ${profile?.user?.lastName}`,
                     billerCode: billerDatails?.billerDetail?.billerCode,
                     transactionReference: '',
@@ -114,8 +115,9 @@ const SelectBillerForms = ({ billerDatails }) => {
                     billerId: billerDatails?.billerDetail?.billerID.toString(),
                     accountNumber: accountNo,
                     productCode: prodCode,
-                    description: `${billerDatails?.billerDetail?.billerCode} ${profile?.user?.lastName}`,
-                    transactionAmount: formRef?.current?.values?.ammount,
+                    paymentDescription: `${billerDatails?.billerDetail?.billerCode} ${profile?.user?.lastName}`,
+                    transactionAmount:
+                        billerDatails?.billerProductInfo[0]?.maxAmount,
                     // productCode ||
                     // billerInfo?.billerProductInfo?.[0]?.productCode?.toString() ||
                     // '',
@@ -178,6 +180,7 @@ const SelectBillerForms = ({ billerDatails }) => {
             showSuccessToastMessage();
         }
     }, [billerPaymentSuccess]);
+    console.log(profile);
     return (
         <>
             <ToastContainer />
@@ -197,7 +200,7 @@ const SelectBillerForms = ({ billerDatails }) => {
 
                             <RegistrationStatus>
                                 <SuccessMainHeading>
-                                    Transfer Successful
+                                    Bill Payment Successful
                                 </SuccessMainHeading>
 
                                 <ButtonComp
@@ -223,21 +226,26 @@ const SelectBillerForms = ({ billerDatails }) => {
                             billerDatails?.billFormData
                         );
                         const data = {
-                            customerName: `${profile?.user?.firstName} ${profile?.user?.lastName}`,
                             billerCode: billerDatails?.billerDetail?.billerCode,
-                            transactionReference: '',
-                            transactionType: 'BILLPAY',
+
+                            transactionReference: 'BILLPAY',
                             transactionPin: otpValue,
                             billerId:
                                 billerDatails?.billerDetail?.billerID.toString(),
                             accountNumber: accountNo,
                             productCode: prodCode,
                             transactionAmount:
-                                formRef?.current?.values?.ammount,
+                                billerValidationData?.data?.totalDRAmount &&
+                                Number(
+                                    billerValidationData?.data?.totalDRAmount
+                                ) > 0
+                                    ? billerValidationData?.data?.totalDRAmount
+                                    : values?.ammount,
+                            mobileNumber: profile?.user?.phoneNumber,
                             // productCode ||
                             // billerInfo?.billerProductInfo?.[0]?.productCode?.toString() ||
                             // '',
-                            paymentDescription: 'test',
+                            paymentDescription: 'desc',
                             currency: currncy,
                             formDataValue
                         };

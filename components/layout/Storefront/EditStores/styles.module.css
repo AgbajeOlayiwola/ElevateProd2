@@ -1,0 +1,648 @@
+.profileHeaderHead {
+    width: 100%;
+    border-radius: 16px;
+    position: relative;
+    z-index: 2;
+    align-items: center;
+}
+.accountNumberCopy {
+    border-radius: 5px;
+    border: 0.5px solid var(--primary-deep-blue, #102572);
+    background: rgba(16, 37, 114, 0.1);
+    display: flex;
+    padding: 6px 12px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+.profileHeaderImg {
+    width: 50px;
+    height: 50px;
+}
+
+.profileBodyHeaderCont {
+    flex: 1;
+    margin-left: 24px;
+}
+.customizeFirsts {
+    display: flex;
+    justify-content: flex-end;
+}
+.customizeFirsts button {
+    width: 30%;
+}
+.profileBodyHeaderCont h2 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    margin: 0px;
+    color: #ffffff;
+}
+
+.profileBodyHeaderCont p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #ffffff;
+    margin: 0px;
+    margin-top: 4px;
+}
+
+.subProfileHead {
+    display: flex;
+    border-radius: 16px;
+    margin-top: -20px;
+    justify-content: flex-end;
+    align-items: center;
+    padding-top: 36px;
+    width: 100%;
+    margin-bottom: 32px;
+}
+
+.freezeAccount {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.storeWrapper {
+    padding: 0px 20px;
+}
+.share {
+    display: flex;
+    justify-content: center;
+}
+.front {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+.front label {
+    color: #7a7978;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+.front input {
+    margin-top: 8px;
+}
+.area {
+    border-radius: 8px;
+    background: #f4f4f4;
+    display: flex;
+    padding: 16px;
+    align-items: flex-start;
+    gap: 8px;
+    align-self: stretch;
+    border: none;
+    margin-top: 8px;
+}
+.copy {
+    display: flex;
+    gap: 12px;
+}
+.freezeAccount h1 {
+    color: #102572;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    padding: 0px 20px;
+}
+.customizeForm {
+    display: flex;
+    flex-direction: column;
+}
+.freezeAccount p {
+    color: #545454;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%; /* 16.8px */
+    padding: 0px 20px;
+}
+.hrDiv {
+    display: flex;
+    justify-content: center;
+}
+.hrDiv hr {
+    width: 90%;
+    border-color: #eaeaea;
+}
+.accountNumber {
+    width: 39%;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.accountNumber h4 {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #a5a5a5;
+    /* margin-top: 14px; */
+}
+
+.accountNumber div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.accountNumber div p {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #303030;
+}
+
+.accountNumber div h5 {
+    margin: 0px;
+    background: rgba(105, 148, 13, 0.1);
+    border-radius: 8px;
+    margin-left: 4px;
+    padding: 6px 8px;
+    cursor: pointer;
+}
+
+.saveBene {
+    display: flex;
+    align-items: center;
+}
+
+.actionText {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 135.52%;
+    color: #3e3e3e;
+    margin: 0px;
+}
+
+.ordersCont {
+    display: flex;
+    margin-top: 48px;
+    width: 58%;
+    background: #f4f4f4;
+    border-radius: 16px;
+}
+
+.openOrders {
+    width: 50%;
+    background: #6ccf00;
+    border-radius: 16px;
+    padding: 16px 0px;
+    cursor: pointer;
+}
+
+.openOrders h4 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 15px;
+    color: #ffffff;
+    margin: 0px;
+    text-align: center;
+}
+
+.closeOrders {
+    width: 50%;
+    background: #f4f4f4;
+    border-radius: 16px;
+    padding: 16px 0px;
+    cursor: pointer;
+}
+
+.closeOrders h4 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #a5a5a5;
+    margin: 0px;
+    text-align: center;
+}
+
+.details h5 {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 15px;
+    color: #102572;
+    margin-top: 4px;
+}
+
+.orderNumber {
+    color: #6ccf00 !important;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 16px;
+    border: 1px solid #6ccf00 !important;
+    background-color: white !important;
+}
+
+.orderDuration {
+    display: flex;
+    align-items: center;
+}
+
+.orderDuration p {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 16px;
+    color: #7a7978;
+}
+
+.orderDuration h3 {
+    color: white !important;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 8px;
+    line-height: 16px;
+    background: #a5a5a5;
+    box-shadow: 0px 9px 30px rgba(0, 0, 0, 0.07);
+    border-radius: 4px;
+    margin-left: 16px;
+    padding: 4px 16px;
+}
+
+.previewHead {
+    display: flex;
+    width: 100%;
+    background: #ffffff;
+    border-radius: 16px;
+}
+
+.previewHead h4 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: rgba(84, 158, 4, 0.4);
+    margin: 0px;
+    padding: 21px 0px;
+    margin-left: 48px;
+    cursor: pointer;
+    transition: all 1s ease;
+}
+
+.previewHead h4:first-child {
+    margin-left: 27px;
+}
+
+.previewActive {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700 !important;
+    font-size: 14px;
+    line-height: 16px;
+    color: #549e04 !important;
+    border-bottom: 4px solid #549e04;
+    /* transition: all 2s ease; */
+}
+
+.previewBody {
+    width: 100%;
+}
+
+.previewSingle {
+    display: inline-flex;
+    width: 24%;
+    /* max-width: 261px; */
+    margin-left: 16px;
+    margin-top: 24px;
+    background: #ffffff;
+    border-radius: 16px;
+    cursor: pointer;
+}
+
+.previewSingle:first-child,
+.previewSingle:nth-child(4n + 5) {
+    margin-left: 0px;
+}
+
+.previewSingle .previewWrapper {
+    width: 100%;
+    position: relative;
+}
+
+.previewWrapper img {
+    width: 100%;
+    border-radius: 16px 16px 0px 0px;
+}
+
+.previewWrapper span {
+    position: absolute;
+    top: 0;
+    right: 0px;
+}
+
+.previewDetails {
+    margin-left: 16px;
+    padding-bottom: 32px;
+}
+
+.previewDetails h2 {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    margin-top: 16px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 16px;
+    color: #263238;
+}
+
+.previewDetails p {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    color: #7a7978;
+    margin-top: 2px;
+}
+
+.previewCont {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.firstPreviewCont {
+    width: 41%;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 16px;
+}
+
+.firstPreviewCont img {
+    width: 100%;
+}
+
+.secondPreviewCont {
+    width: 58%;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 48px;
+}
+
+.description {
+    background: #ffffff;
+    border-radius: 16px;
+    width: 100%;
+    padding: 32px;
+    margin-top: 20px;
+}
+
+.description h2 {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 8px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 23px;
+    color: #005b82;
+}
+
+.description p {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 30px;
+    color: #3e3e3e;
+}
+
+.customer {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 23px;
+    color: #005b82;
+    margin: 0px;
+    margin-top: 48px;
+}
+
+.previewSin {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.previewSin h2 {
+    font-family: 'Inter', sans-serif;
+    width: 25%;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 37px;
+    margin: 0px;
+    color: #005b82;
+}
+
+.previewSin div {
+    display: flex;
+    background: #f3fbea;
+    border-radius: 12px;
+    padding: 12px 16px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.previewSin p {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 15px;
+    color: #549e04;
+    margin-left: 4px;
+}
+
+.rate {
+    margin-top: 16px;
+}
+
+.rate p {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #2f2f2f;
+}
+
+.rate span {
+    color: #005b82;
+}
+
+.stock {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    margin: 0px;
+    color: #a5a5a5;
+    margin-top: 8px;
+}
+
+.sizeContainer {
+    margin-top: 32px;
+    padding-bottom: 44px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.sizeContainer h2 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 23px;
+    margin: 0px;
+    color: #3e3e3e;
+}
+
+.sizeWrapper {
+    display: flex;
+    width: 73%;
+    justify-content: space-between;
+    margin-top: 8px;
+}
+
+.sizeActive {
+    background: #549e04;
+    border-radius: 6px;
+    width: 16%;
+    padding: 24px 0px;
+    cursor: pointer;
+}
+
+.sizeActive p {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    margin: 0px;
+    text-align: center;
+    color: #ffffff;
+}
+
+.beneCheck {
+    position: relative;
+    width: 48px;
+    height: 18px;
+    cursor: pointer;
+    margin-bottom: 0px !important;
+}
+
+.beneCheck input {
+    position: absolute;
+    z-index: 1;
+    width: unset;
+    display: none;
+}
+
+.beneCheck span {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0px;
+    background: #eceef4;
+    border-radius: 100px;
+    transition: 0.5s;
+}
+
+.beneCheck span i {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #dfdfdf;
+    bottom: -2px;
+    top: -2px;
+    left: -4px;
+    transition: 0.5s;
+}
+
+.beneChecked {
+    position: relative;
+    width: 48px;
+    height: 18px;
+    cursor: pointer;
+    margin-bottom: 0px !important;
+}
+
+.beneChecked input {
+    position: absolute;
+    z-index: 1;
+    width: unset;
+    display: none;
+}
+
+.beneChecked span {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0px;
+    background: #eceef4;
+    border-radius: 100px;
+    transition: 0.5s;
+}
+
+.beneChecked span i {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #dfdfdf;
+    bottom: -2px;
+    top: -2px;
+    left: -4px;
+    transition: 0.5s;
+}
+
+.beneChecked span i {
+    left: 24px;
+}
+
+.beneChecked span {
+    background-color: #6ccf00;
+}

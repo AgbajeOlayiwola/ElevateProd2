@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import styles from './styles.module.css';
 
-const Stores = () => {
+const Stores = ({ nextStep }) => {
     const [checkStates, setCheckStates] = useState({});
     const stores = [
         {
@@ -54,7 +54,9 @@ const Stores = () => {
     const cretaeStore = () => {
         router.push('/Admin/Storefront/CreateStore');
     };
-
+    const view = () => {
+        nextStep();
+    };
     return (
         <div className={styles.storeBody}>
             <div className={styles.dtoreBodyDiv}>
@@ -121,7 +123,7 @@ const Stores = () => {
                                 </div>
                             </div>
                             <div className={styles.onClick}>
-                                <p>Click to view</p>
+                                <p onClick={view}>Click to view</p>
                             </div>
                         </div>
                     );

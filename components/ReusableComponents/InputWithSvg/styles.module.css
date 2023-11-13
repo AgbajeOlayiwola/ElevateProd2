@@ -1,0 +1,20 @@
+.inputDivSvg {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.inputDivSvg input {
+    padding-left: 50px;
+    border-radius: 5px;
+    border: 1px solid var(--neutral-color-ecobank-mid-gray, #979797);
+    display: flex;
+    height: 48px;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+}
+.inputDivSvg svg {
+    position: absolute;
+    left: 20px;
+    z-index: 1;
+}

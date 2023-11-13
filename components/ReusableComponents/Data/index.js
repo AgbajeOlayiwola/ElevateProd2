@@ -160,12 +160,12 @@ export const SidebarData = [
             },
             {
                 title: 'Logistics',
-                path: '/Admin/Logistics'
+                path: '#'
                 // icon: <BulkTransfer />
             },
             {
                 title: 'eInvoice and eReceipt',
-                path: '/Admin/invoice'
+                path: '#'
                 // icon: <NairaSvg />
             },
             {
@@ -175,12 +175,12 @@ export const SidebarData = [
             },
             {
                 title: 'Cards',
-                path: '/Admin/Cards'
+                path: '#'
                 // icon: <FaIcons.FaHandHoldingUsd />
             },
             {
                 title: 'Business Registration',
-                path: '/Admin/Business'
+                path: '#'
                 // icon: <FaIcons.FaHandHoldingUsd />
             }
         ]

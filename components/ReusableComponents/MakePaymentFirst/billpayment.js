@@ -14,7 +14,7 @@ const BillPayment = ({
     action,
     firstTitle,
     buttonText,
-
+    closeAction,
     airtimeAction,
     scheduleLater,
     dataAction,
@@ -75,7 +75,10 @@ const BillPayment = ({
             {billerCategoriesLoad ? (
                 <Loader />
             ) : loads ? (
-                <SelectBillerForms billerDatails={billerDatails} />
+                <SelectBillerForms
+                    billerDatails={billerDatails}
+                    closeAction={() => closeAction()}
+                />
             ) : (
                 <>
                     <h2 className={styles.firstTitle}>{firstTitle}</h2>

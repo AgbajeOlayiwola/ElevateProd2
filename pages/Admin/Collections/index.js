@@ -18,7 +18,6 @@ import UssdFirst from '../../../components/ReusableComponents/UssdFirst';
 import VirtualAccountFirst from '../../../components/ReusableComponents/VirtualAccount';
 import QrFirst from '../../../components/layout/QrData';
 import { loadpaylinkGen } from '../../../redux/actions/paylinkAction';
-import { loadussdGen } from '../../../redux/actions/ussdGenAction';
 import { useEnrollQrMutation } from '../../../redux/api/authApi';
 import styles from './styles.module.css';
 const Collections = () => {
@@ -410,17 +409,8 @@ const Collections = () => {
                                 firstTitle="Create USSD Payment Code"
                                 buttonText="Generate USSD Codes"
                                 closeAction={handleClose}
-                                action={(data) => {
-                                    // //console.logdata);
-                                    setPaymentDetails(data);
-                                    const ussdData = {
-                                        amount: parseInt(data?.amount, 10),
-                                        accountId: accountPrimarys?.accountId,
-                                        nameOfPayment: data?.accountName,
-                                        paymentDescription: data?.description
-                                    };
-                                    setIsLoading(true);
-                                    dispatch(loadussdGen(ussdData));
+                                action={() => {
+                                    setCount(count + 1);
                                 }}
                                 type="USSD String"
                                 typeAction={() => {
@@ -447,7 +437,6 @@ const Collections = () => {
                                 type="USSD Code"
                                 closeAction={buttonHandleClose}
                                 info={paymentDetails.description}
-                                primary={accountPrimarys.accountId}
                                 ussdStatusClick={() => {
                                     setCount(5);
                                 }}

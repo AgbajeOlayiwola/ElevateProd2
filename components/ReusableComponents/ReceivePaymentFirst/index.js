@@ -9,6 +9,7 @@ import {
     useUssdRefferenceMutation
 } from '../../../redux/api/authApi';
 import { setDynamicQrData } from '../../../redux/slices/dynamicQrSlice';
+import { setUssdData } from '../../../redux/slices/ussddataSlice';
 import ButtonComp from '../Button';
 import CloseButton from '../CloseButtonSvg';
 import Loader from '../Loader';
@@ -216,6 +217,16 @@ const ReceivePaymentFirst = ({
             showToastMessage();
         }
     }, [ussdRefferenceErr]);
+    useEffect(() => {
+        if (ussdRefferenceSuccess) {
+            const data = {
+                ussdData: ussdRefferenceData?.data,
+                bank: selectedBank
+            };
+            dispatch(setUssdData(data));
+            action();
+        }
+    }, [ussdRefferenceSuccess]);
     const showQrToastMessage = () => {
         toast.error(dynamicQrErr?.data?.message, {
             position: toast.POSITION.TOP_RIGHT,

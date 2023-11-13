@@ -8,7 +8,8 @@
     flex-direction: row !important;
 }
 .saveAnd button {
-    width: 30%;
+    width: fit-content;
+    padding: 18px;
 }
 .hr {
     width: 100%;

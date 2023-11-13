@@ -30,6 +30,7 @@ import profileReducer from '../slices/profile';
 import resetPasswordReducer from '../slices/resetpasswordslice';
 import tokenReducer from '../slices/tokenSlice';
 import transferReducer from '../slices/transferSlice';
+import ussdDataReducer from '../slices/ussddataSlice';
 const reducers = combineReducers({
     [authApi.reducerPath]: authApi.reducer,
     [docsApi.reducerPath]: docsApi.reducer,
@@ -47,7 +48,8 @@ const reducers = combineReducers({
     resetPasswordslice: resetPasswordReducer,
     token: tokenReducer,
     dynamicQrData: dynamiQrDataReeducer,
-    analyticsData: analyticsDataReducer
+    analyticsData: analyticsDataReducer,
+    ussdData: ussdDataReducer
 });
 
 const persistConfig = {
@@ -66,7 +68,8 @@ const persistConfig = {
         'resetPasswordslice',
         'token',
         'dynamicQrData',
-        'analyticsData'
+        'analyticsData',
+        'ussdData'
     ]
 };
 

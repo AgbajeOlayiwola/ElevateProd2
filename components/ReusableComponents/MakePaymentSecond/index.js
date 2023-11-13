@@ -164,7 +164,7 @@ const MakePaymentSecond = ({
             showBulkErrorToastMessage();
         }
     }, [bulkTransferErr]);
-    console.log('Total Amount:', totalAmount);
+    console.log('Total Amount:', transfer);
 
     // console.log(transfer);
     return (
@@ -309,22 +309,29 @@ const MakePaymentSecond = ({
                                                 Charges
                                             </p>
                                             <h3>
-                                                {' '}
-                                                {getSymbolFromCurrency(
-                                                    countryToCurrency[
-                                                        `${affiliate?.substring(
-                                                            1
-                                                        )}`
-                                                    ]
-                                                )}{' '}
-                                                {parseFloat(
-                                                    transfer?.totalCharge
-                                                )
-                                                    .toFixed(2)
-                                                    .replace(
-                                                        /\B(?=(\d{3})+(?!\d))/g,
-                                                        ','
-                                                    )}
+                                                {transfer?.totalCharge
+                                                    ? getSymbolFromCurrency(
+                                                          countryToCurrency[
+                                                              `${affiliate?.substring(
+                                                                  1
+                                                              )}`
+                                                          ]
+                                                      ) +
+                                                      parseFloat(
+                                                          transfer?.totalCharge
+                                                      )
+                                                          .toFixed(2)
+                                                          .replace(
+                                                              /\B(?=(\d{3})+(?!\d))/g,
+                                                              ','
+                                                          )
+                                                    : getSymbolFromCurrency(
+                                                          countryToCurrency[
+                                                              `${affiliate?.substring(
+                                                                  1
+                                                              )}`
+                                                          ]
+                                                      ) + 0.0}
                                             </h3>
                                         </div>
                                         <div

@@ -13,6 +13,11 @@ import ButtonComp from '../Button';
 import Loader from '../Loader';
 import socialdata from '../Lotties/loading.json';
 import OtpInput from '../Otpinput';
+import {
+    RegistrationStatus,
+    SuccessMainHeading
+} from '../PopupStyle/styles.module';
+import SuccessCheckSvg from '../ReusableSvgComponents/SuccessCheckSvg';
 import styles from './styles.module.css';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
@@ -148,208 +153,270 @@ const AirtimeOrData = ({
     return (
         <>
             <ToastContainer />
-            <div>
-                <h2 className={styles.firstTitle}>{firstTitle}</h2>
-                <div className={styles.billBody}>
-                    <Formik
-                        // validationSchema={initSchema}
-                        // validateOnChange={true}
-                        initialValues={initialValues}
-                        onSubmit={(values, { setSubmitting }) => {
-                            // console.log(values);
-                            const data = {
-                                // transactionReference: '',
-                                transactionAmount: values?.ammount,
-                                accountNumber: values?.ecoSourceAccount,
-                                paymentDescription: values?.Narration,
-                                affiliateCode: affiliate,
-                                billerCode: values?.networkCode,
-
-                                billerId:
-                                    billerDetailsData?.data?.billerDetail?.billerID.toString(),
-                                productCode:
-                                    billerDetailsData?.data
-                                        ?.billerProductInfo[0]?.productCode,
-                                currency:
-                                    countryToCurrency[
-                                        `${affiliate.substring(1)}`
-                                    ],
-                                mobileNumber: values?.phoneNumbr,
-                                transactionPin: otpValue,
-                                description: 'jhgfd'
-                            };
-                            console.log(data);
-                            airtimeTopup(data);
-                            // nextPage();
-                            setSubmitting(false);
-                        }}
-                    >
-                        {({
-                            values,
-                            errors,
-                            touched,
-                            handleChange,
-                            setFieldValue,
-                            handleSubmit
-                        }) => (
-                            <form onSubmit={handleSubmit}>
+            {airtimeTopupSuccess ? (
+                <>
+                    <div className={styles.PaymentSecond}>
+                        <div className={styles.successPage}>
+                            <div className={styles.successCheck}>
                                 <div>
-                                    <label>Airtime or Data</label>
-                                    <select
-                                        onChange={(e) => {
-                                            if (e.target.value === 'airtime') {
-                                                airNetworks(null);
-                                            }
-                                        }}
-                                    >
-                                        <option value="">Choose</option>
-                                        <option value="airtime">Airtime</option>
-                                        <option value="data">Data</option>
-                                    </select>
+                                    <SuccessCheckSvg />
                                 </div>
-                                <div className={styles.narration}>
-                                    <label>Source Account</label>
-                                    <select
-                                        name="ecoSourceAccount"
-                                        onChange={(e) => {
-                                            const selectedAccount =
-                                                allAccountInfo.find(
-                                                    (account) =>
-                                                        account?.accountNo ===
-                                                        e.target.value
-                                                );
-                                            if (selectedAccount) {
-                                                setFieldValue(
-                                                    'ecoSourceAccount',
-                                                    selectedAccount?.accountNo
-                                                );
-                                                setFieldValue(
-                                                    'ecoAccountId',
-                                                    selectedAccount?.accountId
-                                                );
-                                                setFieldValue(
-                                                    'ecoCurrency',
-                                                    selectedAccount?.currency
-                                                );
-                                            }
-                                        }}
-                                    >
-                                        <option value="">
-                                            Select Account To Use
-                                        </option>
-                                        {allAccountInfo
-                                            .filter(
-                                                (account) => account.accountNo
-                                            )
-                                            .map((account) => {
-                                                return (
-                                                    <>
-                                                        <option
-                                                            className={
-                                                                styles.accntP
-                                                            }
-                                                            value={
-                                                                account?.accountNo
-                                                            }
-                                                        >
-                                                            <p>
-                                                                {
-                                                                    account?.accountNo
-                                                                }
-                                                            </p>
-                                                        </option>
-                                                    </>
-                                                );
-                                            })}
-                                    </select>
-                                    <p className={styles.error}>
-                                        {errors ? (
-                                            <>{errors?.ecoSourceAccount}</>
-                                        ) : null}
-                                    </p>
-                                </div>
-                                <br />
-                                {airNetworksLoad ? (
-                                    <Loader />
-                                ) : (
+                            </div>
+
+                            <RegistrationStatus>
+                                <SuccessMainHeading>
+                                    Airtime Topup Successful
+                                </SuccessMainHeading>
+
+                                <ButtonComp
+                                    disabled={true}
+                                    active={'active'}
+                                    text="Close"
+                                    type="button"
+                                    onClick={closeAction}
+                                />
+                            </RegistrationStatus>
+                        </div>
+                    </div>
+                </>
+            ) : (
+                <div>
+                    <h2 className={styles.firstTitle}>{firstTitle}</h2>
+                    <div className={styles.billBody}>
+                        <Formik
+                            // validationSchema={initSchema}
+                            // validateOnChange={true}
+                            initialValues={initialValues}
+                            onSubmit={(values, { setSubmitting }) => {
+                                // console.log(values);
+                                const data = {
+                                    // transactionReference: '',
+                                    transactionAmount: values?.ammount,
+                                    accountNumber: values?.ecoSourceAccount,
+                                    paymentDescription: values?.Narration,
+                                    affiliateCode: affiliate,
+                                    billerCode: values?.networkCode,
+
+                                    billerId:
+                                        billerDetailsData?.data?.billerDetail?.billerID.toString(),
+                                    productCode:
+                                        billerDetailsData?.data
+                                            ?.billerProductInfo[0]?.productCode,
+                                    currency:
+                                        countryToCurrency[
+                                            `${affiliate.substring(1)}`
+                                        ],
+                                    mobileNumber: values?.phoneNumbr,
+                                    transactionPin: otpValue,
+                                    description: 'jhgfd'
+                                };
+                                console.log(data);
+                                airtimeTopup(data);
+                                // nextPage();
+                                setSubmitting(false);
+                            }}
+                        >
+                            {({
+                                values,
+                                errors,
+                                touched,
+                                handleChange,
+                                setFieldValue,
+                                handleSubmit
+                            }) => (
+                                <form onSubmit={handleSubmit}>
                                     <div>
-                                        <label>Select network</label>
+                                        <label>Airtime or Data</label>
                                         <select
                                             onChange={(e) => {
-                                                setFieldValue(
-                                                    'networkCode',
-                                                    e.target.value
-                                                ),
-                                                    billerDetails({
-                                                        billerCode:
-                                                            e.target.value
-                                                    });
-                                                const selBiller =
-                                                    airNetworksData?.data?.networks.find(
-                                                        (item) =>
-                                                            e.target.value ===
-                                                            item?.code
-                                                    );
-                                                if (selBiller) {
-                                                    console.log(
-                                                        selBiller?.amountType
-                                                    );
-                                                    if (selBiller?.amount) {
-                                                        setArryAmaount(
-                                                            selBiller?.amount.split(
-                                                                ','
-                                                            )
-                                                        );
-                                                    }
-                                                    setSelectedAmountType(
-                                                        selBiller?.amountType
-                                                    );
+                                                if (
+                                                    e.target.value === 'airtime'
+                                                ) {
+                                                    airNetworks(null);
                                                 }
-                                                setShowOtherFields(true);
                                             }}
                                         >
-                                            <option>Choose Network</option>
-                                            {airNetworksData?.data?.networks.map(
-                                                (data, index) => {
-                                                    return (
-                                                        <option
-                                                            key={index}
-                                                            value={data?.code}
-                                                        >
-                                                            {data?.name}
-                                                        </option>
-                                                    );
-                                                }
-                                            )}
+                                            <option value="">Choose</option>
+                                            <option value="airtime">
+                                                Airtime
+                                            </option>
+                                            <option value="data">Data</option>
                                         </select>
                                     </div>
-                                )}
-                                <br />
-                                <br />
-                                {billerDetailsLoad ? (
-                                    <Loader />
-                                ) : showOtherFields ? (
-                                    <>
+                                    <div className={styles.narration}>
+                                        <label>Source Account</label>
+                                        <select
+                                            name="ecoSourceAccount"
+                                            onChange={(e) => {
+                                                const selectedAccount =
+                                                    allAccountInfo.find(
+                                                        (account) =>
+                                                            account?.accountNo ===
+                                                            e.target.value
+                                                    );
+                                                if (selectedAccount) {
+                                                    setFieldValue(
+                                                        'ecoSourceAccount',
+                                                        selectedAccount?.accountNo
+                                                    );
+                                                    setFieldValue(
+                                                        'ecoAccountId',
+                                                        selectedAccount?.accountId
+                                                    );
+                                                    setFieldValue(
+                                                        'ecoCurrency',
+                                                        selectedAccount?.currency
+                                                    );
+                                                }
+                                            }}
+                                        >
+                                            <option value="">
+                                                Select Account To Use
+                                            </option>
+                                            {allAccountInfo
+                                                .filter(
+                                                    (account) =>
+                                                        account.accountNo
+                                                )
+                                                .map((account) => {
+                                                    return (
+                                                        <>
+                                                            <option
+                                                                className={
+                                                                    styles.accntP
+                                                                }
+                                                                value={
+                                                                    account?.accountNo
+                                                                }
+                                                            >
+                                                                <p>
+                                                                    {
+                                                                        account?.accountNo
+                                                                    }
+                                                                </p>
+                                                            </option>
+                                                        </>
+                                                    );
+                                                })}
+                                        </select>
+                                        <p className={styles.error}>
+                                            {errors ? (
+                                                <>{errors?.ecoSourceAccount}</>
+                                            ) : null}
+                                        </p>
+                                    </div>
+                                    <br />
+                                    {airNetworksLoad ? (
+                                        <Loader />
+                                    ) : (
                                         <div>
-                                            <label>Phone Number</label>
-                                            <input
+                                            <label>Select network</label>
+                                            <select
                                                 onChange={(e) => {
                                                     setFieldValue(
-                                                        'phoneNumbr',
+                                                        'networkCode',
                                                         e.target.value
-                                                    );
+                                                    ),
+                                                        billerDetails({
+                                                            billerCode:
+                                                                e.target.value
+                                                        });
+                                                    const selBiller =
+                                                        airNetworksData?.data?.networks.find(
+                                                            (item) =>
+                                                                e.target
+                                                                    .value ===
+                                                                item?.code
+                                                        );
+                                                    if (selBiller) {
+                                                        console.log(
+                                                            selBiller?.amountType
+                                                        );
+                                                        if (selBiller?.amount) {
+                                                            setArryAmaount(
+                                                                selBiller?.amount.split(
+                                                                    ','
+                                                                )
+                                                            );
+                                                        }
+                                                        setSelectedAmountType(
+                                                            selBiller?.amountType
+                                                        );
+                                                    }
+                                                    setShowOtherFields(true);
                                                 }}
-                                                type="text"
-                                                placeholder="phone number"
-                                            />
+                                            >
+                                                <option>Choose Network</option>
+                                                {airNetworksData?.data?.networks.map(
+                                                    (data, index) => {
+                                                        return (
+                                                            <option
+                                                                key={index}
+                                                                value={
+                                                                    data?.code
+                                                                }
+                                                            >
+                                                                {data?.name}
+                                                            </option>
+                                                        );
+                                                    }
+                                                )}
+                                            </select>
                                         </div>
-                                        <br />
-                                        <br />
-                                        {selectedAmountType === 'V' ? (
+                                    )}
+                                    <br />
+                                    <br />
+                                    {billerDetailsLoad ? (
+                                        <Loader />
+                                    ) : showOtherFields ? (
+                                        <>
                                             <div>
-                                                <label>Ammount</label>
-                                                <div className={styles.ammt}>
-                                                    <p>
+                                                <label>Phone Number</label>
+                                                <input
+                                                    onChange={(e) => {
+                                                        setFieldValue(
+                                                            'phoneNumbr',
+                                                            e.target.value
+                                                        );
+                                                    }}
+                                                    type="text"
+                                                    placeholder="phone number"
+                                                />
+                                            </div>
+                                            <br />
+                                            <br />
+                                            {selectedAmountType === 'V' ? (
+                                                <div>
+                                                    <label>Ammount</label>
+                                                    <div
+                                                        className={styles.ammt}
+                                                    >
+                                                        <p>
+                                                            {getSymbolFromCurrency(
+                                                                countryToCurrency[
+                                                                    `${affiliate.substring(
+                                                                        1
+                                                                    )}`
+                                                                ]
+                                                            )}
+                                                        </p>
+                                                        <input
+                                                            onChange={(e) => {
+                                                                setFieldValue(
+                                                                    'ammount',
+                                                                    e.target
+                                                                        .value
+                                                                );
+                                                            }}
+                                                            type="text"
+                                                            placeholder="0.00"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <div>
+                                                    <label>
+                                                        Ammount{' '}
                                                         {getSymbolFromCurrency(
                                                             countryToCurrency[
                                                                 `${affiliate.substring(
@@ -357,105 +424,92 @@ const AirtimeOrData = ({
                                                                 )}`
                                                             ]
                                                         )}
-                                                    </p>
-                                                    <input
-                                                        onChange={(e) => {
-                                                            setFieldValue(
-                                                                'ammount',
-                                                                e.target.value
-                                                            );
-                                                        }}
-                                                        type="text"
-                                                        placeholder="0.00"
-                                                    />
-                                                </div>
-                                            </div>
-                                        ) : (
-                                            <div>
-                                                <label>
-                                                    Ammount{' '}
-                                                    {getSymbolFromCurrency(
-                                                        countryToCurrency[
-                                                            `${affiliate.substring(
-                                                                1
-                                                            )}`
-                                                        ]
-                                                    )}
-                                                </label>
-                                                <div className={styles.ammt}>
-                                                    <select
-                                                        onChange={(e) => {
-                                                            setFieldValue(
-                                                                'ammount',
-                                                                e.target.value
-                                                            );
-                                                        }}
-                                                        type="text"
-                                                        placeholder="data"
+                                                    </label>
+                                                    <div
+                                                        className={styles.ammt}
                                                     >
-                                                        <option>
-                                                            Choose Amount
-                                                        </option>
-                                                        {arrayAmmount?.map(
-                                                            (item, index) => {
-                                                                return (
-                                                                    <option
-                                                                        key={
-                                                                            index
-                                                                        }
-                                                                    >
-                                                                        {item}
-                                                                    </option>
+                                                        <select
+                                                            onChange={(e) => {
+                                                                setFieldValue(
+                                                                    'ammount',
+                                                                    e.target
+                                                                        .value
                                                                 );
-                                                            }
-                                                        )}
-                                                    </select>
+                                                            }}
+                                                            type="text"
+                                                            placeholder="data"
+                                                        >
+                                                            <option>
+                                                                Choose Amount
+                                                            </option>
+                                                            {arrayAmmount?.map(
+                                                                (
+                                                                    item,
+                                                                    index
+                                                                ) => {
+                                                                    return (
+                                                                        <option
+                                                                            key={
+                                                                                index
+                                                                            }
+                                                                        >
+                                                                            {
+                                                                                item
+                                                                            }
+                                                                        </option>
+                                                                    );
+                                                                }
+                                                            )}
+                                                        </select>
+                                                    </div>
                                                 </div>
+                                            )}
+
+                                            <br />
+                                            <div>
+                                                <label>Narration</label>
+                                                <input
+                                                    onChange={(e) => {
+                                                        setFieldValue(
+                                                            'Narration',
+                                                            e.target.value
+                                                        );
+                                                    }}
+                                                    type="text"
+                                                    placeholder="phone number"
+                                                />
                                             </div>
-                                        )}
+                                            <br />
+                                            <br />
+                                            <p>Transaction Pin</p>
+                                            <div className={styles.transaction}>
+                                                <OtpInput
+                                                    onOtpChange={
+                                                        handleOtpChange
+                                                    }
+                                                    otpfields={6}
+                                                />
+                                            </div>
+                                            <br />
+                                            <br />
+                                        </>
+                                    ) : null}
+                                    <br />
+                                    <br />
 
-                                        <br />
-                                        <div>
-                                            <label>Narration</label>
-                                            <input
-                                                onChange={(e) => {
-                                                    setFieldValue(
-                                                        'Narration',
-                                                        e.target.value
-                                                    );
-                                                }}
-                                                type="text"
-                                                placeholder="phone number"
-                                            />
-                                        </div>
-                                        <br />
-                                        <br />
-                                        <p>Transaction Pin</p>
-                                        <div className={styles.transaction}>
-                                            <OtpInput
-                                                onOtpChange={handleOtpChange}
-                                                otpfields={6}
-                                            />
-                                        </div>
-                                        <br />
-                                        <br />
-                                    </>
-                                ) : null}
-                                <br />
-                                <br />
-
-                                <ButtonComp
-                                    disabled={true}
-                                    active={'active'}
-                                    text={buttonText}
-                                    type="submit"
-                                    loads={airtimeTopupLoad}
-                                />
-                            </form>
-                        )}
-                    </Formik>
+                                    <ButtonComp
+                                        disabled={true}
+                                        active={'active'}
+                                        text={buttonText}
+                                        type="submit"
+                                        loads={airtimeTopupLoad}
+                                    />
+                                </form>
+                            )}
+                        </Formik>
+                    </div>
                 </div>
-            </div>
+            )}
         </>
     );
 };

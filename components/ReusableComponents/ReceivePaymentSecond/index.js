@@ -32,9 +32,10 @@ const ReceivePaymentSecond = ({
     const [destinationTrue, setDestinationTrue] = useState(true);
     const [addnew, setAddnew] = useState(false);
     const [newAmount, setNewAmount] = useState('');
+    const [code, setCode] = useState();
     const Ref = useRef(null);
     const { dynamicQrData } = useSelector((store) => store);
-
+    const { ussdData } = useSelector((store) => store);
     const [timer, setTimer] = useState('00:30:00');
 
     const getTimeRemaining = (e) => {
@@ -204,6 +205,114 @@ const ReceivePaymentSecond = ({
         currency: 'NGN',
         currencyDisplay: 'narrowSymbol'
     });
+    const banks = [
+        {
+            bankName: 'GTBank',
+            bankCode: '*737*',
+            bankID: '000'
+        },
+        {
+            bankName: 'First Bank',
+            bankCode: '*894*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Zenith Bank',
+            bankCode: '*966*',
+            bankID: '000'
+        },
+        {
+            bankName: 'UBA',
+            bankCode: '*919*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Stanbic Bank',
+            bankCode: '*909*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Sterling Bank',
+            bankCode: '*822*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Unity Bank',
+            bankCode: '*7799*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Keystone Bank',
+            bankCode: '*7111*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Fidelity Bank',
+            bankCode: '*770*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Ecobank',
+            bankCode: '*326*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Wema Bank',
+            bankCode: '*945*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Access Bank',
+            bankCode: '*901*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Access (Diamond )',
+            bankCode: '*426*',
+            bankID: '000'
+        },
+        {
+            bankName: 'FCMB',
+            bankCode: '*329*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Heritage Bank',
+            bankCode: '*745*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Union Bank',
+            bankCode: '*826*',
+            bankID: '000'
+        },
+        {
+            bankName: 'VFD MFB',
+            bankCode: '*5037*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Rubies (Highstreet) MFB',
+            bankCode: '*7797*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Globus bank',
+            bankCode: '*989*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Kuda Bank',
+            bankCode: '*5593*',
+            bankID: '000'
+        }
+    ];
+    useEffect(() => {
+        const gtbankCode = banks
+            .filter((bank) => bank.bankName === 'GTBank')
+            .map((gtbank) => gtbank.bankCode.replace('PLC', ''))[0];
+        setCode(gtbankCode);
+    }, []);
 
     return (
         <Overlay overlay={overlay}>
@@ -292,7 +401,7 @@ const ReceivePaymentSecond = ({
                                 <input
                                     className={styles.inputBordr}
                                     type="text"
-                                    value={link}
+                                    value={`${code}${ussdData?.ussdData?.reference}#`}
                                 />
                                 <button
                                     className={styles.copyBtn}
@@ -322,7 +431,9 @@ const ReceivePaymentSecond = ({
                         <div className={styles.deadlineValues}>
                             <p>
                                 {title === 'USSD'
-                                    ? formatter.format(amount)
+                                    ? formatter.format(
+                                          ussdData?.ussdData?.amount
+                                      )
                                     : title === 'Payment Link Generated'
                                     ? formatter.format(amountPaylink)
                                     : formatter.format(

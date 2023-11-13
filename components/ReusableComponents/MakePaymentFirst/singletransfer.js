@@ -265,7 +265,8 @@ const SingleTransfer = ({
                 isEcobankToEcobankTransaction: false,
                 currency: formRef?.current?.values?.ecoCurrency,
                 destinationBank: formRef?.current?.values?.ecoChooseBank,
-
+                destinationAccountNo:
+                    formRef?.current?.values?.ecoAccountNumber,
                 beneficiaryName: accountInquiryData?.data?.accountName,
                 destinationBank: selectedBank?.institutionName,
                 destinationBankCode: selectedBank?.institutionId,
