@@ -5,21 +5,6 @@
     z-index: 2;
     align-items: center;
 }
-.editbtn {
-    position: absolute;
-    z-index: 99999;
-    right: 11px;
-    top: 12px;
-}
-.Logoeditbtn {
-    position: absolute;
-    z-index: 99999;
-    right: 1px;
-    top: 2px;
-}
-.logoDIv {
-    position: relative;
-}
 .accountNumberCopy {
     border-radius: 5px;
     border: 0.5px solid var(--primary-deep-blue, #102572);
@@ -161,7 +146,6 @@
 }
 
 .freezeAccount {
-    position: relative;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -178,6 +162,17 @@
     flex-direction: column;
     gap: 25px;
 }
+.fronts {
+    display: flex;
+    gap: 25px;
+    width: 100%;
+    overflow: scroll;
+    scrollbar-width: none;
+}
+.fronts::-webkit-scrollbar {
+    display: none;
+}
+
 .front label {
     color: #7a7978;
     font-family: Inter;
@@ -230,20 +225,6 @@
     display: flex;
     justify-content: center;
 }
-.logoUpload {
-    width: 100%;
-}
-.info {
-    position: relative;
-}
-.links {
-    position: relative;
-    display: flex;
-    gap: 20px;
-    padding-left: 50px;
-    justify-content: space-between;
-    width: 92%;
-}
 .hrDiv hr {
     width: 90%;
     border-color: #eaeaea;
@@ -256,7 +237,6 @@
     gap: 22px;
 }
 .link {
-    position: relative;
     display: flex;
     padding-left: 50px;
     justify-content: space-between;
@@ -737,6 +717,23 @@
     left: -4px;
     transition: 0.5s;
 }
+.categpory {
+    position: absolute;
+    padding: 15px;
+    background-color: white;
+    border-radius: 10px;
+    left: 73px;
+    top: 20px;
+}
+.button {
+    padding: 7px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    border-radius: 8px;
+    background: #6ccf00;
+}
 
 .beneChecked {
     position: relative;
@@ -745,7 +742,9 @@
     cursor: pointer;
     margin-bottom: 0px !important;
 }
-
+.customizeBody {
+    position: relative;
+}
 .beneChecked input {
     position: absolute;
     z-index: 1;

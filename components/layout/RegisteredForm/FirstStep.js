@@ -57,10 +57,10 @@ const FirstStep = ({ setFormData, formData, action }) => {
         }
     ] = useResendExisitingOtpMutation();
     useEffect(() => {
-        if (verifyExistingOtpSuccess) {
+        if (verifyExistingOtpSuccess || verifyExistingOtpErr) {
             action();
         }
-    }, [verifyExistingOtpSuccess]);
+    }, [verifyExistingOtpSuccess, verifyExistingOtpErr]);
     const handleInputKeyPress = (event, inputIndex) => {
         if (event.key === 'Backspace' || event.key === 'Delete') {
             event.preventDefault();

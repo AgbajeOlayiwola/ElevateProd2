@@ -1,19 +1,19 @@
 import React from 'react';
+import { BsSearch } from 'react-icons/bs';
 import CartSvg from '../CartSvg';
 import CrownSvg from '../CrownSvg';
 import SettingSvg from '../SettingSvg';
 import styles from './styles.module.css';
-import { BsSearch } from 'react-icons/bs';
 
-const StoreNavbar = () => {
+const StoreNavbar = ({ store }) => {
     return (
         <div className={styles.nav}>
             <div className={styles.storesNamme}>
                 <div className={styles.crown}>
                     <CrownSvg />
-                    Isaac Stores
+                    {store?.storeFrontName}
                 </div>
-                <p className={styles.storeiD}>Isaac Stores</p>
+                <p className={styles.storeiD}>{store?.storeFrontName}</p>
             </div>
             <div className={styles.search}>
                 <div className={styles.searchDiv}>

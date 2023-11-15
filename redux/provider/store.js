@@ -20,6 +20,7 @@ import { usersApi } from '../api/usersApi';
 import accountNumberReducer from '../slices/accountNumberSlice';
 import allAccountInfoReducr from '../slices/allAccountInfoSlice';
 import analyticsDataReducer from '../slices/analyticsData';
+import createSToreReducer from '../slices/creatStoreSlice';
 import dynamiQrDataReeducer from '../slices/dynamicQrSlice';
 import existingUserDetailsReducer from '../slices/existingUserData';
 import faceMatchDetailsReducr from '../slices/facematchSlice';
@@ -28,6 +29,7 @@ import moreAccountNumberDetailsReducer from '../slices/moreAccountNumberDetails'
 import pinnedReducer from '../slices/pinned';
 import profileReducer from '../slices/profile';
 import resetPasswordReducer from '../slices/resetpasswordslice';
+import storeSliceReducer from '../slices/storeSlice';
 import tokenReducer from '../slices/tokenSlice';
 import transferReducer from '../slices/transferSlice';
 import ussdDataReducer from '../slices/ussddataSlice';
@@ -49,7 +51,9 @@ const reducers = combineReducers({
     token: tokenReducer,
     dynamicQrData: dynamiQrDataReeducer,
     analyticsData: analyticsDataReducer,
-    ussdData: ussdDataReducer
+    ussdData: ussdDataReducer,
+    createStoreSliceData: createSToreReducer,
+    storeSlice: storeSliceReducer
 });
 
 const persistConfig = {
@@ -69,7 +73,9 @@ const persistConfig = {
         'token',
         'dynamicQrData',
         'analyticsData',
-        'ussdData'
+        'ussdData',
+        'createStoreSliceData',
+        'storeSlice'
     ]
 };
 

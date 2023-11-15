@@ -768,11 +768,296 @@ export const authApi = createApi({
                     body: {}
                 };
             }
+        }),
+        creatStorefront: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'create-storefront',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        deletStorefront: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'delete-storefront',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        deletAllStorefront: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'delete-all-storefronts',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        getStoreFront: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'get-store',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        getAllSToreFront: builder.mutation({
+            query: () => {
+                return {
+                    url: 'get-all-storefronts',
+                    method: 'post',
+                    body: {}
+                };
+            }
+        }),
+        makeDfaultStoreFront: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'default-storefront',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        updateStoreFront: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'update-storefront',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        makeEnable: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'make-enable',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        updateFaqs: builder.mutation({
+            query: () => {
+                return {
+                    url: 'update-faqs',
+                    method: 'post',
+                    body: {}
+                };
+            }
+        }),
+        getFaqs: builder.mutation({
+            query: () => {
+                return {
+                    url: 'get-faqs',
+                    method: 'post',
+                    body: {}
+                };
+            }
+        }),
+        createeInventory: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'create-inventory',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        updateInventory: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'update-inventory',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        getInventoriesByCategory: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'inventories-by-category',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        getInventoriesByCollection: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'inventories-by-collection',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        getAllInventoriesById: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'inventories-by-storeid',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        deleteAllInventories: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'delete-all-inventories',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        deleteByInventoryid: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'delete-by-inventoryid',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        getInventory: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'get-inventory',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+
+        getAllCollections: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'get-all-collections',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        getAllCategory: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'get-all-categories',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        createCategory: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'create-category',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        createCollection: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'create-collection',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        deleteAllCollection: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'delete-all-collections',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        deleteCollection: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'delete-collections',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        getCollection: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'get-collection',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        updateCollction: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'update-collection',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+
+        deleteAllCatgories: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'delete-all-categories',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        deleteCategory: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'delete-category',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        getCategory: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'get-category',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        updateCategory: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'update-category',
+                    method: 'post',
+                    body
+                };
+            }
         })
     })
 });
 
 export const {
+    useGetAllInventoriesByIdMutation,
+    useCreateCategoryMutation,
+    useCreateCollectionMutation,
+    useGetAllCategoryMutation,
+    useGetAllCollectionsMutation,
+    useCreateeInventoryMutation,
+    useUpdateStoreFrontMutation,
+    useDeletStorefrontMutation,
+    useDeletAllStorefrontMutation,
+    useMakeEnableMutation,
+    useGetAllSToreFrontMutation,
+    useGetStoreFrontMutation,
+    useCreatStorefrontMutation,
     useFreezeAcctMutation,
     useUnfreezeAcctMutation,
     useLoanScoringMutation,

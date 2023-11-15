@@ -119,11 +119,11 @@ const StepTwoBVNAuthenticator = ({
     };
 
     useEffect(() => {
-        if (verifyOtpSuccess) {
+        if (verifyOtpSuccess || verifyOtpErr) {
             console.log('otp Error');
             nextStep();
         }
-    }, [verifyOtpSuccess]);
+    }, [verifyOtpSuccess, verifyOtpErr]);
     return (
         <div className={styles.bvnBody}>
             <div className={styles.cover}>

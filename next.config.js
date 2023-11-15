@@ -3,6 +3,9 @@ const nextConfig = {
     reactStrictMode: true,
     productionBrowserSourceMaps: true,
     swcMinify: false,
+    images: {
+        domains: ['res.cloudinary.com']
+    },
     compiler: {
         removeConsole: true
     },

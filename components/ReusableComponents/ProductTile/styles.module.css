@@ -1,10 +1,11 @@
 .items {
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    border-radius: 8px;
+    border-radius: 12px;
+    overflow: hidden;
     border: 1px solid #dbdbdb;
     display: flex;
-    width: 307px;
-    height: 320px;
+    width: fit-content;
+    height: fit-content;
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;

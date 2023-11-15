@@ -85,3 +85,7 @@
     width: fit-content;
     padding: 18px;
 }
+.error {
+    color: red;
+    font-size: 12px;
+}

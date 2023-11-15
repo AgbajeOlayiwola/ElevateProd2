@@ -46,6 +46,7 @@ const CreateStoreFront = () => {
                     <div className={styles.storeFrontSteps}>
                         <div>
                             <div
+                                onClick={() => setPage(0)}
                                 className={
                                     page === 0
                                         ? styles.detBrand
@@ -65,6 +66,7 @@ const CreateStoreFront = () => {
                         <hr className={styles.hr} />
                         <div>
                             <div
+                                onClick={() => setPage(1)}
                                 className={
                                     page === 1
                                         ? styles.detBrand

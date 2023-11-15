@@ -7,7 +7,7 @@ import Stores from '../../../components/layout/Storefront/Stores';
 import styles from './styles.module.css';
 
 const Storefront = () => {
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(1);
 
     const router = useRouter();
     const showProduct = () => {
@@ -25,10 +25,16 @@ const Storefront = () => {
     const multi = () => {
         switch (page) {
             case 0:
-                return <Stores nextStep={() => setPage(page + 1)} />;
+                return (
+                    <Stores
+                        nextStep={() => setPage(page + 1)}
+                        nextInaventory={() => setPage(3)}
+                    />
+                );
             case 1:
                 return (
                     <EditStores
+                        goBackward={() => setPage(0)}
                         showProduct={showProduct}
                         inventory={inventory}
                         nextPage={nextPage}

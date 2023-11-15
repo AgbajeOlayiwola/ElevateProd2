@@ -21,6 +21,12 @@ const InputFile = ({
             setImageUrl(imageUrl);
             setSelectedFile(selectedImage);
             // onImageUrlChange(selectedImage);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const base64Data = reader.result;
+                onImageUrlChange(base64Data); // Pass base64 data to the parent component
+            };
+            reader.readAsDataURL(selectedImage);
         }
     };
 

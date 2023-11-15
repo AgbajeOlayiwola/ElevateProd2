@@ -1,8 +1,9 @@
+import Image from 'next/image';
 import React, { useState } from 'react';
+import { useCreateeInventoryMutation } from '../../../../../../redux/api/authApi';
 import InputFile from '../../../../../ReusableComponents/InputFile';
 import PlusSvg from '../../../../../ReusableComponents/ReusableSvgComponents/PlusSvg';
 import styles from './styles.module.css';
-import Image from 'next/image';
 const Step2 = () => {
     const [assignLog, setAssignLog] = useState(true);
     const saveANdContinue = () => {
@@ -11,6 +12,17 @@ const Step2 = () => {
     const addNew = () => {
         setAssignLog((prev) => !prev);
     };
+    const [
+        createeInventory,
+        {
+            data: createeInventoryData,
+            isLoading: createeInventoryLoad,
+            isSuccess: createeInventorySuccess,
+            isError: createeInventoryFalse,
+            error: createeInventoryErr,
+            reset: createeInventoryReset
+        }
+    ] = useCreateeInventoryMutation();
     return (
         <div className={styles.second}>
             {assignLog ? (
