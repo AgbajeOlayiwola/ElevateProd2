@@ -1085,11 +1085,31 @@ export const authApi = createApi({
                     body
                 };
             }
+        }),
+        addCart: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'add-cart',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        storefrontAnalyticsSummary: builder.mutation({
+            query: () => {
+                return {
+                    url: 'storefront-analytics-summary',
+                    method: 'post',
+                    body: {}
+                };
+            }
         })
     })
 });
 
 export const {
+    useStorefrontAnalyticsSummaryMutation,
+    useAddCartMutation,
     useStorelinkGetStoreMutation,
     useSetPrimaryAcctMutation,
     useGetIdMutation,

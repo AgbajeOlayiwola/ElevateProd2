@@ -6,7 +6,7 @@ import StoreFrontAnalytics from '../../../components/layout/Analytics/StoreFront
 import styles from './styles.module.css';
 
 const Analytics = () => {
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(1);
     const conditionalComponent = () => {
         switch (page) {
             case 0:

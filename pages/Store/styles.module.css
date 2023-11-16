@@ -6,7 +6,8 @@
     font-weight: 700;
     line-height: normal;
 }
-.showProd > a {
+
+.addCart {
     display: grid;
     grid-template-columns: 23% 23% 23% 23%;
     grid-row-gap: 2%;

@@ -1,11 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Cover from '../../components/ReusableComponents/Cover';
 import ProductTile from '../../components/ReusableComponents/ProductTile';
 import StoreNavbar from '../../components/layout/navbar/Navbar';
 import { useStorelinkGetStoreMutation } from '../../redux/api/authApi';
+import { setCart } from '../../redux/slices/cart';
 import styles from './styles.module.css';
 
 const Store = ({ children }) => {
+    const dispatch = useDispatch();
     const [
         storelinkGetStore,
         {
@@ -17,6 +20,7 @@ const Store = ({ children }) => {
             reset: storelinkGetStoreReset
         }
     ] = useStorelinkGetStoreMutation();
+
     useEffect(() => {
         // Get the current URL
         const currentUrl = new URL(window.location.href);
@@ -39,7 +43,11 @@ const Store = ({ children }) => {
             console.log('No ID parameter found in the URL');
         }
     }, []);
-
+    const [count, setCount] = useState(0);
+    const call = () => {
+        setCount(count + 1);
+        dispatch(setCart(count));
+    };
     return (
         <Cover>
             <StoreNavbar store={storelinkGetStoreData?.data} />
@@ -52,13 +60,13 @@ const Store = ({ children }) => {
                 <p>Top Friday Sales</p>
             </div>
             <div className={styles.showProd}>
-                <a href={'/Store/ViewProduct'}>
+                <div className={styles.addCart}>
                     {storelinkGetStoreData?.data?.inventories?.data.map(
                         (item, index) => {
-                            return <ProductTile data={item} />;
+                            return <ProductTile data={item} call={call} />;
                         }
                     )}
-                </a>
+                </div>
             </div>
         </Cover>
     );

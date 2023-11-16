@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { BsArrowDownRight, BsArrowUpRight } from 'react-icons/bs';
 import { useDispatch } from 'react-redux';
-import { useTransactionsSummaryMutation } from '../../../../redux/api/authApi';
+import {
+    useStorefrontAnalyticsSummaryMutation,
+    useTransactionsSummaryMutation
+} from '../../../../redux/api/authApi';
 import { setanalyticsData } from '../../../../redux/slices/analyticsData';
 import { abbreviateNumber } from '../../../../utils/abreviateNumber';
 import AnalyticsData from '../../../ReusableComponents/AnalyticsData';
@@ -25,8 +28,21 @@ const GeneralAnalytics = ({ nextPage, nextStore }) => {
             reset: transactionsSummaryReset
         }
     ] = useTransactionsSummaryMutation();
+    const [
+        storefrontAnalyticsSummary,
+        {
+            data: storefrontAnalyticsSummaryData,
+            isLoading: storefrontAnalyticsSummaryLoad,
+            isSuccess: storefrontAnalyticsSummarySuccess,
+            isError: storefrontAnalyticsSummaryFalse,
+            error: storefrontAnalyticsSummaryErr,
+            reset: storefrontAnalyticsSummaryReset
+        }
+    ] = useStorefrontAnalyticsSummaryMutation();
+
     useEffect(() => {
         transactionsSummary(null);
+        storefrontAnalyticsSummary(null);
     }, []);
     useEffect(() => {
         if (transactionsSummarySuccess) {
@@ -297,7 +313,10 @@ const GeneralAnalytics = ({ nextPage, nextStore }) => {
                                 percentage="5%"
                                 isMoney={false}
                                 inflowOrOutflow="Storefront Visits"
-                                amount={0}
+                                amount={
+                                    storefrontAnalyticsSummaryData?.data
+                                        ?.store_front_visits
+                                }
                             />
                             <AnalyticsData
                                 symbol={<BsArrowDownRight />}
@@ -306,7 +325,10 @@ const GeneralAnalytics = ({ nextPage, nextStore }) => {
                                 percentage="5%"
                                 inflowOrOutflow="Inventories Added"
                                 isMoney={false}
-                                amount={0}
+                                amount={
+                                    storefrontAnalyticsSummaryData?.data
+                                        ?.inventories_added
+                                }
                             />
                         </div>
                         <br />
@@ -318,7 +340,10 @@ const GeneralAnalytics = ({ nextPage, nextStore }) => {
                                 percentage="5%"
                                 isMoney={false}
                                 inflowOrOutflow="Total Orders"
-                                amount="0"
+                                amount={
+                                    storefrontAnalyticsSummaryData?.data
+                                        ?.total_orders
+                                }
                             />
                             <AnalyticsData
                                 symbol={<BsArrowDownRight />}
@@ -327,7 +352,10 @@ const GeneralAnalytics = ({ nextPage, nextStore }) => {
                                 isMoney={false}
                                 percentage="5%"
                                 inflowOrOutflow="Completed Orders"
-                                amount="0"
+                                amount={
+                                    storefrontAnalyticsSummaryData?.data
+                                        ?.completed_orders
+                                }
                             />
                         </div>
                         <br />

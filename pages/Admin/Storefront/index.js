@@ -7,7 +7,7 @@ import Stores from '../../../components/layout/Storefront/Stores';
 import styles from './styles.module.css';
 
 const Storefront = () => {
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
 
     const router = useRouter();
     const showProduct = () => {

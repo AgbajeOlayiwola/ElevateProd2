@@ -20,6 +20,7 @@ import { usersApi } from '../api/usersApi';
 import accountNumberReducer from '../slices/accountNumberSlice';
 import allAccountInfoReducr from '../slices/allAccountInfoSlice';
 import analyticsDataReducer from '../slices/analyticsData';
+import cartReducer from '../slices/cart';
 import createSToreReducer from '../slices/creatStoreSlice';
 import dynamiQrDataReeducer from '../slices/dynamicQrSlice';
 import existingUserDetailsReducer from '../slices/existingUserData';
@@ -33,6 +34,7 @@ import storeSliceReducer from '../slices/storeSlice';
 import tokenReducer from '../slices/tokenSlice';
 import transferReducer from '../slices/transferSlice';
 import ussdDataReducer from '../slices/ussddataSlice';
+import viewProductDataReducer from '../slices/viewProductSlice';
 const reducers = combineReducers({
     [authApi.reducerPath]: authApi.reducer,
     [docsApi.reducerPath]: docsApi.reducer,
@@ -53,7 +55,9 @@ const reducers = combineReducers({
     analyticsData: analyticsDataReducer,
     ussdData: ussdDataReducer,
     createStoreSliceData: createSToreReducer,
-    storeSlice: storeSliceReducer
+    storeSlice: storeSliceReducer,
+    cartSlice: cartReducer,
+    viewProductSliceData: viewProductDataReducer
 });
 
 const persistConfig = {
@@ -75,7 +79,9 @@ const persistConfig = {
         'analyticsData',
         'ussdData',
         'createStoreSliceData',
-        'storeSlice'
+        'storeSlice',
+        'cartSliceData',
+        'viewProductSliceData'
     ]
 };
 
