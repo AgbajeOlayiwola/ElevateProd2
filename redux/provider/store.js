@@ -21,6 +21,7 @@ import accountNumberReducer from '../slices/accountNumberSlice';
 import allAccountInfoReducr from '../slices/allAccountInfoSlice';
 import analyticsDataReducer from '../slices/analyticsData';
 import cartReducer from '../slices/cart';
+import cartItemReducer from '../slices/cartItems';
 import createSToreReducer from '../slices/creatStoreSlice';
 import dynamiQrDataReeducer from '../slices/dynamicQrSlice';
 import existingUserDetailsReducer from '../slices/existingUserData';
@@ -57,7 +58,8 @@ const reducers = combineReducers({
     createStoreSliceData: createSToreReducer,
     storeSlice: storeSliceReducer,
     cartSlice: cartReducer,
-    viewProductSliceData: viewProductDataReducer
+    viewProductSliceData: viewProductDataReducer,
+    cartItem: cartItemReducer
 });
 
 const persistConfig = {
@@ -81,7 +83,8 @@ const persistConfig = {
         'createStoreSliceData',
         'storeSlice',
         'cartSliceData',
-        'viewProductSliceData'
+        'viewProductSliceData',
+        'cartItem'
     ]
 };
 

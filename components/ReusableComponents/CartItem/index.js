@@ -1,37 +1,55 @@
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './styles.module.css';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
-const CartItem = () => {
+const CartItem = ({ items, liftCount }) => {
     const affiliate = localStorage.getItem('affiliateCode');
+    const [count, setCount] = useState(1);
+
     return (
         <div className={styles.cartItem}>
             <div className={styles.divImage}>
                 <Image
-                    src="/Assets/Images/guccishirt.png"
+                    src={items?.image[0]}
                     width={88}
                     height={98}
                     alt="cart image"
                 />
                 <div className={styles.addItemFlex}>
                     <div className={styles.gucci}>
-                        <p className={styles.itmName}>Gucci Black Shirt</p>
+                        <p className={styles.itmName}>{items?.name}</p>
                         <div className={styles.size}>
                             <div className={styles.attributes}>
                                 <p>Size:</p>
-                                <p> XL</p>
-                            </div>
-                            <div className={styles.attributes}>
-                                <p>Size:</p>
-                                <p> XL</p>
+                                {items?.size.map((item, index) => {
+                                    return <p> {item}</p>;
+                                })}
                             </div>
                         </div>
                     </div>
                     <div className={styles.addItem}>
-                        <div className={styles.add}>+</div>
-                        <input type="text" className={styles.inputs} />
-                        <div className={styles.add}>-</div>
+                        <div
+                            className={styles.add}
+                            onClick={() => {
+                                setCount(count + 1), liftCount(count);
+                            }}
+                        >
+                            +
+                        </div>
+                        <input
+                            type="text"
+                            className={styles.inputs}
+                            value={count}
+                        />
+                        <div
+                            className={styles.add}
+                            onClick={() => {
+                                setCount(count - 1), liftCount(count);
+                            }}
+                        >
+                            -
+                        </div>
                     </div>
                 </div>
             </div>
@@ -41,7 +59,7 @@ const CartItem = () => {
                         countryToCurrency[affiliate?.substring(1)]
                     )}
 
-                    {parseFloat(45000)
+                    {parseFloat(items?.price)
                         .toFixed(2)
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 </p>

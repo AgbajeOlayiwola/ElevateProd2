@@ -21,7 +21,8 @@
 }
 .size div {
     display: flex;
-    gap: 5px;
+    gap: 12px;
+    align-items: center;
 }
 .size div p {
     margin: 0px;

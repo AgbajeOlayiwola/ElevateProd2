@@ -2,16 +2,18 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { MdOutlineRemoveShoppingCart } from 'react-icons/md';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Cover from '../../../components/ReusableComponents/Cover';
 import ProductTile from '../../../components/ReusableComponents/ProductTile';
 import StoreNavbar from '../../../components/layout/navbar/Navbar';
 import { useStorelinkGetStoreMutation } from '../../../redux/api/authApi';
+import { setCartItem } from '../../../redux/slices/cartItems';
 import styles from './styles.module.css';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
 const ViewProduct = () => {
     const affiliate = localStorage.getItem('affiliateCode');
+    const dispatch = useDispatch();
     const { viewProductSliceData } = useSelector((store) => store);
     const [
         storelinkGetStore,
@@ -31,6 +33,7 @@ const ViewProduct = () => {
         logistics: ['GIGM', 'Jumia', 'Express', 'FastFast']
     };
     const buyNow = () => {
+        dispatch(setCartItem(viewProductSliceData));
         router.push('/Store/Cart');
     };
     return (
@@ -112,10 +115,10 @@ const ViewProduct = () => {
                                 )}
                             </div>
                         </div>
-                        <br />
+                        {/* <br />
                         <hr />
-                        <br />
-                        <div className={styles.desc}>
+                        <br /> */}
+                        {/* <div className={styles.desc}>
                             <h1>FAQs</h1>
                             <div className={styles.col}>
                                 <p>Question 1</p>
@@ -156,7 +159,7 @@ const ViewProduct = () => {
                                 adipiscing elit. Amet sit justo, consequat
                                 adipiscing dictum praesent sed diam.
                             </p>
-                        </div>
+                        </div> */}
                         <br />
                         <hr />
                         <br />

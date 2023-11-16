@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { MdArrowBack } from 'react-icons/md';
+import { useSelector } from 'react-redux';
 import Cover from '../../../components/ReusableComponents/Cover';
 import EmptyCartSVg from '../../../components/ReusableComponents/EmptyCartSvg';
 import CartsAndItem from '../../../components/layout/Cart/CartsAndItem';
@@ -8,13 +9,30 @@ import styles from './styles.module.css';
 
 const Cart = () => {
     const [isEmpty, setIsEmpty] = useState(false);
+    const { cartItem } = useSelector((store) => store);
+
     const [page, setPage] = useState(0);
+    const [number, setNumber] = useState(1);
+    const gatNumber = (val) => {
+        setNumber(val);
+    };
     const multi = () => {
         switch (page) {
             case 0:
-                return <CartsAndItem nextStep={() => setPage(page + 1)} />;
+                return (
+                    <CartsAndItem
+                        nextStep={() => setPage(page + 1)}
+                        gatNumber={gatNumber}
+                    />
+                );
             case 1:
-                return <Checkout />;
+                return (
+                    <Checkout
+                        items={cartItem}
+                        num={number}
+                        upgradeOrder={setPage(page - 1)}
+                    />
+                );
         }
     };
     return (

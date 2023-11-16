@@ -5,11 +5,11 @@ import PaymmentSuccess from '../PaymmentSuccess';
 import styles from './styles.module.css';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
-const Checkout = () => {
+const Checkout = ({ num, items, upgradeOrder }) => {
     const affiliate = localStorage.getItem('affiliateCode');
     const [page, setPage] = useState(0);
     const [isSucces, setIsSuccess] = useState(false);
-    const multi = () => {
+    const multi = ({ items }) => {
         switch (page) {
             case 0:
                 return <PayNow nextStep={setPage(page + 1)} />;
@@ -28,13 +28,11 @@ const Checkout = () => {
                 <div className={styles.products}>
                     <div>
                         <p className={styles.prod}>PRODUCT</p>
-                        <p>Gucci Black Shirt</p>
-                        <p>Gucci Black Shirt</p>
+                        <p>{items?.name}</p>
                     </div>
                     <div>
                         <p className={styles.prod}>QTY</p>
-                        <p>6pcs</p>
-                        <p>4pcs</p>
+                        <p>{num}pcs</p>
                     </div>
                 </div>
                 <br />
@@ -43,13 +41,13 @@ const Checkout = () => {
                 <div className={styles.products}>
                     <div className={styles.prods}>
                         <p className={styles.products}>
-                            <span>6pcs</span> of Gucci black shirt
+                            <span>{num}pcs</span> of {items?.name}
                         </p>
                         <p className={styles.pcs}>
                             {getSymbolFromCurrency(
                                 countryToCurrency[affiliate?.substring(1)]
                             )}{' '}
-                            {parseFloat(1230)
+                            {parseFloat(items?.ptice)
                                 .toFixed(2)
                                 .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                             /pcs
@@ -60,7 +58,7 @@ const Checkout = () => {
                         {getSymbolFromCurrency(
                             countryToCurrency[affiliate?.substring(1)]
                         )}{' '}
-                        {parseFloat(70000)
+                        {parseFloat(num * items?.price)
                             .toFixed(2)
                             .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                     </p>
@@ -75,14 +73,14 @@ const Checkout = () => {
                             {getSymbolFromCurrency(
                                 countryToCurrency[affiliate?.substring(1)]
                             )}
-                            {parseFloat(1230)
+                            {parseFloat(num * items?.price)
                                 .toFixed(2)
                                 .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                         </p>
                     </div>
                 </div>
                 <div className={styles.proceef}>
-                    <button>Update your order</button>
+                    <button onClick={upgradeOrder}>Update your order</button>
                 </div>
             </div>
             <div className={styles.checkoutInfo}>
