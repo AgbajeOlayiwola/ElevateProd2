@@ -6,15 +6,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Webcam from 'react-webcam';
 import {
-    useCreateExistingUserProfileMutation,
-    useFaceMatchWithoutBvnMutation,
-    useFacematchithAccountnumberMutation,
-    useGetMoreAccountNumberDetailsMutation
-} from '../../../redux/api/authApi';
-import { setfaceMatchDetails } from '../../../redux/slices/facematchSlice';
-import { setMoreAccountNumberDetails } from '../../../redux/slices/moreAccountNumberDetails';
-import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
-import ButtonComp from '../../ReusableComponents/Button';
+    useAddAccountMutation,
+    useFacematchithAccountnumberMutation
+} from '../../../../../redux/api/authApi';
+import ButtonComp from '../../../../ReusableComponents/Button';
 import styles from './styles.module.css';
 const videoConstraints = {
     width: 390,
@@ -32,7 +27,16 @@ const _base64ToArrayBuffer = (base64String) => {
         return bytes.buffer;
     }
 };
-const Liveness = ({ formData, type, action, back }) => {
+const LivenessForAccount = ({
+    formData,
+    type,
+    action,
+    back,
+    account,
+    acct,
+    id,
+    close
+}) => {
     const webcamRef = React.useRef(null);
     const [succes, setSuccess] = useState('');
     const [image, setImage] = useState('');
@@ -42,17 +46,6 @@ const Liveness = ({ formData, type, action, back }) => {
     const { existingUserDetails } = useSelector((store) => store);
     const { faceMatchDetails } = useSelector((store) => store);
     const { moreAccountNumberDetails } = useSelector((store) => store);
-    const [
-        getMoreAccountNumberDetails,
-        {
-            data: getMoreAccountNumberDetailsData,
-            isLoading: getMoreAccountNumberDetailsLoad,
-            isSuccess: getMoreAccountNumberDetailsSuccess,
-            isError: getMoreAccountNumberDetailsFalse,
-            error: getMoreAccountNumberDetailsErr,
-            reset: getMoreAccountNumberDetailsReset
-        }
-    ] = useGetMoreAccountNumberDetailsMutation();
     const [
         facematchithAccountnumber,
         {
@@ -65,77 +58,33 @@ const Liveness = ({ formData, type, action, back }) => {
         }
     ] = useFacematchithAccountnumberMutation();
     const [
-        faceMatchWithoutBvn,
+        addAccount,
         {
-            data: faceMatchWithoutBvnData,
-            isLoading: faceMatchWithoutBvnLoad,
-            isSuccess: faceMatchWithoutBvnSuccess,
-            isError: faceMatchWithoutBvnFalse,
-            error: faceMatchWithoutBvnErr,
-            reset: faceMatchWithoutBvnReset
+            data: addAccountData,
+            isLoading: addAccountLoad,
+            isSuccess: addAccountSuccess,
+            isError: addAccountFalse,
+            error: addAccountErr,
+            reset: addAccountReset
         }
-    ] = useFaceMatchWithoutBvnMutation();
-    const [
-        createExistingUserProfile,
-        {
-            data: createExistingUserProfileData,
-            isLoading: createExistingUserProfileLoad,
-            isSuccess: createExistingUserProfileSuccess,
-            isError: createExistingUserProfileFalse,
-            error: createExistingUserProfileErr,
-            reset: createExistingUserProfileReset
-        }
-    ] = useCreateExistingUserProfileMutation();
+    ] = useAddAccountMutation();
+
     const capture = React.useCallback(() => {
         const ImageSrcII = webcamRef?.current?.getScreenshot();
         setImage(ImageSrcII);
-        console.log(ImageSrcII);
-        // const faceMMatchData = {
-        //     userFaceBase64: ImageSrcII?.replace(
-        //         'data:image/jpeg;base64,',
-        //         ''
-        //     ).trim(),
-        //     idNumber: affiliatData
-        //         ? moreAccountNumberDetails?.accounts?.bvn
-        //         : ''
-        // };
 
         const faceMMatchData = {
             userFaceBase64: ImageSrcII?.replace(
                 'data:image/jpeg;base64,',
                 ''
             ).trim(),
-            accountNumber: existingUserDetails?.accounts[0]?.accountNumber
+            accountNumber: account
         };
         facematchithAccountnumber(faceMMatchData);
     }, [webcamRef]);
-    useEffect(() => {
-        getMoreAccountNumberDetails({
-            accountNo: existingUserDetails?.accounts[0]?.accountNumber
-        });
-    }, []);
-    useEffect(() => {
-        if (getMoreAccountNumberDetailsSuccess) {
-            dispatch(
-                setMoreAccountNumberDetails(
-                    getMoreAccountNumberDetailsData?.data
-                )
-            );
-        }
-    }, [getMoreAccountNumberDetailsSuccess]);
 
     console.log(moreAccountNumberDetails);
-    const showToastErrorMessage = () => {
-        toast.error(faceMatchWithoutBvnErr?.data?.message, {
-            position: toast.POSITION.TOP_RIGHT
-        });
-    };
 
-    useEffect(() => {
-        if (faceMatchWithoutBvnErr) {
-            showToastErrorMessage();
-        }
-    }, [faceMatchWithoutBvnErr]);
     const showToastMessage = () => {
         toast.error(facematchithAccountnumberErr?.data?.message, {
             position: toast.POSITION.TOP_RIGHT
@@ -148,17 +97,28 @@ const Liveness = ({ formData, type, action, back }) => {
     }, [facematchithAccountnumberErr]);
 
     useEffect(() => {
-        if (facematchithAccountnumberSuccess || faceMatchWithoutBvnSuccess) {
-            console.log(facematchithAccountnumberData);
-            dispatch(setfaceMatchDetails(facematchithAccountnumberData));
-            action();
+        if (facematchithAccountnumberSuccess) {
+            addAccount({
+                account_number: account,
+                account_name: acct?.data?.accountName,
+                currency:
+                    countryToCurrency[`${acct?.data?.affiliate?.substring(1)}`],
+                customer_type: 'Individual',
+                account_class: acct?.data?.accountClass,
+                customer_id: id
+            });
         }
-    }, [facematchithAccountnumberSuccess, faceMatchWithoutBvnSuccess]);
+    }, [facematchithAccountnumberSuccess]);
+    useEffect(() => {
+        if (addAccountSuccess) {
+            close();
+        }
+    }, [addAccountSuccess]);
 
     return (
-        <div className={styles.body}>
+        <div>
             <ToastContainer />
-            <div className={styles.cover}>
+            <div>
                 <div className={styles.imageOut}>
                     <Formik
                         onSubmit={(values, { setSubmitting }) => {
@@ -175,10 +135,6 @@ const Liveness = ({ formData, type, action, back }) => {
                         }) => (
                             <form>
                                 <div>
-                                    <ArrowBackSvg
-                                        action={back}
-                                        color="#102572"
-                                    />
                                     <p className={styles.takeSelf}>
                                         Take a Lively Selfie
                                     </p>
@@ -189,16 +145,14 @@ const Liveness = ({ formData, type, action, back }) => {
 
                                     <div
                                         className={
-                                            faceMatchWithoutBvnLoad ||
                                             facematchithAccountnumberLoad
                                                 ? styles.imageOuter
-                                                : faceMatchWithoutBvnErr
+                                                : facematchithAccountnumberSuccess
                                                 ? styles.errorInner
                                                 : styles.imageInner
                                         }
                                     >
-                                        {faceMatchWithoutBvnLoad ||
-                                        facematchithAccountnumberLoad ? (
+                                        {facematchithAccountnumberLoad ? (
                                             <Image
                                                 src={image}
                                                 height={600}
@@ -216,8 +170,7 @@ const Liveness = ({ formData, type, action, back }) => {
                                         )}
                                     </div>
                                 </div>
-                                {faceMatchWithoutBvnLoad ||
-                                facematchithAccountnumberLoad ? (
+                                {facematchithAccountnumberLoad ? (
                                     <p>
                                         Hold On Your Face Is Being Verified.....
                                     </p>
@@ -227,10 +180,7 @@ const Liveness = ({ formData, type, action, back }) => {
                                     disabled={true}
                                     onClick={capture}
                                     type="button"
-                                    loads={
-                                        faceMatchWithoutBvnLoad ||
-                                        facematchithAccountnumberLoad
-                                    }
+                                    loads={facematchithAccountnumberLoad}
                                     text={
                                         succes ===
                                         'facial verification successful'
@@ -247,4 +197,4 @@ const Liveness = ({ formData, type, action, back }) => {
     );
 };
 
-export default Liveness;
+export default LivenessForAccount;

@@ -6,6 +6,12 @@
     font-weight: 700;
     line-height: normal;
 }
+.showProd > a {
+    display: grid;
+    grid-template-columns: 23% 23% 23% 23%;
+    grid-row-gap: 2%;
+    grid-column-gap: 2%;
+}
 .shopNow {
     display: inline-flex;
     padding: 8px 24px;

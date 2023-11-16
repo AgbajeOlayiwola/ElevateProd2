@@ -549,16 +549,16 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                             <div className={styles.phoneHeader}>
                                                 <span>
                                                     <img
-                                                        src={formData.flag}
+                                                        src={formData?.flag}
                                                         alt=""
                                                     />
                                                 </span>
-                                                <p>{formData.baseCurrency}</p>
+                                                <p>{formData?.baseCurrency}</p>
                                             </div>
                                             <div
                                                 className={styles.phoneDetails}
                                             >
-                                                <p>{formData.countryCode}</p>
+                                                <p>{formData?.countryCode}</p>
                                                 <input
                                                     type="number"
                                                     placeholder="812 345 6789"
@@ -726,7 +726,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                             <select
                                                 name=""
                                                 id=""
-                                                value={formData.state}
+                                                value={formData?.state}
                                                 onChange={(event) =>
                                                     setLocalState(
                                                         event.target.value

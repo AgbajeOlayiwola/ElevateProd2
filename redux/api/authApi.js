@@ -1040,11 +1040,61 @@ export const authApi = createApi({
                     body
                 };
             }
+        }),
+        verifyAccount: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'account-inquiry',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        addAccount: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'add-account',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        getId: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'get-customerid',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        setPrimaryAcct: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'set-primary-account',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        storelinkGetStore: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'storelink-get-store',
+                    method: 'post',
+                    body
+                };
+            }
         })
     })
 });
 
 export const {
+    useStorelinkGetStoreMutation,
+    useSetPrimaryAcctMutation,
+    useGetIdMutation,
+    useVerifyAccountMutation,
+    useAddAccountMutation,
     useGetAllInventoriesByIdMutation,
     useCreateCategoryMutation,
     useCreateCollectionMutation,

@@ -11,6 +11,12 @@
     right: 11px;
     top: 12px;
 }
+.seeMore {
+    color: #005b82 !important;
+    margin: 0px;
+    /* padding: 0px !important; */
+    cursor: pointer;
+}
 .Logoeditbtn {
     position: absolute;
     z-index: 99999;
@@ -239,11 +245,13 @@
 .links {
     position: relative;
     display: flex;
-    gap: 20px;
-    padding-left: 50px;
+    flex-direction: column;
+    gap: 12px;
+    padding-left: 14px;
     justify-content: space-between;
-    width: 92%;
+    width: 90%;
 }
+
 .hrDiv hr {
     width: 90%;
     border-color: #eaeaea;
@@ -257,11 +265,12 @@
 }
 .link {
     position: relative;
-    display: flex;
-    padding-left: 50px;
+    /* display: flex; */
+    padding-left: 14px;
     justify-content: space-between;
     width: 50%;
 }
+
 /* .link p svg {
     color: #102572;
     border-radius: 200px;
@@ -318,7 +327,8 @@
 
 .saveBene {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .actionText {

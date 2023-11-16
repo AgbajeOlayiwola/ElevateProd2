@@ -120,6 +120,17 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
     const onImageUrlChange = (data) => {
         setLogoImage(data.replace('data:image/png;base64,', ''));
     };
+    const loremIpsumText = storeSlice?.storeFrontDescription;
+    const [showFullText, setShowFullText] = useState(false);
+
+    const toggleShowFullText = () => {
+        setShowFullText(!showFullText);
+    };
+
+    const displayedText = showFullText
+        ? loremIpsumText
+        : `${loremIpsumText.slice(0, 100)}...`;
+
     return (
         <>
             <div className={styles.top}>
@@ -248,7 +259,7 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
                                         console.log(editBanner);
                                 }}
                             >
-                                <EditSvg />
+                                {/* <EditSvg /> */}
                             </div>
                             {/* {editNameDesc ? (
                                 <>
@@ -273,7 +284,17 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
                             <>
                                 <h1>{name}</h1>
                                 <div className={styles.saveBene}>
-                                    <p>{description}</p>
+                                    <p>{displayedText}</p>
+                                    {loremIpsumText?.length > 100 && (
+                                        <p
+                                            onClick={toggleShowFullText}
+                                            className={styles.seeMore}
+                                        >
+                                            {showFullText
+                                                ? 'See less'
+                                                : 'See more'}
+                                        </p>
+                                    )}
                                 </div>
                             </>
                             {/* )} */}

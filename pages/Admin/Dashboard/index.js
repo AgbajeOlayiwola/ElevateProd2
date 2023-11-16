@@ -10,7 +10,9 @@ import styles from './styles.module.css';
 // import withAuth from '../../components/HOC/withAuth.js';
 import Link from 'next/link';
 import { AiFillCheckCircle } from 'react-icons/ai';
+import { FaArrowLeftLong } from 'react-icons/fa6';
 import { IoMdCopy } from 'react-icons/io';
+import { MdCancel } from 'react-icons/md';
 import Lottie from 'react-lottie';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
@@ -29,10 +31,15 @@ import TotlaCollctionsSvg from '../../../components/ReusableComponents/ReusableS
 import TransactionSvg from '../../../components/ReusableComponents/ReusableSvgComponents/TransactionSvg';
 import SingleTrans from '../../../components/ReusableComponents/SingleTransSvg';
 import TransactionStatus from '../../../components/ReusableComponents/TransactionStatus';
+import AddExistinAccount from '../../../components/layout/Addaccount/AddExistingAccount';
+import SelectOption from '../../../components/layout/Addaccount/SelectOption';
+import StepThreeCompleteProfile1 from '../../../components/layout/NotRegisteredForms/StepThreeCompleteProfile1';
 import {
     useCreateTransactionPinMutation,
     useGetAcctBalsMutation,
+    useGetIdMutation,
     useGetProfileMutation,
+    useSetPrimaryAcctMutation,
     useTransactionHistoryMutation,
     useTransactionsSummaryMutation
 } from '../../../redux/api/authApi';
@@ -94,21 +101,18 @@ const Dashboard = () => {
     let pending = 0;
     let failed = 0;
     const [accountUpgrade, setAccountUpgrade] = useState(true);
+    const [addAcct, setAddAcct] = useState(false);
     const affiliate = localStorage.getItem('affiliateCode');
     const [balance, setBalance] = useState(0.0);
-    const [tableDetails, setTableDetails] = useState([]);
-    const [userProfileData, setUserProfileData] = useState([]);
-    const [dateState, setDateState] = useState(false);
-    const [acctNum, setAcctNumm] = useState('');
+    const { profile } = useSelector((store) => store);
+    console.log(profile);
     const [isCopied, setIsCopied] = useState(false);
     const [acctNumber, setAcctNumber] = useState('');
-    const [isLoading, setIsLoading] = useState(true);
-    const [inflow, setInflow] = useState(formatter.format(0));
-    const [outflow, setOutflow] = useState(formatter.format(0));
-    const [totalMoney, setTotalMMoney] = useState(formatter.format(0));
+    const [currency, setCurrency] = useState();
     const [copyAcctInfo, setCopyAcctInfo] = useState();
     const [alert, setAlert] = useState(false);
     //olayiwola agbje ola_199x
+    const [page, setPage] = useState(0);
     const [
         getAcctBals,
         {
@@ -121,6 +125,28 @@ const Dashboard = () => {
         }
     ] = useGetAcctBalsMutation();
     const [
+        getId,
+        {
+            data: getIdData,
+            isLoading: getIdLoad,
+            isSuccess: getIdSuccess,
+            isError: getIdFalse,
+            error: getIdErr,
+            reset: getIdReset
+        }
+    ] = useGetIdMutation();
+    const [
+        setPrimaryAcct,
+        {
+            data: setPrimaryAcctData,
+            isLoading: setPrimaryAcctLoad,
+            isSuccess: setPrimaryAcctSuccess,
+            isError: setPrimaryAcctFalse,
+            error: setPrimaryAcctErr,
+            reset: setPrimaryAcctReset
+        }
+    ] = useSetPrimaryAcctMutation();
+    const [
         transactionHistory,
         {
             data: transactionHistoryData,
@@ -131,10 +157,52 @@ const Dashboard = () => {
             reset: transactionHistoryReset
         }
     ] = useTransactionHistoryMutation();
+    const showToastAddSuccessMessage = () => {
+        toast.success('Account number successfully added', {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
+    const conditionalComponent = () => {
+        switch (page) {
+            case 0:
+                return (
+                    <SelectOption
+                        moveToAddNew={() => setPage(1)}
+                        moveToAddExisting={() => setPage(2)}
+                    />
+                );
+            case 1:
+                return (
+                    <AddExistinAccount
+                        id={getIdData?.data?.customerId}
+                        close={() => {
+                            setAddAcct((prev) => !prev),
+                                showToastAddSuccessMessage();
+                        }}
+                    />
+                );
+            case 2:
+                return (
+                    <StepThreeCompleteProfile1
+                        type={
+                            profile?.user?.customerCategory === 'INDIVIDUAL'
+                                ? true
+                                : false
+                        }
+                    />
+                );
+        }
+    };
+
     useEffect(() => {
         getAcctBals();
         transactionsSummary(null);
     }, []);
+    useEffect(() => {
+        if (setPrimaryAcctSuccess) {
+            getAcctBals();
+        }
+    }, [setPrimaryAcctSuccess]);
 
     useEffect(() => {
         if (getAcctBalsSuccess) {
@@ -144,6 +212,12 @@ const Dashboard = () => {
                     .map((account) => account.accountNo)
                     .filter(Boolean)
             );
+            setCurrency(
+                getAcctBalsData?.data
+                    .filter((account) => account?.isPrimaryAccount === 'Y') // Filter by primary flag
+                    .map((account) => account.currency)
+                    .filter(Boolean)
+            );
             setBalance(
                 getAcctBalsData?.data
                     .filter((account) => account?.isPrimaryAccount === 'Y') // Filter by primary flag
@@ -151,6 +225,11 @@ const Dashboard = () => {
                     .filter(Boolean)
             );
             dispatch(setAllAccountInfo(getAcctBalsData?.data));
+        }
+        if (acctNumber) {
+            getId({
+                accountNo: acctNumber[0]
+            });
         }
     }, [getAcctBalsSuccess]);
     const socialOptions = {
@@ -277,8 +356,6 @@ const Dashboard = () => {
     ] = useGetProfileMutation();
     const [otpValue, setOtpValue] = useState('');
 
-    const { profile } = useSelector((store) => store);
-
     const handleOtpChange = (otp) => {
         setOtpValue(otp);
     };
@@ -319,6 +396,25 @@ const Dashboard = () => {
     return (
         <div className={styles.statementCover}>
             <ToastContainer />
+            {addAcct ? (
+                <div className={styles.overlay}>
+                    <div className={styles.overlayBg}>
+                        <div className={styles.back}>
+                            <p>
+                                <FaArrowLeftLong onClick={() => setPage(0)} />
+                            </p>
+                            <p
+                                onClick={() => {
+                                    setAddAcct((prev) => !prev), setPage(0);
+                                }}
+                            >
+                                <MdCancel />{' '}
+                            </p>
+                        </div>
+                        {conditionalComponent()}
+                    </div>
+                </div>
+            ) : null}
             {pinCondition === 'N' ? (
                 <div className={styles.overlay}>
                     <form onSubmit={handleSubmit} className={styles.handleForm}>
@@ -537,13 +633,7 @@ const Dashboard = () => {
                                     <div className={styles.moneybodyDiv}>
                                         <div>
                                             <div className={styles.cardMone}>
-                                                {getSymbolFromCurrency(
-                                                    countryToCurrency[
-                                                        `${affiliate?.substring(
-                                                            1
-                                                        )}`
-                                                    ]
-                                                )}
+                                                {currency}
                                                 {outType ? (
                                                     <h1>********</h1>
                                                 ) : (
@@ -689,14 +779,9 @@ const Dashboard = () => {
                                                                 }
                                                             >
                                                                 <p>
-                                                                    {' '}
-                                                                    {getSymbolFromCurrency(
-                                                                        countryToCurrency[
-                                                                            `${affiliate?.substring(
-                                                                                1
-                                                                            )}`
-                                                                        ]
-                                                                    )}
+                                                                    {
+                                                                        account?.currency
+                                                                    }
                                                                 </p>
                                                                 {outType ? (
                                                                     <p>
@@ -704,11 +789,14 @@ const Dashboard = () => {
                                                                     </p>
                                                                 ) : (
                                                                     <p>
-                                                                        {parseFloat(
-                                                                            account?.availableBal
-                                                                        ).toLocaleString(
-                                                                            'en-US'
-                                                                        )}
+                                                                        {account?.availableBal ===
+                                                                        ''
+                                                                            ? 0
+                                                                            : parseFloat(
+                                                                                  account?.availableBal
+                                                                              ).toLocaleString(
+                                                                                  'en-US'
+                                                                              )}
                                                                     </p>
                                                                 )}
                                                             </div>
@@ -721,7 +809,16 @@ const Dashboard = () => {
                                                                     : styles.nothing
                                                             }
                                                         >
-                                                            <AiFillCheckCircle />
+                                                            <AiFillCheckCircle
+                                                                onClick={() => {
+                                                                    setPrimaryAcct(
+                                                                        {
+                                                                            accountNo:
+                                                                                account?.accountNo
+                                                                        }
+                                                                    );
+                                                                }}
+                                                            />
                                                         </div>
                                                     </>
                                                 );
@@ -732,7 +829,7 @@ const Dashboard = () => {
                                 )}
                                 <div
                                     className={styles.addAccount}
-                                    // onClick={openAddAccountModal}
+                                    onClick={setAddAcct}
                                 >
                                     Add Account
                                 </div>

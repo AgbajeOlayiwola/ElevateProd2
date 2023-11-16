@@ -13,6 +13,24 @@
     background: #0000001a;
     z-index: 10;
 }
+.overlay {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    background: #00000049;
+}
+.overlayBg {
+    background: white;
+    padding: 20px;
+    height: fit-content;
+    max-height: 88vh;
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+}
+.overlayBg::-webkit-scrollbar {
+    display: none;
+}
 .noTrans {
     text-align: center;
 }
@@ -22,6 +40,19 @@
     padding: 20px 60px;
     background-color: white;
     border-radius: 50px;
+}
+.back {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.back p:nth-child(1) {
+    color: #005b82;
+    font-size: 20px;
+}
+.back p:nth-child(2) {
+    color: red;
+    font-size: 25px;
 }
 .handleForm {
     display: flex;

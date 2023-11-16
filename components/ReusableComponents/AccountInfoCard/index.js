@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 
 import { AiFillCheckCircle } from 'react-icons/ai';
@@ -49,6 +49,7 @@ const AccountsInfoCard = ({ userProfileData }) => {
     const [newAccuntId, setNewAccountId] = useState();
     const { allAccountInfo } = useSelector((store) => store);
     const { profile } = useSelector((store) => store);
+    const [currency, setCurrency] = useState();
     console.log(allAccountInfo);
     useEffect(() => {
         setAcctNumber(
@@ -63,6 +64,12 @@ const AccountsInfoCard = ({ userProfileData }) => {
                 .map((account) => account?.availableBal)
                 .filter(Boolean)
         );
+        setCurrency(
+            allAccountInfo
+                .filter((account) => account?.isPrimaryAccount === 'Y') // Filter by primary flag
+                .map((account) => account.currency)
+                .filter(Boolean)
+        );
     }, []);
     return (
         <div className={styles.moneyCont}>
@@ -74,11 +81,7 @@ const AccountsInfoCard = ({ userProfileData }) => {
                                 <div className={styles.cardMone}>
                                     <h1>
                                         {' '}
-                                        {getSymbolFromCurrency(
-                                            countryToCurrency[
-                                                `${affiliate?.substring(1)}`
-                                            ]
-                                        )}{' '}
+                                        {currency}
                                         {outType
                                             ? '********'
                                             : parseFloat(
@@ -175,18 +178,18 @@ const AccountsInfoCard = ({ userProfileData }) => {
                                             {account?.accountNo}
                                         </p>
 
-                                        <p>
-                                            {getSymbolFromCurrency(
-                                                countryToCurrency[
-                                                    `${affiliate?.substring(1)}`
-                                                ]
-                                            )}
-                                            {outType
-                                                ? '********'
-                                                : parseFloat(
-                                                      account?.availableBal
-                                                  ).toLocaleString('en-US')}
-                                        </p>
+                                        {outType ? (
+                                            <p>******</p>
+                                        ) : (
+                                            <p>
+                                                {account?.currency}{' '}
+                                                {account?.availableBal === ''
+                                                    ? 0
+                                                    : parseFloat(
+                                                          account?.availableBal
+                                                      ).toLocaleString('en-US')}
+                                            </p>
+                                        )}
                                     </div>
                                     <div
                                         className={

@@ -27,7 +27,6 @@ const CreateStore1 = ({ nextPage }) => {
 
     const initSchema = yup.object().shape({
         storeName: yup.string().required('Store name is required'),
-        storeLink: yup.string().required('Store link is required'),
         storePhoneNumber: yup.string().required('Store phonnumber is required'),
         storeEmail: yup.string().required('Store email is required')
     });
@@ -58,7 +57,7 @@ const CreateStore1 = ({ nextPage }) => {
                         phoneNumbers: [values?.storePhoneNumber],
                         email: values?.storeEmail,
                         whatsappLink: `wa.me/${values?.whatsapp}`,
-                        facebookLink: `facebook.com${values?.facebook}`,
+                        facebookLink: `facebook.com/${values?.facebook}`,
                         instagramLink: `instagram.com/${values?.instagram}`,
                         websiteLink: `https://www.ecobank.com/storefront/${values?.storeFrontLink}`,
                         isPrimary: false,
@@ -97,23 +96,7 @@ const CreateStore1 = ({ nextPage }) => {
                                 </p>
                             ) : null}
                         </div>
-                        <div>
-                            <label>Storefront Link</label>
-                            <input
-                                type="text"
-                                placeholder="Name"
-                                value={values?.storeLink}
-                                name="storeLink"
-                                onChange={(e) =>
-                                    setFieldValue('storeLink', e.target.value)
-                                }
-                            />
-                            {errors ? (
-                                <p className={styles.error}>
-                                    {errors?.storeLink}
-                                </p>
-                            ) : null}
-                        </div>
+
                         <div>
                             <label>Store description (optional)</label>
                             <textarea
