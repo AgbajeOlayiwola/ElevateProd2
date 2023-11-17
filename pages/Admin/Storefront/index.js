@@ -22,6 +22,7 @@ const Storefront = () => {
         setPage(1);
         setInventory(0);
     };
+    const [editStore, setEditStore] = useState();
     const multi = () => {
         switch (page) {
             case 0:
@@ -41,9 +42,16 @@ const Storefront = () => {
                     />
                 );
             case 2:
-                return <ViewProduct retrunBack={retrunBack} />;
+                return (
+                    <ViewProduct
+                        retrunBack={retrunBack}
+                        editInventory={() => {
+                            setPage(3), setEditStore('edit');
+                        }}
+                    />
+                );
             case 3:
-                return <AddNewInventoryForm />;
+                return <AddNewInventoryForm isEdit={editStore} />;
         }
     };
     return <>{multi()}</>;

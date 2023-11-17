@@ -223,6 +223,19 @@
     display: flex;
     flex-direction: column;
 }
+.addSubmit {
+    display: flex;
+    align-items: center;
+    color: #005b82;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.remove {
+    cursor: pointer;
+    color: red;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 .freezeAccount p {
     color: #545454;
     font-family: Inter;
@@ -324,7 +337,115 @@
     padding: 6px 8px;
     cursor: pointer;
 }
+.inventorySingle {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-radius: 8px;
+    border: 1.5px solid #ededed;
+    margin-top: 20px;
+}
+.inventorySingle p {
+    margin: 0px;
+}
+.inventorySingleFirs {
+    display: flex;
+    gap: 5px;
+}
+.ammount {
+    display: flex;
+}
+.ammount > p:nth-child(1) {
+    color: #616161;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 0.12px;
+}
+.ammount > p:nth-child(2) {
+    color: #616161;
+    font-family: Inter;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0.11px;
+}
+.nameLocation {
+    display: flex;
+    gap: 5px;
+}
+.dets {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.nameLocation > p:nth-child(1) {
+    color: #121212;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 0.12px;
+}
+.nameLocation > p:nth-child(2) {
+    color: #616161;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0.12px;
+}
+.time {
+    color: #000;
+    text-align: right;
+    font-family: Inter;
+    font-size: 10px;
+    font-style: italic;
+    font-weight: 300;
+    line-height: normal;
+    letter-spacing: 0.1px;
+    display: flex;
+}
+.divDets {
+    display: flex;
+    gap: 20px;
+}
+.ship {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+.ship > div {
+    color: #fff;
 
+    text-align: center;
+    font-family: Inter;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    border-radius: 200px;
+    background: var(--secondary-green, #549e04);
+    display: flex;
+    padding: 2px 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+.ship > p {
+    color: #121212;
+    text-align: right;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
 .saveBene {
     display: flex;
     flex-direction: column;
@@ -344,7 +465,7 @@
 .ordersCont {
     display: flex;
     margin-top: 48px;
-    width: 58%;
+    width: 100%;
     background: #f4f4f4;
     border-radius: 16px;
 }

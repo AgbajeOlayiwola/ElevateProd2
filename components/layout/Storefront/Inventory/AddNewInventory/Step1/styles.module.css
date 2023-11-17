@@ -11,6 +11,12 @@
     gap: 30px;
     flex-direction: column;
 }
+.colorsDiv {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
 .flexInput {
     border-top: none;
     border-left: none;
@@ -69,7 +75,9 @@
 }
 .avail {
     display: flex;
-    gap: 12px;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
 }
 .addNews {
     color: var(--primary-deep-blue, #102572);

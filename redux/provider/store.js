@@ -16,8 +16,10 @@ import storage from 'redux-persist/lib/storage';
 import { authApi } from '../api/authApi';
 import { cacApi } from '../api/cacApi';
 import { docsApi } from '../api/docsApi';
+import { logisticsApi } from '../api/logisticsApi';
 import { usersApi } from '../api/usersApi';
 import accountNumberReducer from '../slices/accountNumberSlice';
+import addInventoryReducer from '../slices/addInventorySlice';
 import allAccountInfoReducr from '../slices/allAccountInfoSlice';
 import analyticsDataReducer from '../slices/analyticsData';
 import cartReducer from '../slices/cart';
@@ -35,12 +37,14 @@ import storeSliceReducer from '../slices/storeSlice';
 import tokenReducer from '../slices/tokenSlice';
 import transferReducer from '../slices/transferSlice';
 import ussdDataReducer from '../slices/ussddataSlice';
+import viewInventoryReducer from '../slices/viewInventorySlice';
 import viewProductDataReducer from '../slices/viewProductSlice';
 const reducers = combineReducers({
     [authApi.reducerPath]: authApi.reducer,
     [docsApi.reducerPath]: docsApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
     [cacApi.reducerPath]: cacApi.reducer,
+    [logisticsApi.reducerPath]: logisticsApi.reducer,
     profile: profileReducer,
     language: languageReducer,
     existingUserDetails: existingUserDetailsReducer,
@@ -59,7 +63,9 @@ const reducers = combineReducers({
     storeSlice: storeSliceReducer,
     cartSlice: cartReducer,
     viewProductSliceData: viewProductDataReducer,
-    cartItem: cartItemReducer
+    cartItem: cartItemReducer,
+    addInventory: addInventoryReducer,
+    viewInventory: viewInventoryReducer
 });
 
 const persistConfig = {
@@ -84,7 +90,9 @@ const persistConfig = {
         'storeSlice',
         'cartSliceData',
         'viewProductSliceData',
-        'cartItem'
+        'cartItem',
+        'addInventory',
+        'viewInventory'
     ]
 };
 
@@ -105,7 +113,12 @@ export const store = configureStore({
                     REGISTER
                 ]
             }
-        }).concat(authApi.middleware, docsApi.middleware, cacApi.middleware)
+        }).concat(
+            authApi.middleware,
+            docsApi.middleware,
+            cacApi.middleware,
+            logisticsApi.middleware
+        )
 });
 
 export const useAppDispatch = () => useDispatch();

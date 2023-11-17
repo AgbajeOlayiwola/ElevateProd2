@@ -1,11 +1,14 @@
 import { Formik } from 'formik';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
     useCreateCategoryMutation,
     useCreateCollectionMutation,
     useGetAllCategoryMutation,
     useGetAllCollectionsMutation,
+    useUpdateFaqsMutation,
     useUpdateStoreFrontMutation
 } from '../../../../../redux/api/authApi';
 import ButtonComp from '../../../../ReusableComponents/Button';
@@ -22,12 +25,22 @@ const CustomizeStoreFront = ({
     name,
     whatsapp,
     instagram,
-    facebook
+    facebook,
+    phone,
+    goBackTostore
 }) => {
     const [addCategory, setAddCategory] = useState(false);
     const [categoryname, setCategoryName] = useState('');
     const [collection, setCollction] = useState(false);
     const [collectionName, setCollectionName] = useState('');
+
+    const initialFaqData = {
+        storeFrontId: storeSlice?.id,
+        faqs: [{ question: '', answer: '' }],
+        returnPolicy: ''
+    };
+
+    const [faqData, setFaqData] = useState(initialFaqData);
     const [
         createCollection,
         {
@@ -39,6 +52,18 @@ const CustomizeStoreFront = ({
             reset: createCollectionReset
         }
     ] = useCreateCollectionMutation();
+    const [
+        updateFaqs,
+        {
+            data: updateFaqsData,
+            isLoading: updateFaqsLoad,
+            isSuccess: updateFaqsSuccess,
+            isError: updateFaqsFalse,
+            error: updateFaqsErr,
+            reset: updateFaqsReset
+        }
+    ] = useUpdateFaqsMutation();
+
     const [
         createCategory,
         {
@@ -84,11 +109,12 @@ const CustomizeStoreFront = ({
             reset: updateStoreFrontReset
         }
     ] = useUpdateStoreFrontMutation();
+
     const initialValues = {
         storeName: storeSlice?.storeFrontName,
         storeLink: '',
         storeDescription: storeSlice?.storeFrontDescription,
-        storePhon: storeSlice?.phoneNumbers[0],
+        storePhone: phone,
         storEmail: storeSlice?.email,
         storeWhatsapp: storeSlice?.whatsappLink,
         storeFacbbook: storeSlice?.facebookLink,
@@ -106,7 +132,7 @@ const CustomizeStoreFront = ({
 
     useEffect(() => {
         if (updateStoreFrontSuccess) {
-            router('/Admin/Storefront');
+            goBackTostore();
         }
     }, [updateStoreFrontSuccess]);
     useEffect(() => {
@@ -121,9 +147,55 @@ const CustomizeStoreFront = ({
             getAllCollections({ storeFrontId: storeSlice?.id });
         }
     }, [createCollectionSuccess]);
+    const handleQuestionChange = (index, question) => {
+        const updatedFaqs = [...faqData.faqs];
+        updatedFaqs[index].question = question;
+        setFaqData({ ...faqData, faqs: updatedFaqs });
+    };
 
+    const handleAnswerChange = (index, answer) => {
+        const updatedFaqs = [...faqData.faqs];
+        updatedFaqs[index].answer = answer;
+        setFaqData({ ...faqData, faqs: updatedFaqs });
+    };
+
+    const handleAddFaq = () => {
+        setFaqData({
+            ...faqData,
+            faqs: [...faqData.faqs, { question: '', answer: '' }]
+        });
+    };
+
+    const handleRemoveFaq = (index) => {
+        const updatedFaqs = [...faqData.faqs];
+        updatedFaqs.splice(index, 1);
+        setFaqData({ ...faqData, faqs: updatedFaqs });
+    };
+
+    const handleReturnPolicyChange = (returnPolicy) => {
+        setFaqData({ ...faqData, returnPolicy });
+    };
+
+    const handleSubmitFaqs = () => {
+        // Handle submission of faqData
+        console.log(faqData);
+        // Add logic to send data to the server or perform other actions
+        updateFaqs(faqData);
+    };
+    const showToastMessage = () => {
+        toast.success('FAQs and Policies Added', {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+    };
+    useEffect(() => {
+        if (updateFaqsSuccess) {
+            showToastMessage();
+        }
+    }, [updateFaqsSuccess]);
     return (
         <>
+            <ToastContainer />
             <Formik
                 // validationSchema={initSchema}
                 initialValues={initialValues}
@@ -134,12 +206,12 @@ const CustomizeStoreFront = ({
                         storeFrontName: values?.storeName,
                         storeFrontLink: '',
                         storeFrontDescription: values.storeDescription,
-                        phoneNumbers: '',
+                        phoneNumbers: phone,
                         email: email,
                         whatsappLink: whatsapp,
                         facebookLink: facebook,
                         instagramLink: instagram,
-                        websiteLink: 'www.snowtech.com',
+                        websiteLink: storeSlice?.storeFrontLink,
                         isPrimary: false,
                         useBusinessContact: false,
                         logo: logo,
@@ -212,12 +284,10 @@ const CustomizeStoreFront = ({
                                 </div>
                             </div>
                             <br />
-
                             <div className={styles.hrDiv}>
                                 <hr />
                             </div>
                             <br />
-
                             <div className={styles.customizeBody}>
                                 {addCategory ? (
                                     <div className={styles.categpory}>
@@ -284,12 +354,10 @@ const CustomizeStoreFront = ({
                                 </div>
                             </div>
                             <br />
-
                             <div className={styles.hrDiv}>
                                 <hr />
                             </div>
                             <br />
-
                             <div className={styles.customizeBody}>
                                 {collection ? (
                                     <div className={styles.categpory}>
@@ -360,50 +428,87 @@ const CustomizeStoreFront = ({
                             </div>
                             <br />
                             <br />
-                            <div className={styles.customizeBody}>
-                                <h2 className={styles.profh2}>FAQ</h2>
-                                <div className={styles.front}>
-                                    <div className={styles.customizeFirst}>
-                                        <div className={styles.customizeForm}>
-                                            <label>Question 1</label>
-                                            <input
-                                                type="text"
-                                                placeholder="Enter Store Name"
-                                                onChange={(e) =>
-                                                    setFieldValue(
-                                                        'faq1',
-                                                        e.target.value
-                                                    )
+                            {faqData.faqs.map((faq, index) => (
+                                <div key={index}>
+                                    <div className={styles.customizeBody}>
+                                        <h2 className={styles.profh2}>FAQ</h2>
+                                        <div className={styles.front}>
+                                            <div
+                                                className={
+                                                    styles.customizeFirst
                                                 }
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className={styles.customizeSecond}>
-                                        <div className={styles.contactForm}>
-                                            <label>Answer to question 1</label>
-                                            <div>
-                                                <input
-                                                    onChange={(e) =>
-                                                        setFieldValue(
-                                                            'faqAnswer1',
-                                                            e.target.value
-                                                        )
+                                            >
+                                                <div
+                                                    className={
+                                                        styles.customizeForm
                                                     }
-                                                    type="text"
-                                                    placeholder="Enter Phone Number"
-                                                />
+                                                >
+                                                    <label>Question </label>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Question"
+                                                        value={faq.question}
+                                                        onChange={(e) =>
+                                                            handleQuestionChange(
+                                                                index,
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                    />
+                                                </div>
                                             </div>
+                                            <div
+                                                className={
+                                                    styles.customizeFirst
+                                                }
+                                            >
+                                                <div
+                                                    className={
+                                                        styles.customizeForm
+                                                    }
+                                                >
+                                                    <label>
+                                                        Answer to question{' '}
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Answer"
+                                                        value={faq.answer}
+                                                        onChange={(e) =>
+                                                            handleAnswerChange(
+                                                                index,
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div
+                                            className={styles.removeFaq}
+                                            onClick={() =>
+                                                handleRemoveFaq(index)
+                                            }
+                                        >
+                                            Remove FAQ
                                         </div>
                                     </div>
                                 </div>
+                            ))}
+                            <div
+                                className={styles.addFaq}
+                                type="button"
+                                onClick={handleAddFaq}
+                            >
+                                Add FAQ
                             </div>
                             <br />
-                            <br />
+
                             <div className={styles.hrDiv}>
                                 <hr />
                             </div>
                             <br />
-                            <br />
+
                             <div className={styles.customizeBody}>
                                 <h2 className={styles.profh2}>
                                     Return Policy - optional
@@ -412,9 +517,10 @@ const CustomizeStoreFront = ({
                                     <div className={styles.customizeForm}>
                                         <label>Your return policy</label>
                                         <textarea
+                                            type="text"
+                                            value={faqData.returnPolicy}
                                             onChange={(e) =>
-                                                setFieldValue(
-                                                    'returnPolicy',
+                                                handleReturnPolicyChange(
                                                     e.target.value
                                                 )
                                             }
@@ -425,6 +531,18 @@ const CustomizeStoreFront = ({
                                         ></textarea>
                                     </div>
                                 </div>
+                            </div>
+                            <br />
+                            <div
+                                className={styles.addFaq}
+                                type="button"
+                                onClick={handleSubmitFaqs}
+                            >
+                                {updateFaqsLoad ? (
+                                    <Loader />
+                                ) : (
+                                    'Submit FAQs and Return Policy'
+                                )}
                             </div>
                         </div>
                         <br />

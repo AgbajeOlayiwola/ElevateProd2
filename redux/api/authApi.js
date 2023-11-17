@@ -842,11 +842,11 @@ export const authApi = createApi({
             }
         }),
         updateFaqs: builder.mutation({
-            query: () => {
+            query: (body) => {
                 return {
                     url: 'update-faqs',
                     method: 'post',
-                    body: {}
+                    body
                 };
             }
         }),
@@ -1108,6 +1108,8 @@ export const authApi = createApi({
 });
 
 export const {
+    useUpdateInventoryMutation,
+    useUpdateFaqsMutation,
     useStorefrontAnalyticsSummaryMutation,
     useAddCartMutation,
     useStorelinkGetStoreMutation,

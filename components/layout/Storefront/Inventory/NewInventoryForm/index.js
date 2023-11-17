@@ -3,14 +3,19 @@ import Step1 from '../AddNewInventory/Step1';
 import Step2 from '../AddNewInventory/Step2';
 import styles from './styles.module.css';
 
-const AddNewInventoryForm = () => {
+const AddNewInventoryForm = ({ isEdit }) => {
     const [page, setPage] = useState(0);
     const multi = () => {
         switch (page) {
             case 0:
-                return <Step1 saveANdContinue={() => setPage(page + 1)} />;
+                return (
+                    <Step1
+                        saveANdContinue={() => setPage(page + 1)}
+                        ifIsEdit={isEdit}
+                    />
+                );
             case 1:
-                return <Step2 />;
+                return <Step2 ifIsEdit={isEdit} />;
         }
     };
     return (
@@ -18,7 +23,7 @@ const AddNewInventoryForm = () => {
             <div className={styles.createStoreFlex}>
                 <div className={styles.creating}>
                     <div>
-                        <h1>New Inventory</h1>
+                        <h1>{isEdit ? 'Edit Inventory' : 'New Inventory'}</h1>
                     </div>
                     <div className={styles.storeFrontSteps}>
                         <div>

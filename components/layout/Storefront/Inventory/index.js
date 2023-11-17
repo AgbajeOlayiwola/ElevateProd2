@@ -1,15 +1,19 @@
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
+import { useDispatch } from 'react-redux';
+import { useGetAllInventoriesByIdMutation } from '../../../../redux/api/authApi';
+import { setViewInventory } from '../../../../redux/slices/viewInventorySlice';
 import { abbreviateNumber } from '../../../../utils/abreviateNumber';
-import DropDown from '../../../ReusableComponents/DropDown';
 import InputWithSvg from '../../../ReusableComponents/InputWithSvg';
+import Loader from '../../../ReusableComponents/Loader';
 import AddNewInventory from './AddNewInventory';
 import styles from './styles.module.css';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
-const Inventory = ({ actionText, showProduct, nextPage }) => {
+const Inventory = ({ actionText, showProduct, nextPage, storeSlice }) => {
     const affiliate = localStorage.getItem('affiliateCode');
+    const dispatch = useDispatch();
     const [page, setPage] = useState(1);
     const data = [
         {
@@ -78,6 +82,34 @@ const Inventory = ({ actionText, showProduct, nextPage }) => {
             Image: '/Assets/Images/Rectangle59.png'
         }
     ];
+    const [
+        getAllInventoriesById,
+        {
+            data: getAllInventoriesByIdData,
+            isLoading: getAllInventoriesByIdLoad,
+            isSuccess: getAllInventoriesByIdSuccess,
+            isError: getAllInventoriesByIdFalse,
+            error: getAllInventoriesByIdErr,
+            reset: getAllInventoriesByIdReset
+        }
+    ] = useGetAllInventoriesByIdMutation();
+    useEffect(() => {
+        getAllInventoriesById({
+            storeFrontId: storeSlice?.id,
+            page: 1,
+            size: 5
+        });
+    }, []);
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const handleSearch = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const filteredData = getAllInventoriesByIdData?.data.filter((item) =>
+        item?.name?.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     const conditionalComponent = () => {
         switch (page) {
             case 0:
@@ -110,51 +142,75 @@ const Inventory = ({ actionText, showProduct, nextPage }) => {
                                         type="text"
                                         label=""
                                         name="Search"
+                                        value={searchQuery}
+                                        onChange={handleSearch}
                                     />
                                 </div>
                             </div>
                             <br />
-                            <div className={styles.dropDOwn}>
+                            {/* <div className={styles.dropDOwn}>
                                 <DropDown defaultVal="All Time" />
                                 <DropDown defaultVal="All Time" />
-                            </div>
-                            <br />
+                            </div> */}
+                            {/* <br /> */}
                             <div className={styles.inventoryWrapper}></div>
                         </div>
-                        <div className={styles.allInventory}>
-                            {data?.map((item, index) => {
-                                return (
-                                    <div
-                                        className={styles.inventroeyItm}
-                                        onClick={showProduct}
-                                    >
-                                        <Image
-                                            height={188}
-                                            width={172}
-                                            src={item?.Image}
-                                            alt="store front image"
-                                        />
-                                        <p className={styles.category}>
-                                            {item?.category}
-                                        </p>
-                                        <p className={styles.name}>
-                                            {item?.name}
-                                        </p>
-                                        <div className={styles.currncy}>
-                                            <p>
-                                                {getSymbolFromCurrency(
-                                                    countryToCurrency[
-                                                        affiliate?.substring(1)
-                                                    ]
-                                                )}
-                                                {abbreviateNumber(item?.amount)}
-                                            </p>
-                                            <p>Qty: {item?.qty}</p>
-                                        </div>
-                                    </div>
-                                );
-                            })}
-                        </div>
+                        {getAllInventoriesByIdLoad ? (
+                            <Loader />
+                        ) : getAllInventoriesByIdData?.message ===
+                          'No Inventory found' ? (
+                            <p>No Inventory found</p>
+                        ) : (
+                            <>
+                                <div className={styles.allInventory}>
+                                    {filteredData?.map((item, index) => {
+                                        return (
+                                            <div
+                                                className={styles.inventroeyItm}
+                                                key={index}
+                                                onClick={() => {
+                                                    dispatch(
+                                                        setViewInventory(item)
+                                                    ),
+                                                        showProduct();
+                                                }}
+                                            >
+                                                <Image
+                                                    height={188}
+                                                    width={172}
+                                                    src={
+                                                        item?.image[0] ||
+                                                        '/Assets/Images/Rectangle59.png'
+                                                    }
+                                                    alt="store front image"
+                                                />
+                                                <p className={styles.category}>
+                                                    {item?.category?.name}
+                                                </p>
+                                                <p className={styles.name}>
+                                                    {item?.name}
+                                                </p>
+                                                <div className={styles.currncy}>
+                                                    <p>
+                                                        {getSymbolFromCurrency(
+                                                            countryToCurrency[
+                                                                affiliate?.substring(
+                                                                    1
+                                                                )
+                                                            ]
+                                                        )}
+                                                        {abbreviateNumber(
+                                                            item?.price
+                                                        )}
+                                                    </p>
+                                                    <p>Qty: {item?.quantity}</p>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </>
+                        )}
                     </>
                 );
         }

@@ -1,12 +1,14 @@
 import Image from 'next/image';
 import React from 'react';
 import { IoArrowBackOutline } from 'react-icons/io5';
+import { useSelector } from 'react-redux';
 import SwitchComponent from '../../../../ReusableComponents/SwitchComponent';
 import styles from './styles.module.css';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
-const ViewProduct = ({ retrunBack }) => {
+const ViewProduct = ({ retrunBack, editInventory }) => {
     const affiliate = localStorage.getItem('affiliateCode');
+    const { viewInventory } = useSelector((store) => store);
     const data = {
         size: ['XS', 'S', 'L', 'XL'],
         colors: ['Red', 'Blue', 'Brown', 'Purple', 'Magenta', 'Lilac'],
@@ -23,38 +25,37 @@ const ViewProduct = ({ retrunBack }) => {
                     <Image
                         height={600}
                         width={632}
-                        src="/Assets/Images/Rectangle45.png"
+                        src={
+                            viewInventory?.image[0] ||
+                            '/Assets/Images/Rectangle45.png'
+                        }
                         alt="kjhgf"
                     />
                     <div className={styles.sample}>
                         <div className={styles.sampleImh}>
-                            <Image
-                                height={37}
-                                width={43}
-                                src="/Assets/Images/Rectangle45.png"
-                                alt="kjhgf"
-                            />
-                            <Image
-                                height={37}
-                                width={43}
-                                src="/Assets/Images/Rectangle45.png"
-                                alt="kjhgf"
-                            />
-                            <Image
-                                height={37}
-                                width={43}
-                                src="/Assets/Images/Rectangle45.png"
-                                alt="kjhgf"
-                            />
+                            {viewInventory?.image.map((item, index) => {
+                                return (
+                                    <Image
+                                        height={37}
+                                        width={43}
+                                        src={item}
+                                        alt="kjhgf"
+                                    />
+                                );
+                            })}
                         </div>
                     </div>
                 </div>
                 <div className={styles.right}>
                     <div className={styles.rightDiv}>
                         <div className={styles.round}>
-                            <h1>Round Neck T-Shirt</h1>
-                            <p className={styles.name}>Short</p>
-                            <p className={styles.stock}>12 in Stock</p>
+                            <h1>{viewInventory?.name}</h1>
+                            <p className={styles.name}>
+                                {viewInventory?.category?.name}
+                            </p>
+                            <p className={styles.stock}>
+                                {viewInventory?.quantity} in Stock
+                            </p>
                         </div>
                         <div className={styles.switcBtn}>
                             <div className={styles.btns}>
@@ -65,16 +66,12 @@ const ViewProduct = ({ retrunBack }) => {
                     </div>
                     <div className={styles.desc}>
                         <h1>Description</h1>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Amet sit justo, consequat adipiscing dictum
-                            praesent sed diam.
-                        </p>
+                        <p>{viewInventory?.description}</p>
                     </div>
                     <div className={styles.desc}>
                         <h1>Available sizes</h1>
                         <div className={styles.avail}>
-                            {data?.size.map((item, index) => {
+                            {viewInventory?.size.map((item, index) => {
                                 return (
                                     <div className={styles.size}>
                                         <p>{item}</p>
@@ -86,7 +83,7 @@ const ViewProduct = ({ retrunBack }) => {
                     <div className={styles.desc}>
                         <h1>Available colors</h1>
                         <div className={styles.col}>
-                            {data?.colors.map((item, index) => {
+                            {viewInventory?.color.map((item, index) => {
                                 return <p>{item},</p>;
                             })}
                         </div>
@@ -96,17 +93,21 @@ const ViewProduct = ({ retrunBack }) => {
                             Discount <span>(optional)</span>
                         </h1>
                         <div>
-                            <p>N/A</p>
+                            {viewInventory?.discountPercentage ? (
+                                `${viewInventory?.discountPercentage}%`
+                            ) : (
+                                <p>N/A</p>
+                            )}
                         </div>
                     </div>
-                    <div className={styles.desc}>
+                    {/* <div className={styles.desc}>
                         <h1>Assigned logistics</h1>
                         <div className={styles.col}>
                             {data?.logistics.map((item, index) => {
                                 return <p>{item},</p>;
                             })}
                         </div>
-                    </div>
+                    </div> */}
                     <hr />
                     <div className={styles.price}>
                         <div className={styles.prMoney}>
@@ -115,12 +116,14 @@ const ViewProduct = ({ retrunBack }) => {
                                 {getSymbolFromCurrency(
                                     countryToCurrency[affiliate?.substring(1)]
                                 )}
-                                {parseFloat(10000)
+                                {parseFloat(viewInventory?.price)
                                     .toFixed(2)
                                     .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                             </h1>
                         </div>
-                        <div className={styles.edit}>Edit Inventory</div>
+                        <div className={styles.edit} onClick={editInventory}>
+                            Edit Inventory
+                        </div>
                     </div>
                 </div>
             </div>

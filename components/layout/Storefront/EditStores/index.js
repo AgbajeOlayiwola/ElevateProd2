@@ -18,6 +18,7 @@ import Inventory from '../Inventory';
 import EditSvg from '../editSvg';
 import CustomizeStoreFront from './CustomizeStorefront';
 import styles from './styles.module.css';
+import Orders from './Orders';
 const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
     const { storeSlice } = useSelector((store) => store);
     const [preview, setPreview] = useState(false);
@@ -40,7 +41,6 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
     );
     const [logoImag, setLogoImage] = useState(storeSlice?.logo);
     const [bannerImagee, setBannerImage] = useState(storeSlice?.banner);
-    const [phoneNumber, setPhoneNumbr] = useState();
     const [email, setEmail] = useState(storeSlice?.email);
     const [facebookLink, setFacebookLink] = useState(storeSlice?.facebookLink);
     const [instaLink, setInstaLink] = useState();
@@ -131,6 +131,36 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
         ? loremIpsumText
         : `${loremIpsumText.slice(0, 100)}...`;
 
+    const [phoneNumbers, setPhoneNumbers] = useState(
+        storeSlice?.phoneNumbers || ['']
+    );
+
+    useEffect(() => {
+        // Update state when storeSlice changes
+        setPhoneNumbers(storeSlice?.phoneNumbers || ['']);
+    }, [storeSlice]);
+
+    const handlePhoneNumberChange = (index, value) => {
+        const updatedPhoneNumbers = [...phoneNumbers];
+        updatedPhoneNumbers[index] = value;
+        setPhoneNumbers(updatedPhoneNumbers);
+    };
+
+    const handleAddPhoneNumber = () => {
+        setPhoneNumbers([...phoneNumbers, '']);
+    };
+
+    const handleRemovePhoneNumber = (index) => {
+        const updatedPhoneNumbers = [...phoneNumbers];
+        updatedPhoneNumbers.splice(index, 1);
+        setPhoneNumbers(updatedPhoneNumbers);
+    };
+
+    const handleSubmit = () => {
+        // Handle submission of phoneNumbers
+        console.log(phoneNumbers);
+        // Add logic to send data to the server or perform other actions
+    };
     return (
         <>
             <div className={styles.top}>
@@ -204,7 +234,7 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
                                                 uploadLabel=""
                                                 logoBanner="logo"
                                                 onImageUrlChange={
-                                                    onImageUrlChangeBanner
+                                                    onImageUrlChange
                                                 }
                                             />
                                         </div>
@@ -310,6 +340,7 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
                             {editInfo ? (
                                 <>
                                     <div className={styles.links}>
+                                        <label>whatsapp link</label>
                                         <input
                                             type="text"
                                             placeholder="whatsaplink"
@@ -318,7 +349,8 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
                                                 setWhatsappLink(e.target.value)
                                             }
                                         />
-
+                                        <br />
+                                        <label>facebook</label>
                                         <input
                                             type="text"
                                             placeholder="facebooklink"
@@ -330,6 +362,7 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
                                     </div>
                                     <br />
                                     <div className={styles.links}>
+                                        <label>Email</label>
                                         <input
                                             value={email}
                                             onChange={(e) =>
@@ -338,16 +371,54 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
                                             type="text"
                                             placeholder="email"
                                         />
-                                        {storeSlice?.phoneNumbers?.map(
-                                            (phone) => {
-                                                return (
-                                                    <input
-                                                        type="text"
-                                                        placeholder="phone"
-                                                    />
-                                                );
-                                            }
-                                        )}
+                                        <div>
+                                            {phoneNumbers.map(
+                                                (phoneNumber, index) => (
+                                                    <div key={index}>
+                                                        <input
+                                                            type="text"
+                                                            placeholder="Phone Number"
+                                                            value={phoneNumber}
+                                                            onChange={(e) =>
+                                                                handlePhoneNumberChange(
+                                                                    index,
+                                                                    e.target
+                                                                        .value
+                                                                )
+                                                            }
+                                                        />
+                                                        <div
+                                                            className={
+                                                                styles.remove
+                                                            }
+                                                            onClick={() =>
+                                                                handleRemovePhoneNumber(
+                                                                    index
+                                                                )
+                                                            }
+                                                        >
+                                                            Remove
+                                                        </div>
+                                                    </div>
+                                                )
+                                            )}
+                                            <div className={styles.addSubmit}>
+                                                <div
+                                                    type="button"
+                                                    onClick={
+                                                        handleAddPhoneNumber
+                                                    }
+                                                >
+                                                    Add Phone Number
+                                                </div>
+                                                <div
+                                                    type="button"
+                                                    onClick={handleSubmit}
+                                                >
+                                                    Submit
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </>
                             ) : (
@@ -452,185 +523,18 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
                         whatsapp={whatsaplink}
                         instagram={instaLink}
                         facebook={facebookLink}
+                        phone={phoneNumbers}
+                        goBackTostore={() => goBackward()}
                     />
                 ) : actionText === 'Inventory' ? (
                     <Inventory
+                        storeSlice={storeSlice}
                         actionText={actionText}
                         showProduct={showProduct}
                         nextPage={nextPage}
                     />
                 ) : actionText == 'Orders' ? (
-                    <>
-                        <h2 className={styles.actionText}>{actionText}</h2>
-                        <div className={styles.ordersCont}>
-                            <div
-                                className={
-                                    orderType === 'Open'
-                                        ? styles.openOrders
-                                        : styles.closeOrders
-                                }
-                                onClick={() => {
-                                    setOrderType('Open');
-                                }}
-                            >
-                                <h4>Open Orders</h4>
-                            </div>
-                            <div
-                                className={
-                                    orderType === 'Close'
-                                        ? styles.openOrders
-                                        : styles.closeOrders
-                                }
-                                onClick={() => {
-                                    setOrderType('Close');
-                                }}
-                            >
-                                <h4>Closed Orders</h4>
-                            </div>
-                        </div>
-                        {orderType === 'Open' ? (
-                            <>
-                                <div className={styles.inventorySingle}>
-                                    <div
-                                        className={styles.inventorySingleFirst}
-                                    >
-                                        <img
-                                            src="./Assets/Images/cloth.png"
-                                            alt=""
-                                        />
-                                        <div className={styles.details}>
-                                            <p className={styles.productName}>
-                                                Gucci Black Shirt
-                                            </p>
-                                            <p className={styles.productPrice}>
-                                                N10,000
-                                            </p>
-                                            <h5>Order #1234567890</h5>
-                                        </div>
-                                    </div>
-                                    <h3 className={styles.orderNumber}>
-                                        2 Pcs
-                                    </h3>
-                                </div>
-                                <div className={styles.inventorySingle}>
-                                    <div
-                                        className={styles.inventorySingleFirst}
-                                    >
-                                        <img
-                                            src="./Assets/Images/cloth.png"
-                                            alt=""
-                                        />
-                                        <div className={styles.details}>
-                                            <p className={styles.productName}>
-                                                Gucci Black Shirt
-                                            </p>
-                                            <p className={styles.productPrice}>
-                                                N10,000
-                                            </p>
-                                            <h5>Order #1234567890</h5>
-                                        </div>
-                                    </div>
-                                    <h3 className={styles.orderNumber}>
-                                        2 Pcs
-                                    </h3>
-                                </div>
-                                <div className={styles.inventorySingle}>
-                                    <div
-                                        className={styles.inventorySingleFirst}
-                                    >
-                                        <img
-                                            src="./Assets/Images/cloth.png"
-                                            alt=""
-                                        />
-                                        <div className={styles.details}>
-                                            <p className={styles.productName}>
-                                                Gucci Black Shirt
-                                            </p>
-                                            <p className={styles.productPrice}>
-                                                N10,000
-                                            </p>
-                                            <h5>Order #1234567890</h5>
-                                        </div>
-                                    </div>
-                                    <h3 className={styles.orderNumber}>
-                                        2 Pcs
-                                    </h3>
-                                </div>
-                            </>
-                        ) : orderType === 'Close' ? (
-                            <>
-                                <div className={styles.inventorySingle}>
-                                    <div
-                                        className={styles.inventorySingleFirst}
-                                    >
-                                        <img
-                                            src="./Assets/Images/cloth.png"
-                                            alt=""
-                                        />
-                                        <div className={styles.details}>
-                                            <p className={styles.productName}>
-                                                Gucci Black Shirt
-                                            </p>
-                                            <p className={styles.productPrice}>
-                                                N10,000
-                                            </p>
-                                            <h5>Order #1234567890</h5>
-                                        </div>
-                                    </div>
-                                    <div className={styles.orderDuration}>
-                                        <p>25-10-2022</p>
-                                        <h3>Shipped</h3>
-                                    </div>
-                                </div>
-                                <div className={styles.inventorySingle}>
-                                    <div
-                                        className={styles.inventorySingleFirst}
-                                    >
-                                        <img
-                                            src="./Assets/Images/cloth.png"
-                                            alt=""
-                                        />
-                                        <div className={styles.details}>
-                                            <p className={styles.productName}>
-                                                Gucci Black Shirt
-                                            </p>
-                                            <p className={styles.productPrice}>
-                                                N10,000
-                                            </p>
-                                            <h5>Order #1234567890</h5>
-                                        </div>
-                                    </div>
-                                    <div className={styles.orderDuration}>
-                                        <p>25-10-2022</p>
-                                        <h3>Shipped</h3>
-                                    </div>
-                                </div>
-                                <div className={styles.inventorySingle}>
-                                    <div
-                                        className={styles.inventorySingleFirst}
-                                    >
-                                        <img
-                                            src="./Assets/Images/cloth.png"
-                                            alt=""
-                                        />
-                                        <div className={styles.details}>
-                                            <p className={styles.productName}>
-                                                Gucci Black Shirt
-                                            </p>
-                                            <p className={styles.productPrice}>
-                                                N10,000
-                                            </p>
-                                            <h5>Order #1234567890</h5>
-                                        </div>
-                                    </div>
-                                    <div className={styles.orderDuration}>
-                                        <p>25-10-2022</p>
-                                        <h3>Shipped</h3>
-                                    </div>
-                                </div>
-                            </>
-                        ) : null}
-                    </>
+                    <Orders actionText={actionText} />
                 ) : actionText === 'Logistics' ? (
                     <h2 className={styles.actionText}>{actionText}</h2>
                 ) : null}

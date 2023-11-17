@@ -30,6 +30,17 @@
     align-items: center;
     gap: 4px;
 }
+.removeFaq {
+    color: red;
+    text-align: start;
+    margin-top: 15px;
+}
+.addFaq {
+    color: #005b82;
+    text-align: end;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
 .addProduvt div {
     border-radius: 8px;
     border: 1px solid #102572;

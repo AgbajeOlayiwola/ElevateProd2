@@ -160,7 +160,7 @@ export const SidebarData = [
             },
             {
                 title: 'Logistics',
-                path: '#'
+                path: '/Admin/Logistics'
                 // icon: <BulkTransfer />
             },
             {
