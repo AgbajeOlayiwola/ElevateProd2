@@ -345,6 +345,48 @@
     border: 1.5px solid #ededed;
     margin-top: 20px;
 }
+.delDiv {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 20px;
+}
+.delDiv div:nth-child(1) {
+    padding: 10px 26px;
+    border: solid 1px #000;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.delDiv div:nth-child(2) {
+    padding: 10px 26px;
+    background-color: #6ccf00;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.outer {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background: #00000052;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100000000;
+}
+.inner {
+    background: white;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    border-radius: 15px;
+    padding: 30px;
+}
 .inventorySingle p {
     margin: 0px;
 }

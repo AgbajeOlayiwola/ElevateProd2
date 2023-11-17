@@ -1103,11 +1103,63 @@ export const authApi = createApi({
                     body: {}
                 };
             }
+        }),
+        logDisputeCase: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'log-dispute-case',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+
+        viewOrder: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'view-order',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+
+        createOrder: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'create-order',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        viewOrderByStatus: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'view-orders-by-status',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        shipOrder: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'ship-order',
+                    method: 'post',
+                    body
+                };
+            }
         })
     })
 });
 
 export const {
+    useShipOrderMutation,
+    useViewOrderByStatusMutation,
+    useCreateOrderMutation,
+    useViewOrderMutation,
+    useLogDisputeCaseMutation,
     useUpdateInventoryMutation,
     useUpdateFaqsMutation,
     useStorefrontAnalyticsSummaryMutation,

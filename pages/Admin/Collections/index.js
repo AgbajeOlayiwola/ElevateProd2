@@ -467,7 +467,7 @@ const Collections = () => {
                     case 5:
                         return (
                             <RecievePaymentStatus
-                                transactionId={ussdGen?.transactionId}
+                                // transactionId={ussdGen?.transactionId}
                                 overlay={overlay}
                                 action={handleClose}
                                 type="USSD"

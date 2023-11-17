@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
 import InputWithSvg from '../../../components/ReusableComponents/InputWithSvg';
+import Loader from '../../../components/ReusableComponents/Loader';
 import LogisticsTile from '../../../components/layout/Logistics/LogisticTiles';
 import { useGetLogisticsProvidersQuery } from '../../../redux/api/logisticsApi';
 import styles from './styles.module.css';
@@ -47,9 +48,13 @@ const Logistics = () => {
                     />
                 </div>
                 <div className={styles.logDiv}>
-                    {filteredData?.map((item, index) => {
-                        return <LogisticsTile data={item} />;
-                    })}
+                    {isLoading ? (
+                        <Loader />
+                    ) : (
+                        filteredData?.map((item, index) => {
+                            return <LogisticsTile data={item} />;
+                        })
+                    )}
                 </div>
             </div>
         </div>

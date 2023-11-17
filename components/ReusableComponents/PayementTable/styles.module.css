@@ -138,6 +138,10 @@
 
 .more {
     width: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 30px;
 }
 
 .date {

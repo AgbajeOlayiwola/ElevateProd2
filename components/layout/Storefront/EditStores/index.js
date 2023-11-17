@@ -17,8 +17,11 @@ import ProfileLayout from '../../ProfileLayout';
 import Inventory from '../Inventory';
 import EditSvg from '../editSvg';
 import CustomizeStoreFront from './CustomizeStorefront';
-import styles from './styles.module.css';
 import Orders from './Orders';
+import styles from './styles.module.css';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
     const { storeSlice } = useSelector((store) => store);
     const [preview, setPreview] = useState(false);
@@ -51,7 +54,7 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
     const [headTitle, setHeadTitle] = useState('Storefront');
     const [checkd, setChecked] = useState(true);
     const router = useRouter();
-
+    const [alert, setAlert] = useState(false);
     console.log(storeSlice);
     const storeAction = [
         {
@@ -161,20 +164,50 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
         console.log(phoneNumbers);
         // Add logic to send data to the server or perform other actions
     };
+    const [sure, setSure] = useState(false);
+    const showToastMessage = () => {
+        toast.success('Storefront Link Copied', {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+    };
+
     return (
         <>
+            <ToastContainer />
+            {sure ? (
+                <div className={styles.outer}>
+                    <div className={styles.inner}>
+                        <h2>Delete Store front</h2>
+                        <p>ARe you sure you wanrt to delete storfront</p>
+                        <div className={styles.delDiv}>
+                            <div
+                                onClick={() => {
+                                    setSure(false);
+                                }}
+                            >
+                                Cancel
+                            </div>
+                            <div
+                                onClick={() => {
+                                    deletStorefront({
+                                        storeFrontId: storeSlice?.id
+                                    });
+                                }}
+                            >
+                                {deletStorefrontLoad ? <Loader /> : 'Delete'}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ) : null}
             <div className={styles.top}>
                 <div className={styles.Name} onClick={() => goBackward()}>
                     <IoArrowBack />
                     <p>{storeSlice?.storeFrontName}</p>
                 </div>
-                <div
-                    className={styles.del}
-                    onClick={() => {
-                        deletStorefront({ storeFrontId: storeSlice?.id });
-                    }}
-                >
-                    {deletStorefrontLoad ? <Loader /> : 'Delete store front'}
+                <div className={styles.del} onClick={() => setSure(true)}>
+                    Delete store front
                 </div>
             </div>
             <ProfileLayout
@@ -184,8 +217,7 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
                             <div
                                 className={styles.editbtn}
                                 onClick={() => {
-                                    setEditBanner((prev) => !prev),
-                                        console.log(editBanner);
+                                    setSure(true);
                                 }}
                             >
                                 <EditSvg />
@@ -248,36 +280,26 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
                                     )}
                                 </div>
                                 <div>
-                                    <div className={styles.accountNumberCopy}>
+                                    <div
+                                        className={styles.accountNumberCopy}
+                                        onClick={() => {
+                                            {
+                                                navigator.clipboard
+                                                    .writeText(
+                                                        `${storeSlice?.websiteLink}`
+                                                    )
+                                                    .then(() => {
+                                                        setAlert(true);
+                                                        setTimeout(() => {
+                                                            setAlert(false);
+                                                        }, 1500);
+                                                    });
+                                            }
+                                            showToastMessage();
+                                        }}
+                                    >
                                         Share link
                                     </div>
-                                    <label
-                                        className={
-                                            checkd
-                                                ? styles.beneChecked
-                                                : styles.beneCheck
-                                        }
-                                    >
-                                        <input
-                                            type="checkbox"
-                                            // onChange={(e) => {
-                                            //     if (
-                                            //         profile?.user
-                                            //             ?.freezeTransactions === 'N'
-                                            //     ) {
-                                            //         freezeAcct();
-                                            //     } else if (
-                                            //         profile?.user
-                                            //             ?.freezeTransactions === 'Y'
-                                            //     ) {
-                                            //         unfreezeAcct();
-                                            //     }
-                                            // }}
-                                        />
-                                        <span>
-                                            <i></i>
-                                        </span>
-                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -439,6 +461,7 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
                                             <IoMailOutline />
                                             {email}
                                         </p>
+
                                         {storeSlice?.phoneNumbers?.map(
                                             (phone) => {
                                                 return (
@@ -449,6 +472,13 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
                                                 );
                                             }
                                         )}
+                                        <a
+                                            href={storeSlice?.websiteLink}
+                                            target="_blank"
+                                        >
+                                            <MdOutlineLocalPhone />
+                                            Store link
+                                        </a>
                                     </div>
                                 </>
                             )}
@@ -484,11 +514,45 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
                             <br />
                             <div className={styles.share}>
                                 <div className={styles.copy}>
-                                    <div className={styles.accountNumberCopy}>
+                                    <div
+                                        className={styles.accountNumberCopy}
+                                        onClick={() => {
+                                            {
+                                                navigator.clipboard
+                                                    .writeText(
+                                                        `${storeSlice?.websiteLink}`
+                                                    )
+                                                    .then(() => {
+                                                        setAlert(true);
+                                                        setTimeout(() => {
+                                                            setAlert(false);
+                                                        }, 1500);
+                                                    });
+                                            }
+                                            showToastMessage();
+                                        }}
+                                    >
                                         <MdContentCopy />
                                         Copy link
                                     </div>
-                                    <div className={styles.accountNumberCopy}>
+                                    <div
+                                        className={styles.accountNumberCopy}
+                                        onClick={() => {
+                                            {
+                                                navigator.clipboard
+                                                    .writeText(
+                                                        `${storeSlice?.websiteLink}`
+                                                    )
+                                                    .then(() => {
+                                                        setAlert(true);
+                                                        setTimeout(() => {
+                                                            setAlert(false);
+                                                        }, 1500);
+                                                    });
+                                            }
+                                            showToastMessage();
+                                        }}
+                                    >
                                         <MdShare />
                                         Share storefront link
                                     </div>

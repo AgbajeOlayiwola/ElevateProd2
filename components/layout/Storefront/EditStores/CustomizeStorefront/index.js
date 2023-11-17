@@ -239,9 +239,6 @@ const CustomizeStoreFront = ({
                         </div>
                         <br />
                         <br />
-                        <div className={styles.businessLogoDiv}>
-                            <img src="/Assets/Images/businessLogo.png" alt="" />
-                        </div>
                         <div className={styles.customizeBody}>
                             <h2 className={styles.profh2}>
                                 Storefront Details

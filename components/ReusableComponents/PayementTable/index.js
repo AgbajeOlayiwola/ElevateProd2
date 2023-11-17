@@ -5,6 +5,7 @@ import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 import ReactPaginate from 'react-paginate';
 import { useTransactionHistoryMutation } from '../../../redux/api/authApi';
 import socialdata from '../../ReusableComponents/Lotties/loading.json';
+import MoreAction from '../MoreAction';
 import styles from './styles.module.css';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
@@ -67,19 +68,19 @@ const PaymentTable = ({ title, page }) => {
     useEffect(() => {
         if (page === 'Collections') {
             setNewestTableDetails([]);
-            tableDetails.filter((item, index) => {
-                if (item.paymentDirection === 'CREDIT') {
-                    setNewestTableDetails([]);
-                    setNewTableDetails((arr) => [...arr, item]);
-                }
+            transactionHistory?.data?.filter((item, index) => {
+                // if (item.paymentDirection === 'CREDIT') {
+                setNewestTableDetails([]);
+                setNewTableDetails((arr) => [...arr, item]);
+                // }
             });
         } else if (page === 'Payments') {
             setNewestTableDetails([]);
-            tableDetails.filter((item) => {
-                if (item.paymentDirection === 'DEBIT') {
-                    setNewestTableDetails([]);
-                    setNewTableDetails((arr) => [...arr, item]);
-                }
+            transactionHistory?.data?.filter((item) => {
+                // if (item.paymentDirection === 'DEBIT') {
+                setNewestTableDetails([]);
+                setNewTableDetails((arr) => [...arr, item]);
+                // }
             });
         } else if (page === 'Reports') {
             setNewestTableDetails([]);
@@ -88,7 +89,7 @@ const PaymentTable = ({ title, page }) => {
     }, [tableDetails]);
     useEffect(() => {
         setNewestTableDetails([]);
-        newTableDetails?.filter((item) => {
+        transactionHistory?.data?.filter((item) => {
             if (searchValue === '') {
                 setNewestTableDetails((arr) => [...arr, item]);
             } else if (filterCondition(item, searchType)) {
@@ -386,7 +387,23 @@ const PaymentTable = ({ title, page }) => {
                                     >
                                         {item?.transactionStatus}
                                     </p>
-                                    <div className={styles.more}></div>
+                                    <div className={styles.more}>
+                                        <MoreAction
+                                            transactionStatus={
+                                                item?.transactionStatus
+                                            }
+                                            narr={item?.Narration}
+                                            bene={item?.beneficiary}
+                                            transactionTitle={item?.transactionType.replace(
+                                                '_',
+                                                ' '
+                                            )}
+                                            sender={item?.sourceAccount}
+                                            transactionAmount={parseFloat(
+                                                item?.transactionAmount
+                                            ).toLocaleString('en-US')}
+                                        />
+                                    </div>
                                 </div>
                             );
                         })

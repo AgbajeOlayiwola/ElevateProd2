@@ -1,14 +1,16 @@
 import React, { useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import exportAsImage from '../../../utils/exportAsImage';
-import EditSvg from '../editSvg';
-import styles from './styles.module.css';
-
+import { useDispatch, useSelector } from 'react-redux';
 import { getDisputCategorySubGen } from '../../../redux/actions/getSubDisputeCategoryAction';
+import { useLogDisputeCaseMutation } from '../../../redux/api/authApi';
+import exportAsImage from '../../../utils/exportAsImage';
 import CloseBtnSvg from '../ClosebtnSvg';
 import Loader from '../Loader';
 import OutsideClick from '../OutsideClick';
 import StorePopup from '../StorePopup';
+import EditSvg from '../editSvg';
+import styles from './styles.module.css';
+const getSymbolFromCurrency = require('currency-symbol-map');
+const countryToCurrency = require('country-to-currency');
 
 const MoreAction = ({
     isDirection,
@@ -28,6 +30,8 @@ const MoreAction = ({
     isaccountId,
     dateTrans
 }) => {
+    const affiliate = localStorage.getItem('affiliateCode');
+    const { allAccountInfo } = useSelector((store) => store);
     const [dispute, setDispute] = useState('');
     const [disputeCate, setDisputeCat] = useState('');
     const dispatch = useDispatch();
@@ -43,7 +47,19 @@ const MoreAction = ({
     const [selectedDisputeCategory, setSelectedDisputeCategory] = useState();
     const [complaintCategory, setComplaintCategory] = useState();
     const exportRef = useRef();
+    const [accountNumber, setAccountNumber] = useState();
 
+    const [
+        logDisputeCase,
+        {
+            data: logDisputeCaseData,
+            isLoading: logDisputeCaseLoad,
+            isSuccess: logDisputeCaseSuccess,
+            isError: logDisputeCaseFalse,
+            error: logDisputeCaseErr,
+            reset: logDisputeCaseReset
+        }
+    ] = useLogDisputeCaseMutation();
     const complaintSubVateFunction = (event) => {
         dispatch(getDisputCategorySubGen(event.target.value, 'Complaint'));
         setSelectedDisputeCategory(event.target.value);
@@ -57,18 +73,16 @@ const MoreAction = ({
 
     const lodgeTheComplaint = () => {
         setLoading(true);
+
         const data = {
-            accountId: isaccountId,
+            accountNo: sender,
             caseCategory: selectedDisputeCategory,
             caseSubCategory: selectedDisputeType,
             caseType: 'Complaint',
             // caseType: type,
             description: `${type} from USER about ${selectedDisputeCategory} regarding ${selectedDisputeType}. With Transaction Id:  and Transaction Ref: . Amount involved: ${transactionAmount}. Futher Insight From User:${descriptions}`
         };
-        if (lodgeDisputeErrorSubMessage) {
-            setLoading(false);
-            setLodgeDisputeError(lodgeDisputeErrorSubMessage?.data?.message);
-        }
+        logDisputeCase(data);
     };
     const [lodgeSuccess, setLodgeSuccess] = useState();
 
@@ -130,7 +144,15 @@ const MoreAction = ({
                             <CloseBtnSvg action={() => setShowDispute(false)} />
                         </div>
                         <div>
-                            <p>Transaction Amount: {transactionAmount}</p>
+                            <p>
+                                Transaction Amount:{' '}
+                                {getSymbolFromCurrency(
+                                    countryToCurrency[
+                                        `${affiliate?.substring(1)}`
+                                    ]
+                                )}
+                                {transactionAmount}
+                            </p>
 
                             <p>Transaction Type: {transactionTitle}</p>
                             {/* <p>Sub Category: {sub}</p> */}
@@ -151,11 +173,7 @@ const MoreAction = ({
                                 {lodgeSuccess}
                             </p>
                         ) : null}
-                        {lodgeDisputeErrorSubMessage ? (
-                            <p className={styles.errors}>
-                                {lodgeDisputeErrorSubMessage?.data?.message}
-                            </p>
-                        ) : null}
+
                         {/* <div className={styles.formGroup}>
                             <label>Choose Complaint Category</label>
                             <select name="" id="" onChange={disputesFunction}>
@@ -171,6 +189,7 @@ const MoreAction = ({
                                 })}
                             </select>
                         </div> */}
+
                         <div className={styles.formGroup}>
                             <label>Choose Complaint Category</label>
                             <select
@@ -217,7 +236,7 @@ const MoreAction = ({
                             cols={8}
                             rows={6}
                         ></textarea>
-                        {loading ? (
+                        {logDisputeCaseLoad ? (
                             <Loader />
                         ) : (
                             <button onClick={lodgeTheComplaint}>Submit</button>
@@ -241,7 +260,14 @@ const MoreAction = ({
                                         : styles.successReciept
                                 }
                             >
-                                <h1>{transactionAmount}</h1>
+                                <h1>
+                                    {getSymbolFromCurrency(
+                                        countryToCurrency[
+                                            `${affiliate?.substring(1)}`
+                                        ]
+                                    )}
+                                    {transactionAmount}
+                                </h1>
                                 <h2
                                     className={
                                         transactionStatus === 'PENDING'
@@ -269,18 +295,18 @@ const MoreAction = ({
                                 )}
                                 {type === null ? null : (
                                     <>
-                                        <div className={styles.senderInfo}>
+                                        {/* <div className={styles.senderInfo}>
                                             <p>Transaction Type</p>
                                             <p>{isDirection}</p>
                                         </div>
-                                        <hr />
+                                        <hr /> */}
                                     </>
                                 )}
 
                                 {senders === null ? null : (
                                     <>
                                         <div className={styles.senderInfo}>
-                                            <p>Sender Name</p>
+                                            <p>Sender Account</p>
                                             <p>{sender}</p>
                                         </div>
                                         <hr />
@@ -325,10 +351,7 @@ const MoreAction = ({
                             <button
                                 className={styles.dounloadReciept}
                                 onClick={() =>
-                                    exportAsImage(
-                                        exportRef.current,
-                                        'QrReciept'
-                                    )
+                                    exportAsImage(exportRef.current, 'Reciept')
                                 }
                             >
                                 Download

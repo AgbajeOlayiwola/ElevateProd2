@@ -2,6 +2,8 @@
     border-radius: 12px;
     background: #fff;
     padding: 20px;
+    height: 75vh;
+    overflow: scroll;
 }
 .logiH1 {
     color: #005b82;

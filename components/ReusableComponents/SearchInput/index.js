@@ -36,8 +36,7 @@ const Search = ({ placeholder, array, onBankSelect }) => {
                 <ul className={styles.searchItem}>
                     {filteredItems?.map((item, index) => (
                         <li key={index} onClick={() => handleBankSelect(item)}>
-                            Institution Name: {item.institutionName},
-                            Institution Code: {item.institutionCode}
+                            {item.institutionName},{item.institutionCode}
                         </li>
                     ))}
                 </ul>

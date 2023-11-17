@@ -61,10 +61,14 @@ const Store = ({ children }) => {
             </div>
             <div className={styles.showProd}>
                 <div className={styles.addCart}>
-                    {storelinkGetStoreData?.data?.inventories?.data.map(
-                        (item, index) => {
-                            return <ProductTile data={item} call={call} />;
-                        }
+                    {storelinkGetStoreSuccess ? (
+                        storelinkGetStoreData?.data?.inventories?.data.map(
+                            (item, index) => {
+                                return <ProductTile data={item} call={call} />;
+                            }
+                        )
+                    ) : (
+                        <h1>ERROR RETRIEVING ITEMS</h1>
                     )}
                 </div>
             </div>

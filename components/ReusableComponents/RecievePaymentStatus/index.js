@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Popup from '../../layout/Popup';
 import styles from './styles.module.css';
-import { useDispatch, useSelector } from 'react-redux';
 
-import socialdata from '../../ReusableComponents/Lotties/loading.json';
 import Lottie from 'react-lottie';
-import { loadussdStatus } from '../../../redux/actions/ussdStatusAction';
+import socialdata from '../../ReusableComponents/Lotties/loading.json';
+import { useTransactionHistoryMutation } from '../../../redux/api/authApi';
 
 const RecievePaymentStatus = ({
     back,
@@ -14,9 +14,6 @@ const RecievePaymentStatus = ({
     action,
     transactionId
 }) => {
-    const { ussdStatus, errorMessageussdStatus } = useSelector(
-        (state) => state.ussdStatusReducer
-    );
     const [isLoading, setIsLoading] = useState(true);
     const [ussdMainStatus, setUssDmainStatus] = useState();
     const [ussdErr, setUssdErr] = useState('');
@@ -29,22 +26,18 @@ const RecievePaymentStatus = ({
         }
     };
     const dispatch = useDispatch();
-    useEffect(() => {
-        const data = {
-            transactionRef: transactionId
-        };
 
-        dispatch(loadussdStatus(data));
-    }, []);
-    useEffect(() => {
-        //console.log();
-        setUssDmainStatus(ussdStatus);
-        if (ussdStatus != null) {
-            setIsLoading(false);
-        } else if (errorMessageussdStatus != null)
-            setUssdErr('Unable to get USSD Payment Status');
-    }, [ussdStatus, errorMessageussdStatus]);
-
+    const [
+        transactionHistory,
+        {
+            data: transactionHistoryData,
+            isLoading: transactionHistoryLoad,
+            isSuccess: transactionHistorySuccess,
+            isError: transactionHistoryFalse,
+            error: transactionHistoryErr,
+            reset: transactionHistoryReset
+        }
+    ] = useTransactionHistoryMutation();
     return (
         <>
             <Popup overlay={overlay} action={action}>

@@ -401,7 +401,7 @@ const ReceivePaymentSecond = ({
                                 <input
                                     className={styles.inputBordr}
                                     type="text"
-                                    value={`${code}${ussdData?.ussdData?.reference}#`}
+                                    value={`${ussdData?.code}${ussdData?.ussdData?.reference}#`}
                                 />
                                 <button
                                     className={styles.copyBtn}

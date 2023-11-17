@@ -5,6 +5,7 @@ import {
     useCreateeInventoryMutation,
     useUpdateInventoryMutation
 } from '../../../../../../redux/api/authApi';
+import { useGetLogisticsProvidersQuery } from '../../../../../../redux/api/logisticsApi';
 import InputFile from '../../../../../ReusableComponents/InputFile';
 import Loader from '../../../../../ReusableComponents/Loader';
 import PlusSvg from '../../../../../ReusableComponents/ReusableSvgComponents/PlusSvg';
