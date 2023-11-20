@@ -44,29 +44,34 @@ const PaymentTable = ({ title, page }) => {
             }
         });
     }, []);
-
+    const billPayments = [
+        'BILLPAYMENT',
+        'SINGLE_TRANSFER',
+        'BULK_TRANSFER',
+        'AIRTIME_TOPUP'
+    ];
     useEffect(() => {
         if (page === 'Collections') {
-            setNewestTableDetails([]);
-            transactionHistory?.data?.filter((item, index) => {
-                // if (item.paymentDirection === 'CREDIT') {
-                setNewestTableDetails(item);
-                setNewTableDetails((arr) => [...arr, item]);
-                // }
-            });
+            if (transactionHistoryData?.data) {
+                const filteredTransactions = transactionHistoryData.data.filter(
+                    (item) => !billPayments.includes(item?.transactionType)
+                );
+
+                setTransactions(filteredTransactions);
+            }
         } else if (page === 'Payments') {
-            setNewestTableDetails([]);
-            transactionHistory?.data?.filter((item) => {
-                // if (item.paymentDirection === 'DEBIT') {
-                setNewestTableDetails(item);
-                setNewTableDetails((arr) => [...arr, item]);
-                // }
-            });
+            if (transactionHistoryData?.data) {
+                const filteredTransactions = transactionHistoryData.data.filter(
+                    (item) => billPayments.includes(item?.transactionType)
+                );
+
+                setTransactions(filteredTransactions);
+            }
         } else if (page === 'Reports') {
             setNewestTableDetails([]);
             setNewTableDetails(tableDetails);
         }
-    }, [tableDetails]);
+    }, [tableDetails, transactionHistorySuccess, billPayments]);
     useEffect(() => {
         setNewestTableDetails([]);
         transactionHistory?.data?.filter((item) => {
@@ -351,12 +356,22 @@ const PaymentTable = ({ title, page }) => {
             /> */}
             <div className={styles.tableMain}>
                 <div className={styles.TableDetailHeader}>
-                    <p className={styles.beneficiary}>Beneficiary </p>
+                    {page === 'Collections' ? null : (
+                        <p className={styles.beneficiary}>Beneficiary </p>
+                    )}
                     <p className={styles.type}>Type</p>
                     <p className={styles.amount}>Amount</p>
                     {/* <p className={styles.bank}>Bank/Network</p> */}
                     <p className={styles.date}>Date</p>
-                    <p className={styles.status}>Status</p>
+                    <p
+                        className={
+                            page === 'Collections'
+                                ? styles.statuss
+                                : styles.status
+                        }
+                    >
+                        Status
+                    </p>
                     <div className={styles.more}></div>
                 </div>
                 <div className={styles.tableDetails}>
@@ -370,9 +385,11 @@ const PaymentTable = ({ title, page }) => {
                         currentTransactions?.map((item, index) => {
                             return (
                                 <div className={styles.TableDetailHeaders}>
-                                    <p className={styles.beneficiary}>
-                                        {item?.beneficiary}
-                                    </p>
+                                    {page === 'Collections' ? null : (
+                                        <p className={styles.beneficiary}>
+                                            {item?.beneficiary}
+                                        </p>
+                                    )}
                                     <p className={styles.type}>
                                         {item?.transactionType.replace(
                                             '_',
@@ -399,7 +416,11 @@ const PaymentTable = ({ title, page }) => {
                                                 ? styles.failed
                                                 : item?.transactionStatus ===
                                                   'PENDING'
-                                                ? styles.pending
+                                                ? page === 'Collections'
+                                                    ? styles.pendings
+                                                    : styles.pending
+                                                : page === 'Collections'
+                                                ? styles.successes
                                                 : styles.success
                                         }
                                     >

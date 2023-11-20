@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 
 import { AiFillCheckCircle } from 'react-icons/ai';
+import { FaRegCircle } from 'react-icons/fa6';
 import { IoMdCopy } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
 import Visbility from '../Eyeysvg';
@@ -80,13 +81,12 @@ const AccountsInfoCard = ({ userProfileData }) => {
                             <div>
                                 <div className={styles.cardMone}>
                                     <h1>
-                                        {' '}
-                                        {currency}
-                                        {outType
-                                            ? '********'
-                                            : parseFloat(
-                                                  balance
-                                              ).toLocaleString('en-US')}
+                                        {currency}{' '}
+                                        {balance === '0.0'
+                                            ? '0.00'
+                                            : parseFloat(balance)
+                                                  .toFixed(2)
+                                                  .toLocaleString('en-US')}
                                     </h1>
                                     <Visbility color="green" typeSet={types} />
                                 </div>
@@ -193,19 +193,24 @@ const AccountsInfoCard = ({ userProfileData }) => {
                                                     ? '0.00'
                                                     : parseFloat(
                                                           account?.availableBal
-                                                      ).toLocaleString('en-US')}
+                                                      )
+                                                          .toFixed(2)
+                                                          .toLocaleString(
+                                                              'en-US'
+                                                          )}
                                             </p>
                                         )}
                                     </div>
-                                    <div
-                                        className={
-                                            account?.isPrimaryAccount === 'Y'
-                                                ? styles.success
-                                                : styles.nothing
-                                        }
-                                    >
-                                        <AiFillCheckCircle />
-                                    </div>
+                                    {account?.isPrimaryAccount === 'Y' ? (
+                                        <div className={styles.success}>
+                                            <AiFillCheckCircle />
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            {' '}
+                                            <FaRegCircle />
+                                        </div>
+                                    )}
                                     <hr className={styles.accountHr} />
                                 </div>
                             );

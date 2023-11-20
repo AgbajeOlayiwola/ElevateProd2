@@ -12,7 +12,10 @@ import {
     useUpdateStoreFrontMutation
 } from '../../../../../redux/api/authApi';
 import ButtonComp from '../../../../ReusableComponents/Button';
+import CloseBtnSvg from '../../../../ReusableComponents/ClosebtnSvg';
+import InputFile from '../../../../ReusableComponents/InputFile';
 import Loader from '../../../../ReusableComponents/Loader';
+import PlusSvg from '../../../../ReusableComponents/ReusableSvgComponents/PlusSvg';
 import styles from './styles.module.css';
 
 const CustomizeStoreFront = ({
@@ -193,8 +196,102 @@ const CustomizeStoreFront = ({
             showToastMessage();
         }
     }, [updateFaqsSuccess]);
+    const [bannerImagee, setBannerImage] = useState();
+    const onImageUrlChangeBanner = (data) => {
+        setBannerImage(data.replace('data:image/png;base64,', ''));
+    };
     return (
         <>
+            {addCategory ? (
+                <div className={styles.outer}>
+                    <div className={styles.inner}>
+                        <div>
+                            <div className={styles.add}>
+                                <h2>Add Category</h2>
+                                <CloseBtnSvg
+                                    action={() => setAddCategory(false)}
+                                />
+                            </div>
+                            <div className={styles.categpory}>
+                                <InputFile
+                                    icon={<PlusSvg />}
+                                    name="Upload your category banner"
+                                    disclaimer=""
+                                    uploadLabel="Click to add a catgory banner banner"
+                                    logoBanner="banner"
+                                    onImageUrlChange={onImageUrlChangeBanner}
+                                />
+                                <label>Category Name</label>
+                                <input
+                                    type="text"
+                                    value={collectionName}
+                                    onChange={(e) =>
+                                        setCollectionName(e.target.value)
+                                    }
+                                />
+                                <br />
+                                <div
+                                    className={styles.button}
+                                    onClick={() => {
+                                        createCategory({
+                                            storeFrontId: storeSlice?.id,
+                                            name: collectionName,
+                                            image: bannerImagee
+                                        });
+                                    }}
+                                >
+                                    {createCategoryLoad ? <Loader /> : 'Add'}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ) : null}
+            {collection ? (
+                <div className={styles.outer}>
+                    <div className={styles.inner}>
+                        <div>
+                            <div className={styles.add}>
+                                <h2>Add Collection</h2>
+                                <CloseBtnSvg
+                                    action={() => setCollction(false)}
+                                />
+                            </div>
+                            <div className={styles.categpory}>
+                                <InputFile
+                                    icon={<PlusSvg />}
+                                    name="Upload your collection banner"
+                                    disclaimer=""
+                                    uploadLabel="Click to add a collection banner banner"
+                                    logoBanner="banner"
+                                    onImageUrlChange={onImageUrlChangeBanner}
+                                />
+
+                                <label>Collection Name</label>
+                                <input
+                                    type="text"
+                                    value={categoryname}
+                                    onChange={(e) =>
+                                        setCategoryName(e.target.value)
+                                    }
+                                />
+                                <div
+                                    className={styles.button}
+                                    onClick={() => {
+                                        createCollection({
+                                            storeFrontId: storeSlice?.id,
+                                            name: categoryname,
+                                            image: bannerImagee
+                                        });
+                                    }}
+                                >
+                                    {createCollectionLoad ? <Loader /> : 'Add'}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ) : null}
             <ToastContainer />
             <Formik
                 // validationSchema={initSchema}
@@ -286,37 +383,6 @@ const CustomizeStoreFront = ({
                             </div>
                             <br />
                             <div className={styles.customizeBody}>
-                                {addCategory ? (
-                                    <div className={styles.categpory}>
-                                        <label>Category Name</label>
-                                        <input
-                                            type="text"
-                                            value={collectionName}
-                                            onChange={(e) =>
-                                                setCollectionName(
-                                                    e.target.value
-                                                )
-                                            }
-                                        />
-                                        <div
-                                            className={styles.button}
-                                            onClick={() => {
-                                                createCategory({
-                                                    storeFrontId:
-                                                        storeSlice?.id,
-                                                    name: collectionName,
-                                                    image: 'https://www.ecobank.com/image.png'
-                                                });
-                                            }}
-                                        >
-                                            {createCategoryLoad ? (
-                                                <Loader />
-                                            ) : (
-                                                'Add'
-                                            )}
-                                        </div>
-                                    </div>
-                                ) : null}
                                 <h2 className={styles.profh2}>
                                     Product Categories
                                 </h2>
@@ -342,7 +408,18 @@ const CustomizeStoreFront = ({
                                                             styles.addProduvt
                                                         }
                                                     >
-                                                        <p>{name?.name}</p>
+                                                        <img
+                                                            src={`data:image/png;base64,${name?.image}`}
+                                                            width={10}
+                                                            height={50}
+                                                        />
+                                                        <p
+                                                            className={
+                                                                styles.categpryP
+                                                            }
+                                                        >
+                                                            {name?.name}
+                                                        </p>
                                                     </div>
                                                 );
                                             }
@@ -356,35 +433,6 @@ const CustomizeStoreFront = ({
                             </div>
                             <br />
                             <div className={styles.customizeBody}>
-                                {collection ? (
-                                    <div className={styles.categpory}>
-                                        <label>Collection Name</label>
-                                        <input
-                                            type="text"
-                                            value={categoryname}
-                                            onChange={(e) =>
-                                                setCategoryName(e.target.value)
-                                            }
-                                        />
-                                        <div
-                                            className={styles.button}
-                                            onClick={() => {
-                                                createCollection({
-                                                    storeFrontId:
-                                                        storeSlice?.id,
-                                                    name: categoryname,
-                                                    image: 'https://www.ecobank.com/image.png'
-                                                });
-                                            }}
-                                        >
-                                            {createCollectionLoad ? (
-                                                <Loader />
-                                            ) : (
-                                                'Add'
-                                            )}
-                                        </div>
-                                    </div>
-                                ) : null}
                                 <h2 className={styles.profh2}>
                                     Product Collection
                                 </h2>
@@ -410,7 +458,18 @@ const CustomizeStoreFront = ({
                                                             styles.addProduvt
                                                         }
                                                     >
-                                                        <p>{name?.name}</p>
+                                                        <img
+                                                            src={`data:image/png;base64,${name?.image}`}
+                                                            width={10}
+                                                            height={50}
+                                                        />
+                                                        <p
+                                                            className={
+                                                                styles.categpryP
+                                                            }
+                                                        >
+                                                            {name?.name}
+                                                        </p>
                                                     </div>
                                                 );
                                             }

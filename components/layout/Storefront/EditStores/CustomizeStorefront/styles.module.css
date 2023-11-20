@@ -20,26 +20,39 @@
     border: 1px dashed #102572;
     background: rgba(16, 37, 114, 0.05);
     padding-top: 21px;
-
+    cursor: pointer;
     display: flex;
     width: 96px;
     height: 86px;
     padding: 8px;
     flex-direction: column;
     justify-content: center;
+    position: relative;
     align-items: center;
     gap: 4px;
+}
+.addProduvt > img {
+    height: 100%;
+    width: 100%;
 }
 .removeFaq {
     color: red;
     text-align: start;
     margin-top: 15px;
+    cursor: pointer;
 }
 .addFaq {
     color: #005b82;
     text-align: end;
     margin-top: 15px;
     margin-bottom: 15px;
+    cursor: pointer;
+}
+.categpryP {
+    position: absolute;
+    bottom: 15px;
+    color: white !important;
+    font-size: 15px !important;
 }
 .addProduvt div {
     border-radius: 8px;
@@ -48,6 +61,7 @@
     padding: 5px;
     color: white;
     font-size: 22px;
+    position: relative;
 }
 .addProduvt p {
     color: #102572;
@@ -728,14 +742,7 @@
     left: -4px;
     transition: 0.5s;
 }
-.categpory {
-    position: absolute;
-    padding: 15px;
-    background-color: white;
-    border-radius: 10px;
-    left: 73px;
-    top: 20px;
-}
+
 .button {
     padding: 7px;
     color: white;
@@ -792,4 +799,35 @@
 
 .beneChecked span {
     background-color: #6ccf00;
+}
+.outer {
+    width: 100vw;
+    height: 100vh;
+    background-color: #00000052;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 19999999999;
+}
+.inner {
+    width: 30%;
+    height: fit-content;
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+}
+.inner input {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.add {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.add svg {
+    cursor: pointer;
 }

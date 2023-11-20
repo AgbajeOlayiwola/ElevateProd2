@@ -495,6 +495,11 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
                                 {storeAction?.map((store, index) => {
                                     return (
                                         <CustomerSingle
+                                            active={
+                                                actionText === store?.title
+                                                    ? true
+                                                    : false
+                                            }
                                             icon={store.icon}
                                             profileText={store.title}
                                             action={() => {
@@ -562,7 +567,7 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
                             <br />
                             <br />
                             <button
-                                className={styles.copyLink}
+                                className={styles}
                                 onClick={() => {
                                     setPreview(true);
                                     router.push({

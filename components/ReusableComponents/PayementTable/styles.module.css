@@ -135,7 +135,10 @@
 .status {
     width: 14%;
 }
-
+.statuss {
+    width: 27%;
+    text-align: center !important;
+}
 .more {
     width: 5%;
     display: flex;
@@ -167,13 +170,28 @@
 .failed {
     color: rgb(213, 28, 28) !important;
 }
+.faileds {
+    width: 27%;
+    text-align: center !important;
+    color: rgb(213, 28, 28) !important;
+}
 .success {
+    color: #6ccf00 !important;
+}
+.successs {
+    width: 27%;
+    text-align: center !important;
     color: #6ccf00 !important;
 }
 .paginationBtns a {
     cursor: pointer;
 }
 .pending {
+    color: rgba(177, 132, 36, 0.805) !important;
+}
+.pendings {
+    width: 27%;
+    text-align: center !important;
     color: rgba(177, 132, 36, 0.805) !important;
 }
 .paginationActive {

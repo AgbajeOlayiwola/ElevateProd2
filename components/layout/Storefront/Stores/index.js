@@ -119,7 +119,6 @@ const Stores = ({ nextStep, nextInaventory }) => {
                     </p>
                 </div>
                 <div className={styles.storeButton}>
-                    <button onClick={addInventory}>Add an inventory</button>
                     <button
                         onClick={() => {
                             cretaeStore();

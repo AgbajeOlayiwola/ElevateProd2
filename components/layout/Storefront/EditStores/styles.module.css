@@ -35,13 +35,13 @@
     justify-content: center;
     align-items: center;
     gap: 8px;
+    cursor: pointer;
 }
 .addProduvt {
     border-radius: 8px;
     border: 1px dashed #102572;
     background: rgba(16, 37, 114, 0.05);
     padding-top: 21px;
-
     display: flex;
     width: 96px;
     height: 86px;
@@ -59,6 +59,7 @@
     color: white;
     font-size: 22px;
 }
+
 .addProduvt p {
     color: #102572;
     text-align: center;
@@ -92,6 +93,7 @@
     padding: 8px 12px;
     align-items: center;
     gap: 4px;
+    cursor: pointer;
     color: #f00;
     text-align: center;
     font-family: Inter;

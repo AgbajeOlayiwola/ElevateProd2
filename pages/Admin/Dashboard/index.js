@@ -1,4 +1,3 @@
-import moment from 'moment';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
@@ -11,7 +10,7 @@ import styles from './styles.module.css';
 
 import Link from 'next/link';
 import { AiFillCheckCircle } from 'react-icons/ai';
-import { FaArrowLeftLong } from 'react-icons/fa6';
+import { FaArrowLeftLong, FaRegCircle } from 'react-icons/fa6';
 import { IoMdCopy } from 'react-icons/io';
 import { MdCancel } from 'react-icons/md';
 import Lottie from 'react-lottie';
@@ -301,7 +300,7 @@ const Dashboard = () => {
     useEffect(() => {
         setPinCondition(profile?.user?.hasSetTransactionPin);
         transactionHistory({
-            limit: 12,
+            limit: 30,
             fromDate: '',
             toDate: '',
             order: 'DESC',
@@ -393,23 +392,21 @@ const Dashboard = () => {
         });
     };
     const [transactions, setTransactions] = useState([]);
-
+    const billPayments = [
+        'BILLPAYMENT',
+        'SINGLE_TRANSFER',
+        'BULK_TRANSFER',
+        'AIRTIME_TOPUP'
+    ];
     useEffect(() => {
-        // Assume your API response is stored in a variable called responseData
-        const responseData = {
-            // ... (your API response object)
-        };
+        if (transactionHistoryData?.data) {
+            const filteredTransactions = transactionHistoryData.data.filter(
+                (item) => !billPayments.includes(item?.transactionType)
+            );
 
-        // Filter transactions with the current date
-        const currentDate = moment().format('MMM D, YYYY');
-        const filteredTransactions = transactionHistoryData?.data?.filter(
-            (transaction) =>
-                moment(transaction?.transactionDate).format('MMM D, YYYY') ===
-                currentDate
-        );
-
-        setTransactions(filteredTransactions);
-    }, [transactions]);
+            setTransactions(filteredTransactions);
+        }
+    }, [transactionHistorySuccess, billPayments]);
 
     return (
         <div className={styles.statementCover}>
@@ -590,10 +587,10 @@ const Dashboard = () => {
                     <div className={styles.btmI}>
                         <div className={styles.btmItop}>
                             <h2 className={styles.transP}>
-                                Transactions Today
+                                Collection Transactions
                             </h2>
 
-                            {transactions?.length > 0 ? (
+                            {transactionHistoryData ? (
                                 transactions?.map((item, index) => {
                                     return (
                                         <>
@@ -830,11 +827,15 @@ const Dashboard = () => {
                                                     <h1>********</h1>
                                                 ) : (
                                                     <h1>
-                                                        {parseFloat(
-                                                            balance
-                                                        ).toLocaleString(
-                                                            'en-US'
-                                                        )}
+                                                        {balance === '0.0'
+                                                            ? '0.00'
+                                                            : parseFloat(
+                                                                  balance
+                                                              )
+                                                                  .toFixed(2)
+                                                                  .toLocaleString(
+                                                                      'en-US'
+                                                                  )}
                                                     </h1>
                                                 )}
                                                 <Visbility
@@ -982,36 +983,47 @@ const Dashboard = () => {
                                                                 ) : (
                                                                     <p>
                                                                         {account?.availableBal ===
-                                                                        ''
-                                                                            ? 0
+                                                                        '0.0'
+                                                                            ? '0.00'
                                                                             : parseFloat(
                                                                                   account?.availableBal
-                                                                              ).toLocaleString(
-                                                                                  'en-US'
-                                                                              )}
+                                                                              )
+                                                                                  .toFixed(
+                                                                                      2
+                                                                                  )
+                                                                                  .toLocaleString(
+                                                                                      'en-US'
+                                                                                  )}
                                                                     </p>
                                                                 )}
                                                             </div>
                                                         </div>
-                                                        <div
-                                                            className={
-                                                                account?.isPrimaryAccount ===
-                                                                'Y'
-                                                                    ? styles.success
-                                                                    : styles.nothing
-                                                            }
-                                                        >
-                                                            <AiFillCheckCircle
-                                                                onClick={() => {
-                                                                    setPrimaryAcct(
-                                                                        {
-                                                                            accountNo:
-                                                                                account?.accountNo
-                                                                        }
-                                                                    );
-                                                                }}
-                                                            />
-                                                        </div>
+                                                        {account?.isPrimaryAccount ===
+                                                        'Y' ? (
+                                                            <div
+                                                                className={
+                                                                    styles.success
+                                                                }
+                                                            >
+                                                                <AiFillCheckCircle />
+                                                            </div>
+                                                        ) : (
+                                                            <div>
+                                                                <FaRegCircle
+                                                                    style={{
+                                                                        cursor: 'pointer'
+                                                                    }}
+                                                                    onClick={() => {
+                                                                        setPrimaryAcct(
+                                                                            {
+                                                                                accountNo:
+                                                                                    account?.accountNo
+                                                                            }
+                                                                        );
+                                                                    }}
+                                                                />
+                                                            </div>
+                                                        )}
                                                     </>
                                                 );
                                             })}
@@ -1062,7 +1074,7 @@ const Dashboard = () => {
                     <div className={styles.btm}>
                         <div className={styles.btmII}>
                             <div className={styles.btmIIp}>
-                                <p>Recent Transactions</p>
+                                <p>Payment Transactions</p>
                             </div>
 
                             {transactionHistoryLoad ? (
@@ -1100,11 +1112,11 @@ const Dashboard = () => {
                                 </div>
                             ) : (
                                 transactionHistoryData?.data
-                                    ?.filter((item) => {
-                                        const newDate =
-                                            item.transactionDate.split('T');
-                                        return item;
-                                    })
+                                    ?.filter((item) =>
+                                        billPayments.includes(
+                                            item.transactionType
+                                        )
+                                    )
                                     ?.map((item, index) => {
                                         return (
                                             <>
