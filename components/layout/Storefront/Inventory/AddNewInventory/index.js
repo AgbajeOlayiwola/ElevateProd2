@@ -6,6 +6,7 @@ const AddNewInventory = ({ nextPage }) => {
     const nextStep = () => {
         nextPage();
     };
+
     return (
         <div className={styles.addNew}>
             <h1>Inventory</h1>

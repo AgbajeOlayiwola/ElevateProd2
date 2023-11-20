@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -9,6 +9,7 @@ import {
     useGetStoreFrontMutation,
     useMakeEnableMutation
 } from '../../../../redux/api/authApi';
+import { setAllStars } from '../../../../redux/slices/allStoresSlice';
 import { setStoreSlice } from '../../../../redux/slices/storeSlice';
 import Loader from '../../../ReusableComponents/Loader';
 import styles from './styles.module.css';
@@ -61,6 +62,12 @@ const Stores = ({ nextStep, nextInaventory }) => {
     useEffect(() => {
         getAllSToreFront(null);
     }, []);
+    useEffect(() => {
+        if (getAllSToreFrontSuccess) {
+            dispatch(setAllStars(getAllSToreFrontData?.data));
+        }
+    }, [getAllSToreFrontSuccess]);
+
     const showToastMessage = () => {
         toast.error('This storefront is currntly disabled', {
             position: toast.POSITION.TOP_RIGHT,
@@ -89,7 +96,14 @@ const Stores = ({ nextStep, nextInaventory }) => {
             nextStep();
         }
     }, [getStoreFrontSuccess]);
-
+    const enable = useCallback(
+        (val) => {
+            makeEnable({
+                storeFrontId: val
+            });
+        },
+        [makeEnable]
+    );
     return (
         <div className={styles.storeBody}>
             <ToastContainer />
@@ -132,9 +146,7 @@ const Stores = ({ nextStep, nextInaventory }) => {
                                     <div
                                         className={styles.saveBene}
                                         onClick={() => {
-                                            makeEnable({
-                                                storeFrontId: store?.id
-                                            });
+                                            enable(store?.id);
                                         }}
                                     >
                                         <label

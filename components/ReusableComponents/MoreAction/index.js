@@ -1,17 +1,24 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { getDisputCategorySubGen } from '../../../redux/actions/getSubDisputeCategoryAction';
 import { useLogDisputeCaseMutation } from '../../../redux/api/authApi';
 import exportAsImage from '../../../utils/exportAsImage';
+import ButtonComp from '../Button';
 import CloseBtnSvg from '../ClosebtnSvg';
 import Loader from '../Loader';
 import OutsideClick from '../OutsideClick';
+import {
+    RegistrationStatus,
+    SuccessMainHeading
+} from '../PaymentSuccess/styles.module';
+import SuccessCheckSvg from '../ReusableSvgComponents/SuccessCheckSvg';
 import StorePopup from '../StorePopup';
 import EditSvg from '../editSvg';
 import styles from './styles.module.css';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
-
 const MoreAction = ({
     isDirection,
     transactionAmount,
@@ -76,20 +83,43 @@ const MoreAction = ({
 
         const data = {
             accountNo: sender,
-            caseCategory: selectedDisputeCategory,
-            caseSubCategory: selectedDisputeType,
+            caseCategory: transactionTitle,
+            caseSubCategory: 'TransferError',
             caseType: 'Complaint',
             // caseType: type,
             description: `${type} from USER about ${selectedDisputeCategory} regarding ${selectedDisputeType}. With Transaction Id:  and Transaction Ref: . Amount involved: ${transactionAmount}. Futher Insight From User:${descriptions}`
         };
         logDisputeCase(data);
     };
+    const showSuccessToastMessage = () => {
+        toast.success('Disput Logged Successfully', {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+    };
+    const showErrorToastMessage = () => {
+        toast.success('Disput Log Failed', {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+    };
+    useEffect(() => {
+        if (logDisputeCaseErr) {
+            showErrorToastMessage();
+        }
+    }, [logDisputeCaseErr]);
+    useEffect(() => {
+        if (logDisputeCaseSuccess) {
+            showSuccessToastMessage();
+        }
+    }, [logDisputeCaseSuccess]);
     const [lodgeSuccess, setLodgeSuccess] = useState();
 
     let newDate = dates?.split('T');
     let newTranDate = dateTrans?.split('T');
     return (
         <>
+            <ToastContainer />
             <div
                 className={
                     showDispute
@@ -143,38 +173,62 @@ const MoreAction = ({
                         <div className={styles.cancel}>
                             <CloseBtnSvg action={() => setShowDispute(false)} />
                         </div>
-                        <div>
-                            <p>
-                                Transaction Amount:{' '}
-                                {getSymbolFromCurrency(
-                                    countryToCurrency[
-                                        `${affiliate?.substring(1)}`
-                                    ]
-                                )}
-                                {transactionAmount}
-                            </p>
+                        {logDisputeCaseSuccess ? (
+                            <div>
+                                <div className={styles.successPage}>
+                                    <div className={styles.successCheck}>
+                                        <SuccessCheckSvg />
+                                    </div>
 
-                            <p>Transaction Type: {transactionTitle}</p>
-                            {/* <p>Sub Category: {sub}</p> */}
-                            <p>Transaction Status: {transactionStatus}</p>
-                            {newDate == null ? null : (
-                                <p>
-                                    Date :{newDate[0]}, {newDate[1]}
-                                </p>
-                            )}
-                            {newTranDate == null ? null : (
-                                <p>
-                                    Date :{newTranDate[0]}, {newTranDate[1]}
-                                </p>
-                            )}
-                        </div>
-                        {lodgeSuccess ? (
-                            <p className={styles.lofgeSuccess}>
-                                {lodgeSuccess}
-                            </p>
-                        ) : null}
+                                    <RegistrationStatus>
+                                        <SuccessMainHeading>
+                                            Dispute Logged Successfully
+                                        </SuccessMainHeading>
 
-                        {/* <div className={styles.formGroup}>
+                                        <ButtonComp
+                                            disabled={true}
+                                            active={'active'}
+                                            text="Close"
+                                            type="button"
+                                            onClick={() =>
+                                                setShowDispute(false)
+                                            }
+                                        />
+                                    </RegistrationStatus>
+                                </div>
+                            </div>
+                        ) : (
+                            <>
+                                <div>
+                                    <p>
+                                        Transaction Amount:{' '}
+                                        {getSymbolFromCurrency(
+                                            countryToCurrency[
+                                                `${affiliate?.substring(1)}`
+                                            ]
+                                        )}
+                                        {transactionAmount}
+                                    </p>
+
+                                    <p>Transaction Type: {transactionTitle}</p>
+                                    {/* <p>Sub Category: {sub}</p> */}
+                                    <p>
+                                        Transaction Status: {transactionStatus}
+                                    </p>
+                                    {newDate == null ? null : (
+                                        <p>
+                                            Date :{newDate[0]}, {newDate[1]}
+                                        </p>
+                                    )}
+                                    {newTranDate == null ? null : (
+                                        <p>
+                                            Date :{newTranDate[0]},{' '}
+                                            {newTranDate[1]}
+                                        </p>
+                                    )}
+                                </div>
+
+                                {/* <div className={styles.formGroup}>
                             <label>Choose Complaint Category</label>
                             <select name="" id="" onChange={disputesFunction}>
                                 <option value="">
@@ -190,7 +244,7 @@ const MoreAction = ({
                             </select>
                         </div> */}
 
-                        <div className={styles.formGroup}>
+                                {/* <div className={styles.formGroup}>
                             <label>Choose Complaint Category</label>
                             <select
                                 name=""
@@ -208,8 +262,8 @@ const MoreAction = ({
                                     );
                                 })}
                             </select>
-                        </div>
-                        <div className={styles.formGroup}>
+                        </div> */}
+                                {/* <div className={styles.formGroup}>
                             <label>Choose Sub Category</label>
                             <select
                                 name=""
@@ -229,17 +283,23 @@ const MoreAction = ({
                                     }
                                 )}
                             </select>
-                        </div>
-                        <textarea
-                            onChange={(e) => setDescription(e.target.value)}
-                            className={styles.disputTextArea}
-                            cols={8}
-                            rows={6}
-                        ></textarea>
-                        {logDisputeCaseLoad ? (
-                            <Loader />
-                        ) : (
-                            <button onClick={lodgeTheComplaint}>Submit</button>
+                        </div> */}
+                                <textarea
+                                    onChange={(e) =>
+                                        setDescription(e.target.value)
+                                    }
+                                    className={styles.disputTextArea}
+                                    cols={8}
+                                    rows={6}
+                                ></textarea>
+                                {logDisputeCaseLoad ? (
+                                    <Loader />
+                                ) : (
+                                    <button onClick={lodgeTheComplaint}>
+                                        Submit
+                                    </button>
+                                )}
+                            </>
                         )}
                     </div>
                 </StorePopup>

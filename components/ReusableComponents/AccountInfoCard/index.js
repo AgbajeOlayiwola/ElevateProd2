@@ -182,9 +182,15 @@ const AccountsInfoCard = ({ userProfileData }) => {
                                             <p>******</p>
                                         ) : (
                                             <p>
-                                                {account?.currency}{' '}
-                                                {account?.availableBal === ''
-                                                    ? 0
+                                                {getSymbolFromCurrency(
+                                                    countryToCurrency[
+                                                        `${affiliate?.substring(
+                                                            1
+                                                        )}`
+                                                    ]
+                                                )}
+                                                {account?.availableBal === 0
+                                                    ? '0.00'
                                                     : parseFloat(
                                                           account?.availableBal
                                                       ).toLocaleString('en-US')}

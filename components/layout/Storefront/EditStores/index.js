@@ -217,7 +217,7 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
                             <div
                                 className={styles.editbtn}
                                 onClick={() => {
-                                    setSure(true);
+                                    setEditBanner((prev) => !prev);
                                 }}
                             >
                                 <EditSvg />
@@ -227,7 +227,7 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
                                     <InputFile
                                         icon={<PlusSvg />}
                                         name="Upload your store banner"
-                                        disclaimer="Use a banner of 364px by 160px for maximum resolution"
+                                        disclaimer=""
                                         uploadLabel="Click to add a banner"
                                         logoBanner="banner"
                                         onImageUrlChange={
@@ -265,6 +265,7 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
                                                 disclaimer=""
                                                 uploadLabel=""
                                                 logoBanner="logo"
+                                                logoChange={true}
                                                 onImageUrlChange={
                                                     onImageUrlChange
                                                 }

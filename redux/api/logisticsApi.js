@@ -45,7 +45,7 @@ export const logisticsApi = createApi({
             query: (body) => {
                 return {
                     url: 'smeapp-enable-logistic-service/assign/logistic-provider',
-                    method: 'post',
+                    method: 'POST',
                     body
                 };
             }
@@ -54,7 +54,7 @@ export const logisticsApi = createApi({
             query: (body) => {
                 return {
                     url: 'smeapp-disable-logistic-service/unassign/logistic-provider',
-                    method: 'post',
+                    method: 'POST',
                     body
                 };
             }

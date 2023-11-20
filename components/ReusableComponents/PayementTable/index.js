@@ -145,10 +145,33 @@ const PaymentTable = ({ title, page }) => {
         setPageNumber(selected);
     };
 
-    const currentTransactions = transactions?.slice(
-        pageNumber * transactionsPerPage,
-        (pageNumber + 1) * transactionsPerPage
-    );
+    const currentTransactions = transactions
+        ?.filter((item) => {
+            // Add a check to skip the filter if the value is an empty string
+            if (searchValue === '') {
+                return true; // Skip the filter
+            } else if (
+                item.transactionType === searchValue &&
+                searchType === 'transactionType'
+            ) {
+                return true;
+            } else if (
+                item.transactionStatus === searchValue &&
+                searchType === 'transactionStatus'
+            ) {
+                return true;
+            } else if (
+                searchType === 'transactionAmount' &&
+                parseFloat(item.transactionAmount) === parseFloat(searchValue)
+            ) {
+                return true;
+            }
+            return false;
+        })
+        ?.slice(
+            pageNumber * transactionsPerPage,
+            (pageNumber + 1) * transactionsPerPage
+        );
 
     return (
         <div className={styles.table}>
@@ -195,7 +218,7 @@ const PaymentTable = ({ title, page }) => {
                             >
                                 <option value="">All</option>
                                 <option value="Paylink">Paylink</option>
-                                <option value="QR_Payment">QR Payment</option>
+                                <option value="QR">QR Payment</option>
                                 <option value="USSD">USSD</option>
                             </select>
                         ) : searchType === 'transactionStatus' ? (
@@ -207,9 +230,9 @@ const PaymentTable = ({ title, page }) => {
                                 }}
                             >
                                 <option value="">All</option>
-                                <option value="Success">Success</option>
-                                <option value="Pending">Pending</option>
-                                <option value="Failed">Failed</option>
+                                <option value="SUCCESS">Success</option>
+                                <option value="PENDING">Pending</option>
+                                <option value="FAILED">Failed</option>
                             </select>
                         ) : searchType === 'transactionAmount' ? (
                             <div>
@@ -254,9 +277,9 @@ const PaymentTable = ({ title, page }) => {
                                 }}
                             >
                                 <option value="">All</option>
-                                <option value="Success">Success</option>
-                                <option value="Pending">Pending</option>
-                                <option value="Failed">Failed</option>
+                                <option value="SUCCESS">Success</option>
+                                <option value="PENDING">Pending</option>
+                                <option value="FAILED">Failed</option>
                             </select>
                         ) : searchType === 'transactionAmount' ? (
                             <div>
@@ -299,7 +322,7 @@ const PaymentTable = ({ title, page }) => {
                             >
                                 <option value="">All</option>
                                 <option value="Paylink">Paylink</option>
-                                <option value="QR_Payment">QR Payment</option>
+                                <option value="QR">QR Payment</option>
                                 <option value="USSD">USSD</option>
                             </select>
                         ) : null

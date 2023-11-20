@@ -47,6 +47,7 @@ const Step1 = ({ saveANdContinue, ifIsEdit }) => {
 
     const initialValues = {
         selectedStoreFront: '',
+        storeFrontId: storeSlice?.id ? storeSlice?.id : allStores[0]?.id,
         productName: ifIsEdit ? viewInventory?.name : '',
         productCategory: ifIsEdit ? viewInventory?.category?.id : '',
         productCollection: ifIsEdit ? viewInventory?.collection?.id : '',
@@ -103,6 +104,7 @@ const Step1 = ({ saveANdContinue, ifIsEdit }) => {
         console.log('Colors:', colors);
         // Add logic to send data to the server or perform other actions
     };
+    const { allStores } = useSelector((store) => store);
     return (
         <>
             <Formik
@@ -111,7 +113,7 @@ const Step1 = ({ saveANdContinue, ifIsEdit }) => {
                 // validateOnChange={true}
                 onSubmit={(values, { setSubmitting }) => {
                     const data = {
-                        storeFrontId: storeSlice?.id,
+                        storeFrontId: values?.storeFrontId,
                         name: values?.productName,
                         categoryID: values?.productCategory,
                         collectionID: values?.productCollection,
@@ -142,16 +144,36 @@ const Step1 = ({ saveANdContinue, ifIsEdit }) => {
                                 <div>
                                     <label>Select a storefront</label>
                                     <select
-                                        onChange={(e) =>
-                                            setFieldValue(
-                                                'selectedStoreFront',
-                                                e.target.value
-                                            )
-                                        }
+                                        onChange={(e) => {
+                                            const selectedAccount =
+                                                allStores?.find(
+                                                    (account) =>
+                                                        account?.accountNo ===
+                                                        e.target.value
+                                                );
+                                            if (selectedAccount) {
+                                                setFieldValue(
+                                                    'ecoSourceAccount',
+                                                    selectedAccount?.accountNo
+                                                );
+                                                setFieldValue(
+                                                    'storeFrontId',
+                                                    selectedAccount?.accountId
+                                                );
+                                                setFieldValue(
+                                                    'selectedStoreFront',
+                                                    e.target.value
+                                                );
+                                            }
+                                        }}
                                     >
-                                        <option value="isac stores">
-                                            Isac Store
-                                        </option>
+                                        {allStores?.map((item, index) => {
+                                            return (
+                                                <option value="isac stores">
+                                                    {item?.storeFrontName}
+                                                </option>
+                                            );
+                                        })}
                                     </select>
                                 </div>
                             )}

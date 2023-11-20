@@ -159,6 +159,8 @@
     border-radius: 16px;
     margin-top: -20px;
     /* justify-content: flex-end; */
+    padding-left: 20px;
+    padding-right: 20px;
     position: relative;
     align-items: center;
     padding-top: 36px;

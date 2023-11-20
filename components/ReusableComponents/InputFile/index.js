@@ -8,6 +8,7 @@ const InputFile = ({
     uploadLabel,
     disclaimer,
     name,
+    logoChange,
     logoBanner
 }) => {
     const [selectedFile, setSelectedFile] = useState(null);
@@ -31,7 +32,7 @@ const InputFile = ({
     };
 
     return (
-        <div className={styles.inputFile}>
+        <div className={logoChange ? styles.inputFiles : styles.inputFile}>
             <p>{name}</p>
             <div className={styles.lblDiclaimr}>
                 <p className={styles.labelP}>{label}</p>

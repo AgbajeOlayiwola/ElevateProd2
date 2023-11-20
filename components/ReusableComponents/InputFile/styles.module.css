@@ -10,6 +10,18 @@
     width: 100%;
     flex-direction: column;
 }
+.inputFiles label {
+    border-radius: 5px;
+    border: none;
+    padding-top: 0px;
+    /* padding-bottom: 43px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background: rgba(0, 91, 130, 0.05); */
+    width: 100%;
+    flex-direction: column;
+}
 .fullImage {
     display: flex;
     justify-content: center;
@@ -61,6 +73,9 @@
 .inputFile label input {
     display: none;
 }
+.inputFiles label input {
+    display: none;
+}
 .inputFile {
     display: flex;
     flex-direction: column;
@@ -71,6 +86,25 @@
     width: 95%;
 }
 .inputFile > p {
+    color: #3e3e3e;
+    margin: 0px;
+    text-align: center;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.inputFiles {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 16px;
+    border-radius: 24px;
+    width: 95%;
+}
+.inputFiles > p {
     color: #3e3e3e;
     margin: 0px;
     text-align: center;
