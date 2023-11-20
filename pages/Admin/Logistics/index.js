@@ -34,7 +34,12 @@ const Logistics = () => {
             </p>
             <div className={styles.logi}>
                 <p className={styles.numOfLogi}>
-                    <span>56</span> logistics company available
+                    {isLoading ? (
+                        <Loader />
+                    ) : (
+                        <span>{logisticsProviders?.data?.length} </span>
+                    )}
+                    logistics company available
                 </p>
                 <div className={styles.search}>
                     <InputWithSvg

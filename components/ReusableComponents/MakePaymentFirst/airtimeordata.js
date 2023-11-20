@@ -173,7 +173,7 @@ const AirtimeOrData = ({
                                     active={'active'}
                                     text="Close"
                                     type="button"
-                                    onClick={closeAction}
+                                    onClick={() => closeAction()}
                                 />
                             </RegistrationStatus>
                         </div>

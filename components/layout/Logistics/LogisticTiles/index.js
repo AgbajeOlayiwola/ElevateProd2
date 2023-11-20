@@ -31,11 +31,12 @@ const LogisticsTile = ({ data }) => {
         }
     ] = useDisableLogisticMutation();
     const handleCheckChange = () => {
-        enableLogistic({ providerId: data?.id });
+        enableLogistic({ providerId: data?.id.toString() });
         setCheckStates((prev) => !prev);
     };
+    console.log(data?.id.toString());
     const changeCHeck = () => {
-        disableLogistic({ providerId: data?.id });
+        disableLogistic({ providerId: data?.id.toString() });
         setCheckStates((prev) => !prev);
     };
     useEffect(() => {

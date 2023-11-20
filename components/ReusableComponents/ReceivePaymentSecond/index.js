@@ -353,10 +353,10 @@ const ReceivePaymentSecond = ({
                                     Download
                                 </p>
                             </div>
-                            <div className={styles.validTill}>
+                            {/* <div className={styles.validTill}>
                                 <p>Valid Till</p>
                                 <p>{timer}</p>
-                            </div>
+                            </div> */}
                             {/* <div className={styles.qrData}>
                                 <div onClick={copyQr}>
                                     <p> {isCopied ? 'Copied!' : 'Copy'}</p>

@@ -174,20 +174,24 @@ const Stores = ({ nextStep, nextInaventory }) => {
                                         height={48}
                                         alt="image"
                                     />
-                                    <p
-                                        className={styles.storeName}
-                                        onClick={() => {
-                                            if (store?.isEnabled === true) {
-                                                getStoreFront({
-                                                    storeFrontId: store?.id
-                                                });
-                                            } else {
-                                                isNotEnabled();
-                                            }
-                                        }}
-                                    >
-                                        {store?.storeFrontName}
-                                    </p>
+                                    {getStoreFrontLoad ? (
+                                        <Loader />
+                                    ) : (
+                                        <p
+                                            className={styles.storeName}
+                                            onClick={() => {
+                                                if (store?.isEnabled === true) {
+                                                    getStoreFront({
+                                                        storeFrontId: store?.id
+                                                    });
+                                                } else {
+                                                    isNotEnabled();
+                                                }
+                                            }}
+                                        >
+                                            {store?.storeFrontName}
+                                        </p>
+                                    )}
                                 </div>
                                 <div className={styles.store}>
                                     {/* <div>
@@ -200,7 +204,24 @@ const Stores = ({ nextStep, nextInaventory }) => {
                                 </div> */}
                                 </div>
                                 <div className={styles.onClick}>
-                                    <p onClick={view}>Click to view</p>
+                                    {getStoreFrontLoad ? (
+                                        <Loader />
+                                    ) : (
+                                        <p
+                                            className={styles.storeName}
+                                            onClick={() => {
+                                                if (store?.isEnabled === true) {
+                                                    getStoreFront({
+                                                        storeFrontId: store?.id
+                                                    });
+                                                } else {
+                                                    isNotEnabled();
+                                                }
+                                            }}
+                                        >
+                                            Click to view
+                                        </p>
+                                    )}
                                 </div>
                             </div>
                         );

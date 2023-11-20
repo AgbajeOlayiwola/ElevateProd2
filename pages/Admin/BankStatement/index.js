@@ -140,6 +140,9 @@ const BankStatments = () => {
     useEffect(() => {
         accountMiniStatement({ accountNumber: acctNum });
     }, []);
+    useEffect(() => {
+        accountMiniStatement({ accountNumber: acctNum });
+    }, [acctNum]);
     const [acctNummber, setAcctNumber] = useState('');
     useEffect(() => {
         setAcctNumber(
@@ -183,18 +186,7 @@ const BankStatments = () => {
                             (account) => account?.accountNo === e.target.value
                         );
                         if (selectedAccount) {
-                            setFieldValue(
-                                'ecoSourceAccount',
-                                selectedAccount?.accountNo
-                            );
-                            setFieldValue(
-                                'ecoAccountId',
-                                selectedAccount?.accountId
-                            );
-                            setFieldValue(
-                                'ecoCurrency',
-                                selectedAccount?.currency
-                            );
+                            setAcctNum(selectedAccount?.accountNo);
                         }
                     }}
                 >
@@ -477,7 +469,7 @@ const BankStatments = () => {
                         {accountMiniStatementLoad ? (
                             <Loader />
                         ) : accountMiniStatementErr ? (
-                            <p className={styles.error}>
+                            <p className={styles.errorP}>
                                 {accountMiniStatementErr?.data?.message}
                             </p>
                         ) : (

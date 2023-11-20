@@ -4,27 +4,21 @@ import { useDispatch } from 'react-redux';
 import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 import ReactPaginate from 'react-paginate';
 import { useTransactionHistoryMutation } from '../../../redux/api/authApi';
-import socialdata from '../../ReusableComponents/Lotties/loading.json';
+import Loader from '../Loader';
 import MoreAction from '../MoreAction';
 import styles from './styles.module.css';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
 const PaymentTable = ({ title, page }) => {
-    const [pageSrchIndex, setPageSrchIndex] = useState(0);
-    const [numOfRecords, setNumOfRecords] = useState(1000);
     const [tableDetails, setTableDetails] = useState([]);
     const [newTableDetails, setNewTableDetails] = useState([]);
     const [newestTableDetails, setNewestTableDetails] = useState([]);
     const [searchValue, setSearchValue] = useState('');
     const [displayType, setDisplayType] = useState('');
-    const [pageNumber, setPageNumber] = useState(0);
     const [searchType, setSearchType] = useState('');
-    const [disputes, setDisputes] = useState();
-    const [isLoading, setIsLoading] = useState(true);
+
     const affiliate = localStorage.getItem('affiliateCode');
-    let pending = 0;
-    let success = 0;
-    let failed = 0;
+
     const [
         transactionHistory,
         {
@@ -36,9 +30,10 @@ const PaymentTable = ({ title, page }) => {
             reset: transactionHistoryReset
         }
     ] = useTransactionHistoryMutation();
+    const [transactions, setTransactions] = useState([]);
     useEffect(() => {
         transactionHistory({
-            limit: 12,
+            limit: 1000,
             fromDate: '',
             toDate: '',
             order: 'DESC',
@@ -49,28 +44,13 @@ const PaymentTable = ({ title, page }) => {
             }
         });
     }, []);
-    const formatter = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'NGN',
-        currencyDisplay: 'narrowSymbol'
-    });
 
-    const usersPerPage = 10;
-    const pagesVisited = pageNumber * usersPerPage;
-    const socialOptions = {
-        loop: true,
-        autoplay: true,
-        animationData: socialdata,
-        rendererSettings: {
-            preserveAspectRatio: 'xMidYMid slice'
-        }
-    };
     useEffect(() => {
         if (page === 'Collections') {
             setNewestTableDetails([]);
             transactionHistory?.data?.filter((item, index) => {
                 // if (item.paymentDirection === 'CREDIT') {
-                setNewestTableDetails([]);
+                setNewestTableDetails(item);
                 setNewTableDetails((arr) => [...arr, item]);
                 // }
             });
@@ -78,7 +58,7 @@ const PaymentTable = ({ title, page }) => {
             setNewestTableDetails([]);
             transactionHistory?.data?.filter((item) => {
                 // if (item.paymentDirection === 'DEBIT') {
-                setNewestTableDetails([]);
+                setNewestTableDetails(item);
                 setNewTableDetails((arr) => [...arr, item]);
                 // }
             });
@@ -91,13 +71,12 @@ const PaymentTable = ({ title, page }) => {
         setNewestTableDetails([]);
         transactionHistory?.data?.filter((item) => {
             if (searchValue === '') {
-                setNewestTableDetails((arr) => [...arr, item]);
+                setTransactions(item);
             } else if (filterCondition(item, searchType)) {
-                setNewestTableDetails((arr) => [...arr, item]);
+                setTransactions(item);
             }
         });
-    }, [searchValue, newTableDetails]);
-    const pageCount = Math.ceil(newestTableDetails.length / usersPerPage);
+    }, [searchValue]);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -111,34 +90,32 @@ const PaymentTable = ({ title, page }) => {
             setDisplayType('Date');
         }
     }, [searchType]);
-    const filterCondition = (item, searchType) => {
+    console.log(searchType);
+    const filterCondition = (searchType) => {
         switch (searchType) {
             case 'transactionType':
-                return item.transactionType
-                    .toLowerCase()
-                    .includes(searchValue.toLowerCase());
+                return 'USSD'.toLowerCase().includes(searchValue.toLowerCase());
             case 'transactionStatus':
-                return item.transactionStatus
+                return item?.transactionStatus
                     .toLowerCase()
                     .includes(searchValue.toLowerCase());
             case 'transactionAmount':
-                return item.transactionAmount
+                return item?.transactionAmount
                     .toLowerCase()
                     .includes(searchValue.toLowerCase());
             case 'inflow':
-                return item.transactionType
+                return item?.transactionType
                     .toLowerCase()
                     .includes(searchValue.toLowerCase());
             case 'outflow':
-                return item.transactionType
+                return item?.transactionType
                     .toLowerCase()
                     .includes(searchValue.toLowerCase());
             default:
-                item.transactionType
-                    .toLowerCase()
-                    .includes(searchValue.toLowerCase());
+                'USSD'.toLowerCase().includes(searchValue.toLowerCase());
         }
     };
+    console.log(filterCondition());
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
 
@@ -157,6 +134,22 @@ const PaymentTable = ({ title, page }) => {
         // unsubscribe from the event on component unmount
         return () => window.removeEventListener('resize', handleWindowResize);
     }, [width]);
+    const [pageNumber, setPageNumber] = useState(0);
+    const transactionsPerPage = 10;
+
+    useEffect(() => {
+        setTransactions(transactionHistoryData?.data);
+    }, [transactionHistorySuccess]);
+
+    const handlePageChange = ({ selected }) => {
+        setPageNumber(selected);
+    };
+
+    const currentTransactions = transactions?.slice(
+        pageNumber * transactionsPerPage,
+        (pageNumber + 1) * transactionsPerPage
+    );
+
     return (
         <div className={styles.table}>
             <div className={styles.tableHeader}>
@@ -344,12 +337,14 @@ const PaymentTable = ({ title, page }) => {
                     <div className={styles.more}></div>
                 </div>
                 <div className={styles.tableDetails}>
-                    {transactionHistoryErr ? (
+                    {transactionHistoryLoad ? (
+                        <Loader />
+                    ) : transactionHistoryErr ? (
                         <p className={styles.notrans}>
                             No Transaction Available
                         </p>
                     ) : (
-                        transactionHistoryData?.data.map((item, index) => {
+                        currentTransactions?.map((item, index) => {
                             return (
                                 <div className={styles.TableDetailHeaders}>
                                     <p className={styles.beneficiary}>
@@ -414,10 +409,12 @@ const PaymentTable = ({ title, page }) => {
             <ReactPaginate
                 previousLabel={<AiOutlineLeft />}
                 nextLabel={<AiOutlineRight />}
-                pageCount={pageCount}
-                onPageChange={({ selected }) => {
-                    setPageNumber(selected);
-                }}
+                pageCount={Math.ceil(
+                    transactions?.length / transactionsPerPage
+                )}
+                pageRangeDisplayed={3}
+                marginPagesDisplayed={1}
+                onPageChange={handlePageChange}
                 containerClassName={styles.paginationBtns}
                 previousClassName={styles.previousBtns}
                 nextLinkClassName={styles.nextBtns}

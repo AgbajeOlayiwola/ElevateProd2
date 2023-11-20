@@ -536,6 +536,10 @@
     display: flex;
     justify-content: center;
 }
+.diclaimer > p {
+    font-size: 10px;
+    color: #3e3e3e;
+}
 .recieptDiv {
     padding-bottom: 0px;
 }

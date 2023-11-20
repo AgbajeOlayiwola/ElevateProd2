@@ -98,10 +98,10 @@ const MakePaymentSecond = ({
             position: toast.POSITION.TOP_RIGHT,
             className: 'toast-message'
         });
-        setTimeout(() => {
-            // closeAction();
-            dispatch(clearTransfer());
-        }, 7000);
+        // setTimeout(() => {
+        //     // closeAction();
+        //     dispatch(clearTransfer());
+        // }, 7000);
     };
     useEffect(() => {
         if (singleTransferSuccess) {
@@ -141,10 +141,10 @@ const MakePaymentSecond = ({
             position: toast.POSITION.TOP_RIGHT,
             className: 'toast-message'
         });
-        setTimeout(() => {
-            // closeAction();
-            dispatch(clearTransfer());
-        }, 7000);
+        // setTimeout(() => {
+        //     // closeAction();
+
+        // }, 7000);
     };
     useEffect(() => {
         if (bulkTransferSuccess) {
@@ -187,7 +187,7 @@ const MakePaymentSecond = ({
                                     </SuccessMainHeading>
 
                                     {title === 'Bulk Payments' ? null : (
-                                        <p styls={{ textAlign: 'center' }}>
+                                        <p style={{ textAlign: 'center' }}>
                                             {getSymbolFromCurrency(
                                                 countryToCurrency[
                                                     `${affiliate?.substring(1)}`
@@ -210,7 +210,10 @@ const MakePaymentSecond = ({
                                         active={'active'}
                                         text="Close"
                                         type="button"
-                                        onClick={closeAction}
+                                        onClick={() => {
+                                            closeAction(),
+                                                dispatch(clearTransfer());
+                                        }}
                                     />
                                 </RegistrationStatus>
                             </div>
@@ -319,6 +322,8 @@ const MakePaymentSecond = ({
                                                       ) +
                                                       parseFloat(
                                                           transfer?.totalCharge
+                                                              ? transfer?.totalCharge
+                                                              : 0
                                                       )
                                                           .toFixed(2)
                                                           .replace(
@@ -411,6 +416,8 @@ const MakePaymentSecond = ({
                                                         )}{' '}
                                                         {parseFloat(
                                                             transfer?.totalCharge
+                                                                ? transfer?.totalCharge
+                                                                : 0
                                                         )
                                                             .toFixed(2)
                                                             .replace(

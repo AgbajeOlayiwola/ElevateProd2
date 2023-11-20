@@ -10,6 +10,7 @@
     height: fit-content;
     overflow-y: scroll;
     z-index: 10;
+    height: 80vh;
 }
 
 .otpSect > div {

@@ -109,7 +109,9 @@ const Collections = () => {
 
             referalCode: ''
         };
-        enrollQr(data);
+        if (profile?.user?.isQrEnrolled === 'N') {
+            enrollQr(data);
+        }
     }, [acctNummber]);
     const showSuccessToastMessage = () => {
         toast.success('Successfully Enrolled for QR Payments', {
@@ -648,7 +650,7 @@ const Collections = () => {
                 </div>
             </div>
             <PaymentTable
-                title="Payment History"
+                title="Collections History"
                 test={count}
                 page="Collections"
             />

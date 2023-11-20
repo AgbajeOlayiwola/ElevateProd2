@@ -164,7 +164,7 @@ const VirtualAccountFirst = ({
                                         <br />
                                         <br />
                                         <div>
-                                            <label>Merchant Name</label>
+                                            <label>Clientst Name</label>
                                             <input
                                                 placeholder="Name"
                                                 onChange={(e) => {

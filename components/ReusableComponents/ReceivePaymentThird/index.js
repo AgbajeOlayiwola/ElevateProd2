@@ -1,15 +1,13 @@
-import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import CloseButton from '../CloseButtonSvg';
-import Overlay from '../Overlay';
-import styles from './styles.module.css';
-import MoreAction from '../MoreAction';
 import Lottie from 'react-lottie';
 import { useDispatch } from 'react-redux';
 import { getDisputCategoryGen } from '../../../redux/actions/getDisputeInfoAction';
-import { getTransactionElevate } from '../../../redux/actions/transactionEllevateAction';
 import { useTransactionHistoryMutation } from '../../../redux/api/authApi';
 import socialdata from '../../ReusableComponents/Lotties/loading.json';
+import CloseButton from '../CloseButtonSvg';
+import MoreAction from '../MoreAction';
+import Overlay from '../Overlay';
+import styles from './styles.module.css';
 import TransactionDets from './transactionDets';
 
 const ReceivePaymentThird = ({
@@ -213,18 +211,16 @@ const ReceivePaymentThird = ({
                                                         </div>
                                                         <MoreAction
                                                             transactionStatus={
-                                                                data?.transactionStatus
+                                                                data?.transactionType
                                                             }
-                                                            narr={
-                                                                data?.Narration
-                                                            }
-                                                            bene={
-                                                                data?.beneficiary
-                                                            }
-                                                            transactionTitle={data?.transactionType.replace(
+                                                            narr={`${data?.transactionStatus} Recieve Payment`}
+                                                            bene={data?.transactionType.replace(
                                                                 '_',
                                                                 ' '
                                                             )}
+                                                            transactionTitle={
+                                                                data?.transactionDate
+                                                            }
                                                             sender={
                                                                 data?.sourceAccount
                                                             }

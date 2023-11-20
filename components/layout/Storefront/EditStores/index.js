@@ -473,7 +473,7 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
                                             }
                                         )}
                                         <a
-                                            href={storeSlice?.websiteLink}
+                                            href={storeSlice?.storeFrontLink}
                                             target="_blank"
                                         >
                                             <MdOutlineLocalPhone />
