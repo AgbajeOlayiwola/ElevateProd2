@@ -46,6 +46,21 @@ const AllDisputes = () => {
 
         return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     }
+    const [transactions, setTransactions] = useState([]);
+    const transactionsPerPage = 10;
+
+    useEffect(() => {
+        setTransactions(disputeHistoryData?.response?.records);
+    }, [disputeHistorySuccess]);
+
+    const handlePageChange = ({ selected }) => {
+        setPageNumber(selected);
+    };
+
+    const currentTransactions = transactions?.slice(
+        pageNumber * transactionsPerPage,
+        (pageNumber + 1) * transactionsPerPage
+    );
     return (
         <div className={styles.statementCover}>
             <div>
@@ -60,7 +75,7 @@ const AllDisputes = () => {
                 {disputeHistoryLoad ? (
                     <Loader />
                 ) : (
-                    disputeHistoryData?.response?.records.map((item, index) => {
+                    currentTransactions?.map((item, index) => {
                         return (
                             <div
                                 className={styles.TableDetailHeaders}
@@ -89,11 +104,11 @@ const AllDisputes = () => {
                 previousLabel={<AiOutlineLeft />}
                 nextLabel={<AiOutlineRight />}
                 pageCount={Math.ceil(
-                    disputeHistoryData?.response?.records.length / usersPerPage
+                    transactions?.length / transactionsPerPage
                 )}
-                onPageChange={({ selected }) => {
-                    setPageNumber(selected);
-                }}
+                pageRangeDisplayed={3}
+                marginPagesDisplayed={1}
+                onPageChange={handlePageChange}
                 containerClassName={styles.paginationBtns}
                 previousClassName={styles.previousBtns}
                 nextLinkClassName={styles.nextBtns}

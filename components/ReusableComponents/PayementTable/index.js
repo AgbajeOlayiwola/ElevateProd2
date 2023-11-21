@@ -44,34 +44,54 @@ const PaymentTable = ({ title, page }) => {
             }
         });
     }, []);
-    const billPayments = [
+    var billPayments = [
         'BILLPAYMENT',
         'SINGLE_TRANSFER',
         'BULK_TRANSFER',
         'AIRTIME_TOPUP'
     ];
+    console.log(billPayments);
+
     useEffect(() => {
         if (page === 'Collections') {
             if (transactionHistoryData?.data) {
-                const filteredTransactions = transactionHistoryData.data.filter(
-                    (item) => !billPayments.includes(item?.transactionType)
-                );
+                const filteredTransactions =
+                    transactionHistoryData?.data?.filter((item) => {
+                        const excludedTypes = [
+                            'BILLPAYMENT',
+                            'SINGLE_TRANSFER',
+                            'BULK_TRANSFER',
+                            'AIRTIME_TOPUP'
+                        ];
+                        console.log('Transaction Type:', item?.transactionType);
+                        return !excludedTypes.includes(item?.transactionType);
+                    });
 
                 setTransactions(filteredTransactions);
             }
         } else if (page === 'Payments') {
             if (transactionHistoryData?.data) {
-                const filteredTransactions = transactionHistoryData.data.filter(
-                    (item) => billPayments.includes(item?.transactionType)
-                );
+                const filteredTransactions =
+                    transactionHistoryData?.data?.filter((item) => {
+                        const includedTypes = [
+                            'BILLPAYMENT',
+                            'SINGLE_TRANSFER',
+                            'BULK_TRANSFER',
+                            'AIRTIME_TOPUP'
+                        ];
+                        return includedTypes.includes(item?.transactionType);
+                    });
+
+                console.log('Filtered Transactions:', filteredTransactions);
 
                 setTransactions(filteredTransactions);
             }
         } else if (page === 'Reports') {
+            console.log('Setting Reports');
             setNewestTableDetails([]);
             setNewTableDetails(tableDetails);
         }
-    }, [tableDetails, transactionHistorySuccess, billPayments]);
+    }, [tableDetails, transactionHistorySuccess, page]);
     useEffect(() => {
         setNewestTableDetails([]);
         transactionHistory?.data?.filter((item) => {
@@ -142,10 +162,6 @@ const PaymentTable = ({ title, page }) => {
     const [pageNumber, setPageNumber] = useState(0);
     const transactionsPerPage = 10;
 
-    useEffect(() => {
-        setTransactions(transactionHistoryData?.data);
-    }, [transactionHistorySuccess]);
-
     const handlePageChange = ({ selected }) => {
         setPageNumber(selected);
     };
@@ -177,6 +193,7 @@ const PaymentTable = ({ title, page }) => {
             pageNumber * transactionsPerPage,
             (pageNumber + 1) * transactionsPerPage
         );
+    console.log(transactions);
 
     return (
         <div className={styles.table}>

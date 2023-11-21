@@ -1150,11 +1150,21 @@ export const authApi = createApi({
                     body
                 };
             }
+        }),
+        logisticsnableProviders: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'logistics-enable-provider',
+                    method: 'post',
+                    body
+                };
+            }
         })
     })
 });
 
 export const {
+    useLogisticsnableProvidersMutation,
     useShipOrderMutation,
     useViewOrderByStatusMutation,
     useCreateOrderMutation,

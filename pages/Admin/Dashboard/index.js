@@ -406,7 +406,7 @@ const Dashboard = () => {
 
             setTransactions(filteredTransactions);
         }
-    }, [transactionHistorySuccess, billPayments]);
+    }, [transactionHistorySuccess]);
 
     return (
         <div className={styles.statementCover}>

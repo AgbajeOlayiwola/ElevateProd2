@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import {
-    useDisableLogisticMutation,
-    useEnableLogisticMutation
-} from '../../../../redux/api/logisticsApi';
+    useCreateTransactionPinMutation,
+    useLogisticsnableProvidersMutation
+} from '../../../../redux/api/authApi';
+import { useDisableLogisticMutation } from '../../../../redux/api/logisticsApi';
 import Loader from '../../../ReusableComponents/Loader';
 import styles from './styles.module.css';
 
 const LogisticsTile = ({ data }) => {
     const [checkStates, setCheckStates] = useState(false);
     const [
-        enableLogistic,
+        logisticsnableProviders,
         {
             data: enableLogisticData,
             isLoading: enableLogisticLoad,
@@ -18,7 +19,18 @@ const LogisticsTile = ({ data }) => {
             error: enableLogisticErr,
             reset: enableLogisticReset
         }
-    ] = useEnableLogisticMutation();
+    ] = useLogisticsnableProvidersMutation();
+    const [
+        createTransactionPin,
+        {
+            data: createTransactionPinData,
+            isLoading: createTransactionPinLoad,
+            isSuccess: createTransactionPinSuccess,
+            isError: createTransactionPinFalse,
+            error: createTransactionPinErr,
+            reset: createTransactionPinReset
+        }
+    ] = useCreateTransactionPinMutation();
     const [
         disableLogistic,
         {
@@ -30,8 +42,9 @@ const LogisticsTile = ({ data }) => {
             reset: disableLogisticReset
         }
     ] = useDisableLogisticMutation();
+
     const handleCheckChange = () => {
-        enableLogistic({ providerId: data?.id.toString() });
+        logisticsnableProviders({ providerId: data?.id.toString() });
         setCheckStates((prev) => !prev);
     };
     console.log(data?.id.toString());
@@ -60,12 +73,7 @@ const LogisticsTile = ({ data }) => {
                         <Loader />
                     ) : (
                         <>
-                            <div
-                                className={styles.saveBene}
-                                onClick={() => {
-                                    enableLogistic();
-                                }}
-                            >
+                            <div className={styles.saveBene}>
                                 <label
                                     className={
                                         checkStates === true
