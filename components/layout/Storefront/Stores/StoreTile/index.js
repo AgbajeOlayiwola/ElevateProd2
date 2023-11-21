@@ -1,15 +1,19 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
     useGetStoreFrontMutation,
     useMakeEnableMutation
 } from '../../../../../redux/api/authApi';
+import { setStoreSlice } from '../../../../../redux/slices/storeSlice';
 import Loader from '../../../../ReusableComponents/Loader';
 import styles from '../styles.module.css';
-
-const StorTile = ({ store, checkSTore }) => {
+const StorTile = ({ store, checkSTore, nextStep }) => {
     const [checkStates, setCheckStates] = useState(store?.isEnabled);
+    const dispatch = useDispatch();
     const router = useRouter();
     const [
         getStoreFront,
@@ -72,8 +76,11 @@ const StorTile = ({ store, checkSTore }) => {
     const cretaeStore = () => {
         router.push('/Admin/Storefront/CreateStore');
     };
+
     return (
         <div>
+            {' '}
+            <ToastContainer />
             <div className={styles.indexImage}>
                 <div className={styles.save}>
                     {makeEnableLoad ? (

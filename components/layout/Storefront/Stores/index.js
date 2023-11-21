@@ -74,7 +74,11 @@ const Stores = ({ nextStep, nextInaventory }) => {
                 <div className={styles.tableBody}>
                     {getAllSToreFrontData?.data?.map((store, index) => {
                         return (
-                            <StorTile store={store} checkSTore={checkSTore} />
+                            <StorTile
+                                store={store}
+                                checkSTore={checkSTore}
+                                nextStep={() => nextStep()}
+                            />
                         );
                     })}
                 </div>
