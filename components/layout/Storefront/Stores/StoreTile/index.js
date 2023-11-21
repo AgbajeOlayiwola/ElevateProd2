@@ -123,7 +123,12 @@ const StorTile = ({ store, checkSTore, nextStep }) => {
                     }}
                 >
                     <Image
-                        src={`data:image/png;base64,${store?.logo}`}
+                        src={
+                            store?.logo &&
+                            store?.logo.startsWith('data:image/png;base64,')
+                                ? store?.logo
+                                : `data:image/png;base64,${store?.logo}`
+                        }
                         width={48}
                         height={48}
                         alt="image"

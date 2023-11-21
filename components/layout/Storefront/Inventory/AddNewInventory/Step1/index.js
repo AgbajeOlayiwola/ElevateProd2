@@ -123,7 +123,8 @@ const Step1 = ({ saveANdContinue, ifIsEdit }) => {
                         price: values?.productPrice,
                         lessQuantity: notify,
                         discountPercentage: values?.discount,
-                        color: colors
+                        color: colors,
+                        size: sizes
                     };
                     console.log(data);
                     dispatch(setAddInventory(data));

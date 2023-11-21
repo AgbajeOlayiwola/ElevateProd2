@@ -16,7 +16,14 @@
     background: #ffffff;
     border-radius: 16px;
     margin-left: 20px;
+    height: 80vh;
+    overflow: scroll;
     padding: 48px 48px 48px 48px;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.profileLayoutBody::-webkit-scrollbar {
+    display: none;
 }
 
 @media screen and (max-width: 1000px) {

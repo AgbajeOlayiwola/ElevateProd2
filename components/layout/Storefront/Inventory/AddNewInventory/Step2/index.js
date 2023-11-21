@@ -10,7 +10,7 @@ import InputFile from '../../../../../ReusableComponents/InputFile';
 import Loader from '../../../../../ReusableComponents/Loader';
 import PlusSvg from '../../../../../ReusableComponents/ReusableSvgComponents/PlusSvg';
 import styles from './styles.module.css';
-const Step2 = ({ ifIsEdit }) => {
+const Step2 = ({ ifIsEdit, backToInventories }) => {
     const [assignLog, setAssignLog] = useState(true);
     const { viewInventory } = useSelector((store) => store);
     const router = useRouter();
@@ -55,26 +55,35 @@ const Step2 = ({ ifIsEdit }) => {
     const [inventories, setInventorie] = useState([]);
     const [logisticsId, stLogisticsID] = useState([]);
     const handleCheckboxChange = (id) => {
-        // Check if the id is already in the selectedLogisticsIds array
-        if (selectedLogisticsIds.includes(id)) {
+        // Convert id to string
+        const stringId = id.toString();
+
+        // Check if the stringId is already in the selectedLogisticsIds array
+        if (selectedLogisticsIds.includes(stringId)) {
             // If yes, remove it
             setSelectedLogisticsIds((prevIds) =>
-                prevIds.filter((selectedId) => selectedId !== id)
+                prevIds.filter((selectedId) => selectedId !== stringId)
             );
         } else {
             // If no, add it
-            setSelectedLogisticsIds((prevIds) => [...prevIds, id]);
+            setSelectedLogisticsIds((prevIds) => [...prevIds, stringId]);
         }
     };
     const saveANdContinue = () => {
+        const imageArray = [
+            image1 ? image1 : null,
+            image2 ? image2 : null,
+            image3 ? image3 : null,
+            image4 ? image4 : null
+        ].filter(Boolean);
         const data = {
             ...addInventory,
-            images: [image1, image2, image3, image4],
+            image: imageArray,
             logisticsId: selectedLogisticsIds
         };
         const updateDta = {
             ...addInventory,
-            images: [image1, image2, image3, image4],
+            image: imageArray,
             logisticsId: selectedLogisticsIds,
             inventoryId: viewInventory?.id
         };
@@ -90,7 +99,7 @@ const Step2 = ({ ifIsEdit }) => {
     };
     useEffect(() => {
         if (createeInventorySuccess || updateInventorySuccess) {
-            router.reload();
+            backToInventories();
         }
     }, [createeInventorySuccess, updateInventorySuccess]);
 
@@ -102,16 +111,16 @@ const Step2 = ({ ifIsEdit }) => {
     const [image4, setImage4] = useState();
 
     const onProdChange1 = (data) => {
-        setImage1(data.replace('data:image/png;base64,', ''));
+        setImage1(data);
     };
     const onProdChange2 = (data) => {
-        setImage2(data.replace('data:image/png;base64,', ''));
+        setImage2(data);
     };
     const onProdChange3 = (data) => {
-        setImage3(data.replace('data:image/png;base64,', ''));
+        setImage3(data);
     };
     const onProdChange4 = (data) => {
-        setImage4(data.replace('data:image/png;base64,', ''));
+        setImage4(data);
     };
     return (
         <div className={styles.second}>
@@ -131,9 +140,9 @@ const Step2 = ({ ifIsEdit }) => {
                         <Loader />
                     ) : (
                         getStationsData?.data?.map((item, index) => {
-                            const isChecked = selectedLogisticsIds.includes(
-                                item.id
-                            );
+                            const stringId = item.id.toString();
+                            const isChecked =
+                                selectedLogisticsIds.includes(stringId);
 
                             return (
                                 <div className={styles.fass} key={index}>

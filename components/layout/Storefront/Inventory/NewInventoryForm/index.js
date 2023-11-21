@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import Step1 from '../AddNewInventory/Step1';
 import Step2 from '../AddNewInventory/Step2';
 import styles from './styles.module.css';
+import { IoArrowBack } from 'react-icons/io5';
 
-const AddNewInventoryForm = ({ isEdit }) => {
+const AddNewInventoryForm = ({ isEdit, backToInventories }) => {
     const [page, setPage] = useState(0);
     const multi = () => {
         switch (page) {
@@ -15,11 +16,21 @@ const AddNewInventoryForm = ({ isEdit }) => {
                     />
                 );
             case 1:
-                return <Step2 ifIsEdit={isEdit} />;
+                return (
+                    <Step2
+                        ifIsEdit={isEdit}
+                        backToInventories={backToInventories}
+                    />
+                );
         }
     };
     return (
         <div>
+            <p onClick={() => backToInventories()} className={styles.Name}>
+                {' '}
+                <IoArrowBack />
+                Back
+            </p>
             <div className={styles.createStoreFlex}>
                 <div className={styles.creating}>
                     <div>

@@ -51,7 +51,12 @@ const Storefront = () => {
                     />
                 );
             case 3:
-                return <AddNewInventoryForm isEdit={editStore} />;
+                return (
+                    <AddNewInventoryForm
+                        isEdit={editStore}
+                        backToInventories={() => setPage(1)}
+                    />
+                );
         }
     };
     return <>{multi()}</>;

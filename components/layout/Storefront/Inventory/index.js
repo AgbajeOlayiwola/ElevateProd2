@@ -123,7 +123,14 @@ const Inventory = ({ actionText, showProduct, nextPage, storeSlice }) => {
                                 <h2 className={styles.actionText}>
                                     {actionText}
                                 </h2>
-                                <p>23 Items</p>
+                                <p>
+                                    {getAllInventoriesByIdLoad ? (
+                                        <Loader />
+                                    ) : (
+                                        getAllInventoriesByIdData?.data?.lenght
+                                    )}{' '}
+                                    Items
+                                </p>
                             </div>
                             <button
                                 onClick={() => {
@@ -179,8 +186,12 @@ const Inventory = ({ actionText, showProduct, nextPage, storeSlice }) => {
                                                     height={188}
                                                     width={172}
                                                     src={
-                                                        item?.image[0] ||
-                                                        '/Assets/Images/Rectangle59.png'
+                                                        item?.image[0] &&
+                                                        item?.image[0].startsWith(
+                                                            'data:image/png;base64,'
+                                                        )
+                                                            ? item?.image[0]
+                                                            : `data:image/png;base64,${item?.image[0]}`
                                                     }
                                                     alt="store front image"
                                                 />

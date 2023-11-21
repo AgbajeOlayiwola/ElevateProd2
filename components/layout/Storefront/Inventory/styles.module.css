@@ -79,9 +79,21 @@
     grid-template-columns: 30% 30% 30%;
     gap: 3%;
     overflow: scroll;
+    height: 100%;
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
 }
 .allInventory::-webkit-scrollbar {
     display: none;
+}
+.Name {
+    color: #005b82;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
