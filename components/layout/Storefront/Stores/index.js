@@ -1,21 +1,14 @@
-import Image from 'next/image';
-import { useRouter } from 'next/router';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {
-    useGetAllSToreFrontMutation,
-    useGetStoreFrontMutation,
-    useMakeEnableMutation
-} from '../../../../redux/api/authApi';
+import { useGetAllSToreFrontMutation } from '../../../../redux/api/authApi';
 import { setAllStars } from '../../../../redux/slices/allStoresSlice';
-import { setStoreSlice } from '../../../../redux/slices/storeSlice';
 import Loader from '../../../ReusableComponents/Loader';
+import StorTile from './StoreTile';
 import styles from './styles.module.css';
 
 const Stores = ({ nextStep, nextInaventory }) => {
-    const [checkStates, setCheckStates] = useState({});
     const dispatch = useDispatch();
     const addInventory = () => {
         nextInaventory();
@@ -31,79 +24,20 @@ const Stores = ({ nextStep, nextInaventory }) => {
             reset: getAllSToreFrontReset
         }
     ] = useGetAllSToreFrontMutation();
-    const [
-        getStoreFront,
-        {
-            data: getStoreFrontData,
-            isLoading: getStoreFrontLoad,
-            isSuccess: getStoreFrontSuccess,
-            isError: getStoreFrontFalse,
-            error: getStoreFrontErr,
-            reset: getStoreFrontReset
-        }
-    ] = useGetStoreFrontMutation();
-    const [
-        makeEnable,
-        {
-            data: makeEnableData,
-            isLoading: makeEnableLoad,
-            isSuccess: makeEnableSuccess,
-            isError: makeEnableFalse,
-            error: makeEnableErr,
-            reset: makeEnableReset
-        }
-    ] = useMakeEnableMutation();
-    useEffect(() => {
-        if (makeEnableSuccess) {
-            getAllSToreFront(null);
-        }
-    }, [makeEnableSuccess]);
 
-    useEffect(() => {
-        getAllSToreFront(null);
-    }, []);
     useEffect(() => {
         if (getAllSToreFrontSuccess) {
             dispatch(setAllStars(getAllSToreFrontData?.data));
         }
     }, [getAllSToreFrontSuccess]);
-
-    const showToastMessage = () => {
-        toast.error('This storefront is currntly disabled', {
-            position: toast.POSITION.TOP_RIGHT,
-            className: 'toast-message'
-        });
-    };
-
-    const handleCheckChange = (index) => {
-        setCheckStates((prevCheckStates) => ({
-            ...prevCheckStates,
-            [index]: !prevCheckStates[index] // Toggle the check state for the specific item
-        }));
-    };
-
-    const router = useRouter();
-    const isNotEnabled = () => {
-        showToastMessage();
-    };
-    const cretaeStore = () => {
-        router.push('/Admin/Storefront/CreateStore');
+    useEffect(() => {
+        getAllSToreFront(null);
+    }, []);
+    const checkSTore = () => {
+        getAllSToreFront(null);
     };
     const view = () => {};
-    useEffect(() => {
-        if (getStoreFrontSuccess) {
-            dispatch(setStoreSlice(getStoreFrontData?.data));
-            nextStep();
-        }
-    }, [getStoreFrontSuccess]);
-    const enable = useCallback(
-        (val) => {
-            makeEnable({
-                storeFrontId: val
-            });
-        },
-        [makeEnable]
-    );
+
     return (
         <div className={styles.storeBody}>
             <ToastContainer />
@@ -140,101 +74,7 @@ const Stores = ({ nextStep, nextInaventory }) => {
                 <div className={styles.tableBody}>
                     {getAllSToreFrontData?.data?.map((store, index) => {
                         return (
-                            <div className={styles.indexImage} key={index}>
-                                <div className={styles.save}>
-                                    <div
-                                        className={styles.saveBene}
-                                        onClick={() => {
-                                            enable(store?.id);
-                                        }}
-                                    >
-                                        <label
-                                            className={
-                                                store?.isEnabled === true
-                                                    ? styles.beneChecked
-                                                    : styles.beneCheck
-                                            }
-                                        >
-                                            <input
-                                                type="checkbox"
-                                                onChange={() =>
-                                                    handleCheckChange(index)
-                                                }
-                                                checked={checkStates[index]}
-                                            />
-                                            <span>
-                                                <i></i>
-                                            </span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div
-                                    onClick={() => {
-                                        if (store?.isEnabled === true) {
-                                            getStoreFront({
-                                                storeFrontId: store?.id
-                                            });
-                                        } else {
-                                            isNotEnabled();
-                                        }
-                                    }}
-                                >
-                                    <Image
-                                        src={`data:image/png;base64,${store?.logo}`}
-                                        width={48}
-                                        height={48}
-                                        alt="image"
-                                    />
-                                    {getStoreFrontLoad ? (
-                                        <Loader />
-                                    ) : (
-                                        <p
-                                            className={styles.storeName}
-                                            onClick={() => {
-                                                if (store?.isEnabled === true) {
-                                                    getStoreFront({
-                                                        storeFrontId: store?.id
-                                                    });
-                                                } else {
-                                                    isNotEnabled();
-                                                }
-                                            }}
-                                        >
-                                            {store?.storeFrontName}
-                                        </p>
-                                    )}
-                                </div>
-                                <div className={styles.store}>
-                                    {/* <div>
-                                    <h1>{store?.orders}</h1>
-                                    <p>{store?.storeFrontLink}</p>
-                                </div>
-                                <div>
-                                    <h1>{store?.orders}</h1>
-                                    <p>{store?.storeFrontLink}</p>
-                                </div> */}
-                                </div>
-                                <div className={styles.onClick}>
-                                    {getStoreFrontLoad ? (
-                                        <Loader />
-                                    ) : (
-                                        <p
-                                            className={styles.storeName}
-                                            onClick={() => {
-                                                if (store?.isEnabled === true) {
-                                                    getStoreFront({
-                                                        storeFrontId: store?.id
-                                                    });
-                                                } else {
-                                                    isNotEnabled();
-                                                }
-                                            }}
-                                        >
-                                            Click to view
-                                        </p>
-                                    )}
-                                </div>
-                            </div>
+                            <StorTile store={store} checkSTore={checkSTore} />
                         );
                     })}
                 </div>
