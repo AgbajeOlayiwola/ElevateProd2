@@ -5,7 +5,7 @@ import {
     useCreateeInventoryMutation,
     useUpdateInventoryMutation
 } from '../../../../../../redux/api/authApi';
-import { useGetLogisticsProvidersQuery } from '../../../../../../redux/api/logisticsApi';
+import { useGetStationsQuery } from '../../../../../../redux/api/logisticsApi';
 import InputFile from '../../../../../ReusableComponents/InputFile';
 import Loader from '../../../../../ReusableComponents/Loader';
 import PlusSvg from '../../../../../ReusableComponents/ReusableSvgComponents/PlusSvg';
@@ -40,25 +40,42 @@ const Step2 = ({ ifIsEdit }) => {
     ] = useUpdateInventoryMutation();
 
     console.log(addInventory);
-    const filteredData = logisticsProviders?.data.filter((item) =>
-        item?.providerName?.toLowerCase().includes(searchQuery.toLowerCase())
-    );
 
     const {
-        data: logisticsProviders,
+        data: getStationsData,
         isLoading,
         isError,
         refetch // This function can be used to manually trigger a refetch
-    } = useGetLogisticsProvidersQuery();
+    } = useGetStationsQuery();
+    useEffect(() => {
+        refetch();
+    }, []);
+    const [selectedLogisticsIds, setSelectedLogisticsIds] = useState([]);
+
     const [inventories, setInventorie] = useState([]);
+    const [logisticsId, stLogisticsID] = useState([]);
+    const handleCheckboxChange = (id) => {
+        // Check if the id is already in the selectedLogisticsIds array
+        if (selectedLogisticsIds.includes(id)) {
+            // If yes, remove it
+            setSelectedLogisticsIds((prevIds) =>
+                prevIds.filter((selectedId) => selectedId !== id)
+            );
+        } else {
+            // If no, add it
+            setSelectedLogisticsIds((prevIds) => [...prevIds, id]);
+        }
+    };
     const saveANdContinue = () => {
         const data = {
             ...addInventory,
-            images: [image1, image2, image3, image4]
+            images: [image1, image2, image3, image4],
+            logisticsId: selectedLogisticsIds
         };
         const updateDta = {
             ...addInventory,
             images: [image1, image2, image3, image4],
+            logisticsId: selectedLogisticsIds,
             inventoryId: viewInventory?.id
         };
         if (ifIsEdit) {
@@ -110,20 +127,34 @@ const Step2 = ({ ifIsEdit }) => {
                 </div>
             ) : (
                 <div className={styles.companys}>
-                    {filteredData?.map((item, index) => {
-                        return (
-                            <div className={styles.fass} key={index}>
-                                <input type="checkbox" />
-                                <img
-                                    src={item?.imageUrl}
-                                    height={28}
-                                    width={28}
-                                    alt={item?.providerName}
-                                />
-                                <p>{item?.providerName}</p>
-                            </div>
-                        );
-                    })}
+                    {isLoading ? (
+                        <Loader />
+                    ) : (
+                        getStationsData?.data?.map((item, index) => {
+                            const isChecked = selectedLogisticsIds.includes(
+                                item.id
+                            );
+
+                            return (
+                                <div className={styles.fass} key={index}>
+                                    <input
+                                        type="checkbox"
+                                        checked={isChecked}
+                                        onChange={() =>
+                                            handleCheckboxChange(item.id)
+                                        }
+                                    />
+                                    <img
+                                        src={item.imageUrl}
+                                        height={28}
+                                        width={28}
+                                        alt={item.providerName}
+                                    />
+                                    <p>{item.providerName}</p>
+                                </div>
+                            );
+                        })
+                    )}
                 </div>
             )}
             <br />

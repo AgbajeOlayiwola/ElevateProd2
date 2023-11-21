@@ -54,7 +54,7 @@
 }
 .size {
     display: flex;
-    width: 48px;
+    width: fit-content;
     height: 48px;
     padding: 12px;
     justify-content: center;

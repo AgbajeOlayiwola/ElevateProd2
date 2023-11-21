@@ -37,7 +37,7 @@ export const logisticsApi = createApi({
         getStations: builder.query({
             query: () => {
                 return {
-                    url: 'smeapp-logistics-providers-service/get/stations'
+                    url: 'smeapp-logistics-providers-by-userid/logistics-providers/by-userid'
                 };
             }
         }),

@@ -11,6 +11,7 @@ const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
 const Step1 = ({ saveANdContinue, ifIsEdit }) => {
     const { storeSlice } = useSelector((store) => store);
+    const [notify, setNotify] = useState(0);
     const { viewInventory } = useSelector((store) => store);
     const dispatch = useDispatch();
     const [count, setCount] = useState(ifIsEdit ? viewInventory?.quantity : 0);
@@ -55,8 +56,8 @@ const Step1 = ({ saveANdContinue, ifIsEdit }) => {
         productPrice: ifIsEdit ? viewInventory?.price : '',
         discount: ifIsEdit ? viewInventory?.discountPercentage : ''
     };
-    const [sizes, setSizes] = useState(['Small', 'Medium', 'Large']);
-    const [colors, setColors] = useState(['Red', 'Blue', 'Green']);
+    const [sizes, setSizes] = useState([]);
+    const [colors, setColors] = useState([]);
     const [newSize, setNewSize] = useState('');
     const [newColor, setNewColor] = useState('');
 
@@ -120,7 +121,7 @@ const Step1 = ({ saveANdContinue, ifIsEdit }) => {
                         description: values?.productDescription,
                         quantity: count,
                         price: values?.productPrice,
-                        lessQuantity: 2,
+                        lessQuantity: notify,
                         discountPercentage: values?.discount,
                         color: colors
                     };
@@ -343,8 +344,17 @@ const Step1 = ({ saveANdContinue, ifIsEdit }) => {
                                         Notify me when product is less than
                                         (optional)y
                                     </label>
-                                    <select>
-                                        <option>N/A</option>
+                                    <select
+                                        onChange={(e) =>
+                                            setNotify(e.target.value)
+                                        }
+                                    >
+                                        <option value={0}>N/A</option>
+                                        <option value={3}>3</option>
+                                        <option value={5}>5</option>
+                                        <option value={10}>10</option>
+                                        <option value={15}>15</option>
+                                        <option value={20}>20</option>
                                     </select>
                                 </div>
                                 <div className={styles.flexeersDiv}>

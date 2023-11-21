@@ -26,7 +26,7 @@ const AddNewInventoryForm = ({ isEdit }) => {
                         <h1>{isEdit ? 'Edit Inventory' : 'New Inventory'}</h1>
                     </div>
                     <div className={styles.storeFrontSteps}>
-                        <div>
+                        <div onClick={() => setPage(0)}>
                             <div
                                 className={
                                     page === 0
@@ -45,7 +45,7 @@ const AddNewInventoryForm = ({ isEdit }) => {
                             </p>
                         </div>
                         <hr className={styles.hr} />
-                        <div>
+                        <div onClick={() => setPage(1)}>
                             <div
                                 className={
                                     page === 1

@@ -3,7 +3,10 @@ import {
     useCreateTransactionPinMutation,
     useLogisticsnableProvidersMutation
 } from '../../../../redux/api/authApi';
-import { useDisableLogisticMutation } from '../../../../redux/api/logisticsApi';
+import {
+    useDisableLogisticMutation,
+    useGetStationsQuery
+} from '../../../../redux/api/logisticsApi';
 import Loader from '../../../ReusableComponents/Loader';
 import styles from './styles.module.css';
 
@@ -42,6 +45,15 @@ const LogisticsTile = ({ data }) => {
             reset: disableLogisticReset
         }
     ] = useDisableLogisticMutation();
+    const {
+        data: getStationsData,
+        isLoading,
+        isError,
+        refetch // This function can be used to manually trigger a refetch
+    } = useGetStationsQuery();
+    useEffect(() => {
+        refetch();
+    }, []);
 
     const handleCheckChange = () => {
         logisticsnableProviders({ providerId: data?.id.toString() });
