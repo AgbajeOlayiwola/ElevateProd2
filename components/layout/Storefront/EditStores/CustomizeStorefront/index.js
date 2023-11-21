@@ -6,6 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import {
     useCreateCategoryMutation,
     useCreateCollectionMutation,
+    useDeleteCategoryMutation,
+    useDeleteCollectionMutation,
     useGetAllCategoryMutation,
     useGetAllCollectionsMutation,
     useUpdateFaqsMutation,
@@ -113,6 +115,29 @@ const CustomizeStoreFront = ({
         }
     ] = useUpdateStoreFrontMutation();
 
+    const [
+        deleteCategory,
+        {
+            data: deleteCategoryData,
+            isLoading: deleteCategoryLoad,
+            isSuccess: deleteCategorySuccess,
+            isError: deleteCategoryFalse,
+            error: deleteCategoryErr,
+            reset: deleteCategoryReset
+        }
+    ] = useDeleteCategoryMutation();
+    const [
+        deleteCollection,
+        {
+            data: deleteCollectionData,
+            isLoading: deleteCollectionLoad,
+            isSuccess: deleteCollectionSuccess,
+            isError: deleteCollectionFalse,
+            error: deleteCollectionErr,
+            reset: deleteCollectionReset
+        }
+    ] = useDeleteCollectionMutation();
+
     const initialValues = {
         storeName: storeSlice?.storeFrontName,
         storeLink: '',
@@ -139,17 +164,17 @@ const CustomizeStoreFront = ({
         }
     }, [updateStoreFrontSuccess]);
     useEffect(() => {
-        if (createCategorySuccess) {
+        if (createCategorySuccess || deleteCategorySuccess) {
             setAddCategory(false);
             getAllCategory({ storeFrontId: storeSlice?.id });
         }
-    }, [createCategorySuccess]);
+    }, [createCategorySuccess, deleteCategorySuccess]);
     useEffect(() => {
-        if (createCollectionSuccess) {
+        if (createCollectionSuccess || deleteCollectionSuccess) {
             setCollction(false);
             getAllCollections({ storeFrontId: storeSlice?.id });
         }
-    }, [createCollectionSuccess]);
+    }, [createCollectionSuccess, deleteCollectionSuccess]);
     const handleQuestionChange = (index, question) => {
         const updatedFaqs = [...faqData.faqs];
         updatedFaqs[index].question = question;
@@ -402,24 +427,51 @@ const CustomizeStoreFront = ({
                                         getAllCategoryData?.data?.map(
                                             (name, index) => {
                                                 return (
-                                                    <div
-                                                        key={index}
-                                                        className={
-                                                            styles.addProduvt
-                                                        }
-                                                    >
-                                                        <img
-                                                            src={`data:image/png;base64,${name?.image}`}
-                                                            width={10}
-                                                            height={50}
-                                                        />
-                                                        <p
+                                                    <div>
+                                                        <div
+                                                            key={index}
                                                             className={
-                                                                styles.categpryP
+                                                                styles.addProduvt
                                                             }
                                                         >
-                                                            {name?.name}
-                                                        </p>
+                                                            <img
+                                                                src={`data:image/png;base64,${name?.image}`}
+                                                                width={10}
+                                                                height={50}
+                                                            />
+                                                            <p
+                                                                className={
+                                                                    styles.categpryP
+                                                                }
+                                                            >
+                                                                {name?.name}
+                                                            </p>
+                                                        </div>
+                                                        {deleteCategoryLoad ? (
+                                                            <Loader />
+                                                        ) : (
+                                                            <p
+                                                                style={{
+                                                                    color: 'red',
+                                                                    textAlign:
+                                                                        'center',
+                                                                    cursor: 'pointer'
+                                                                }}
+                                                                onClick={() =>
+                                                                    deleteCategory(
+                                                                        {
+                                                                            storeFrontId:
+                                                                                storeSlice?.id,
+                                                                            productCategoryId:
+                                                                                name?.id
+                                                                        }
+                                                                    )
+                                                                }
+                                                            >
+                                                                {' '}
+                                                                Delete
+                                                            </p>
+                                                        )}
                                                     </div>
                                                 );
                                             }
@@ -452,24 +504,50 @@ const CustomizeStoreFront = ({
                                         getAllCollectionsData?.data?.map(
                                             (name, index) => {
                                                 return (
-                                                    <div
-                                                        key={index}
-                                                        className={
-                                                            styles.addProduvt
-                                                        }
-                                                    >
-                                                        <img
-                                                            src={`data:image/png;base64,${name?.image}`}
-                                                            width={10}
-                                                            height={50}
-                                                        />
-                                                        <p
+                                                    <div>
+                                                        <div
+                                                            key={index}
                                                             className={
-                                                                styles.categpryP
+                                                                styles.addProduvt
                                                             }
                                                         >
-                                                            {name?.name}
-                                                        </p>
+                                                            <img
+                                                                src={`data:image/png;base64,${name?.image}`}
+                                                                width={10}
+                                                                height={50}
+                                                            />
+                                                            <p
+                                                                className={
+                                                                    styles.categpryP
+                                                                }
+                                                            >
+                                                                {name?.name}
+                                                            </p>
+                                                        </div>
+                                                        {deleteCollectionLoad ? (
+                                                            <Loader />
+                                                        ) : (
+                                                            <p
+                                                                style={{
+                                                                    color: 'red',
+                                                                    textAlign:
+                                                                        'center',
+                                                                    cursor: 'pointer'
+                                                                }}
+                                                                onClick={() =>
+                                                                    deleteCollection(
+                                                                        {
+                                                                            storeFrontId:
+                                                                                storeSlice?.id,
+                                                                            productCollectionId:
+                                                                                name?.id
+                                                                        }
+                                                                    )
+                                                                }
+                                                            >
+                                                                Delete
+                                                            </p>
+                                                        )}
                                                     </div>
                                                 );
                                             }

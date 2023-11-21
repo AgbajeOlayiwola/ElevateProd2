@@ -1164,6 +1164,8 @@ export const authApi = createApi({
 });
 
 export const {
+    useDeleteCategoryMutation,
+    useDeleteCollectionMutation,
     useLogisticsnableProvidersMutation,
     useShipOrderMutation,
     useViewOrderByStatusMutation,
