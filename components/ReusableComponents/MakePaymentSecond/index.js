@@ -183,13 +183,13 @@ const MakePaymentSecond = ({
         const data = {
             beneficiaryName: transfer?.beneficiaryName,
             accountNumber: transfer?.accountNumber,
-            bankName: transfer?.bankName,
-            bankCode: transfer?.bankCode
+            bankName: transfer?.destinationBank,
+            bankCode: transfer?.destinationBankCode
         };
         createTxBeneficiary(data);
     };
     const showBeneToast = () => {
-        toast.succes('Bneficiary Addd Successfuly', {
+        toast.success('Bneficiary Addd Successfuly', {
             position: toast.POSITION.TOP_RIGHT,
             className: 'toast-message'
         });

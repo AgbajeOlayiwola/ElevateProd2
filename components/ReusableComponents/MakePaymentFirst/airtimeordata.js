@@ -419,6 +419,9 @@ const AirtimeOrData = ({
                                                                         .value
                                                                 );
                                                             }}
+                                                            className={
+                                                                styles.amoountWithSvg
+                                                            }
                                                             type="text"
                                                             placeholder="0.00"
                                                         />

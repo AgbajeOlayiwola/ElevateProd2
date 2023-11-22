@@ -283,13 +283,20 @@ const SingleTransfer = ({
                 isEcobankToEcobankTransaction: false,
                 currency: formRef?.current?.values?.ecoCurrency,
                 destinationBank: formRef?.current?.values?.ecoChooseBank,
-                destinationAccountNo:
-                    formRef?.current?.values?.ecoAccountNumber,
-                beneficiaryName: accountInquiryData?.data?.accountName,
-                destinationBank: selectedBank?.institutionName,
-                destinationBankCode: selectedBank?.institutionId,
+                destinationAccountNo: beneficiaries?.accountNumber
+                    ? beneficiaries?.accountNumber
+                    : formRef?.current?.values?.ecoAccountNumber,
+                beneficiaryName: beneficiaries?.beneficiaryName
+                    ? beneficiaries?.beneficiaryName
+                    : accountInquiryData?.data?.accountName,
+                destinationBank: beneficiaries?.bankName
+                    ? beneficiaries?.bankName
+                    : selectedBank?.institutionName,
+                destinationBankCode: beneficiaries?.bankCode
+                    ? beneficiaries?.bankCode
+                    : selectedBank?.institutionId,
                 transactionAmount: formRef?.current?.values?.ecoEnterAmount,
-                narration: formRef?.current?.values?.ecoEnterAmount,
+                narration: formRef?.current?.values?.ecoNarration,
                 accountId: formRef?.current?.values?.ecoAccountId,
                 accountNumber: formRef?.current?.values?.ecoSourceAccount,
                 totalCharge: paymentFetchtransactionfeeData?.data?.totalCharge
@@ -689,6 +696,9 @@ const SingleTransfer = ({
                                 .map((item, index) => {
                                     return (
                                         <div
+                                            onClick={() =>
+                                                setBeneficiaries(item)
+                                            }
                                             className={styles.benerInner}
                                             key={index}
                                         >
@@ -721,10 +731,15 @@ const SingleTransfer = ({
                                 amount: values?.ecoEnterAmount,
                                 sourceAccount: values?.ecoSourceAccount,
                                 sourceAccountType: 'A',
-                                receiverAccountNumber: values?.ecoAccountNumber,
+                                receiverAccountNumber:
+                                    beneficiaries?.accountNumber
+                                        ? beneficiaries?.accountNumber
+                                        : values?.ecoAccountNumber,
                                 senderPhoneNumber: profile?.user?.phoneNumber,
                                 sourceAccountCcy: values?.ecoCurrency,
-                                udf1: selectedBank?.institutionId,
+                                udf1: beneficiaries?.bankCode
+                                    ? beneficiaries?.bankCode
+                                    : selectedBank?.institutionId,
                                 udf2: '',
                                 udf3: ''
                             };
@@ -809,6 +824,15 @@ const SingleTransfer = ({
                                 <div className={styles.narration}>
                                     {paymentbanklistLoad ? (
                                         <Loader />
+                                    ) : beneficiaries?.beneficiaryName ? (
+                                        <div className={styles.formBank}>
+                                            <label className={styles.bulkLabel}>
+                                                Choose Bank
+                                            </label>
+                                            <input
+                                                value={beneficiaries?.bankName}
+                                            />
+                                        </div>
                                     ) : (
                                         <div className={styles.formBank}>
                                             <label className={styles.bulkLabel}>
@@ -830,7 +854,11 @@ const SingleTransfer = ({
                                 <div className={styles.narration}>
                                     <label>Account Number</label>
                                     <input
-                                        value={values?.ecoAccountNumber}
+                                        value={
+                                            beneficiaries?.accountNumber
+                                                ? beneficiaries?.accountNumber
+                                                : values?.ecoAccountNumber
+                                        }
                                         name="ecoAccountNumber"
                                         onInput={(e) => {
                                             setFieldValue(
@@ -866,8 +894,10 @@ const SingleTransfer = ({
                                         <input
                                             type="text"
                                             value={
-                                                accountInquiryData?.data
-                                                    ?.accountName
+                                                beneficiaries?.beneficiaryName
+                                                    ? beneficiaries?.beneficiaryName
+                                                    : accountInquiryData?.data
+                                                          ?.accountName
                                             }
                                         />
                                     </div>

@@ -378,9 +378,11 @@
     border: 1px solid #dbdbdb;
     border-radius: 12px;
     color: #3e3e3e;
-    padding-left: 50px;
+    padding-left: 20px;
 }
-
+.amoountWithSvg {
+    padding-left: 50px !important;
+}
 .firstBody input::placeholder {
     font-size: 14px;
     font-family: 'Inter', sans-serif;
