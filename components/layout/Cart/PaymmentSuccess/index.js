@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import CloseBtnSvg from '../../../ReusableComponents/ClosebtnSvg';
 import SuccesLoanSvg from '../Checkout/succesLoanSvg';
 import styles from './styles.module.css';
-const PaymmentSuccess = () => {
+const PaymmentSuccess = ({ close }) => {
     const router = useRouter();
     const returnToSTore = () => {
         router.push('/Store');
@@ -10,6 +11,9 @@ const PaymmentSuccess = () => {
     return (
         <div className={styles.overflow}>
             <div className={styles.overLayWhite}>
+                <div className={styles.cancel}>
+                    <CloseBtnSvg action={() => close()} />
+                </div>
                 <SuccesLoanSvg />
                 <h1>Payment successful</h1>
                 <p>

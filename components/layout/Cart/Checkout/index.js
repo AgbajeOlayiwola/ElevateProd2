@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { MdOutlineInfo } from 'react-icons/md';
+import { useSelector } from 'react-redux';
 import PayNow from '../PayNow';
 import PaymmentSuccess from '../PaymmentSuccess';
 import styles from './styles.module.css';
@@ -9,12 +10,18 @@ const Checkout = ({ num, items, upgradeOrder }) => {
     const affiliate = localStorage.getItem('affiliateCode');
     const [page, setPage] = useState(0);
     const [isSucces, setIsSuccess] = useState(false);
-    const multi = ({ items }) => {
+    const close = () => {
+        setIsSuccess(false);
+    };
+    const { cartItem } = useSelector((store) => store);
+    const multi = () => {
         switch (page) {
             case 0:
-                return <PayNow nextStep={setPage(page + 1)} />;
+                return (
+                    <PayNow nextStep={() => setPage(page + 1)} close={close} />
+                );
             case 1:
-                return <PaymmentSuccess />;
+                return <PaymmentSuccess close={close} />;
         }
     };
     return (
@@ -28,11 +35,20 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                 <div className={styles.products}>
                     <div>
                         <p className={styles.prod}>PRODUCT</p>
-                        <p>{items?.name}</p>
+                        {cartItem?.map((item, index) => {
+                            return <p key={{ index }}>{item?.name}</p>;
+                        })}
                     </div>
                     <div>
                         <p className={styles.prod}>QTY</p>
-                        <p>{num}pcs</p>
+                        <p>
+                            {' '}
+                            {cartItem?.map((item, index) => {
+                                return (
+                                    <p key={{ index }}>{item?.quantity} pcs</p>
+                                );
+                            })}
+                        </p>
                     </div>
                 </div>
                 <br />
@@ -40,28 +56,32 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                 <br />
                 <div className={styles.products}>
                     <div className={styles.prods}>
-                        <p className={styles.products}>
-                            <span>{num}pcs</span> of {items?.name}
-                        </p>
-                        <p className={styles.pcs}>
-                            {getSymbolFromCurrency(
-                                countryToCurrency[affiliate?.substring(1)]
-                            )}{' '}
-                            {parseFloat(items?.ptice)
-                                .toFixed(2)
-                                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                            /pcs
-                        </p>
+                        {cartItem?.map((item, index) => {
+                            return (
+                                <div className={styles.pricePCsFlex}>
+                                    {' '}
+                                    <p className={styles.products}>
+                                        <span>{item?.quantity} pcs </span> of{' '}
+                                        {item?.name}
+                                    </p>
+                                    <pdiv className={styles.ammt}>
+                                        {' '}
+                                        {getSymbolFromCurrency(
+                                            countryToCurrency[
+                                                affiliate?.substring(1)
+                                            ]
+                                        )}{' '}
+                                        {parseFloat(item?.price * item.quantity)
+                                            .toFixed(2)
+                                            .replace(
+                                                /\B(?=(\d{3})+(?!\d))/g,
+                                                ','
+                                            )}
+                                    </pdiv>
+                                </div>
+                            );
+                        })}
                     </div>
-                    <p className={styles.ammt}>
-                        {' '}
-                        {getSymbolFromCurrency(
-                            countryToCurrency[affiliate?.substring(1)]
-                        )}{' '}
-                        {parseFloat(num * items?.price)
-                            .toFixed(2)
-                            .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                    </p>
                 </div>
                 <hr />
                 <div className={styles.products}>
@@ -73,7 +93,13 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                             {getSymbolFromCurrency(
                                 countryToCurrency[affiliate?.substring(1)]
                             )}
-                            {parseFloat(num * items?.price)
+                            {parseFloat(
+                                cartItem?.reduce(
+                                    (total, item) =>
+                                        total + item.price * item.quantity,
+                                    0
+                                )
+                            )
                                 .toFixed(2)
                                 .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                         </p>

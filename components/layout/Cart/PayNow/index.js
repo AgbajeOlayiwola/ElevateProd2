@@ -7,11 +7,17 @@ import {
     MdOutlineSend,
     MdQrCodeScanner
 } from 'react-icons/md';
+import { useSelector } from 'react-redux';
 import styles from './styles.module.css';
-const PayNow = ({ nextStep }) => {
+const getSymbolFromCurrency = require('currency-symbol-map');
+const countryToCurrency = require('country-to-currency');
+import CloseBtnSvg from '../../../ReusableComponents/ClosebtnSvg';
+const PayNow = ({ nextStep, close }) => {
+    const affiliate = localStorage.getItem('affiliateCode');
     const succesFullyPaid = () => {
         nextStep();
     };
+    const { cartItem } = useSelector((store) => store);
     const [current, setCurrent] = useState('card');
     const multi = () => {
         switch (current) {
@@ -91,9 +97,26 @@ const PayNow = ({ nextStep }) => {
     return (
         <div className={styles.overflow}>
             <div className={styles.overLayWhite}>
+                <div className={styles.cancel}>
+                    <CloseBtnSvg action={() => close()} />
+                </div>
                 <div className={styles.ammt}>
                     <p>Amount to pay</p>
-                    <p>27460</p>
+                    <p>
+                        {' '}
+                        {getSymbolFromCurrency(
+                            countryToCurrency[affiliate?.substring(1)]
+                        )}
+                        {parseFloat(
+                            cartItem?.reduce(
+                                (total, item) =>
+                                    total + item.price * item.quantity,
+                                0
+                            )
+                        )
+                            .toFixed(2)
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                    </p>
                 </div>
                 <br />
                 <hr />

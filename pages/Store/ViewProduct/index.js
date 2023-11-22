@@ -33,7 +33,17 @@ const ViewProduct = () => {
         logistics: ['GIGM', 'Jumia', 'Express', 'FastFast']
     };
     const buyNow = () => {
-        dispatch(setCartItem(viewProductSliceData));
+        const newItem = {
+            storeFrontId: viewProductSliceData?.storeFrontId,
+            inventoryId: viewProductSliceData?.id,
+            id: viewProductSliceData?.id, // replace with the actual identifier of your product
+            name: viewProductSliceData?.name,
+            price: viewProductSliceData?.price,
+            image: viewProductSliceData?.image[0],
+            size: viewProductSliceData?.size[0],
+            quantity: 1 // you can adjust the quantity as needed
+        };
+        dispatch(setCartItem([newItem]));
         router.push('/Store/Cart');
     };
     return (

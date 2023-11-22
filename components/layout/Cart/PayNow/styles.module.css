@@ -1,5 +1,5 @@
 .overflow {
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     width: 100vw;
@@ -19,6 +19,11 @@
 .ammt {
     display: flex;
     justify-content: space-between;
+}
+.cancel {
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-end;
 }
 .ammt p:nth-child(1) {
     color: var(--neutral-color-ecobank-dark-gray, #4e4e4e);

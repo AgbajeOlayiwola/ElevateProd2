@@ -4,12 +4,11 @@ import React, { useEffect, useState } from 'react';
 import { MdAddShoppingCart } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
 import { useAddCartMutation } from '../../../redux/api/authApi';
-import { setCartItem } from '../../../redux/slices/cartItems';
 import { setviewProductSliceData } from '../../../redux/slices/viewProductSlice';
 import Loader from '../Loader';
 import styles from './styles.module.css';
 
-const ProductTile = ({ data, call }) => {
+const ProductTile = ({ data, call, addToCart }) => {
     const dispatch = useDispatch();
     const [cartData, setCartData] = useState([]);
     const [cartItems, setCartItems] = useState([]);
@@ -24,32 +23,7 @@ const ProductTile = ({ data, call }) => {
             reset: addCartReset
         }
     ] = useAddCartMutation();
-    const addToCart = () => {
-        // addCart({
-        //     storeFrontId: data?.storeFrontId,
-        //     inventoryId: data?.id,
-        //     dateAdded: '2023/04/23',
-        //     affiliateCode: data?.affiliateCode,
-        //     size: data?.size[0] ? data?.size[0] : 'No Size',
-        //     color: data?.color[0] ? data?.color[0] : 'No Color',
-        //     quantity: 1,
-        //     currentPrice: data?.price,
-        //     totalCost: 50000
-        // });
-        const newItem = {
-            storeFrontId: data?.storeFrontId,
-            inventoryId: data?.id,
-            id: data?.id, // replace with the actual identifier of your product
-            name: data?.name,
-            price: data?.price,
-            image: data?.image[0],
-            size: data?.size[0],
-            quantity: 1 // you can adjust the quantity as needed
-        };
 
-        setCartItems((prevCartItems) => [...prevCartItems, newItem]);
-        dispatch(setCartItem(cartItems));
-    };
     useEffect(() => {
         if (addCartSuccess) {
             call();
@@ -86,7 +60,10 @@ const ProductTile = ({ data, call }) => {
                             <p>N1.00</p>
                         </div>
                     </div>
-                    <div className={styles.addtoCrta} onClick={addToCart}>
+                    <div
+                        className={styles.addtoCrta}
+                        onClick={() => addToCart(data)}
+                    >
                         {addCartLoad ? (
                             <Loader />
                         ) : (

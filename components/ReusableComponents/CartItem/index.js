@@ -1,16 +1,21 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearCartItem } from '../../../redux/slices/cartItems';
 import styles from './styles.module.css';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
-const CartItem = ({ items, liftCount }) => {
+const CartItem = ({
+    index,
+    items,
+    liftCount,
+    handleAddQuantity,
+    handleRemoveQuantity,
+    removeFromCart
+}) => {
     const affiliate = localStorage.getItem('affiliateCode');
     const { cartItem } = useSelector((store) => store);
     const [count, setCount] = useState(1);
     const dispatch = useDispatch();
-    console.log(items);
 
     return (
         <div className={styles.cartItem}>
@@ -32,7 +37,7 @@ const CartItem = ({ items, liftCount }) => {
                         <div className={styles.size}>
                             <div className={styles.attributes}>
                                 <p>Size:</p>
-                                <p> {items?.size}</p>;
+                                <p> {items?.size}</p>
                             </div>
                         </div>
                     </div>
@@ -40,7 +45,7 @@ const CartItem = ({ items, liftCount }) => {
                         <div
                             className={styles.add}
                             onClick={() => {
-                                setCount(count + 1), liftCount(count);
+                                handleAddQuantity(index), setCount(count + 1);
                             }}
                         >
                             +
@@ -53,7 +58,11 @@ const CartItem = ({ items, liftCount }) => {
                         <div
                             className={styles.add}
                             onClick={() => {
-                                setCount(count - 1), liftCount(count);
+                                handleRemoveQuantity(index),
+                                    setCount(count - 1);
+                                if (count <= 0) {
+                                    alert('camnt be less than 0');
+                                }
                             }}
                         >
                             -
@@ -73,7 +82,7 @@ const CartItem = ({ items, liftCount }) => {
                 </p>
                 <p
                     className={styles.removew}
-                    onClick={() => dispatch(clearCartItem())}
+                    onClick={() => removeFromCart(index)}
                 >
                     Remove
                 </p>

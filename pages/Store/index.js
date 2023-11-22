@@ -5,6 +5,7 @@ import ProductTile from '../../components/ReusableComponents/ProductTile';
 import StoreNavbar from '../../components/layout/navbar/Navbar';
 import { useStorelinkGetStoreMutation } from '../../redux/api/authApi';
 import { setCart } from '../../redux/slices/cart';
+import { setCartItem } from '../../redux/slices/cartItems';
 import styles from './styles.module.css';
 
 const Store = ({ children }) => {
@@ -48,6 +49,23 @@ const Store = ({ children }) => {
         setCount(count + 1);
         dispatch(setCart(count));
     };
+    const [cartData, setCartData] = useState([]);
+    const [cartItems, setCartItems] = useState([]);
+    const addToCart = (data) => {
+        const newItem = {
+            storeFrontId: data?.storeFrontId,
+            inventoryId: data?.id,
+            id: data?.id, // replace with the actual identifier of your product
+            name: data?.name,
+            price: data?.price,
+            image: data?.image[0],
+            size: data?.size[0],
+            quantity: 1 // you can adjust the quantity as needed
+        };
+
+        setCartItems((prevCartItems) => [...prevCartItems, newItem]);
+        dispatch(setCartItem(cartItems));
+    };
     return (
         <Cover>
             <StoreNavbar store={storelinkGetStoreData?.data} />
@@ -66,7 +84,13 @@ const Store = ({ children }) => {
                     {storelinkGetStoreSuccess ? (
                         storelinkGetStoreData?.data?.inventories?.data.map(
                             (item, index) => {
-                                return <ProductTile data={item} call={call} />;
+                                return (
+                                    <ProductTile
+                                        data={item}
+                                        addToCart={addToCart}
+                                        call={call}
+                                    />
+                                );
                             }
                         )
                     ) : (

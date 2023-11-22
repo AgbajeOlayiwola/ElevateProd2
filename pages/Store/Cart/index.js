@@ -16,21 +16,22 @@ const Cart = () => {
     const gatNumber = (val) => {
         setNumber(val);
     };
+    const nextStep = () => {
+        console.log('clicked');
+        setPage(1);
+    };
     const multi = () => {
         switch (page) {
             case 0:
                 return (
-                    <CartsAndItem
-                        nextStep={() => setPage(page + 1)}
-                        gatNumber={gatNumber}
-                    />
+                    <CartsAndItem nextStep={nextStep} gatNumber={gatNumber} />
                 );
             case 1:
                 return (
                     <Checkout
                         items={cartItem}
                         num={number}
-                        upgradeOrder={setPage(page - 1)}
+                        upgradeOrder={() => setPage(0)}
                     />
                 );
         }
