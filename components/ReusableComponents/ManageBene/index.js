@@ -1,11 +1,10 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { FaTrash } from 'react-icons/fa';
 import Popup from '../../layout/Popup';
 import BeneUserSvg from '../ReusableSvgComponents/BeneUserSvg';
-import ThreeDotsSvg from '../ThreeDotSvg';
 import styles from './styles.module.css';
-import { FaTrash } from 'react-icons/fa';
 
-const ManageBene = ({ overlay, title, action, btnAction }) => {
+const ManageBene = ({ overlay, title, action, btnAction, load }) => {
     const [transfer, setTransfer] = useState(true);
     const [bills, setBills] = useState(false);
     const [others, setOthers] = useState(false);
@@ -184,7 +183,13 @@ const ManageBene = ({ overlay, title, action, btnAction }) => {
     );
 };
 
-const ManageBeneSingle = ({ beneAccount, beneName, index, deleteAction }) => {
+const ManageBeneSingle = ({
+    beneAccount,
+    beneName,
+    index,
+    deleteAction,
+    load
+}) => {
     return (
         <div className={styles.manageBeneSingle} key={index}>
             <div className={styles.manageBeneDetails}>
@@ -194,6 +199,7 @@ const ManageBeneSingle = ({ beneAccount, beneName, index, deleteAction }) => {
                     <p>{beneAccount}</p>
                 </div>
             </div>
+
             <FaTrash onClick={deleteAction} className={styles.trash} />
         </div>
     );

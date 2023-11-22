@@ -25,7 +25,6 @@ import OtpInput from '../../../components/ReusableComponents/Otpinput';
 import OutsideClick from '../../../components/ReusableComponents/OutsideClick';
 import PaymentSuccess from '../../../components/ReusableComponents/PopupStyle';
 import ProfileSingle from '../../../components/ReusableComponents/ProfileSingle';
-import AddSvg from '../../../components/ReusableComponents/ReusableSvgComponents/AddSvg';
 import ContactSvg from '../../../components/ReusableComponents/ReusableSvgComponents/ContactSvg';
 import EditProfileSvg from '../../../components/ReusableComponents/ReusableSvgComponents/EditProfileSvg';
 import RmSvg from '../../../components/ReusableComponents/RmSvg';
@@ -33,13 +32,14 @@ import ShareSvg from '../../../components/ReusableComponents/ShareSvg';
 import StorePopup from '../../../components/ReusableComponents/StorePopup';
 import ProfileLayout from '../../../components/layout/ProfileLayout';
 import { deleteAirtimeBeneficiariesData } from '../../../redux/actions/deleteAirtimeBeneficiariesAction';
-import { deleteBeneficiariesData } from '../../../redux/actions/deleteBeneficiariesAction';
 import { postInterBankEnquiry } from '../../../redux/actions/interbankEnquieryAction';
 import { postBeneficiariesData } from '../../../redux/actions/postBeneficiariesAction';
 import {
+    useDeleteTxBeneficiaryMutation,
     useFreezeAcctMutation,
     useGetProfileMutation,
     useGetRelationshipManagerMutation,
+    useGetTxBeneficiaryMutation,
     useUnfreezeAcctMutation,
     useVerifyTransactionPinMutation
 } from '../../../redux/api/authApi';
@@ -151,7 +151,37 @@ const Profile = () => {
             reset: getProfileReset
         }
     ] = useGetProfileMutation();
+    const [
+        getTxBeneficiary,
+        {
+            data: getTxBeneficiaryData,
+            isLoading: getTxBeneficiaryLoad,
+            isSuccess: getTxBeneficiarySuccess,
+            isError: getTxBeneficiaryFalse,
+            error: getTxBeneficiaryErr,
+            reset: getTxBeneficiaryReset
+        }
+    ] = useGetTxBeneficiaryMutation();
+    const [
+        deleteTxBeneficiary,
+        {
+            data: deleteTxBeneficiaryData,
+            isLoading: deleteTxBeneficiaryLoad,
+            isSuccess: deleteTxBeneficiarySuccess,
+            isError: deleteTxBeneficiaryFalse,
+            error: deleteTxBeneficiaryErr,
+            reset: deleteTxBeneficiaryReset
+        }
+    ] = useDeleteTxBeneficiaryMutation();
 
+    useEffect(() => {
+        getTxBeneficiary(null);
+    }, []);
+    useEffect(() => {
+        if (deleteTxBeneficiarySuccess) {
+            getTxBeneficiary(null);
+        }
+    }, [deleteTxBeneficiarySuccess]);
     const profileData = [
         {
             text: 'View Profile',
@@ -1146,7 +1176,7 @@ const Profile = () => {
                             <>
                                 <div className={styles.beneficiaryHead}>
                                     <h2>Manage Beneficiaries</h2>
-                                    <div
+                                    {/* <div
                                         className={styles.add}
                                         onClick={() => {
                                             setCount(count + 1);
@@ -1154,7 +1184,7 @@ const Profile = () => {
                                     >
                                         <AddSvg />
                                         <p>Add</p>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <div className={styles.beneficiaryHeader}>
                                     <div
@@ -1201,15 +1231,17 @@ const Profile = () => {
                                     {type === 'Account' ? (
                                         <>
                                             {/* <p className={styles.text}>A</p> */}
-                                            {!beneficiaries.beneficiaries
-                                                ?.length ? (
+                                            {getTxBeneficiaryLoad ? (
+                                                <Loader />
+                                            ) : getTxBeneficiaryData?.data
+                                                  ?.length <= 0 ? (
                                                 <h2 className={styles.dontHave}>
                                                     You do not have any
                                                     Beneficiary at the moment
                                                 </h2>
                                             ) : (
                                                 <>
-                                                    {beneficiaries.beneficiaries
+                                                    {getTxBeneficiaryData?.data
                                                         ?.filter((item) => {
                                                             if (
                                                                 searchItem ===
@@ -1233,6 +1265,9 @@ const Profile = () => {
                                                             ) => {
                                                                 return (
                                                                     <ManageBeneSingle
+                                                                        load={
+                                                                            deleteTxBeneficiaryLoad
+                                                                        }
                                                                         beneAccount={
                                                                             account.bankName
                                                                         }
@@ -1256,7 +1291,7 @@ const Profile = () => {
                                                                                 'bene'
                                                                             );
                                                                             setBene(
-                                                                                account.beneficiaryId
+                                                                                account.beneficiaryID
                                                                             );
                                                                             setBeneType(
                                                                                 'Account'
@@ -1983,12 +2018,16 @@ const Profile = () => {
                     type={alertType}
                     overlay="true"
                     text="Continue"
+                    load={deleteTxBeneficiaryLoad}
                     actionNo={() => {
                         setOutcome(false);
                     }}
                     actionYes={() => {
                         if (beneType === 'Account') {
-                            dispatch(deleteBeneficiariesData(bene));
+                            deleteTxBeneficiary({
+                                beneficiary_id: bene
+                            });
+
                             setOutcome(false);
                             setBeneType('Account');
                             setType('Account');

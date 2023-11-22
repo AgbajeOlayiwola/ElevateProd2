@@ -1,15 +1,15 @@
-import React, { useState, useRef, useEffect } from 'react';
-import styles from './styles.module.css';
+import React, { useState } from 'react';
+import ButtonComp from '../Button';
+import Loader from '../Loader';
+import Overlay from '../Overlay';
+import ErrorSvg from '../ReusableSvgComponents/ErrorSvg';
+import SuccessCheckSvg from '../ReusableSvgComponents/SuccessCheckSvg';
 import {
     BodyWrapper,
     RegistrationStatus,
     SuccessMainHeading
 } from './styles.module';
-import Link from 'next/link';
-import ButtonComp from '../Button';
-import Overlay from '../Overlay';
-import ErrorSvg from '../ReusableSvgComponents/ErrorSvg';
-import SuccessCheckSvg from '../ReusableSvgComponents/SuccessCheckSvg';
+import styles from './styles.module.css';
 
 const PaymentSuccess = ({
     action,
@@ -21,7 +21,8 @@ const PaymentSuccess = ({
     body,
     statusbar,
     error,
-    type
+    type,
+    load
 }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     // alert(statusbar);
@@ -71,7 +72,7 @@ const PaymentSuccess = ({
                                         active={
                                             activeBtn ? 'active' : 'inactive'
                                         }
-                                        text="Yes"
+                                        text={load ? <Loader /> : 'Yes'}
                                         type="button"
                                         onClick={actionYes}
                                     />
