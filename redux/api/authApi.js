@@ -980,7 +980,7 @@ export const authApi = createApi({
         deleteCollection: builder.mutation({
             query: (body) => {
                 return {
-                    url: 'delete-collections',
+                    url: 'delete-collection',
                     method: 'post',
                     body
                 };
@@ -1159,11 +1159,71 @@ export const authApi = createApi({
                     body
                 };
             }
+        }),
+        getTxBeneficiary: builder.mutation({
+            query: () => {
+                return {
+                    url: 'get-user-beneficiary',
+                    method: 'post',
+                    body: {}
+                };
+            }
+        }),
+        deleteTxBeneficiary: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'delete-user-beneficiary',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        createTxBeneficiary: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'create-user-beneficiary',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        getPhoneBeneficiary: builder.mutation({
+            query: () => {
+                return {
+                    url: 'get-phone-beneficiary',
+                    method: 'post',
+                    body: {}
+                };
+            }
+        }),
+        deletePhoneBeneficiary: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'delete-phone-beneficiary',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        createPhoneBeneficiary: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'create-phone-beneficiary',
+                    method: 'post',
+                    body
+                };
+            }
         })
     })
 });
 
 export const {
+    useCreatePhoneBeneficiaryMutation,
+    useDeletePhoneBeneficiaryMutation,
+    useGetPhoneBeneficiaryMutation,
+    useDeleteTxBeneficiaryMutation,
+    useGetTxBeneficiaryMutation,
+    useCreateTxBeneficiaryMutation,
     useDeleteCategoryMutation,
     useDeleteCollectionMutation,
     useLogisticsnableProvidersMutation,

@@ -404,7 +404,9 @@ const PaymentTable = ({ title, page }) => {
                                 <div className={styles.TableDetailHeaders}>
                                     {page === 'Collections' ? null : (
                                         <p className={styles.beneficiary}>
-                                            {item?.beneficiary}
+                                            {item?.beneficiaryName
+                                                ? item?.beneficiaryName
+                                                : item?.beneficiaryAccountNumber}
                                         </p>
                                     )}
                                     <p className={styles.type}>
