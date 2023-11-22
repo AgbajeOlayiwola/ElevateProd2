@@ -10,7 +10,6 @@ import {
     SuccessMainHeading
 } from './styles.module';
 import styles from './styles.module.css';
-
 const PaymentSuccess = ({
     action,
     actionYes,

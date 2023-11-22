@@ -141,7 +141,7 @@
 }
 .flexeersDivs {
     display: flex;
-    align-items: end;
+    align-items: flex-end;
 }
 .flexeersDivs input {
     width: 30%;
