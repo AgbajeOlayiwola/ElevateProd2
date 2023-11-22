@@ -31,6 +31,14 @@
     align-items: center;
     gap: 4px;
 }
+.addProduvtOverlay {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 94px;
+    height: 84px;
+    background-color: #000000c3 !important;
+}
 .addProduvt > img {
     height: 100%;
     width: 100%;

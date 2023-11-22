@@ -56,9 +56,11 @@ const Store = ({ children }) => {
                 <h1>Discount Special Sales</h1>
                 <div className={styles.shopNow}>Shop Now</div>
             </div>
-            <div className={styles.top}>
+            <br />
+            <br />
+            {/* <div className={styles.top}>
                 <p>Top Friday Sales</p>
-            </div>
+            </div> */}
             <div className={styles.showProd}>
                 <div className={styles.addCart}>
                     {storelinkGetStoreSuccess ? (

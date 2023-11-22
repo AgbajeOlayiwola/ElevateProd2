@@ -1,15 +1,18 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdAddShoppingCart } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
 import { useAddCartMutation } from '../../../redux/api/authApi';
+import { setCartItem } from '../../../redux/slices/cartItems';
 import { setviewProductSliceData } from '../../../redux/slices/viewProductSlice';
 import Loader from '../Loader';
 import styles from './styles.module.css';
 
 const ProductTile = ({ data, call }) => {
     const dispatch = useDispatch();
+    const [cartData, setCartData] = useState([]);
+    const [cartItems, setCartItems] = useState([]);
     const [
         addCart,
         {
@@ -22,17 +25,30 @@ const ProductTile = ({ data, call }) => {
         }
     ] = useAddCartMutation();
     const addToCart = () => {
-        addCart({
+        // addCart({
+        //     storeFrontId: data?.storeFrontId,
+        //     inventoryId: data?.id,
+        //     dateAdded: '2023/04/23',
+        //     affiliateCode: data?.affiliateCode,
+        //     size: data?.size[0] ? data?.size[0] : 'No Size',
+        //     color: data?.color[0] ? data?.color[0] : 'No Color',
+        //     quantity: 1,
+        //     currentPrice: data?.price,
+        //     totalCost: 50000
+        // });
+        const newItem = {
             storeFrontId: data?.storeFrontId,
             inventoryId: data?.id,
-            dateAdded: '2023/04/23',
-            affiliateCode: data?.affiliateCode,
-            size: data?.size[0] ? data?.size[0] : 'No Size',
-            color: data?.color[0] ? data?.color[0] : 'No Color',
-            quantity: 1,
-            currentPrice: data?.price,
-            totalCost: 50000
-        });
+            id: data?.id, // replace with the actual identifier of your product
+            name: data?.name,
+            price: data?.price,
+            image: data?.image[0],
+            size: data?.size[0],
+            quantity: 1 // you can adjust the quantity as needed
+        };
+
+        setCartItems((prevCartItems) => [...prevCartItems, newItem]);
+        dispatch(setCartItem(cartItems));
     };
     useEffect(() => {
         if (addCartSuccess) {
@@ -48,10 +64,15 @@ const ProductTile = ({ data, call }) => {
     return (
         <div className={styles.items}>
             {data ? (
-                <>
+                <div style={{ cursor: 'pointer' }}>
                     <Image
                         onClick={() => viewProduct(data)}
-                        src={data?.image[0]}
+                        src={
+                            data?.image[0] &&
+                            data?.image[0].startsWith('data:image/png;base64,')
+                                ? data?.image[0]
+                                : `data:image/png;base64,${data?.image[0]}`
+                        }
                         width={307}
                         height={220}
                         alt="hi"
@@ -75,7 +96,7 @@ const ProductTile = ({ data, call }) => {
                             </>
                         )}
                     </div>
-                </>
+                </div>
             ) : (
                 <p>There are no inventories</p>
             )}

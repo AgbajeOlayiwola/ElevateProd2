@@ -1,17 +1,27 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearCartItem } from '../../../redux/slices/cartItems';
 import styles from './styles.module.css';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
 const CartItem = ({ items, liftCount }) => {
     const affiliate = localStorage.getItem('affiliateCode');
+    const { cartItem } = useSelector((store) => store);
     const [count, setCount] = useState(1);
+    const dispatch = useDispatch();
+    console.log(items);
 
     return (
         <div className={styles.cartItem}>
             <div className={styles.divImage}>
                 <Image
-                    src={items?.image[0]}
+                    src={
+                        items?.image &&
+                        items?.image.startsWith('data:image/png;base64,')
+                            ? items?.image
+                            : `data:image/png;base64,${items?.image}`
+                    }
                     width={88}
                     height={98}
                     alt="cart image"
@@ -22,9 +32,7 @@ const CartItem = ({ items, liftCount }) => {
                         <div className={styles.size}>
                             <div className={styles.attributes}>
                                 <p>Size:</p>
-                                {items?.size.map((item, index) => {
-                                    return <p> {item}</p>;
-                                })}
+                                <p> {items?.size}</p>;
                             </div>
                         </div>
                     </div>
@@ -63,7 +71,12 @@ const CartItem = ({ items, liftCount }) => {
                         .toFixed(2)
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 </p>
-                <p className={styles.removew}>Remove</p>
+                <p
+                    className={styles.removew}
+                    onClick={() => dispatch(clearCartItem())}
+                >
+                    Remove
+                </p>
             </div>
         </div>
     );

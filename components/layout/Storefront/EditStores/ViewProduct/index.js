@@ -2,11 +2,14 @@ import Image from 'next/image';
 import React from 'react';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import SwitchComponent from '../../../../ReusableComponents/SwitchComponent';
 import styles from './styles.module.css';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
 const ViewProduct = ({ retrunBack, editInventory }) => {
+    const { storeSlice } = useSelector((store) => store);
     const affiliate = localStorage.getItem('affiliateCode');
     const { viewInventory } = useSelector((store) => store);
     const data = {
@@ -14,8 +17,15 @@ const ViewProduct = ({ retrunBack, editInventory }) => {
         colors: ['Red', 'Blue', 'Brown', 'Purple', 'Magenta', 'Lilac'],
         logistics: ['GIGM', 'Jumia', 'Express', 'FastFast']
     };
+    const showToastMessage = () => {
+        toast.success('Storefront Link Copied', {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+    };
     return (
         <>
+            <ToastContainer />
             <div className={styles.backArrow} onClick={retrunBack}>
                 <IoArrowBackOutline />
                 <p>Back to inventory</p>
@@ -61,7 +71,21 @@ const ViewProduct = ({ retrunBack, editInventory }) => {
                             <div className={styles.btns}>
                                 <SwitchComponent />
                             </div>
-                            <button> Share link</button>
+                            <button
+                                onClick={() => {
+                                    {
+                                        navigator.clipboard
+                                            .writeText(
+                                                `${storeSlice?.storeFrontLink}`
+                                            )
+                                            .then(() => {});
+                                    }
+                                    showToastMessage();
+                                }}
+                            >
+                                {' '}
+                                Share link
+                            </button>
                         </div>
                     </div>
                     <div className={styles.desc}>

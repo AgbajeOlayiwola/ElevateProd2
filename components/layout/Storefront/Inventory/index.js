@@ -173,6 +173,7 @@ const Inventory = ({ actionText, showProduct, nextPage, storeSlice }) => {
                                     {filteredData?.map((item, index) => {
                                         return (
                                             <div
+                                                style={{ cursor: 'pointer' }}
                                                 className={styles.inventroeyItm}
                                                 key={index}
                                                 onClick={() => {

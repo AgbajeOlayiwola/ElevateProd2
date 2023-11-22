@@ -434,6 +434,11 @@ const CustomizeStoreFront = ({
                                                                 styles.addProduvt
                                                             }
                                                         >
+                                                            <div
+                                                                className={
+                                                                    styles.addProduvtOverlay
+                                                                }
+                                                            ></div>
                                                             <img
                                                                 src={`data:image/png;base64,${name?.image}`}
                                                                 width={10}
@@ -511,6 +516,11 @@ const CustomizeStoreFront = ({
                                                                 styles.addProduvt
                                                             }
                                                         >
+                                                            <div
+                                                                className={
+                                                                    styles.addProduvtOverlay
+                                                                }
+                                                            ></div>
                                                             <img
                                                                 src={`data:image/png;base64,${name?.image}`}
                                                                 width={10}

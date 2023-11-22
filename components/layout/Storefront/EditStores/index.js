@@ -287,7 +287,7 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
                                             {
                                                 navigator.clipboard
                                                     .writeText(
-                                                        `${storeSlice?.websiteLink}`
+                                                        `${storeSlice?.storeFrontLink}`
                                                     )
                                                     .then(() => {
                                                         setAlert(true);
@@ -526,7 +526,7 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
                                             {
                                                 navigator.clipboard
                                                     .writeText(
-                                                        `${storeSlice?.websiteLink}`
+                                                        `${storeSlice?.storeFrontLink}`
                                                     )
                                                     .then(() => {
                                                         setAlert(true);
@@ -547,7 +547,7 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
                                             {
                                                 navigator.clipboard
                                                     .writeText(
-                                                        `${storeSlice?.websiteLink}`
+                                                        `${storeSlice?.storeFrontLink}`
                                                     )
                                                     .then(() => {
                                                         setAlert(true);

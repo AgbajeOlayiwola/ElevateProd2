@@ -19,7 +19,9 @@ const CartsAndItem = ({ nextStep, gatNumber }) => {
     return (
         <div className={styles.CartsAndItem}>
             <div className={styles.cartItems}>
-                <CartItem items={cartItem} liftCount={liftCount} />
+                {cartItem?.map((item, index) => {
+                    return <CartItem items={item} liftCount={liftCount} />;
+                })}
             </div>
             <div className={styles.itemDetails}>
                 <p>Order #SME661012</p>

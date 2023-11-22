@@ -39,6 +39,10 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
+    border: solid 1px #d3d3d3;
+    height: 250px;
+    border-radius: 8px;
+    padding: 8px;
 }
 .category {
     color: #121212;
@@ -76,12 +80,9 @@
 }
 .allInventory {
     display: grid;
-    grid-template-columns: 30% 30% 30%;
-    gap: 3%;
-    overflow: scroll;
-    height: 100%;
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    grid-template-columns: 32% 32% 32%;
+    gap: 2%;
+    /* Firefox */
 }
 .allInventory::-webkit-scrollbar {
     display: none;

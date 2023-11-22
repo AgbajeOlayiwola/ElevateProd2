@@ -3,10 +3,10 @@ import { BsSearch } from 'react-icons/bs';
 import { useSelector } from 'react-redux';
 import CartSvg from '../CartSvg';
 import CrownSvg from '../CrownSvg';
-import SettingSvg from '../SettingSvg';
 import styles from './styles.module.css';
 
 const StoreNavbar = ({ store }) => {
+    const { cartItem } = useSelector((store) => store);
     const { cartSlice } = useSelector((store) => store);
     return (
         <div className={styles.nav}>
@@ -26,13 +26,15 @@ const StoreNavbar = ({ store }) => {
                         placeholder="Search Products"
                     />
                 </div>
-                <div className={styles.settings}>
+                {/* <div className={styles.settings}>
                     <SettingSvg />
-                </div>
-                <div className={styles.cart}>
-                    <p className={styles.num}>{cartSlice}</p>
-                    <CartSvg />
-                </div>
+                </div> */}
+                <a href="/Store/Cart">
+                    <div className={styles.cart}>
+                        <p className={styles.num}>{cartItem?.length}</p>
+                        <CartSvg />
+                    </div>
+                </a>
             </div>
         </div>
     );
