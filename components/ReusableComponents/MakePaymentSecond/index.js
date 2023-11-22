@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
     useBulkTransferMutation,
+    useCreateTxBeneficiaryMutation,
     useSingleTransferMutation
 } from '../../../redux/api/authApi';
 import { clearTransfer } from '../../../redux/slices/transferSlice';
@@ -167,6 +168,39 @@ const MakePaymentSecond = ({
     console.log('Total Amount:', transfer);
 
     // console.log(transfer);
+    const [
+        createTxBeneficiary,
+        {
+            data: createTxBeneficiaryData,
+            isLoading: createTxBeneficiaryLoad,
+            isSuccess: createTxBeneficiarySuccess,
+            isError: createTxBeneficiaryFalse,
+            error: createTxBeneficiaryErr,
+            reset: createTxBeneficiaryReset
+        }
+    ] = useCreateTxBeneficiaryMutation();
+    const saveBeneficiary = () => {
+        const data = {
+            beneficiaryName: transfer?.beneficiaryName,
+            accountNumber: transfer?.accountNumber,
+            bankName: transfer?.bankName,
+            bankCode: transfer?.bankCode
+        };
+        createTxBeneficiary(data);
+    };
+    const showBeneToast = () => {
+        toast.succes('Bneficiary Addd Successfuly', {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+        // closeAction();
+    };
+    useEffect(() => {
+        if (createTxBeneficiarySuccess) {
+            showBeneToast();
+        }
+    }, [createTxBeneficiarySuccess]);
+
     return (
         <Overlay overlay={overlay}>
             <ToastContainer />
@@ -452,6 +486,7 @@ const MakePaymentSecond = ({
                                         beneActive ? null : (
                                             <div className={styles.saveBene}>
                                                 <label
+                                                    onClick={saveBeneficiary}
                                                     className={styles.beneCheck}
                                                 >
                                                     <input

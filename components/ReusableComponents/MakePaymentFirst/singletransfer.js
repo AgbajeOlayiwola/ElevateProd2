@@ -1,4 +1,5 @@
 import { Formik } from 'formik';
+import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Lottie from 'react-lottie';
@@ -9,6 +10,7 @@ import * as yup from 'yup';
 import { loadbank } from '../../../redux/actions/bankAction';
 import {
     useAccountInquiryMutation,
+    useGetTxBeneficiaryMutation,
     usePaymentFetchtransactionfeeMutation,
     usePaymentbanklistMutation
 } from '../../../redux/api/authApi';
@@ -25,7 +27,6 @@ const SingleTransfer = ({
     scheduleLater,
     isLoading,
     bankAccounts,
-    beneficiaries,
     payload,
     formData,
     setFormdata,
@@ -42,6 +43,7 @@ const SingleTransfer = ({
     const [showInterEnquiry, setshowInterEnquiry] = useState(false);
     const [newBeneficiaries, setNewBeneficiaries] = useState([]);
     const [newBeneficiarieso, setNewBeneficiarieso] = useState([]);
+    const [beneficiaries, setBeneficiaries] = useState([]);
     // const [inputType, setinputType] = useState(true);
     const [interEnquiry, setInterEnquiry] = useState('');
     const [accountName, setAccountName] = useState(
@@ -66,6 +68,7 @@ const SingleTransfer = ({
             ? payload.bankNameBene
             : ''
     );
+
     const [narration, setNarration] = useState(
         payload.narration !== '' ? payload.narration : ''
     );
@@ -214,6 +217,21 @@ const SingleTransfer = ({
         }
     ] = usePaymentbanklistMutation();
     const [
+        getTxBeneficiary,
+        {
+            data: getTxBeneficiaryData,
+            isLoading: getTxBeneficiaryLoad,
+            isSuccess: getTxBeneficiarySuccess,
+            isError: getTxBeneficiaryFalse,
+            error: getTxBeneficiaryErr,
+            reset: getTxBeneficiaryReset
+        }
+    ] = useGetTxBeneficiaryMutation();
+    useEffect(() => {
+        getTxBeneficiary(null);
+    }, []);
+
+    const [
         accountInquiry,
         {
             data: accountInquiryData,
@@ -299,7 +317,9 @@ const SingleTransfer = ({
 
     const initialValues = {
         ecoSourceAccount: '',
-        ecoAccountNumber: '',
+        ecoAccountNumber: beneficiaries?.accountNumber
+            ? beneficiaries?.accountNumber
+            : '',
         ecoAccountName: '',
         ecoSourceAccount: '',
         ecoChooseBank: '',
@@ -309,6 +329,7 @@ const SingleTransfer = ({
         ecoCurrency: '',
         destinationBankCode: ''
     };
+    console.log(beneficiaries);
     return (
         <div>
             <ToastContainer />
@@ -355,8 +376,43 @@ const SingleTransfer = ({
                     <p>Other Banks</p>
                 </div>
             </div>
+
             {type === 'Ecobank' ? (
                 <>
+                    <div className={styles.beneOuter}>
+                        {getTxBeneficiaryLoad ? (
+                            <Loader />
+                        ) : getTxBeneficiaryData?.data?.length > 0 ? (
+                            getTxBeneficiaryData?.data
+                                ?.filter((item) =>
+                                    type
+                                        ? item?.bankName?.toLowerCase() ===
+                                          type.toLowerCase()
+                                        : true
+                                )
+                                ?.map((item, index) => {
+                                    return (
+                                        <div
+                                            className={styles.benerInner}
+                                            onClick={() =>
+                                                setBeneficiaries(item)
+                                            }
+                                        >
+                                            <Image
+                                                src="/Assets/Images/bankcard.png"
+                                                height={50}
+                                                width={50}
+                                                alt="non"
+                                            />
+                                            <p>{item?.beneficiaryName}</p>
+                                            <p>{item?.bankName}</p>
+                                        </div>
+                                    );
+                                })
+                        ) : (
+                            <p>No beneficiary available</p>
+                        )}
+                    </div>
                     <Formik
                         validationSchema={initSchema}
                         // validateOnChange={true}
@@ -369,11 +425,15 @@ const SingleTransfer = ({
                                 currency: values?.ecoCurrency,
                                 destinationBank: 'ECOBANK',
                                 destinationBankCode: 'ECOBANK',
-                                beneficiaryName:
-                                    accountInquiryData?.data?.accountName,
-                                destinationAccountNo: values?.ecoAccountNumber,
+                                beneficiaryName: beneficiaries?.beneficiaryName
+                                    ? beneficiaries?.beneficiaryName
+                                    : accountInquiryData?.data?.accountName,
+                                destinationAccountNo:
+                                    beneficiaries?.accountNumber
+                                        ? beneficiaries?.accountNumber
+                                        : values?.ecoAccountNumber,
                                 transactionAmount: values?.ecoEnterAmount,
-                                narration: values?.ecoEnterAmount,
+                                narration: values?.ecoNarration,
                                 accountId: values?.ecoAccountId,
                                 accountNumber: values?.ecoSourceAccount
                             };
@@ -492,7 +552,6 @@ const SingleTransfer = ({
                                 <div className={styles.narration}>
                                     <label>Account Number</label>
                                     <input
-                                        value={values?.ecoAccountNumber}
                                         name="ecoAccountNumber"
                                         onInput={(e) => {
                                             setFieldValue(
@@ -501,6 +560,11 @@ const SingleTransfer = ({
                                             );
                                             setAccountNumber(e.target.value);
                                         }}
+                                        value={
+                                            beneficiaries?.accountNumber
+                                                ? beneficiaries?.accountNumber
+                                                : values?.ecoAccountNumber
+                                        }
                                         onBlur={handleBlur}
                                         type="text"
                                         placeholder="Enter account number here"
@@ -528,8 +592,10 @@ const SingleTransfer = ({
                                         <input
                                             type="text"
                                             value={
-                                                accountInquiryData?.data
-                                                    ?.accountName
+                                                beneficiaries?.beneficiaryName
+                                                    ? beneficiaries?.beneficiaryName
+                                                    : accountInquiryData?.data
+                                                          ?.accountName
                                             }
                                         />
                                     </div>
@@ -607,12 +673,41 @@ const SingleTransfer = ({
                                 />
                             </div>
                         </div>
-                        <div className={styles.beneficiaryBodyNo}>
-                            <h2>
-                                You do not have any Beneficiaries at the Moment
-                            </h2>
-                        </div>
                     </div>
+                    <div className={styles.beneOuter}>
+                        {getTxBeneficiaryLoad ? (
+                            <Loader />
+                        ) : getTxBeneficiaryData?.data?.length > 0 ? (
+                            getTxBeneficiaryData?.data
+                                .filter((item) =>
+                                    selectedBank
+                                        ? item?.bankName?.toLowerCase() ===
+                                          selectedBank
+                                        : item?.bankName?.toLowerCase() !==
+                                          'ecobank'
+                                )
+                                .map((item, index) => {
+                                    return (
+                                        <div
+                                            className={styles.benerInner}
+                                            key={index}
+                                        >
+                                            <Image
+                                                src="/Assets/Images/bankcard.png"
+                                                height={50}
+                                                width={50}
+                                                alt="non"
+                                            />
+                                            <p>{item?.beneficiaryName}</p>
+                                            <p>{item?.bankName}</p>
+                                        </div>
+                                    );
+                                })
+                        ) : (
+                            <p>No beneficiary available</p>
+                        )}
+                    </div>
+                    <br />
                     <Formik
                         validationSchema={initSchema}
                         // validateOnChange={true}

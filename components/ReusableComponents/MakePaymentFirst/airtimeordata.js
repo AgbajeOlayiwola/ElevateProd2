@@ -7,7 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import {
     useAirNetworksMutation,
     useAirtimeTopupMutation,
-    useBillerDetailsMutation
+    useBillerDetailsMutation,
+    useGetPhoneBeneficiaryMutation
 } from '../../../redux/api/authApi';
 import ButtonComp from '../Button';
 import Loader from '../Loader';
@@ -105,7 +106,17 @@ const AirtimeOrData = ({
             reset: airtimeTopupReset
         }
     ] = useAirtimeTopupMutation();
-
+    const [
+        getPhoneBeneficiary,
+        {
+            data: getPhoneBeneficiaryData,
+            isLoading: getPhoneBeneficiaryLoad,
+            isSuccess: getPhoneBeneficiarySuccess,
+            isError: getPhoneBeneficiaryFalse,
+            error: getPhoneBeneficiaryErr,
+            reset: getPhoneBeneficiaryReset
+        }
+    ] = useGetPhoneBeneficiaryMutation();
     const initialValues = {
         networkCode: '',
         ecoSourceAccount: '',
