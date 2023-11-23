@@ -11,7 +11,7 @@ import styles from './styles.module.css';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
 const Checkout = ({ num, items, upgradeOrder }) => {
-    const affiliate = localStorage.getItem('affiliateCode');
+    const { affiliate } = useSelector((store) => store);
     const { storeSlice } = useSelector((store) => store);
     const [isGift, setIsGift] = useState(false);
     const [totalPrice, setTotalPrice] = useState();

@@ -12,7 +12,8 @@ import styles from './styles.module.css';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
 const ViewProduct = () => {
-    const affiliate = localStorage.getItem('affiliateCode');
+    // const affiliate = localStorage.getItem('affiliateCode');
+    const { affiliate } = useSelector((store) => store);
     const dispatch = useDispatch();
     const { viewProductSliceData } = useSelector((store) => store);
     const [

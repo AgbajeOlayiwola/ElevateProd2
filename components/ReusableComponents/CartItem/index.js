@@ -12,7 +12,7 @@ const CartItem = ({
     handleRemoveQuantity,
     removeFromCart
 }) => {
-    const affiliate = localStorage.getItem('affiliateCode');
+    const { affiliate } = useSelector((store) => store);
     const { cartItem } = useSelector((store) => store);
     const [count, setCount] = useState(1);
     const dispatch = useDispatch();

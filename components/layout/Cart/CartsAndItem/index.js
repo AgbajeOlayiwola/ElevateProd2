@@ -6,7 +6,7 @@ import styles from './styles.module.css';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
 const CartsAndItem = ({ nextStep, gatNumber }) => {
-    const affiliate = localStorage.getItem('affiliateCode');
+    const { affiliate } = useSelector((store) => store);
     const { cartItem } = useSelector((store) => store);
     const [cartItems, setCartItems] = useState(cartItem);
     const [num, setNum] = useState(1);

@@ -188,9 +188,12 @@ const Inventory = ({ actionText, showProduct, nextPage, storeSlice }) => {
                                                     width={172}
                                                     src={
                                                         item?.image[0] &&
-                                                        item?.image[0].startsWith(
+                                                        (item?.image[0].startsWith(
                                                             'data:image/png;base64,'
-                                                        )
+                                                        ) ||
+                                                            item?.image[0].startsWith(
+                                                                'data:image/jpeg;base64,'
+                                                            ))
                                                             ? item?.image[0]
                                                             : `data:image/png;base64,${item?.image[0]}`
                                                     }

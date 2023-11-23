@@ -4,6 +4,7 @@ import Cover from '../../components/ReusableComponents/Cover';
 import ProductTile from '../../components/ReusableComponents/ProductTile';
 import StoreNavbar from '../../components/layout/navbar/Navbar';
 import { useStorelinkGetStoreMutation } from '../../redux/api/authApi';
+import { setAffiliate } from '../../redux/slices/affiliateSlice';
 import { setCart } from '../../redux/slices/cart';
 import { setCartItem } from '../../redux/slices/cartItems';
 import styles from './styles.module.css';
@@ -45,6 +46,17 @@ const Store = ({ children }) => {
         }
     }, []);
     const [count, setCount] = useState(0);
+    useEffect(() => {
+        if (storelinkGetStoreSuccess) {
+            storelinkGetStoreData?.data?.inventories?.data.forEach(
+                (item, index) => {
+                    console.log(item.affiliateCode);
+                    dispatch(setAffiliate(item?.affiliateCode));
+                }
+            );
+        }
+    }, [storelinkGetStoreSuccess]);
+
     const call = () => {
         setCount(count + 1);
         dispatch(setCart(count));

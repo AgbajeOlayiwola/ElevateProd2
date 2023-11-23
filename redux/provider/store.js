@@ -20,6 +20,7 @@ import { logisticsApi } from '../api/logisticsApi';
 import { usersApi } from '../api/usersApi';
 import accountNumberReducer from '../slices/accountNumberSlice';
 import addInventoryReducer from '../slices/addInventorySlice';
+import affiliateReducer from '../slices/affiliateSlice';
 import allAccountInfoReducr from '../slices/allAccountInfoSlice';
 import allStoresReducer from '../slices/allStoresSlice';
 import analyticsDataReducer from '../slices/analyticsData';
@@ -67,7 +68,8 @@ const reducers = combineReducers({
     cartItem: cartItemReducer,
     addInventory: addInventoryReducer,
     viewInventory: viewInventoryReducer,
-    allStores: allStoresReducer
+    allStores: allStoresReducer,
+    affiliate: affiliateReducer
 });
 
 const persistConfig = {
@@ -95,7 +97,8 @@ const persistConfig = {
         'cartItem',
         'addInventory',
         'viewInventory',
-        'allStores'
+        'allStores',
+        'affiliate'
     ]
 };
 

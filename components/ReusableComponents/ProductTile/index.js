@@ -43,7 +43,12 @@ const ProductTile = ({ data, call, addToCart }) => {
                         onClick={() => viewProduct(data)}
                         src={
                             data?.image[0] &&
-                            data?.image[0].startsWith('data:image/png;base64,')
+                            (data?.image[0].startsWith(
+                                'data:image/png;base64,'
+                            ) ||
+                                data?.image[0].startsWith(
+                                    'data:image/jpeg;base64,'
+                                ))
                                 ? data?.image[0]
                                 : `data:image/png;base64,${data?.image[0]}`
                         }

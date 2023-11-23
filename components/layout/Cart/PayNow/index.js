@@ -8,12 +8,12 @@ import {
     MdQrCodeScanner
 } from 'react-icons/md';
 import { useSelector } from 'react-redux';
+import CloseBtnSvg from '../../../ReusableComponents/ClosebtnSvg';
 import styles from './styles.module.css';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
-import CloseBtnSvg from '../../../ReusableComponents/ClosebtnSvg';
 const PayNow = ({ nextStep, close }) => {
-    const affiliate = localStorage.getItem('affiliateCode');
+    const { affiliate } = useSelector((store) => store);
     const succesFullyPaid = () => {
         nextStep();
     };
