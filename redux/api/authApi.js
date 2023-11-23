@@ -1218,6 +1218,7 @@ export const authApi = createApi({
 });
 
 export const {
+    useCreateOrderMutation,
     useCreatePhoneBeneficiaryMutation,
     useDeletePhoneBeneficiaryMutation,
     useGetPhoneBeneficiaryMutation,
@@ -1229,7 +1230,6 @@ export const {
     useLogisticsnableProvidersMutation,
     useShipOrderMutation,
     useViewOrderByStatusMutation,
-    useCreateOrderMutation,
     useViewOrderMutation,
     useLogDisputeCaseMutation,
     useUpdateInventoryMutation,

@@ -1,6 +1,10 @@
 .Checkout {
     display: flex;
     justify-content: space-between;
+    gap: 28px;
+}
+.form input {
+    margin-top: 10px;
 }
 .itemDetails {
     padding: 28px 28px 63px 24px;
@@ -135,7 +139,7 @@
     gap: 40px;
     border-radius: 8px;
     background: #fff;
-    width: 53%;
+    width: 100%;
     /* mySMEApp */
     box-shadow: 0px 0px 30px 0px rgba(224, 224, 224, 0.71);
 }
