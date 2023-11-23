@@ -1218,6 +1218,7 @@ export const authApi = createApi({
 });
 
 export const {
+    useDeleteByInventoryidMutation,
     useCreateOrderMutation,
     useCreatePhoneBeneficiaryMutation,
     useDeletePhoneBeneficiaryMutation,

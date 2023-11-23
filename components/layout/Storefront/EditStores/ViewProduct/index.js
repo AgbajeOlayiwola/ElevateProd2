@@ -1,9 +1,11 @@
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useDeleteByInventoryidMutation } from '../../../../../redux/api/authApi';
+import Loader from '../../../../ReusableComponents/Loader';
 import SwitchComponent from '../../../../ReusableComponents/SwitchComponent';
 import styles from './styles.module.css';
 const getSymbolFromCurrency = require('currency-symbol-map');
@@ -23,6 +25,23 @@ const ViewProduct = ({ retrunBack, editInventory }) => {
             className: 'toast-message'
         });
     };
+    const [
+        deleteByInventoryid,
+        {
+            data: deleteByInventoryidData,
+            isLoading: deleteByInventoryidLoad,
+            isSuccess: deleteByInventoryidSuccess,
+            isError: deleteByInventoryidFalse,
+            error: deleteByInventoryidErr,
+            reset: deleteByInventoryidReset
+        }
+    ] = useDeleteByInventoryidMutation();
+    useEffect(() => {
+        if (deleteByInventoryidSuccess) {
+            retrunBack();
+        }
+    }, [deleteByInventoryidSuccess]);
+
     return (
         <>
             <ToastContainer />
@@ -88,6 +107,23 @@ const ViewProduct = ({ retrunBack, editInventory }) => {
                             </button>
                         </div>
                     </div>
+                    <br />
+                    <div
+                        className={styles.delete}
+                        onClick={() =>
+                            deleteByInventoryid({
+                                storeFrontId: viewInventory?.storeFrontId,
+                                inventoryId: viewInventory?.id
+                            })
+                        }
+                    >
+                        {deleteByInventoryidLoad ? (
+                            <Loader />
+                        ) : (
+                            'Delete Inventory'
+                        )}
+                    </div>
+                    <br />
                     <div className={styles.desc}>
                         <h1>Description</h1>
                         <p>{viewInventory?.description}</p>
