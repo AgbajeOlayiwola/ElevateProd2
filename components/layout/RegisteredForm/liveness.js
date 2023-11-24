@@ -38,11 +38,7 @@ const Liveness = ({ formData, type, action, back }) => {
     const [image, setImage] = useState('');
     const { profile } = useSelector((store) => store);
     const affiliatData = localStorage.getItem('affiliateCode');
-    useEffect(() => {
-        getMoreAccountNumberDetails({
-            accountNo: existingUserDetails?.accounts[0]?.accountNumber
-        });
-    }, []);
+
     const dispatch = useDispatch();
     const { existingUserDetails } = useSelector((store) => store);
     const { faceMatchDetails } = useSelector((store) => store);
@@ -91,6 +87,11 @@ const Liveness = ({ formData, type, action, back }) => {
             reset: createExistingUserProfileReset
         }
     ] = useCreateExistingUserProfileMutation();
+    useEffect(() => {
+        getMoreAccountNumberDetails({
+            accountNo: existingUserDetails?.accounts[0]?.accountNumber
+        });
+    }, []);
     const capture = React.useCallback(() => {
         const ImageSrcII = webcamRef?.current?.getScreenshot();
         setImage(ImageSrcII);
