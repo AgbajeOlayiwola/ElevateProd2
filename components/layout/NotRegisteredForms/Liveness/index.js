@@ -9,7 +9,6 @@ import {
     useFacematchMutation
 } from '../../../../redux/api/authApi';
 import {
-    PRODUCTNAME,
     SmileIDPartnerId,
     SmileIdCallbackUrl,
     SmileIdCompName,
@@ -36,7 +35,7 @@ const _base64ToArrayBuffer = (base64String) => {
     }
 };
 const Liveness = ({ nextStep }) => {
-    const productName = PRODUCTNAME;
+    const productName = 'biometric_kyc';
     const myElementRef = useRef(null);
     const { profile } = useSelector((store) => store);
     const [loading, setLoading] = useState(false);
