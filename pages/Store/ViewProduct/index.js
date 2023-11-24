@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
 import { MdOutlineRemoveShoppingCart } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import Cover from '../../../components/ReusableComponents/Cover';
@@ -14,6 +14,10 @@ const countryToCurrency = require('country-to-currency');
 const ViewProduct = () => {
     // const affiliate = localStorage.getItem('affiliateCode');
     const { affiliate } = useSelector((store) => store);
+    const { allInventories } = useSelector((store) => store);
+
+    const [cartData, setCartData] = useState([]);
+    const [cartItems, setCartItems] = useState([]);
     const dispatch = useDispatch();
     const { viewProductSliceData } = useSelector((store) => store);
     const [
@@ -46,6 +50,25 @@ const ViewProduct = () => {
         };
         dispatch(setCartItem([newItem]));
         router.push('/Store/Cart');
+    };
+    const call = () => {
+        setCount(count + 1);
+        dispatch(setCart(count));
+    };
+    const addToCart = (data) => {
+        const newItem = {
+            storeFrontId: data?.storeFrontId,
+            inventoryId: data?.id,
+            id: data?.id, // replace with the actual identifier of your product
+            name: data?.name,
+            price: data?.price,
+            image: data?.image[0],
+            size: data?.size[0],
+            quantity: 1 // you can adjust the quantity as needed
+        };
+
+        setCartItems((prevCartItems) => [...prevCartItems, newItem]);
+        dispatch(setCartItem(cartItems));
     };
     return (
         <>
@@ -203,10 +226,15 @@ const ViewProduct = () => {
                 </div>
                 <p className={styles.cust}>Customers also view this</p>
                 <div className={styles.products}>
-                    <ProductTile />
-                    <ProductTile />
-                    <ProductTile />
-                    <ProductTile />
+                    {allInventories?.inventories?.data.map((item, index) => {
+                        return (
+                            <ProductTile
+                                data={item}
+                                addToCart={addToCart}
+                                call={call}
+                            />
+                        );
+                    })}
                 </div>
             </Cover>
         </>

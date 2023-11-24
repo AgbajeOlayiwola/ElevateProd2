@@ -23,7 +23,8 @@ const CartItem = ({
                 <Image
                     src={
                         items?.image &&
-                        items?.image.startsWith('data:image/png;base64,')
+                        (items?.image?.startsWith('data:image/png;base64,') ||
+                            items?.image?.startsWith('data:image/jpeg;base64,'))
                             ? items?.image
                             : `data:image/png;base64,${items?.image}`
                     }

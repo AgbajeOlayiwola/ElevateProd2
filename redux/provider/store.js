@@ -22,6 +22,7 @@ import accountNumberReducer from '../slices/accountNumberSlice';
 import addInventoryReducer from '../slices/addInventorySlice';
 import affiliateReducer from '../slices/affiliateSlice';
 import allAccountInfoReducr from '../slices/allAccountInfoSlice';
+import allStoreInventoriesReducer from '../slices/allInventoriesSlice';
 import allStoresReducer from '../slices/allStoresSlice';
 import analyticsDataReducer from '../slices/analyticsData';
 import cartReducer from '../slices/cart';
@@ -69,7 +70,8 @@ const reducers = combineReducers({
     addInventory: addInventoryReducer,
     viewInventory: viewInventoryReducer,
     allStores: allStoresReducer,
-    affiliate: affiliateReducer
+    affiliate: affiliateReducer,
+    allInventories: allStoreInventoriesReducer
 });
 
 const persistConfig = {
@@ -98,7 +100,8 @@ const persistConfig = {
         'addInventory',
         'viewInventory',
         'allStores',
-        'affiliate'
+        'affiliate',
+        'allInventories'
     ]
 };
 

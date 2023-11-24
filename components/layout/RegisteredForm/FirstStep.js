@@ -61,6 +61,14 @@ const FirstStep = ({ setFormData, formData, action }) => {
             action();
         }
     }, [verifyExistingOtpSuccess, verifyExistingOtpErr]);
+    function replaceFirstZero(inputStr) {
+        if (inputStr.charAt(0) === '0') {
+            inputStr = formData?.countryCode + inputStr.slice(1);
+        } else if (inputStr.charAt(0) === '+') {
+            inputStr = '' + inputStr.slice(1);
+        }
+        return inputStr;
+    }
     const handleInputKeyPress = (event, inputIndex) => {
         if (event.key === 'Backspace' || event.key === 'Delete') {
             event.preventDefault();
@@ -80,14 +88,7 @@ const FirstStep = ({ setFormData, formData, action }) => {
         };
         verifyExistingOtp(data);
     };
-    function replaceFirstZero(inputStr) {
-        if (inputStr.charAt(0) === '0') {
-            inputStr = formData?.countryCode + inputStr.slice(1);
-        } else if (inputStr.charAt(0) === '+') {
-            inputStr = '' + inputStr.slice(1);
-        }
-        return inputStr;
-    }
+
     useEffect(() => {
         resendExisitingOtp({
             phoneNumber: replaceFirstZero(existingUserDetails?.originalMsisdn)

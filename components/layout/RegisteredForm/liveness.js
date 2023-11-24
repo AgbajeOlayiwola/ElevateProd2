@@ -1,4 +1,3 @@
-import { Formik } from 'formik';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,6 +14,7 @@ import { setfaceMatchDetails } from '../../../redux/slices/facematchSlice';
 import { setMoreAccountNumberDetails } from '../../../redux/slices/moreAccountNumberDetails';
 import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
 import ButtonComp from '../../ReusableComponents/Button';
+import Loader from '../../ReusableComponents/Loader';
 import styles from './styles.module.css';
 const videoConstraints = {
     width: 390,
@@ -38,6 +38,11 @@ const Liveness = ({ formData, type, action, back }) => {
     const [image, setImage] = useState('');
     const { profile } = useSelector((store) => store);
     const affiliatData = localStorage.getItem('affiliateCode');
+    useEffect(() => {
+        getMoreAccountNumberDetails({
+            accountNo: existingUserDetails?.accounts[0]?.accountNumber
+        });
+    }, []);
     const dispatch = useDispatch();
     const { existingUserDetails } = useSelector((store) => store);
     const { faceMatchDetails } = useSelector((store) => store);
@@ -109,11 +114,7 @@ const Liveness = ({ formData, type, action, back }) => {
         };
         facematchithAccountnumber(faceMMatchData);
     }, [webcamRef]);
-    useEffect(() => {
-        getMoreAccountNumberDetails({
-            accountNo: existingUserDetails?.accounts[0]?.accountNumber
-        });
-    }, []);
+
     useEffect(() => {
         if (getMoreAccountNumberDetailsSuccess) {
             dispatch(
@@ -160,87 +161,67 @@ const Liveness = ({ formData, type, action, back }) => {
             <ToastContainer />
             <div className={styles.cover}>
                 <div className={styles.imageOut}>
-                    <Formik
-                        onSubmit={(values, { setSubmitting }) => {
-                            setSubmitting(false);
-                        }}
-                    >
-                        {({
-                            values,
-                            errors,
-                            touched,
-                            handleChange,
-                            setFieldValue,
-                            handleSubmit
-                        }) => (
-                            <form>
-                                <div>
-                                    <ArrowBackSvg
-                                        action={back}
-                                        color="#102572"
-                                    />
-                                    <p className={styles.takeSelf}>
-                                        Take a Lively Selfie
-                                    </p>
-                                    <p className={styles.finish}>
-                                        Finish up with a clear photo of your
-                                        face to verify your identity.
-                                    </p>
+                    <form>
+                        <div>
+                            <ArrowBackSvg action={back} color="#102572" />
+                            <p className={styles.takeSelf}>
+                                Take a Lively Selfie
+                            </p>
+                            <p className={styles.finish}>
+                                Finish up with a clear photo of your face to
+                                verify your identity.
+                            </p>
 
-                                    <div
-                                        className={
-                                            faceMatchWithoutBvnLoad ||
-                                            facematchithAccountnumberLoad
-                                                ? styles.imageOuter
-                                                : faceMatchWithoutBvnErr
-                                                ? styles.errorInner
-                                                : styles.imageInner
-                                        }
-                                    >
-                                        {faceMatchWithoutBvnLoad ||
-                                        facematchithAccountnumberLoad ? (
-                                            <Image
-                                                src={image}
-                                                height={600}
-                                                width={600}
-                                            />
-                                        ) : (
-                                            <Webcam
-                                                audio={false}
-                                                screenshotFormat="image/jpeg"
-                                                videoConstraints={
-                                                    videoConstraints
-                                                }
-                                                ref={webcamRef}
-                                            />
-                                        )}
-                                    </div>
-                                </div>
+                            <div
+                                className={
+                                    faceMatchWithoutBvnLoad ||
+                                    facematchithAccountnumberLoad
+                                        ? styles.imageOuter
+                                        : faceMatchWithoutBvnLoad ||
+                                          facematchithAccountnumberLoad
+                                        ? styles.errorInner
+                                        : styles.imageInner
+                                }
+                            >
                                 {faceMatchWithoutBvnLoad ||
                                 facematchithAccountnumberLoad ? (
-                                    <p>
-                                        Hold On Your Face Is Being Verified.....
-                                    </p>
-                                ) : null}
-                                <ButtonComp
-                                    active={'active'}
-                                    disabled={true}
-                                    onClick={capture}
-                                    type="button"
-                                    loads={
-                                        faceMatchWithoutBvnLoad ||
-                                        facematchithAccountnumberLoad
-                                    }
-                                    text={
-                                        succes ===
-                                        'facial verification successful'
-                                            ? 'Continue'
-                                            : 'Snap'
-                                    }
-                                />
-                            </form>
-                        )}
-                    </Formik>
+                                    <Image
+                                        src={image}
+                                        height={600}
+                                        width={600}
+                                    />
+                                ) : getMoreAccountNumberDetailsLoad ? (
+                                    <Loader />
+                                ) : (
+                                    <Webcam
+                                        audio={false}
+                                        screenshotFormat="image/jpeg"
+                                        videoConstraints={videoConstraints}
+                                        ref={webcamRef}
+                                    />
+                                )}
+                            </div>
+                        </div>
+                        {faceMatchWithoutBvnLoad ||
+                        facematchithAccountnumberLoad ? (
+                            <p>Hold On Your Face Is Being Verified.....</p>
+                        ) : null}
+                        <ButtonComp
+                            active={'active'}
+                            disabled={true}
+                            onClick={capture}
+                            type="button"
+                            loads={
+                                faceMatchWithoutBvnLoad ||
+                                facematchithAccountnumberLoad
+                            }
+                            text={
+                                succes === 'facial verification successful'
+                                    ? 'Continue'
+                                    : 'Snap'
+                            }
+                        />
+                    </form>
                 </div>
             </div>
         </div>

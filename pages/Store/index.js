@@ -8,6 +8,7 @@ import { setAffiliate } from '../../redux/slices/affiliateSlice';
 import { setCart } from '../../redux/slices/cart';
 import { setCartItem } from '../../redux/slices/cartItems';
 import styles from './styles.module.css';
+import { setAllInventories } from '../../redux/slices/allInventoriesSlice';
 
 const Store = ({ children }) => {
     const dispatch = useDispatch();
@@ -55,6 +56,7 @@ const Store = ({ children }) => {
                 }
             );
         }
+        dispatch(setAllInventories(storelinkGetStoreData?.data));
     }, [storelinkGetStoreSuccess]);
 
     const call = () => {
@@ -98,6 +100,7 @@ const Store = ({ children }) => {
                             (item, index) => {
                                 return (
                                     <ProductTile
+                                        key={index}
                                         data={item}
                                         addToCart={addToCart}
                                         call={call}

@@ -20,7 +20,7 @@ function Error({ statusCode }) {
             ) : (
                 <>
                     <p>An error occurred on client&rsquo;s</p>
-                    <Link href="/Admin/Dashboard">Return To DashBoard</Link>
+                    <Link href="/">Return To DashBoard</Link>
                 </>
             )}
         </p>
