@@ -178,8 +178,8 @@ const Liveness = ({ formData, type, action, back }) => {
                                     faceMatchWithoutBvnLoad ||
                                     facematchithAccountnumberLoad
                                         ? styles.imageOuter
-                                        : faceMatchWithoutBvnLoad ||
-                                          facematchithAccountnumberLoad
+                                        : faceMatchWithoutBvnErr ||
+                                          facematchithAccountnumberErr
                                         ? styles.errorInner
                                         : styles.imageInner
                                 }
