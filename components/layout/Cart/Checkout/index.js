@@ -170,33 +170,60 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                 // validateOnChange={true}
                 onSubmit={(values, { setSubmitting }) => {
                     const data = {
-                        storeFrontId: storeSlice?.id,
-                        ipAddress: '234545678',
-                        logisticId: values?.deliveryOption,
-                        isGift: isGift,
-                        recipientFirstName: values?.recipientFirstName,
-                        recipientLastName: values?.recipientLastName,
+                        storeFrontId: '655c999081831964e4aa0d45',
+                        cartId: '253456789765446',
+                        cart: [
+                            {
+                                storeFrontId: '655c999081831964e4aa0d45',
+                                inventoryId: '655c99d381831964e4aa0d48',
+                                dateAdded: '2023/04/23',
+                                affiliateCode: 'ENG',
+                                size: 'XL',
+                                color: 'red',
+                                quantity: 2,
+                                currentPrice: 2500,
+                                totalCost: 2500
+                            },
+                            {
+                                storeFrontId: '655c999081831964e4aa0d45',
+                                inventoryId: '655c9a3381831964e4aa0d49',
+                                dateAdded: '2023/04/23',
+                                affiliateCode: 'ENG',
+                                size: 'XL',
+                                color: 'red',
+                                quantity: 2,
+                                currentPrice: 2500,
+                                totalCost: 2500
+                            }
+                        ],
+                        logisticId: '1',
+                        isGift: true,
+                        recipientFirstName: 'Faith Umunnakwe',
+                        recipientLastName: 'Last',
                         recipientMsisdn: '2348148184543',
-                        recipientEmail: values?.recipientEmail,
-                        isInformRecipientViaEmail: informEmail,
-                        senderName: '2349030751428',
-                        senderMsisdn: '2349030751428',
-                        senderEmail: 'faithuchinonso@gmail.com',
-                        affiliateCode: storeSlice?.affiliateCode,
-                        shippingAddress: values?.shippingAddress,
-                        city: '',
-                        state: '',
-                        customerEmail: values?.recipientEmail,
+                        recipientEmail: 'amalahaprosper@gmail.com',
+                        isInformRecipientViaEmail: false,
+                        senderName: 'Prosper Amalaha',
+                        senderMsisdn: '2348135139753',
+                        senderEmail: 'amalahaprosper@gmail.com',
+                        affiliateCode: 'ENG',
+                        shippingAddress: 'No 5 Ehimen Ehon avenue, Ogudu',
+                        city: 'eti-osa',
+                        state: 'Lagos',
+                        customerEmail: 'amalahaprosper@gmail.com',
                         customerMsisdn: '2348148184543',
-                        deliveryCost: 9000,
-                        tax: 32.45,
-                        totalCost: totalPrice,
-                        cart: 'ihgfvbhj',
+                        deliveryCost: 450,
+                        totalCost: 5450,
                         orderDate: '2023-04-23',
-                        attachments: [
-                            'dfghjkljhfsrtdfyguhklj',
-                            'dfghjkl;hgfjdhsrdgfhjgkhljh'
-                        ]
+                        attachments: [],
+                        senderLocation: {
+                            latitude: '8765487654786',
+                            longitude: '98765434567987'
+                        },
+                        receiverLocation: {
+                            latitude: '98765456789087',
+                            longitude: '09876545678345'
+                        }
                     };
 
                     createOrder(data);

@@ -1,10 +1,40 @@
-import React from 'react';
-import styles from './styles.module.css';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useLoanBalanceMutation } from '../../../redux/api/authApi';
 import { formatter } from '../../../utils/formatter/formatter';
 import LoansSvg from '../LoansSvg';
-import { useRouter } from 'next/router';
-
+import styles from './styles.module.css';
+const getSymbolFromCurrency = require('currency-symbol-map');
+const countryToCurrency = require('country-to-currency');
 const LoansMiddle = ({ status, state }) => {
+    const affiliate = localStorage.getItem('affiliateCode');
+    const [acctNummber, setAcctNumber] = useState('');
+    const { allAccountInfo } = useSelector((store) => store);
+    const [
+        loanBalance,
+        {
+            data: loanBalanceData,
+            isLoading: loanBalanceLoad,
+            isSuccess: loanBalanceSuccess,
+            isError: loanBalanceFalse,
+            error: loanBalanceErr,
+            reset: loanBalanceReset
+        }
+    ] = useLoanBalanceMutation();
+    useEffect(() => {
+        setAcctNumber(
+            allAccountInfo
+                .filter((account) => account?.isPrimaryAccount === 'Y') // Filter by primary flag
+                .map((account) => account.accountNo)
+                .filter(Boolean)
+        );
+        loanBalance({
+            account: acctNummber[0],
+            prod_token: 'ECO-ZE9EGP'
+        });
+    }, []);
+
     const router = useRouter();
     return (
         <div className={styles.loansMiddle}>
@@ -23,10 +53,31 @@ const LoansMiddle = ({ status, state }) => {
                                 <span>/{formatter.format(100000000)}</span>
                             </h2>
                         ) : (
-                            <h2>
-                                {formatter.format(0)}
-                                <span>/{formatter.format(0)}</span>
-                            </h2>
+                            <>
+                                {loanBalanceData?.data?.activity?.map(
+                                    (item, index) => {
+                                        console.log(item);
+                                        return (
+                                            <h2 key={index}>
+                                                {getSymbolFromCurrency(
+                                                    countryToCurrency[
+                                                        `${affiliate.substring(
+                                                            1
+                                                        )}`
+                                                    ]
+                                                )}
+                                                {parseFloat(item?.amount)
+                                                    .toFixed(2)
+                                                    .replace(
+                                                        /\B(?=(\d{3})+(?!\d))/g,
+                                                        ','
+                                                    )}
+                                            </h2>
+                                        );
+                                    }
+                                )}
+                                {/* <span>/{formatter.format(0)}</span> */}
+                            </>
                         )}
                         <p>Loan Balance</p>
                     </div>
