@@ -4,6 +4,7 @@ import Cover from '../../components/ReusableComponents/Cover';
 import Loader from '../../components/ReusableComponents/Loader';
 import ProductTile from '../../components/ReusableComponents/ProductTile';
 import StoreNavbar from '../../components/layout/navbar/Navbar';
+import { useStorelinkGetStoreMutation } from '../../redux/api/authApi';
 import { setAffiliate } from '../../redux/slices/affiliateSlice';
 import { setAllInventories } from '../../redux/slices/allInventoriesSlice';
 import { setCart } from '../../redux/slices/cart';
@@ -13,17 +14,17 @@ import styles from './styles.module.css';
 const Store = ({ children }) => {
     const dispatch = useDispatch();
     const [count, setCount] = useState(0);
-    // const [
-    //     storelinkGetStore,
-    //     {
-    //         data: storelinkGetStoreData,
-    //         isLoading: storelinkGetStoreLoad,
-    //         isSuccess: storelinkGetStoreSuccess,
-    //         isError: storelinkGetStoreFalse,
-    //         error: storelinkGetStoreErr,
-    //         reset: storelinkGetStoreReset
-    //     }
-    // ] = useStorelinkGetStoreMutation();
+    const [
+        storelinkGetStore,
+        {
+            data: storelinkGetStoreData,
+            isLoading: storelinkGetStoreLoad,
+            isSuccess: storelinkGetStoreSuccess,
+            isError: storelinkGetStoreFalse,
+            error: storelinkGetStoreErr,
+            reset: storelinkGetStoreReset
+        }
+    ] = useStorelinkGetStoreMutation();
 
     useEffect(() => {
         // Get the current URL
