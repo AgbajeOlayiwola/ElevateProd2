@@ -4,7 +4,6 @@ import Cover from '../../components/ReusableComponents/Cover';
 import Loader from '../../components/ReusableComponents/Loader';
 import ProductTile from '../../components/ReusableComponents/ProductTile';
 import StoreNavbar from '../../components/layout/navbar/Navbar';
-import { useStorelinkGetStoreMutation } from '../../redux/api/authApi';
 import { setAffiliate } from '../../redux/slices/affiliateSlice';
 import { setAllInventories } from '../../redux/slices/allInventoriesSlice';
 import { setCart } from '../../redux/slices/cart';
@@ -13,24 +12,25 @@ import styles from './styles.module.css';
 
 const Store = ({ children }) => {
     const dispatch = useDispatch();
-    const [
-        storelinkGetStore,
-        {
-            data: storelinkGetStoreData,
-            isLoading: storelinkGetStoreLoad,
-            isSuccess: storelinkGetStoreSuccess,
-            isError: storelinkGetStoreFalse,
-            error: storelinkGetStoreErr,
-            reset: storelinkGetStoreReset
-        }
-    ] = useStorelinkGetStoreMutation();
+    const [count, setCount] = useState(0);
+    // const [
+    //     storelinkGetStore,
+    //     {
+    //         data: storelinkGetStoreData,
+    //         isLoading: storelinkGetStoreLoad,
+    //         isSuccess: storelinkGetStoreSuccess,
+    //         isError: storelinkGetStoreFalse,
+    //         error: storelinkGetStoreErr,
+    //         reset: storelinkGetStoreReset
+    //     }
+    // ] = useStorelinkGetStoreMutation();
 
     useEffect(() => {
         // Get the current URL
-        const currentUrl = new URL(window.location.href);
+        const currentUrl = new URL(window?.location?.href);
 
         // Get the "id" parameter from the URL
-        const idParam = currentUrl.searchParams.get('id');
+        const idParam = currentUrl?.searchParams?.get('id');
 
         if (idParam) {
             // Do something with the idParam
@@ -47,7 +47,7 @@ const Store = ({ children }) => {
             console.log('No ID parameter found in the URL');
         }
     }, []);
-    const [count, setCount] = useState(0);
+
     useEffect(() => {
         if (storelinkGetStoreSuccess) {
             storelinkGetStoreData?.data?.inventories?.data.forEach(
