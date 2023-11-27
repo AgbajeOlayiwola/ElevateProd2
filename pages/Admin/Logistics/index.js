@@ -3,7 +3,10 @@ import { BiSearch } from 'react-icons/bi';
 import InputWithSvg from '../../../components/ReusableComponents/InputWithSvg';
 import Loader from '../../../components/ReusableComponents/Loader';
 import LogisticsTile from '../../../components/layout/Logistics/LogisticTiles';
-import { useGetLogisticsProvidersQuery } from '../../../redux/api/logisticsApi';
+import {
+    useGetLogisticsProvidersQuery,
+    useGetStationsQuery
+} from '../../../redux/api/logisticsApi';
 import styles from './styles.module.css';
 const Logistics = () => {
     const {
@@ -12,9 +15,17 @@ const Logistics = () => {
         isError,
         refetch // This function can be used to manually trigger a refetch
     } = useGetLogisticsProvidersQuery();
+    const {
+        data: getStationsData,
+        isLoading: getStationsLoad,
+        isError: getStationsError,
+        refetch: getStations // This function can be used to manually trigger a refetch
+    } = useGetStationsQuery();
     useEffect(() => {
+        getStations();
         refetch();
     }, []);
+
     const [checkStates, setCheckStates] = useState({});
     const [searchQuery, setSearchQuery] = useState('');
 
@@ -57,7 +68,18 @@ const Logistics = () => {
                         <Loader />
                     ) : (
                         filteredData?.map((item, index) => {
-                            return <LogisticsTile data={item} />;
+                            const isCommon = getStationsData?.data?.some(
+                                (data2Item) =>
+                                    data2Item.providerName === item.providerName
+                            );
+
+                            return (
+                                <LogisticsTile
+                                    key={index}
+                                    data={item}
+                                    isCommon={isCommon}
+                                />
+                            );
                         })
                     )}
                 </div>

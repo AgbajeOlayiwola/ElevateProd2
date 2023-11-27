@@ -9,7 +9,7 @@
 .enter div {
     display: flex;
     justify-content: space-between;
-    gap: 80px;
+    gap: 20px;
 }
 .enter div input {
     text-align: center;

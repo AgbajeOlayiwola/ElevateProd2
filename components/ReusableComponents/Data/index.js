@@ -180,7 +180,7 @@ export const SidebarData = [
             },
             {
                 title: 'Business Registration',
-                path: '#'
+                path: '/Admin/BusinessRegisteration'
                 // icon: <FaIcons.FaHandHoldingUsd />
             }
         ]

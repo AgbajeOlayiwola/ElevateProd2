@@ -3,6 +3,9 @@
     justify-content: space-between;
     gap: 28px;
 }
+.form {
+    width: 60%;
+}
 .form input {
     margin-top: 10px;
 }

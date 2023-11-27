@@ -1,7 +1,10 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useLoanBalanceMutation } from '../../../redux/api/authApi';
+import {
+    useLoanBalanceMutation,
+    useLoanBookingMutation
+} from '../../../redux/api/authApi';
 import { formatter } from '../../../utils/formatter/formatter';
 import LoansSvg from '../LoansSvg';
 import styles from './styles.module.css';
@@ -22,6 +25,18 @@ const LoansMiddle = ({ status, state }) => {
             reset: loanBalanceReset
         }
     ] = useLoanBalanceMutation();
+    const [
+        loanBooking,
+        {
+            data: loanBookingData,
+            isLoading: loanBookingLoad,
+            isSuccess: loanBookingSuccess,
+            isError: loanBookingFalse,
+            error: loanBookingErr,
+            reset: loanBookingReset
+        }
+    ] = useLoanBookingMutation();
+
     useEffect(() => {
         setAcctNumber(
             allAccountInfo
@@ -32,6 +47,12 @@ const LoansMiddle = ({ status, state }) => {
         loanBalance({
             account: acctNummber[0],
             prod_token: 'ECO-ZE9EGP'
+        });
+        loanBooking({
+            accountNo: '6682009170',
+            affiliate: 'EKE',
+            prod_token: 'ECO-ZE9EGP',
+            amount: '800'
         });
     }, []);
 

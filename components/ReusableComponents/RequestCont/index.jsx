@@ -1,9 +1,9 @@
-import React, { useRef, useEffect, useState } from 'react';
-import styles from './styles.module.css';
-import { formatter } from '../../../utils/formatter/formatter';
 import { useRouter } from 'next/router';
+import React, { useEffect, useRef, useState } from 'react';
+import { formatter } from '../../../utils/formatter/formatter';
+import styles from './styles.module.css';
 
-const RequestCont = ({ type, title, topup }) => {
+const RequestCont = ({ type, title, topup, nextPage }) => {
     const router = useRouter();
     const thumbRef = useRef();
     const sliderRef = useRef();
@@ -59,7 +59,12 @@ const RequestCont = ({ type, title, topup }) => {
     return (
         <div className={styles.loanRequest}>
             <div className={styles.loanRequestTitle}>
-                <h2>{title}</h2>
+                <h2
+                    onClick={() => router.push('/Admin/Loans')}
+                    style={{ cursor: 'pointer' }}
+                >
+                    {title}
+                </h2>
                 {type ? null : (
                     <p>You can only change the monthly repayment date.</p>
                 )}
@@ -151,13 +156,7 @@ const RequestCont = ({ type, title, topup }) => {
                     </p>
                 </div>
                 <div className={styles.loanRequestButton}>
-                    <button
-                        onClick={() => {
-                            router.push('/Admin/Loans/Confirm');
-                        }}
-                    >
-                        Continue
-                    </button>
+                    <button onClick={nextPage}>Continue</button>
                 </div>
             </div>
         </div>

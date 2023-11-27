@@ -80,62 +80,89 @@ const Orders = ({ actionText }) => {
                     ) : viewOrderByStatusData?.data?.length === 0 ? (
                         <p>No item found</p>
                     ) : (
-                        <>
-                            <div className={styles.inventorySingle}>
-                                <div className={styles.inventorySingleFirst}>
-                                    <div className={styles.divDets}>
-                                        <img
-                                            src="/Assets/Images/guccishirt.png"
-                                            alt=""
-                                        />
-                                        <div className={styles.dets}>
-                                            <div className={styles.details}>
-                                                <p
-                                                    className={
-                                                        styles.productName
-                                                    }
-                                                >
-                                                    Gucci Black Shirtdkj
-                                                </p>
-                                                <div className={styles.ammount}>
-                                                    <p>3Pcs</p>
-                                                    <p>Black. Brown, Red</p>
-                                                </div>
-                                                <h5>Order #1234567890</h5>
-                                            </div>
-                                            <div>
-                                                <div
-                                                    className={
-                                                        styles.nameLocation
-                                                    }
-                                                >
-                                                    <p>Issac Adyemi</p>
-                                                    <p>Lagos</p>
-                                                </div>
-                                                <div className={styles.time}>
-                                                    <p>23/09/2023</p>
-                                                    <p>12:04pm</p>
+                        viewOrderByStatusData?.data?.map((item, index) => {
+                            return (
+                                <>
+                                    <div className={styles.inventorySingle}>
+                                        <div
+                                            className={
+                                                styles.inventorySingleFirst
+                                            }
+                                        >
+                                            <div className={styles.divDets}>
+                                                <img
+                                                    src="/Assets/Images/guccishirt.png"
+                                                    alt=""
+                                                />
+                                                <div className={styles.dets}>
+                                                    <div
+                                                        className={
+                                                            styles.details
+                                                        }
+                                                    >
+                                                        <p
+                                                            className={
+                                                                styles.productName
+                                                            }
+                                                        >
+                                                            Gucci Black Shirtdkj
+                                                        </p>
+                                                        <div
+                                                            className={
+                                                                styles.ammount
+                                                            }
+                                                        >
+                                                            <p>3Pcs</p>
+                                                            <p>
+                                                                Black. Brown,
+                                                                Red
+                                                            </p>
+                                                        </div>
+                                                        <h5>
+                                                            Order #1234567890
+                                                        </h5>
+                                                    </div>
+                                                    <div>
+                                                        <div
+                                                            className={
+                                                                styles.nameLocation
+                                                            }
+                                                        >
+                                                            <p>Issac Adyemi</p>
+                                                            <p>Lagos</p>
+                                                        </div>
+                                                        <div
+                                                            className={
+                                                                styles.time
+                                                            }
+                                                        >
+                                                            <p>23/09/2023</p>
+                                                            <p>12:04pm</p>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div className={styles.ship}>
+                                            <div>SHipped</div>
+                                            <p>
+                                                {' '}
+                                                {getSymbolFromCurrency(
+                                                    countryToCurrency[
+                                                        `${affiliate?.substring(
+                                                            1
+                                                        )}`
+                                                    ]
+                                                )}{' '}
+                                                {parseFloat(
+                                                    9999999999
+                                                ).toLocaleString('en-US')}
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className={styles.ship}>
-                                    <div>SHipped</div>
-                                    <p>
-                                        {' '}
-                                        {getSymbolFromCurrency(
-                                            countryToCurrency[
-                                                `${affiliate?.substring(1)}`
-                                            ]
-                                        )}{' '}
-                                        {parseFloat(9999999999).toLocaleString(
-                                            'en-US'
-                                        )}
-                                    </p>
-                                </div>
-                            </div>
-                        </>
+                                </>
+                            );
+                        })
                     )}
                 </>
             ) : orderType === 'close' ? (

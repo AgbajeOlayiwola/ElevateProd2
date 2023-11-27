@@ -1,0 +1,80 @@
+.inputFlex {
+    display: flex;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+.addAnothr {
+    color: var(--primary-deep-blue, #102572);
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-decoration-line: underline;
+}
+.checkBox {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.checkBox input {
+    width: 10px;
+}
+.stepTwo {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.stepTwo label {
+    color: #7a7978;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+.stepTwo input {
+    margin-top: 10px;
+    border: none;
+}
+.stepTwo select {
+    margin-top: 10px;
+    border: none;
+}
+.head h2 {
+    color: var(--color-black-500, #000b0f);
+    font-family: Inter;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.head p {
+    color: var(--color-black-300, #545454);
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%; /* 16.8px */
+}
+.button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.button button {
+    width: 45%;
+}
+.saveAsDrafr {
+    cursor: pointer;
+    color: var(--primary-deep-blue, #102572);
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+.hr {
+    width: 100%;
+}

@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
 import EmptyState from '../../../components/ReusableComponents/EmptyState';
 import LoansHeader from '../../../components/ReusableComponents/LoansHeader';
 import LoansMiddle from '../../../components/ReusableComponents/LoansMiddle';
 import LoansTable from '../../../components/ReusableComponents/LoansTable';
-import { useLoanBalanceMutation } from '../../../redux/api/authApi';
 import styles from './styles.module.css';
 
 const Loans = () => {
-    const [status, setStatus] = useState('default');
+    const [status, setStatus] = useState('request granted');
     const [state, setState] = useState(false);
 
     return (

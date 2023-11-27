@@ -1,0 +1,103 @@
+.txtDiv {
+    display: flex;
+    flex-direction: column;
+}
+
+.txtDiv textarea {
+    display: flex;
+    height: 153px;
+    padding: 16px;
+    align-items: flex-start;
+    gap: 8px;
+    align-self: stretch;
+    border-radius: 8px;
+    background: #f4f4f4;
+    border: none;
+    margin-top: 10px;
+}
+.button {
+    display: flex;
+    justify-content: flex-end;
+}
+.button button {
+    width: 45%;
+}
+.hr {
+    width: 100%;
+}
+.inputFlex {
+    display: flex;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+.checkBox {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.checkBox input {
+    width: 10px;
+}
+.step0ne {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.step0ne label {
+    color: #7a7978;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+.step0ne input {
+    margin-top: 10px;
+    border: none;
+}
+.step0ne select {
+    margin-top: 10px;
+    border: none;
+}
+.max {
+    margin: 0px;
+    color: #7a7978;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin: 2px;
+}
+.wordCount {
+    margin: 0px;
+    color: #7a7978;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin: 2px;
+    text-align: end;
+}
+.yesNo {
+    display: flex;
+}
+.yesNo div {
+    padding: 10px 20px;
+    border-radius: 0px 5px 5px 0px;
+    border-top: 1px solid #e4e4e4;
+    border-right: 1px solid #e4e4e4;
+    border-bottom: 1px solid #e4e4e4;
+}
+.registering {
+    color: #7a7978;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin: 0px;
+    margin-bottom: 10px;
+}

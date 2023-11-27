@@ -751,6 +751,15 @@ export const authApi = createApi({
                 };
             }
         }),
+        loanRepayment: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'loan-repayment',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
         freezeAcct: builder.mutation({
             query: () => {
                 return {
@@ -1213,11 +1222,46 @@ export const authApi = createApi({
                     body
                 };
             }
+        }),
+        getLoans: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'get-loans',
+                    method: 'post',
+                    body: {}
+                };
+            }
+        }),
+        logisticsDisableProvider: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'logistics-disable-provider',
+                    method: 'post',
+                    body: {}
+                };
+            }
+        }),
+        logisticsEnableProvider: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'logistics-enable-provider',
+                    method: 'post',
+                    body: {}
+                };
+            }
         })
+        //         logistics-disable-provider
+        // logistics-enable-provider
+        // logistics-gig-capture-shipment
+        // logistics-gig-shipment-price
+        // logistics-gig-stations
+        // logistics-providers
     })
 });
 
 export const {
+    useLogisticsEnableProviderMutation,
+    useLogisticsDisableProviderMutation,
     useDeleteByInventoryidMutation,
     useCreateOrderMutation,
     useCreatePhoneBeneficiaryMutation,

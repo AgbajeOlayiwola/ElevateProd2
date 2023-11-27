@@ -1,0 +1,53 @@
+.dataFlex {
+    display: flex;
+    justify-content: space-between;
+}
+.stepFour p {
+    color: var(--color-black-300, #545454);
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.stepFour h3 {
+    color: var(--color-black-500, #000b0f);
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 140%; /* 22.4px */
+}
+.stepFour {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.hr {
+    width: 100%;
+}
+.checkBox {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.checkBox input {
+    width: 10px;
+}
+.button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.button button {
+    width: 45%;
+}
+.saveAsDrafr {
+    cursor: pointer;
+    color: var(--primary-deep-blue, #102572);
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}

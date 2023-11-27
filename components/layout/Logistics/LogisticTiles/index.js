@@ -1,28 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import {
     useCreateTransactionPinMutation,
-    useLogisticsnableProvidersMutation
+    useLogisticsDisableProviderMutation,
+    useLogisticsEnableProviderMutation
 } from '../../../../redux/api/authApi';
-import {
-    useDisableLogisticMutation,
-    useGetStationsQuery
-} from '../../../../redux/api/logisticsApi';
 import Loader from '../../../ReusableComponents/Loader';
 import styles from './styles.module.css';
 
-const LogisticsTile = ({ data }) => {
+const LogisticsTile = ({ data, isCommon }) => {
     const [checkStates, setCheckStates] = useState(false);
     const [
-        logisticsnableProviders,
+        logisticsEnableProvider,
         {
-            data: enableLogisticData,
-            isLoading: enableLogisticLoad,
-            isSuccess: enableLogisticSuccess,
-            isError: enableLogisticFalse,
-            error: enableLogisticErr,
-            reset: enableLogisticReset
+            data: logisticsEnableProviderData,
+            isLoading: logisticsEnableProviderLoad,
+            isSuccess: logisticsEnableProviderSuccess,
+            isError: logisticsEnableProviderFalse,
+            error: logisticsEnableProviderErr,
+            reset: logisticsEnableProviderReset
         }
-    ] = useLogisticsnableProvidersMutation();
+    ] = useLogisticsEnableProviderMutation();
     const [
         createTransactionPin,
         {
@@ -35,25 +32,16 @@ const LogisticsTile = ({ data }) => {
         }
     ] = useCreateTransactionPinMutation();
     const [
-        disableLogistic,
+        logisticsDisableProvider,
         {
-            data: disableLogisticData,
-            isLoading: disableLogisticLoad,
-            isSuccess: disableLogisticSuccess,
-            isError: disableLogisticFalse,
-            error: disableLogisticErr,
-            reset: disableLogisticReset
+            data: logisticsDisableProviderData,
+            isLoading: logisticsDisableProviderLoad,
+            isSuccess: logisticsDisableProviderSuccess,
+            isError: logisticsDisableProviderFalse,
+            error: logisticsDisableProviderErr,
+            reset: logisticsDisableProviderReset
         }
-    ] = useDisableLogisticMutation();
-    const {
-        data: getStationsData,
-        isLoading,
-        isError,
-        refetch // This function can be used to manually trigger a refetch
-    } = useGetStationsQuery();
-    useEffect(() => {
-        refetch();
-    }, []);
+    ] = useLogisticsDisableProviderMutation();
 
     const handleCheckChange = () => {
         logisticsnableProviders({ providerId: data?.id.toString() });
@@ -61,34 +49,35 @@ const LogisticsTile = ({ data }) => {
     };
     console.log(data?.id.toString());
     const changeCHeck = () => {
-        disableLogistic({ providerId: data?.id.toString() });
+        logisticsDisableProvider({ providerId: data?.id.toString() });
         setCheckStates((prev) => !prev);
     };
     useEffect(() => {
-        if (disableLogisticSuccess) {
+        if (logisticsDisableProviderSuccess) {
             setCheckStates(false);
         }
-    }, [disableLogisticSuccess]);
+    }, [logisticsDisableProviderSuccess]);
 
     useEffect(() => {
-        if (enableLogisticSuccess) {
+        if (logisticsEnableProviderSuccess) {
             setCheckStates(true);
         }
-    }, [enableLogisticSuccess]);
+    }, [logisticsEnableProviderSuccess]);
 
     return (
         <div className={styles.logistics}>
             <div className={styles.imgLabel}>
                 <img src={data?.imageUrl} width={50} height={30} />
                 <div className={styles.save}>
-                    {enableLogisticLoad || disableLogisticLoad ? (
+                    {logisticsEnableProviderLoad ||
+                    logisticsDisableProviderLoad ? (
                         <Loader />
                     ) : (
                         <>
                             <div className={styles.saveBene}>
                                 <label
                                     className={
-                                        checkStates === true
+                                        checkStates || isCommon === true
                                             ? styles.beneChecked
                                             : styles.beneCheck
                                     }

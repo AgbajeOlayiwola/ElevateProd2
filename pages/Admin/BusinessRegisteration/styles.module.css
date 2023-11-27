@@ -1,0 +1,147 @@
+.businss h1 {
+    color: #005b82;
+    font-family: Inter;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0px;
+}
+.businss p {
+    color: var(--color-black-300, #545454);
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin: 0px;
+}
+.businss {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.reg {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.reg button {
+    width: 22%;
+}
+.regBus {
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 20px;
+    height: 70vh;
+    padding-top: 20px;
+    background: white;
+}
+.regBus button {
+    width: 30%;
+}
+.center {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+}
+.regHistory {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.regHistory h1 {
+    color: #005b82;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.tableHeader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.tableHeader h2 {
+    color: #102572;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    line-height: 19.36px;
+}
+
+.beneficiary {
+    width: 6%;
+}
+
+.type {
+    width: 9%;
+}
+
+.amount {
+    width: 20%;
+}
+
+.status {
+    width: 14%;
+}
+.statuss {
+    width: 27%;
+    text-align: center !important;
+}
+.more {
+    width: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 30px;
+}
+.bank {
+    width: 17%;
+}
+.date {
+    width: 6%;
+}
+.dates {
+    width: 20%;
+}
+
+.TableDetailHeader {
+    margin-top: 20px;
+    display: flex;
+    width: 100%;
+    background: #f5f6fa;
+    border-radius: 4px;
+    padding: 10px 0px 10px 24px;
+}
+
+.TableDetailHeader p {
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: #3e3e3e;
+    line-height: 17px;
+    text-align: left;
+}
+.TableDetailHeaders {
+    display: flex;
+    width: 100%;
+    border-radius: 4px;
+    padding: 10px 0px 10px 24px;
+}
+
+.TableDetailHeaders p {
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: #3e3e3e;
+    line-height: 17px;
+    text-align: left;
+}

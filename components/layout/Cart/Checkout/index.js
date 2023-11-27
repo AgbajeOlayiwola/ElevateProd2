@@ -13,11 +13,12 @@ const countryToCurrency = require('country-to-currency');
 const Checkout = ({ num, items, upgradeOrder }) => {
     const { affiliate } = useSelector((store) => store);
     const { storeSlice } = useSelector((store) => store);
-    const [isGift, setIsGift] = useState(false);
+    const [isGift, setIsGift] = useState(true);
     const [totalPrice, setTotalPrice] = useState();
     const [informEmail, setInformEMail] = useState(false);
     const [page, setPage] = useState(0);
     const [isSucces, setIsSuccess] = useState(false);
+    const [formattedDate, setFormattedDate] = useState('');
     const {
         data: getStationsData,
         isLoading,
@@ -39,6 +40,18 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                 0
             )
         );
+        const formatDate = () => {
+            const currentDate = new Date();
+            const year = currentDate.getFullYear();
+            const month = (currentDate.getMonth() + 1)
+                .toString()
+                .padStart(2, '0');
+            const day = currentDate.getDate().toString().padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        };
+
+        // Set the initial formatted date
+        setFormattedDate(formatDate());
     }, []);
 
     const multi = () => {
@@ -77,7 +90,11 @@ const Checkout = ({ num, items, upgradeOrder }) => {
         senderName: '',
         senderEmail: '',
         senderPhoneNumber: '',
-        shippingAddress: ''
+        shippingAddress: '',
+        firstName: '',
+        lastName: '',
+        yourEmail: '',
+        yourPhoneNumber: ''
     };
     return (
         <div className={styles.Checkout}>
@@ -172,49 +189,26 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                     const data = {
                         storeFrontId: '655c999081831964e4aa0d45',
                         cartId: '253456789765446',
-                        cart: [
-                            {
-                                storeFrontId: '655c999081831964e4aa0d45',
-                                inventoryId: '655c99d381831964e4aa0d48',
-                                dateAdded: '2023/04/23',
-                                affiliateCode: 'ENG',
-                                size: 'XL',
-                                color: 'red',
-                                quantity: 2,
-                                currentPrice: 2500,
-                                totalCost: 2500
-                            },
-                            {
-                                storeFrontId: '655c999081831964e4aa0d45',
-                                inventoryId: '655c9a3381831964e4aa0d49',
-                                dateAdded: '2023/04/23',
-                                affiliateCode: 'ENG',
-                                size: 'XL',
-                                color: 'red',
-                                quantity: 2,
-                                currentPrice: 2500,
-                                totalCost: 2500
-                            }
-                        ],
+                        cart: cartItem,
                         logisticId: '1',
                         isGift: true,
-                        recipientFirstName: 'Faith Umunnakwe',
-                        recipientLastName: 'Last',
-                        recipientMsisdn: '2348148184543',
-                        recipientEmail: 'amalahaprosper@gmail.com',
+                        recipientFirstName: values?.recipientFirstName,
+                        recipientLastName: values?.recipientLastName,
+                        recipientMsisdn: values?.senderPhoneNumber,
+                        recipientEmail: values?.recipientEmail,
                         isInformRecipientViaEmail: false,
-                        senderName: 'Prosper Amalaha',
-                        senderMsisdn: '2348135139753',
-                        senderEmail: 'amalahaprosper@gmail.com',
-                        affiliateCode: 'ENG',
+                        senderName: `${values?.firstName} ${values?.lastName}`,
+                        senderMsisdn: values?.yourPhoneNumber,
+                        senderEmail: values?.yourEmail,
+                        affiliateCode: affiliate,
                         shippingAddress: 'No 5 Ehimen Ehon avenue, Ogudu',
                         city: 'eti-osa',
                         state: 'Lagos',
-                        customerEmail: 'amalahaprosper@gmail.com',
-                        customerMsisdn: '2348148184543',
+                        customerEmail: values?.yourEmail,
+                        customerMsisdn: values?.yourPhoneNumber,
                         deliveryCost: 450,
-                        totalCost: 5450,
-                        orderDate: '2023-04-23',
+                        totalCost: totalPrice,
+                        orderDate: formattedDate,
                         attachments: [],
                         senderLocation: {
                             latitude: '8765487654786',
@@ -246,87 +240,177 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                                 />
                                 <p>Is this a gift?</p>
                             </div>
-                            <h1 className={styles.dets}>Recipient details</h1>
-                            <div className={styles.names}>
-                                <div className={styles.inputDiv}>
-                                    <label>Recipient first name</label>
-                                    <input
-                                        onChange={(e) => {
-                                            setFieldValue(
-                                                'recipientFirstName',
-                                                e.target.value
-                                            );
-                                        }}
-                                        value={values?.recipientFirstName}
-                                        type="text"
-                                        placeholder="first name"
-                                    />
-                                </div>
-                                <div className={styles.inputDiv}>
-                                    <label>Recipient last name</label>
-                                    <input
-                                        onChange={(e) => {
-                                            setFieldValue(
-                                                'recipientLastName',
-                                                e.target.value
-                                            );
-                                        }}
-                                        value={values?.recipientLastName}
-                                        type="text"
-                                        placeholder="first name"
-                                    />
-                                </div>
-                            </div>
-                            <div className={styles.names}>
-                                <div className={styles.inputDiv}>
-                                    <label>
-                                        Recipient’s email address (optional)
-                                    </label>
-                                    <input
-                                        onChange={(e) => {
-                                            setFieldValue(
-                                                'recipientEmail',
-                                                e.target.value
-                                            );
-                                        }}
-                                        value={values?.recipientEmail}
-                                        type="text"
-                                        placeholder="first name"
-                                    />
-                                </div>
-                                <div className={styles.inputDiv}>
-                                    <label>Recipient phone number</label>
-                                    <input
-                                        onChange={(e) => {
-                                            setFieldValue(
-                                                'senderPhoneNumber',
-                                                e.target.value
-                                            );
-                                        }}
-                                        value={values?.senderPhoneNumber}
-                                        type="number"
-                                        placeholder="first name"
-                                    />
-                                </div>
-                            </div>
-                            <div className={styles.isGift}>
-                                <input
-                                    type="checkbox"
-                                    onChange={() =>
-                                        setInformEMail((prev) => !prev)
-                                    }
-                                />
-                                <p>Inform recipient via email</p>
-                            </div>
-                            <br />
-                            <hr />
-                            <br />
-                            <div className={styles.inputDivs}>
-                                <label>Your phone number</label>
-                                <input type="number" placeholder="first name" />
-                            </div>
-                            <br />
-                            <hr />
+                            {isGift ? (
+                                <>
+                                    <h1 className={styles.dets}>
+                                        Your details
+                                    </h1>
+                                    <div className={styles.names}>
+                                        <div className={styles.inputDiv}>
+                                            <label>Recipient first name</label>
+                                            <input
+                                                onChange={(e) => {
+                                                    setFieldValue(
+                                                        'firstName',
+                                                        e.target.value
+                                                    );
+                                                }}
+                                                value={values?.firstName}
+                                                type="text"
+                                                placeholder="first name"
+                                            />
+                                        </div>
+                                        <div className={styles.inputDiv}>
+                                            <label>Recipient last name</label>
+                                            <input
+                                                onChange={(e) => {
+                                                    setFieldValue(
+                                                        'lastName',
+                                                        e.target.value
+                                                    );
+                                                }}
+                                                value={values?.lastName}
+                                                type="text"
+                                                placeholder="first name"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className={styles.names}>
+                                        <div className={styles.inputDiv}>
+                                            <label>Your phone number</label>
+                                            <input
+                                                onChange={(e) => {
+                                                    setFieldValue(
+                                                        'yourPhoneNumber',
+                                                        e.target.value
+                                                    );
+                                                }}
+                                                value={values?.yourPhoneNumber}
+                                                type="number"
+                                                placeholder="first name"
+                                            />
+                                        </div>
+                                        <div className={styles.inputDiv}>
+                                            <label>
+                                                Your email address (optional)
+                                            </label>
+                                            <input
+                                                onChange={(e) => {
+                                                    setFieldValue(
+                                                        'yourEmail',
+                                                        e.target.value
+                                                    );
+                                                }}
+                                                value={values?.yourEmail}
+                                                type="text"
+                                                placeholder="first name"
+                                            />
+                                        </div>
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <h1 className={styles.dets}>
+                                        Recipient details
+                                    </h1>
+                                    <div className={styles.names}>
+                                        <div className={styles.inputDiv}>
+                                            <label>Recipient first name</label>
+                                            <input
+                                                onChange={(e) => {
+                                                    setFieldValue(
+                                                        'recipientFirstName',
+                                                        e.target.value
+                                                    );
+                                                }}
+                                                value={
+                                                    values?.recipientFirstName
+                                                }
+                                                type="text"
+                                                placeholder="first name"
+                                            />
+                                        </div>
+                                        <div className={styles.inputDiv}>
+                                            <label>Recipient last name</label>
+                                            <input
+                                                onChange={(e) => {
+                                                    setFieldValue(
+                                                        'recipientLastName',
+                                                        e.target.value
+                                                    );
+                                                }}
+                                                value={
+                                                    values?.recipientLastName
+                                                }
+                                                type="text"
+                                                placeholder="first name"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className={styles.names}>
+                                        <div className={styles.inputDiv}>
+                                            <label>
+                                                Recipient’s email address
+                                                (optional)
+                                            </label>
+                                            <input
+                                                onChange={(e) => {
+                                                    setFieldValue(
+                                                        'recipientEmail',
+                                                        e.target.value
+                                                    );
+                                                }}
+                                                value={values?.recipientEmail}
+                                                type="text"
+                                                placeholder="first name"
+                                            />
+                                        </div>
+                                        <div className={styles.inputDiv}>
+                                            <label>
+                                                Recipient phone number
+                                            </label>
+                                            <input
+                                                onChange={(e) => {
+                                                    setFieldValue(
+                                                        'senderPhoneNumber',
+                                                        e.target.value
+                                                    );
+                                                }}
+                                                value={
+                                                    values?.senderPhoneNumber
+                                                }
+                                                type="number"
+                                                placeholder="first name"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className={styles.isGift}>
+                                        <input
+                                            type="checkbox"
+                                            onChange={() =>
+                                                setInformEMail((prev) => !prev)
+                                            }
+                                        />
+                                        <p>Inform recipient via email</p>
+                                    </div>
+
+                                    <br />
+                                    <hr />
+                                    <br />
+                                    <div className={styles.inputDivs}>
+                                        <label>Your phone number</label>
+                                        <input
+                                            type="number"
+                                            placeholder="first name"
+                                        />
+                                    </div>
+                                    <br />
+                                    <hr />
+                                </>
+                            )}
                             <br />
                             <h1 className={styles.dets}>Recipient details</h1>
                             <div className={styles.inputDivs}>

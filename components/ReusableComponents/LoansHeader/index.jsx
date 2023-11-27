@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import styles from './styles.module.css';
-import StorePopup from '../StorePopup';
-import Close from '../Close';
-import AlertSvg from '../AlertSvg';
 import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import AlertSvg from '../AlertSvg';
+import Close from '../Close';
+import StorePopup from '../StorePopup';
+import styles from './styles.module.css';
 
 const LoansHeader = ({ state, status, action }) => {
     const router = useRouter();
