@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Cover from '../../components/ReusableComponents/Cover';
+import Loader from '../../components/ReusableComponents/Loader';
 import ProductTile from '../../components/ReusableComponents/ProductTile';
 import StoreNavbar from '../../components/layout/navbar/Navbar';
 import { useStorelinkGetStoreMutation } from '../../redux/api/authApi';
 import { setAffiliate } from '../../redux/slices/affiliateSlice';
+import { setAllInventories } from '../../redux/slices/allInventoriesSlice';
 import { setCart } from '../../redux/slices/cart';
 import { setCartItem } from '../../redux/slices/cartItems';
 import styles from './styles.module.css';
-import { setAllInventories } from '../../redux/slices/allInventoriesSlice';
 
 const Store = ({ children }) => {
     const dispatch = useDispatch();
@@ -95,7 +96,9 @@ const Store = ({ children }) => {
             </div> */}
             <div className={styles.showProd}>
                 <div className={styles.addCart}>
-                    {storelinkGetStoreSuccess ? (
+                    {storelinkGetStoreLoad ? (
+                        <Loader />
+                    ) : storelinkGetStoreSuccess ? (
                         storelinkGetStoreData?.data?.inventories?.data.map(
                             (item, index) => {
                                 return (
@@ -109,7 +112,7 @@ const Store = ({ children }) => {
                             }
                         )
                     ) : (
-                        <h1>ERROR RETRIEVING ITEMS</h1>
+                        <p>Error Fetching Data</p>
                     )}
                 </div>
             </div>
