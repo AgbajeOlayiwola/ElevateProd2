@@ -40,7 +40,7 @@ const Store = ({ children }) => {
             // You can also convert the ID to a number if needed
             const id = parseInt(idParam, 10);
 
-            // storelinkGetStore({ storeLink: idParam });
+            storelinkGetStore({ storeLink: idParam });
             // Perform additional actions based on the ID
             // For example, fetch data from an API using the ID
             // or update the component state based on the ID

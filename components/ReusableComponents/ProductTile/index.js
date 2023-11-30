@@ -12,23 +12,7 @@ const ProductTile = ({ data, call, addToCart }) => {
     const dispatch = useDispatch();
     const [cartData, setCartData] = useState([]);
     const [cartItems, setCartItems] = useState([]);
-    const [
-        addCart,
-        {
-            data: addCartData,
-            isLoading: addCartLoad,
-            isSuccess: addCartSuccess,
-            isError: addCartFalse,
-            error: addCartErr,
-            reset: addCartReset
-        }
-    ] = useAddCartMutation();
 
-    useEffect(() => {
-        if (addCartSuccess) {
-            call();
-        }
-    }, [addCartSuccess]);
     const router = useRouter();
     const viewProduct = (val) => {
         dispatch(setviewProductSliceData(val));
