@@ -14,6 +14,7 @@ import styles from './styles.module.css';
 const Store = ({ children }) => {
     const dispatch = useDispatch();
     const [count, setCount] = useState(0);
+    const [id, setID] = useState();
     const [
         storelinkGetStore,
         {
@@ -38,9 +39,8 @@ const Store = ({ children }) => {
             console.log('ID parameter found:', idParam);
 
             // You can also convert the ID to a number if needed
-            const id = parseInt(idParam, 10);
+            setID(parseInt(idParam, 10));
 
-            storelinkGetStore({ storeLink: idParam });
             // Perform additional actions based on the ID
             // For example, fetch data from an API using the ID
             // or update the component state based on the ID
@@ -48,6 +48,9 @@ const Store = ({ children }) => {
             console.log('No ID parameter found in the URL');
         }
     }, []);
+    useEffect(() => {
+        storelinkGetStore({ storeLink: id });
+    }, [id]);
 
     useEffect(() => {
         if (storelinkGetStoreSuccess) {
