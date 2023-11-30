@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Cover from '../../components/ReusableComponents/Cover';
 import Loader from '../../components/ReusableComponents/Loader';
-import ProductTile from '../../components/ReusableComponents/ProductTile';
 import StoreNavbar from '../../components/layout/navbar/Navbar';
 import { useStorelinkGetStoreMutation } from '../../redux/api/authApi';
 import { setAffiliate } from '../../redux/slices/affiliateSlice';
@@ -103,12 +102,13 @@ const Store = ({ children }) => {
                         storelinkGetStoreData?.data?.inventories?.data.map(
                             (item, index) => {
                                 return (
-                                    <ProductTile
-                                        key={index}
-                                        data={item}
-                                        addToCart={addToCart}
-                                        call={call}
-                                    />
+                                    // <ProductTile
+                                    //     key={index}
+                                    //     data={item}
+                                    //     addToCart={addToCart}
+                                    //     call={call}
+                                    // />
+                                    <p>Store</p>
                                 );
                             }
                         )
