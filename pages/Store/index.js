@@ -49,7 +49,6 @@ const Store = ({ children }) => {
         }
     }, []);
     useEffect(() => {
-        console.log(id);
         storelinkGetStore({ storeLink: id });
     }, [id]);
 
@@ -102,7 +101,7 @@ const Store = ({ children }) => {
                 <div className={styles.addCart}>
                     {storelinkGetStoreLoad ? (
                         <Loader />
-                    ) : storelinkGetStoreSuccess ? (
+                    ) : storelinkGetStoreFalse ? (
                         storelinkGetStoreData?.data?.inventories?.data.map(
                             (item, index) => {
                                 return (
