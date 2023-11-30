@@ -39,7 +39,7 @@ const Store = ({ children }) => {
             console.log('ID parameter found:', idParam);
 
             // You can also convert the ID to a number if needed
-            setID(parseInt(idParam, 10));
+            setID(idParam);
 
             // Perform additional actions based on the ID
             // For example, fetch data from an API using the ID
@@ -49,6 +49,7 @@ const Store = ({ children }) => {
         }
     }, []);
     useEffect(() => {
+        console.log(id);
         storelinkGetStore({ storeLink: id });
     }, [id]);
 
