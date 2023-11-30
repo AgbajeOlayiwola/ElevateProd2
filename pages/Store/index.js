@@ -54,13 +54,13 @@ const Store = ({ children }) => {
 
     useEffect(() => {
         if (storelinkGetStoreSuccess) {
+            dispatch(setAllInventories(storelinkGetStoreData?.data));
             storelinkGetStoreData?.data?.inventories?.data.forEach(
                 (item, index) => {
                     dispatch(setAffiliate(item?.affiliateCode));
                 }
             );
         }
-        dispatch(setAllInventories(storelinkGetStoreData?.data));
     }, [storelinkGetStoreSuccess]);
 
     const call = () => {
@@ -101,7 +101,7 @@ const Store = ({ children }) => {
                 <div className={styles.addCart}>
                     {storelinkGetStoreLoad ? (
                         <Loader />
-                    ) : storelinkGetStoreFalse ? (
+                    ) : storelinkGetStoreSuccess ? (
                         storelinkGetStoreData?.data?.inventories?.data.map(
                             (item, index) => {
                                 return (
