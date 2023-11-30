@@ -12,6 +12,12 @@
     grid-template-columns: 18% 18% 18% 18% 18%;
     grid-gap: 2%;
 }
+.empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+}
 .store {
     display: flex;
     justify-content: space-between;

@@ -4,7 +4,9 @@ const nextConfig = {
     productionBrowserSourceMaps: true,
     swcMinify: false,
     images: {
-        domains: ['res.cloudinary.com']
+        domains: ['res.cloudinary.com'],
+
+        domains: ['appdev.ecobank.com']
     },
     compiler: {
         removeConsole: true

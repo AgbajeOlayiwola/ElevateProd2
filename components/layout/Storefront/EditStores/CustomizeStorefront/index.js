@@ -440,7 +440,7 @@ const CustomizeStoreFront = ({
                                                                 }
                                                             ></div>
                                                             <img
-                                                                src={`data:image/png;base64,${name?.image}`}
+                                                                src={`${name?.image}`}
                                                                 width={10}
                                                                 height={50}
                                                             />
@@ -522,7 +522,7 @@ const CustomizeStoreFront = ({
                                                                 }
                                                             ></div>
                                                             <img
-                                                                src={`data:image/png;base64,${name?.image}`}
+                                                                src={`${name?.image}`}
                                                                 width={10}
                                                                 height={50}
                                                             />

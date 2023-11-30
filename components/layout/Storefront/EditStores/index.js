@@ -236,7 +236,7 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
                                     />
                                 ) : (
                                     <Image
-                                        src={`data:image/png;base64,${bannerImagee}`}
+                                        src={`${bannerImagee}`}
                                         width="100%"
                                         height="30px"
                                         layout="responsive"
@@ -273,7 +273,7 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
                                         </div>
                                     ) : (
                                         <Image
-                                            src={`data:image/png;base64,${logoImag}`}
+                                            src={`${logoImag}`}
                                             width={78}
                                             height={70}
                                             alt="logo"

@@ -1,15 +1,18 @@
+import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useGetAllSToreFrontMutation } from '../../../../redux/api/authApi';
 import { setAllStars } from '../../../../redux/slices/allStoresSlice';
+import AddNewSvg from '../../../ReusableComponents/AddNewSvg';
 import Loader from '../../../ReusableComponents/Loader';
 import StorTile from './StoreTile';
 import styles from './styles.module.css';
 
 const Stores = ({ nextStep, nextInaventory }) => {
     const dispatch = useDispatch();
+    const router = useRouter();
     const addInventory = () => {
         nextInaventory();
     };
@@ -36,7 +39,9 @@ const Stores = ({ nextStep, nextInaventory }) => {
     const checkSTore = () => {
         getAllSToreFront(null);
     };
-    const view = () => {};
+    const cretaeStore = () => {
+        router.push('/Admin/Storefront/CreateStore');
+    };
 
     return (
         <div className={styles.storeBody}>
@@ -64,8 +69,8 @@ const Stores = ({ nextStep, nextInaventory }) => {
             </div>
             {getAllSToreFrontLoad ? (
                 <Loader />
-            ) : getAllSToreFrontData?.data?.length < 0 ? (
-                <div className>
+            ) : getAllSToreFrontData?.data?.length <= 0 ? (
+                <div className={styles.empty}>
                     <div>
                         <AddNewSvg />
                     </div>

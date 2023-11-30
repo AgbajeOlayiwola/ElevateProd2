@@ -4,11 +4,19 @@
 }
 
 .profileLayoutHead {
-    width: 32%;
+    width: 37%;
     background-color: #ffffff;
     border-radius: 16px;
-    height: fit-content;
+    height: 80vh;
+    overflow: scroll;
+    height: -moz-fit-content;
+    /* height: fit-content; */
     padding-bottom: 47px;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.profileLayoutHead::-webkit-scrollbar {
+    display: none;
 }
 
 .profileLayoutBody {
