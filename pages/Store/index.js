@@ -6,6 +6,7 @@ import ProductTile from '../../components/ReusableComponents/ProductTile';
 import StoreNavbar from '../../components/layout/navbar/Navbar';
 import { useStorelinkGetStoreMutation } from '../../redux/api/authApi';
 import { setAffiliate } from '../../redux/slices/affiliateSlice';
+import { setAllInventories } from '../../redux/slices/allInventoriesSlice';
 import { setCart } from '../../redux/slices/cart';
 import { setCartItem } from '../../redux/slices/cartItems';
 import styles from './styles.module.css';
@@ -39,7 +40,7 @@ const Store = ({ children }) => {
             // You can also convert the ID to a number if needed
             const id = parseInt(idParam, 10);
 
-            // storelinkGetStore({ storeLink: idParam });
+            storelinkGetStore({ storeLink: idParam });
             // Perform additional actions based on the ID
             // For example, fetch data from an API using the ID
             // or update the component state based on the ID
@@ -56,7 +57,7 @@ const Store = ({ children }) => {
                 }
             );
         }
-        // dispatch(setAllInventories(storelinkGetStoreData?.data));
+        dispatch(setAllInventories(storelinkGetStoreData?.data));
     }, [storelinkGetStoreSuccess]);
 
     const call = () => {
