@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Cover from '../../components/ReusableComponents/Cover';
 import Loader from '../../components/ReusableComponents/Loader';
+import ProductTile from '../../components/ReusableComponents/ProductTile';
 import StoreNavbar from '../../components/layout/navbar/Navbar';
 import { useStorelinkGetStoreMutation } from '../../redux/api/authApi';
 import { setAffiliate } from '../../redux/slices/affiliateSlice';
-import { setAllInventories } from '../../redux/slices/allInventoriesSlice';
 import { setCart } from '../../redux/slices/cart';
 import { setCartItem } from '../../redux/slices/cartItems';
 import styles from './styles.module.css';
@@ -39,7 +39,7 @@ const Store = ({ children }) => {
             // You can also convert the ID to a number if needed
             const id = parseInt(idParam, 10);
 
-            storelinkGetStore({ storeLink: idParam });
+            // storelinkGetStore({ storeLink: idParam });
             // Perform additional actions based on the ID
             // For example, fetch data from an API using the ID
             // or update the component state based on the ID
@@ -52,12 +52,11 @@ const Store = ({ children }) => {
         if (storelinkGetStoreSuccess) {
             storelinkGetStoreData?.data?.inventories?.data.forEach(
                 (item, index) => {
-                    console.log(item.affiliateCode);
                     dispatch(setAffiliate(item?.affiliateCode));
                 }
             );
         }
-        dispatch(setAllInventories(storelinkGetStoreData?.data));
+        // dispatch(setAllInventories(storelinkGetStoreData?.data));
     }, [storelinkGetStoreSuccess]);
 
     const call = () => {
@@ -102,13 +101,12 @@ const Store = ({ children }) => {
                         storelinkGetStoreData?.data?.inventories?.data.map(
                             (item, index) => {
                                 return (
-                                    // <ProductTile
-                                    //     key={index}
-                                    //     data={item}
-                                    //     addToCart={addToCart}
-                                    //     call={call}
-                                    // />
-                                    <p>Store</p>
+                                    <ProductTile
+                                        key={index}
+                                        data={item}
+                                        addToCart={addToCart}
+                                        call={call}
+                                    />
                                 );
                             }
                         )
