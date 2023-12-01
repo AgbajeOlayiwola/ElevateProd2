@@ -306,6 +306,7 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                                                         e.target.value
                                                     );
                                                 }}
+                                                name="firstname"
                                                 value={values?.firstName}
                                                 type="text"
                                                 placeholder="first name"
@@ -320,6 +321,7 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                                                         e.target.value
                                                     );
                                                 }}
+                                                name="lastname"
                                                 value={values?.lastName}
                                                 type="text"
                                                 placeholder="first name"
@@ -347,6 +349,7 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                                                             className:
                                                                 'location-search-input'
                                                         })}
+                                                        value={rciepientAddress}
                                                     />
                                                     <div className="autocomplete-dropdown-container">
                                                         {loading && (
@@ -383,7 +386,13 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                                                                             }
                                                                         )}
                                                                     >
-                                                                        <span>
+                                                                        <span
+                                                                            onClick={() =>
+                                                                                setRecipientAddrss(
+                                                                                    suggestion.description
+                                                                                )
+                                                                            }
+                                                                        >
                                                                             {
                                                                                 suggestion.description
                                                                             }
@@ -407,6 +416,7 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                                                         e.target.value
                                                     );
                                                 }}
+                                                name="phone number"
                                                 value={values?.yourPhoneNumber}
                                                 type="number"
                                                 placeholder="first name"
@@ -423,6 +433,7 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                                                         e.target.value
                                                     );
                                                 }}
+                                                name="email"
                                                 value={values?.yourEmail}
                                                 type="text"
                                                 placeholder="first name"
@@ -557,6 +568,7 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                                                     className:
                                                         'location-search-input'
                                                 })}
+                                                value={snderAddress}
                                             />
                                             <div className="autocomplete-dropdown-container">
                                                 {loading && (
@@ -591,7 +603,13 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                                                                     }
                                                                 )}
                                                             >
-                                                                <span>
+                                                                <span
+                                                                    onClick={() =>
+                                                                        setSenderAddress(
+                                                                            suggestion.description
+                                                                        )
+                                                                    }
+                                                                >
                                                                     {
                                                                         suggestion.description
                                                                     }

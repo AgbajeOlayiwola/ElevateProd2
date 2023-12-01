@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { MdArrowBack } from 'react-icons/md';
 import { useSelector } from 'react-redux';
@@ -10,7 +11,8 @@ import styles from './styles.module.css';
 const Cart = () => {
     const [isEmpty, setIsEmpty] = useState(false);
     const { cartItem } = useSelector((store) => store);
-
+    const { allInventories } = useSelector((store) => store);
+    const router = useRouter();
     const [page, setPage] = useState(0);
     const [number, setNumber] = useState(1);
     const gatNumber = (val) => {
@@ -41,7 +43,16 @@ const Cart = () => {
             <div className={styles.cover}>
                 <p className={styles.backYourCart}>
                     {' '}
-                    <MdArrowBack /> Your cart
+                    <MdArrowBack
+                        onClick={() => {
+                            if (page === 0) {
+                                router.push(`/Store?id=${allInventories?.id}`);
+                            } else {
+                                setPage(0);
+                            }
+                        }}
+                    />{' '}
+                    Your cart
                 </p>
                 <p className={styles.yourCart}>Your cart</p>
                 {isEmpty ? (
