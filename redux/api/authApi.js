@@ -1260,6 +1260,7 @@ export const authApi = createApi({
 });
 
 export const {
+    useLogisticsGigStationsMutation,
     useLogisticsEnableProviderMutation,
     useLogisticsDisableProviderMutation,
     useDeleteByInventoryidMutation,

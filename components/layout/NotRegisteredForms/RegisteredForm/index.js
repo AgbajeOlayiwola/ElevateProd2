@@ -14,6 +14,7 @@ import {
     useRegisteredSetupMutation
 } from '../../../../redux/api/authApi';
 import { useSearchRCMutation } from '../../../../redux/api/cacApi';
+import Loader from '../../../ReusableComponents/Loader';
 import socialdata from '../../../ReusableComponents/Lotties/loading.json';
 const RegisteredForm = ({ formData, setFormData, nextStep }) => {
     const [activeBtn, setActiveBtn] = useState(true);
@@ -226,6 +227,11 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
                                     name="rcNumber"
                                     onChange={(e) => setCallRc(e.target.value)}
                                 />
+                                {searchRCLoad ? (
+                                    <Loader />
+                                ) : (
+                                    <p>{searchRCData?.data?.legal_name}</p>
+                                )}
 
                                 <InputWrapper>
                                     <Label>Enter your TIN</Label>

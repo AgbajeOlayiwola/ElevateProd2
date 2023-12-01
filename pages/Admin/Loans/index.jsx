@@ -1,28 +1,110 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import EmptyState from '../../../components/ReusableComponents/EmptyState';
 import LoansHeader from '../../../components/ReusableComponents/LoansHeader';
 import LoansMiddle from '../../../components/ReusableComponents/LoansMiddle';
 import LoansTable from '../../../components/ReusableComponents/LoansTable';
+import { useLoanScoringMutation } from '../../../redux/api/authApi';
 import styles from './styles.module.css';
 
 const Loans = () => {
     const [status, setStatus] = useState('request granted');
     const [state, setState] = useState(false);
+    const [sourceAccount, setSourceAccount] = useState();
+    const [acctNummber, setAcctNumber] = useState('');
+    const { allAccountInfo } = useSelector((store) => store);
+    const [
+        loanScoring,
+        {
+            data: loanScoringData,
+            isLoading: loanScoringLoad,
+            isSuccess: loanScoringSuccess,
+            isError: loanScoringFalse,
+            error: loanScoringErr,
+            reset: loanScoringReset
+        }
+    ] = useLoanScoringMutation();
+    useEffect(() => {
+        setAcctNumber(
+            allAccountInfo
+                .filter((account) => account?.isPrimaryAccount === 'Y') // Filter by primary flag
+                .map((account) => account.accountNo)
+                .filter(Boolean)
+        );
+        loanScoring({
+            account: acctNummber,
+
+            prod_token: 'ECO-ZE9EGP'
+        });
+    }, []);
 
     return (
         <div className={styles.loansContainer}>
             <h2>Loans</h2>
             <div className={styles.loansWrapper}>
-                <LoansHeader
+                <div className={styles.accountELigibility}>
+                    <div className={styles.narration}>
+                        <label>Source Account</label>
+                        <select
+                            name="ecoSourceAccount"
+                            onChange={(e) => {
+                                const selectedAccount = allAccountInfo.find(
+                                    (account) =>
+                                        account?.accountNo === e.target.value
+                                );
+                                if (selectedAccount) {
+                                    setSourceAccount(
+                                        selectedAccount?.accountNo
+                                    );
+                                    loanScoring({
+                                        account: selectedAccount?.accountNo,
+
+                                        prod_token: 'ECO-ZE9EGP'
+                                    });
+                                }
+                            }}
+                        >
+                            <option value="">Select Account To Use</option>
+                            {allAccountInfo
+                                .filter((account) => account.accountNo)
+                                .map((account) => {
+                                    return (
+                                        <>
+                                            <option
+                                                className={styles.accntP}
+                                                value={account?.accountNo}
+                                            >
+                                                <p>{account?.accountNo}</p>
+                                                {/* <p>
+                                                        {account?.availableBal.toLocaleString()}
+                                                    </p> */}
+                                            </option>
+                                        </>
+                                    );
+                                })}
+                        </select>
+                    </div>
+                    <LoansHeader
+                        state={state}
+                        status={status}
+                        action={() => {
+                            setStatus('request granted');
+                        }}
+                        loads={loanScoringLoad}
+                        data={loanScoringData}
+                    />
+                </div>
+                <LoansMiddle
                     state={state}
                     status={status}
-                    action={() => {
-                        setStatus('request granted');
-                    }}
+                    loads={loanScoringLoad}
+                    data={loanScoringData}
                 />
-                <LoansMiddle state={state} status={status} />
                 {state ? (
-                    <LoansTable />
+                    <LoansTable
+                        loads={loanScoringLoad}
+                        data={loanScoringData}
+                    />
                 ) : (
                     <div className={styles.loansBody}>
                         <EmptyState />

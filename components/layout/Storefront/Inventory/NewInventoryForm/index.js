@@ -3,6 +3,7 @@ import Step1 from '../AddNewInventory/Step1';
 import Step2 from '../AddNewInventory/Step2';
 import styles from './styles.module.css';
 import { IoArrowBack } from 'react-icons/io5';
+import Specifications from '../AddNewInventory/Specifications';
 
 const AddNewInventoryForm = ({ isEdit, backToInventories }) => {
     const [page, setPage] = useState(0);
@@ -16,6 +17,14 @@ const AddNewInventoryForm = ({ isEdit, backToInventories }) => {
                     />
                 );
             case 1:
+                return (
+                    <Specifications
+                        ifIsEdit={isEdit}
+                        saveANdContinue={() => setPage(page + 1)}
+                        backToInventories={backToInventories}
+                    />
+                );
+            case 2:
                 return (
                     <Step2
                         ifIsEdit={isEdit}
@@ -65,6 +74,25 @@ const AddNewInventoryForm = ({ isEdit, backToInventories }) => {
                                 }
                             >
                                 2
+                            </div>
+                            <p
+                                className={
+                                    page === 1 ? styles.active : styles.inactive
+                                }
+                            >
+                                Specifications
+                            </p>
+                        </div>
+                        <hr className={styles.hr} />
+                        <div onClick={() => setPage(2)}>
+                            <div
+                                className={
+                                    page === 2
+                                        ? styles.detBrand
+                                        : styles.detBrandInactive
+                                }
+                            >
+                                3
                             </div>
                             <p
                                 className={

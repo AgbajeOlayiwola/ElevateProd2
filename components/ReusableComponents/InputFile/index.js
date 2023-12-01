@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import EditSvg from '../editSvg';
 import styles from './styles.module.css';
 
 const InputFile = ({
@@ -47,6 +48,9 @@ const InputFile = ({
                         }
                     >
                         <img src={imageUrl} alt="Selected Image" />
+                        <div className={styles.editbtn}>
+                            <EditSvg />
+                        </div>
                         {loading && <p>Uploading...</p>}
                     </div>
                 ) : (

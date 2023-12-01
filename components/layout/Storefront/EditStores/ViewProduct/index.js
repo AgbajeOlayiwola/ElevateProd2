@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
@@ -14,6 +14,12 @@ const ViewProduct = ({ retrunBack, editInventory }) => {
     const { storeSlice } = useSelector((store) => store);
     const affiliate = localStorage.getItem('affiliateCode');
     const { viewInventory } = useSelector((store) => store);
+    const [quantity, setQuantity] = useState(
+        viewInventory?.specifications?.reduce(
+            (total, specification) => total + specification.quantity,
+            0
+        )
+    );
     const data = {
         size: ['XS', 'S', 'L', 'XL'],
         colors: ['Red', 'Blue', 'Brown', 'Purple', 'Magenta', 'Lilac'],
@@ -87,47 +93,31 @@ const ViewProduct = ({ retrunBack, editInventory }) => {
                             <p className={styles.name}>
                                 {viewInventory?.category?.name}
                             </p>
-                            <p className={styles.stock}>
-                                {viewInventory?.quantity} in Stock
-                            </p>
+                            <p className={styles.stock}>{quantity} in Stock</p>
                         </div>
                         <div className={styles.switcBtn}>
                             <div className={styles.btns}>
                                 <SwitchComponent />
                             </div>
-                            <button
-                                onClick={() => {
-                                    {
-                                        navigator.clipboard
-                                            .writeText(
-                                                `${storeSlice?.storeFrontLink}`
-                                            )
-                                            .then(() => {});
-                                    }
-                                    showToastMessage();
-                                }}
+                            <div
+                                className={styles.delete}
+                                onClick={() =>
+                                    deleteByInventoryid({
+                                        storeFrontId:
+                                            viewInventory?.storeFrontId,
+                                        inventoryId: viewInventory?.id
+                                    })
+                                }
                             >
-                                {' '}
-                                Share link
-                            </button>
+                                {deleteByInventoryidLoad ? (
+                                    <Loader />
+                                ) : (
+                                    'Delete Inventory'
+                                )}
+                            </div>
                         </div>
                     </div>
-                    <br />
-                    <div
-                        className={styles.delete}
-                        onClick={() =>
-                            deleteByInventoryid({
-                                storeFrontId: viewInventory?.storeFrontId,
-                                inventoryId: viewInventory?.id
-                            })
-                        }
-                    >
-                        {deleteByInventoryidLoad ? (
-                            <Loader />
-                        ) : (
-                            'Delete Inventory'
-                        )}
-                    </div>
+
                     <br />
                     <div className={styles.desc}>
                         <h1>Description</h1>
@@ -136,13 +126,27 @@ const ViewProduct = ({ retrunBack, editInventory }) => {
                     <div className={styles.desc}>
                         <h1>Available sizes</h1>
                         <div className={styles.avail}>
-                            {viewInventory?.size.map((item, index) => {
-                                return (
-                                    <div className={styles.size}>
-                                        <p>{item}</p>
-                                    </div>
-                                );
-                            })}
+                            {viewInventory?.specifications?.map(
+                                (item, index) => {
+                                    return (
+                                        <div>
+                                            {item?.sizes?.map(
+                                                (items, index) => {
+                                                    return (
+                                                        <div
+                                                            className={
+                                                                styles.size
+                                                            }
+                                                        >
+                                                            <p>{items?.size}</p>{' '}
+                                                        </div>
+                                                    );
+                                                }
+                                            )}
+                                        </div>
+                                    );
+                                }
+                            )}
                         </div>
                     </div>
                     <div className={styles.desc}>

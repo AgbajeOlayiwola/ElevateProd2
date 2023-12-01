@@ -2,7 +2,10 @@ import { Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { MdOutlineInfo } from 'react-icons/md';
 import { useSelector } from 'react-redux';
-import { useCreateOrderMutation } from '../../../../redux/api/authApi';
+import {
+    useCreateOrderMutation,
+    useLogisticsGigStationsMutation
+} from '../../../../redux/api/authApi';
 import { useGetStationsQuery } from '../../../../redux/api/logisticsApi';
 import Loader from '../../../ReusableComponents/Loader';
 import PayNow from '../PayNow';
@@ -10,15 +13,26 @@ import PaymmentSuccess from '../PaymmentSuccess';
 import styles from './styles.module.css';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
+
+import PlacesAutocomplete, {
+    geocodeByAddress,
+    getLatLng
+} from 'react-places-autocomplete';
+import { lgasArr } from '../../../ReusableComponents/Data';
 const Checkout = ({ num, items, upgradeOrder }) => {
     const { affiliate } = useSelector((store) => store);
     const { storeSlice } = useSelector((store) => store);
-    const [isGift, setIsGift] = useState(true);
+    const [isGift, setIsGift] = useState(false);
     const [totalPrice, setTotalPrice] = useState();
     const [informEmail, setInformEMail] = useState(false);
+    const [city, setCity] = useState('');
     const [page, setPage] = useState(0);
     const [isSucces, setIsSuccess] = useState(false);
     const [formattedDate, setFormattedDate] = useState('');
+    const [rciepientAddress, setRecipientAddrss] = useState('');
+    const [snderAddress, setSenderAddress] = useState('');
+    const [localGovernment, setLocalGovernment] = useState('');
+    const [lga, setLga] = useState('');
     const {
         data: getStationsData,
         isLoading,
@@ -53,7 +67,6 @@ const Checkout = ({ num, items, upgradeOrder }) => {
         // Set the initial formatted date
         setFormattedDate(formatDate());
     }, []);
-
     const multi = () => {
         switch (page) {
             case 0:
@@ -75,11 +88,26 @@ const Checkout = ({ num, items, upgradeOrder }) => {
             reset: createOrderReset
         }
     ] = useCreateOrderMutation();
+    const [
+        logisticsGigStations,
+        {
+            data: logisticsGigStationsData,
+            isLoading: logisticsGigStationsLoad,
+            isSuccess: logisticsGigStationsSuccess,
+            isError: logisticsGigStationsFalse,
+            error: logisticsGigStationsErr,
+            reset: logisticsGigStationsReset
+        }
+    ] = useLogisticsGigStationsMutation();
     useEffect(() => {
         if (createOrderSuccess) {
             setIsSuccess(true);
         }
     }, [createOrderSuccess]);
+
+    const callLogistics = () => {
+        logisticsGigStations({ stateName: 'Lagos' });
+    };
 
     const initialValues = {
         storeFrontId: storeSlice?.id,
@@ -95,6 +123,29 @@ const Checkout = ({ num, items, upgradeOrder }) => {
         lastName: '',
         yourEmail: '',
         yourPhoneNumber: ''
+    };
+
+    const [coordinate, setCoordinate] = useState({
+        lat: null,
+        lng: null
+    });
+    const [senderCoordinate, setSenderCoordinate] = useState({
+        lat: null,
+        lng: null
+    });
+    const handleSelect = async (value) => {
+        const result = await geocodeByAddress(value);
+        const ll = await getLatLng(result[0]);
+
+        setCoordinate(ll);
+        console.log(coordinate);
+    };
+    const handleSenderSelect = async (value) => {
+        const result = await geocodeByAddress(value);
+        const ll = await getLatLng(result[0]);
+
+        setSenderCoordinate(ll);
+        console.log(coordinate);
     };
     return (
         <div className={styles.Checkout}>
@@ -187,11 +238,11 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                 // validateOnChange={true}
                 onSubmit={(values, { setSubmitting }) => {
                     const data = {
-                        storeFrontId: '655c999081831964e4aa0d45',
+                        storeFrontId: storeSlice?.id,
                         cartId: '253456789765446',
                         cart: cartItem,
                         logisticId: '1',
-                        isGift: true,
+                        isGift: isGift,
                         recipientFirstName: values?.recipientFirstName,
                         recipientLastName: values?.recipientLastName,
                         recipientMsisdn: values?.senderPhoneNumber,
@@ -201,9 +252,9 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                         senderMsisdn: values?.yourPhoneNumber,
                         senderEmail: values?.yourEmail,
                         affiliateCode: affiliate,
-                        shippingAddress: 'No 5 Ehimen Ehon avenue, Ogudu',
-                        city: 'eti-osa',
-                        state: 'Lagos',
+                        shippingAddress: rciepientAddress,
+                        city: city,
+                        state: lga,
                         customerEmail: values?.yourEmail,
                         customerMsisdn: values?.yourPhoneNumber,
                         deliveryCost: 450,
@@ -211,12 +262,12 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                         orderDate: formattedDate,
                         attachments: [],
                         senderLocation: {
-                            latitude: '8765487654786',
-                            longitude: '98765434567987'
+                            latitude: senderCoordinate?.lat,
+                            longitude: senderCoordinate?.lng
                         },
                         receiverLocation: {
-                            latitude: '98765456789087',
-                            longitude: '09876545678345'
+                            latitude: coordinate?.lat,
+                            longitude: coordinate?.lng
                         }
                     };
 
@@ -275,7 +326,77 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                                             />
                                         </div>
                                     </div>
-
+                                    <div>
+                                        <label>Recipient Address</label>
+                                        <PlacesAutocomplete
+                                            value={rciepientAddress}
+                                            onChange={setRecipientAddrss}
+                                            onSelect={handleSelect}
+                                        >
+                                            {({
+                                                getInputProps,
+                                                suggestions,
+                                                getSuggestionItemProps,
+                                                loading
+                                            }) => (
+                                                <div>
+                                                    <input
+                                                        {...getInputProps({
+                                                            placeholder:
+                                                                'Search Places ...',
+                                                            className:
+                                                                'location-search-input'
+                                                        })}
+                                                    />
+                                                    <div className="autocomplete-dropdown-container">
+                                                        {loading && (
+                                                            <div>
+                                                                Loading...
+                                                            </div>
+                                                        )}
+                                                        {suggestions.map(
+                                                            (suggestion) => {
+                                                                const className =
+                                                                    suggestion.active
+                                                                        ? 'suggestion-item--active'
+                                                                        : 'suggestion-item';
+                                                                // inline style for demonstration purpose
+                                                                const style =
+                                                                    suggestion.active
+                                                                        ? {
+                                                                              backgroundColor:
+                                                                                  '#fafafa',
+                                                                              cursor: 'pointer'
+                                                                          }
+                                                                        : {
+                                                                              backgroundColor:
+                                                                                  '#ffffff',
+                                                                              cursor: 'pointer'
+                                                                          };
+                                                                return (
+                                                                    <div
+                                                                        {...getSuggestionItemProps(
+                                                                            suggestion,
+                                                                            {
+                                                                                className,
+                                                                                style
+                                                                            }
+                                                                        )}
+                                                                    >
+                                                                        <span>
+                                                                            {
+                                                                                suggestion.description
+                                                                            }
+                                                                        </span>
+                                                                    </div>
+                                                                );
+                                                            }
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </PlacesAutocomplete>
+                                    </div>
                                     <div className={styles.names}>
                                         <div className={styles.inputDiv}>
                                             <label>Your phone number</label>
@@ -417,30 +538,97 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                                 <label>
                                     Your address (Number and street name)
                                 </label>
-                                <input
-                                    type="text"
-                                    onChange={(e) =>
-                                        setFieldValue(
-                                            'shippingAddress',
-                                            e.target.value
-                                        )
-                                    }
-                                    value={values?.shippingAddress}
-                                    placeholder="first name"
-                                />
+                                <PlacesAutocomplete
+                                    value={snderAddress}
+                                    onChange={setSenderAddress}
+                                    onSelect={handleSenderSelect}
+                                >
+                                    {({
+                                        getInputProps,
+                                        suggestions,
+                                        getSuggestionItemProps,
+                                        loading
+                                    }) => (
+                                        <div>
+                                            <input
+                                                {...getInputProps({
+                                                    placeholder:
+                                                        'Search Places ...',
+                                                    className:
+                                                        'location-search-input'
+                                                })}
+                                            />
+                                            <div className="autocomplete-dropdown-container">
+                                                {loading && (
+                                                    <div>Loading...</div>
+                                                )}
+                                                {suggestions.map(
+                                                    (suggestion) => {
+                                                        const className =
+                                                            suggestion.active
+                                                                ? 'suggestion-item--active'
+                                                                : 'suggestion-item';
+                                                        // inline style for demonstration purpose
+                                                        const style =
+                                                            suggestion.active
+                                                                ? {
+                                                                      backgroundColor:
+                                                                          '#fafafa',
+                                                                      cursor: 'pointer'
+                                                                  }
+                                                                : {
+                                                                      backgroundColor:
+                                                                          '#ffffff',
+                                                                      cursor: 'pointer'
+                                                                  };
+                                                        return (
+                                                            <div
+                                                                {...getSuggestionItemProps(
+                                                                    suggestion,
+                                                                    {
+                                                                        className,
+                                                                        style
+                                                                    }
+                                                                )}
+                                                            >
+                                                                <span>
+                                                                    {
+                                                                        suggestion.description
+                                                                    }
+                                                                </span>
+                                                            </div>
+                                                        );
+                                                    }
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
+                                </PlacesAutocomplete>
                             </div>
                             <div className={styles.names}>
                                 <div className={styles.inputDiv}>
                                     <label>State/Province</label>
-                                    <select>
-                                        <option>Choose</option>
+                                    <select
+                                        onChange={(e) => setLga(e.target.value)}
+                                    >
+                                        {lgasArr.map((item, index) => {
+                                            return (
+                                                <option value={item.state}>
+                                                    {item.state}
+                                                </option>
+                                            );
+                                        })}
                                     </select>
                                 </div>
                                 <div className={styles.inputDiv}>
                                     <label>Local Government city/town</label>
-                                    <select>
-                                        <option>Choose</option>
-                                    </select>
+                                    <input
+                                        type="text"
+                                        value={city}
+                                        onChange={(e) =>
+                                            setCity(e.target.value)
+                                        }
+                                    />
                                 </div>
                             </div>
                             <br />
@@ -449,12 +637,13 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                             <div>
                                 <label>Delivery option</label>
                                 <select
-                                    onChange={(e) =>
-                                        setFieldValue(
-                                            'deliveryOption',
-                                            e.target.value
-                                        )
-                                    }
+                                    onChange={(e) => {
+                                        callLogistics(),
+                                            setFieldValue(
+                                                'deliveryOption',
+                                                e.target.value
+                                            );
+                                    }}
                                 >
                                     <option>Choose</option>
                                     {isLoading ? (
@@ -472,6 +661,26 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                                     )}
                                 </select>
                             </div>
+                            <br />
+                            {logisticsGigStationsLoad ? (
+                                <Loader />
+                            ) : logisticsGigStationsSuccess ? (
+                                <div>
+                                    <label>Delivery Locations</label>
+                                    <select>
+                                        <option>Choose</option>
+                                        {logisticsGigStationsData?.data?.map(
+                                            (item, index) => {
+                                                return (
+                                                    <option value={item?.id}>
+                                                        {item?.stationName}
+                                                    </option>
+                                                );
+                                            }
+                                        )}
+                                    </select>
+                                </div>
+                            ) : null}
                             <div className={styles.del}>
                                 <MdOutlineInfo />{' '}
                                 <p>Delivery time affects price range.</p>

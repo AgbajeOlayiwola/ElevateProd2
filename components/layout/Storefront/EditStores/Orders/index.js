@@ -27,7 +27,7 @@ const Orders = ({ actionText }) => {
             storeFrontId: storeSlice?.id,
             orderStatus: orderType,
             page: 1,
-            size: '5'
+            size: '100'
         };
         viewOrderByStatus(data);
     }, [orderType]);
@@ -43,7 +43,7 @@ const Orders = ({ actionText }) => {
                             : styles.closeOrders
                     }
                     onClick={() => {
-                        setOrderType('Open');
+                        setOrderType('open');
                     }}
                 >
                     <h4>Open Orders</h4>

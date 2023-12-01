@@ -97,7 +97,7 @@ const Inventory = ({ actionText, showProduct, nextPage, storeSlice }) => {
         getAllInventoriesById({
             storeFrontId: storeSlice?.id,
             page: 1,
-            size: 5
+            size: 100
         });
     }, []);
     const [searchQuery, setSearchQuery] = useState('');

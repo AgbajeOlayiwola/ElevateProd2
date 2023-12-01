@@ -10,6 +10,11 @@ import Loader from '../../../ReusableComponents/Loader';
 import PlusSvg from '../../../ReusableComponents/ReusableSvgComponents/PlusSvg';
 import CreateStoreSuccess from '../CreateStoreSuccess';
 import styles from './styles.module.css';
+
+import PlacesAutocomplete, {
+    geocodeByAddress,
+    getLatLng
+} from 'react-places-autocomplete';
 const CreateStore2 = ({ nextPage }) => {
     const [succes, setSucces] = useState(false);
     const [selectedLogisticsIds, setSelectedLogisticsIds] = useState([]);
@@ -129,8 +134,8 @@ const CreateStore2 = ({ nextPage }) => {
             stationId: selectedLogisticsIds,
             color: 'rogbiv',
             senderLocation: {
-                latitude: '23456754321475689',
-                longitude: '8976543098765987'
+                latitude: coordinaten?.lat,
+                longitude: coordinaten?.lng
             }
         };
         if (ifIsEdit) {
@@ -139,6 +144,17 @@ const CreateStore2 = ({ nextPage }) => {
             createeInventory(data);
         }
         // alert('Done');
+    };
+    const [coordinate, setCoordinate] = useState({
+        lat: null,
+        lng: null
+    });
+    const handleSelect = async (value) => {
+        const result = await geocodeByAddress(value);
+        const ll = await getLatLng(result[0]);
+
+        setCoordinate(ll);
+        console.log(coordinate);
     };
     return (
         <>
@@ -207,7 +223,7 @@ const CreateStore2 = ({ nextPage }) => {
                     </div>
                     <div className={styles.address}>
                         <label>Store addrss (Number and street name)</label>
-                        <input
+                        {/* <input
                             type="text"
                             className={styles.addressInput}
                             value={
@@ -216,8 +232,63 @@ const CreateStore2 = ({ nextPage }) => {
                                     : typeAddress
                             }
                             onChange={(e) => setTypeAddress(e.target.value)}
-                        />
+                        /> */}
                     </div>
+                    <PlacesAutocomplete
+                        value={typeAddress}
+                        onChange={setTypeAddress}
+                        onSelect={handleSelect}
+                    >
+                        {({
+                            getInputProps,
+                            suggestions,
+                            getSuggestionItemProps,
+                            loading
+                        }) => (
+                            <div>
+                                <input
+                                    {...getInputProps({
+                                        placeholder: 'Search Places ...',
+                                        className: 'location-search-input'
+                                    })}
+                                />
+                                <div className="autocomplete-dropdown-container">
+                                    {loading && <div>Loading...</div>}
+                                    {suggestions.map((suggestion) => {
+                                        const className = suggestion.active
+                                            ? 'suggestion-item--active'
+                                            : 'suggestion-item';
+                                        // inline style for demonstration purpose
+                                        const style = suggestion.active
+                                            ? {
+                                                  backgroundColor: '#fafafa',
+                                                  cursor: 'pointer'
+                                              }
+                                            : {
+                                                  backgroundColor: '#ffffff',
+                                                  cursor: 'pointer'
+                                              };
+                                        return (
+                                            <div
+                                                {...getSuggestionItemProps(
+                                                    suggestion,
+                                                    {
+                                                        className,
+                                                        style
+                                                    }
+                                                )}
+                                            >
+                                                <span>
+                                                    {suggestion.description}
+                                                </span>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        )}
+                    </PlacesAutocomplete>
+
                     <br />
                     <div className={styles.stateLocal}>
                         <div>

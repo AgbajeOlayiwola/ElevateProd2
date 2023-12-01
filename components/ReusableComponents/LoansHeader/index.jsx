@@ -8,6 +8,7 @@ import styles from './styles.module.css';
 const LoansHeader = ({ state, status, action }) => {
     const router = useRouter();
     const [popup, setPopup] = useState(false);
+
     return (
         <div className={styles.loansHeader}>
             <div>

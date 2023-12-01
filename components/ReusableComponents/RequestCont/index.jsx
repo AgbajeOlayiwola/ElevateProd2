@@ -1,9 +1,12 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { formatter } from '../../../utils/formatter/formatter';
 import styles from './styles.module.css';
 
 const RequestCont = ({ type, title, topup, nextPage }) => {
+    const { allAccountInfo } = useSelector((store) => store);
+    const [sourceAccount, setSourceAccount] = useState();
     const router = useRouter();
     const thumbRef = useRef();
     const sliderRef = useRef();
@@ -80,6 +83,40 @@ const RequestCont = ({ type, title, topup, nextPage }) => {
                     </div>
                     <p>1.5% Interest</p>
                 </div>
+                <div className={styles.narration}>
+                    <label>Source Account</label>
+                    <select
+                        name="ecoSourceAccount"
+                        onChange={(e) => {
+                            const selectedAccount = allAccountInfo.find(
+                                (account) =>
+                                    account?.accountNo === e.target.value
+                            );
+                            if (selectedAccount) {
+                                setSourceAccount(selectedAccount?.accountNo);
+                            }
+                        }}
+                    >
+                        <option value="">Select Account To Use</option>
+                        {allAccountInfo
+                            .filter((account) => account.accountNo)
+                            .map((account) => {
+                                return (
+                                    <>
+                                        <option
+                                            className={styles.accntP}
+                                            value={account?.accountNo}
+                                        >
+                                            <p>{account?.accountNo}</p>
+                                            {/* <p>
+                                                        {account?.availableBal.toLocaleString()}
+                                                    </p> */}
+                                        </option>
+                                    </>
+                                );
+                            })}
+                    </select>
+                </div>
                 <div className={styles.loanRequestBottom}>
                     <div className={styles.loanRequestAmount}>
                         {topup ? (
@@ -116,7 +153,7 @@ const RequestCont = ({ type, title, topup, nextPage }) => {
                             </div>
                         ) : null}
                     </div>
-                    {topup ? null : (
+                    {/* {topup ? null : (
                         <>
                             <div className={styles.loanRequestDetails}>
                                 <div className={styles.loanRequestGroup}>
@@ -146,7 +183,7 @@ const RequestCont = ({ type, title, topup, nextPage }) => {
                                 </div>
                             </div>
                         </>
-                    )}
+                    )} */}
                 </div>
                 <div className={styles.loanTerms}>
                     <input type="checkbox" />

@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 
 // const baseUrl = 'https://dpmfb-prod-app-srvr-01.azurewebsites.net/api/v1';
-const baseUrl = 'https://eidev.ecobank.com:7507/smeapp-service/';
+const baseUrl = 'https://eidev.ecobank.com:7505/smeapp-service/';
 if (typeof window !== 'undefined') {
     const affiliate = localStorage.getItem('affiliateCode');
 }
@@ -11,7 +11,7 @@ export const cacApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl,
         prepareHeaders: (headers, { getState }) => {
-            const token = getState().profile?.token;
+            const token = getState().token;
             headers.set('Accept', 'application/json');
             headers.set('Content-Type', 'application/json');
             headers.set(
@@ -28,7 +28,7 @@ export const cacApi = createApi({
         searchRC: builder.mutation({
             query: (body) => {
                 return {
-                    url: 'business-name',
+                    url: 'business-verification',
                     method: 'post',
                     body
                 };

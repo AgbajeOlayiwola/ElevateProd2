@@ -68,7 +68,7 @@ const Step1 = ({ saveANdContinue, ifIsEdit }) => {
         if (newSize.trim() !== '') {
             // Use the functional form of setNewSize to ensure the latest value
             setNewSize((currentNewSize) => {
-                const updatedSizes = [...sizes, currentNewSize];
+                const updatedSizes = [...sizes, { size: currentNewSize }];
                 setSizes(updatedSizes);
 
                 const updatedSpecs = [...specsData.specs];
@@ -158,7 +158,7 @@ const Step1 = ({ saveANdContinue, ifIsEdit }) => {
         updatedSpec.splice(index, 1);
         setSpecsData({ ...specsData, specs: updatedSpec });
     };
-
+    console.log(specsData);
     return (
         <>
             <Formik
@@ -173,8 +173,9 @@ const Step1 = ({ saveANdContinue, ifIsEdit }) => {
                         collectionID: values?.productCollection,
                         description: values?.productDescription,
                         lessQuantity: notify,
+                        price: values?.productPrice,
                         discountPercentage: values?.discount,
-                        specs: specsData?.specs
+                        color: colors
                     };
                     console.log(data);
                     dispatch(setAddInventory(data));
@@ -413,185 +414,73 @@ const Step1 = ({ saveANdContinue, ifIsEdit }) => {
                                     Add New Colour
                                 </p>
                             </div>
-                            {specsData?.specs?.map((spec, index) => {
-                                return (
-                                    <>
-                                        <div
-                                            className={styles.removeSpec}
-                                            onClick={() =>
-                                                handleRemoveSpec(index)
-                                            }
-                                        >
-                                            Remove Specification
-                                        </div>
-
-                                        <div className={styles.flexrs}>
+                            <div className={styles.flexrs}>
+                                <div className={styles.flexeersDivs}>
+                                    <div>
+                                        <label>Total quantity</label>
+                                        <div className={styles.flexeersDivs}>
                                             <div
-                                                className={styles.flexeersDivs}
-                                            >
-                                                <div
-                                                    className={styles.remove}
-                                                    onClick={() => {
-                                                        if (quantity > 0) {
-                                                            handleCountChange(
-                                                                index,
-                                                                quantity
-                                                            );
-
-                                                            setQuantity(
-                                                                quantity - 1
-                                                            );
-                                                        } else
-                                                            alert(
-                                                                'Numbher of items cant be less than 0'
-                                                            );
-                                                    }}
-                                                >
-                                                    -
-                                                </div>
-                                                <input
-                                                    type="text"
-                                                    placeholder="1"
-                                                    value={spec.quantity}
-                                                    className={styles.flexInput}
-                                                />
-                                                <div
-                                                    className={styles.add}
-                                                    onClick={() => {
+                                                className={styles.remove}
+                                                onClick={() => {
+                                                    if (quantity > 0) {
                                                         handleCountChange(
                                                             index,
                                                             quantity
-                                                        ),
-                                                            setQuantity(
-                                                                quantity + 1
-                                                            );
-                                                    }}
-                                                >
-                                                    +
-                                                </div>
-                                            </div>
-                                            <div className={styles.flexeersDiv}>
-                                                <label>Price of product</label>
-                                                <div
-                                                    className={
-                                                        styles.inputIneerDiv
-                                                    }
-                                                >
-                                                    <p>
-                                                        {getSymbolFromCurrency(
-                                                            countryToCurrency[
-                                                                affiliate?.substring(
-                                                                    1
-                                                                )
-                                                            ]
-                                                        )}
-                                                    </p>
+                                                        );
 
-                                                    <input
-                                                        onChange={(e) =>
-                                                            handleProductPriceChange(
-                                                                index,
-                                                                e.target.value
-                                                            )
-                                                        }
-                                                        value={spec?.price}
-                                                        type="text"
-                                                        placeholder="100000"
-                                                        className={
-                                                            styles.flexInput
-                                                        }
-                                                    />
-                                                </div>
+                                                        setQuantity(
+                                                            quantity - 1
+                                                        );
+                                                    } else
+                                                        alert(
+                                                            'Numbher of items cant be less than 0'
+                                                        );
+                                                }}
+                                            >
+                                                -
                                             </div>
-                                        </div>
-                                        <div>
-                                            <div className={styles.availa}>
-                                                {' '}
-                                                <p>
-                                                    Sizes available (optional)
-                                                </p>{' '}
-                                                <div className={styles.avail}>
-                                                    {ifIsEdit
-                                                        ? viewInventory?.size.map(
-                                                              (item, index) => {
-                                                                  return (
-                                                                      <div
-                                                                          className={
-                                                                              styles.size
-                                                                          }
-                                                                      >
-                                                                          <p>
-                                                                              {
-                                                                                  item
-                                                                              }
-                                                                          </p>
-                                                                      </div>
-                                                                  );
-                                                              }
-                                                          )
-                                                        : null}
-                                                    {spec.sizes.map(
-                                                        (item, index) => {
-                                                            return (
-                                                                <div
-                                                                    className={
-                                                                        styles.size
-                                                                    }
-                                                                >
-                                                                    <p>
-                                                                        {item}
-                                                                    </p>
-                                                                </div>
-                                                            );
-                                                        }
-                                                    )}
-                                                </div>
-                                            </div>{' '}
                                             <input
                                                 type="text"
-                                                placeholder="New Size"
-                                                value={newSize}
-                                                onChange={(e) =>
-                                                    setNewSize(e.target.value)
-                                                }
+                                                placeholder="1"
+                                                value={quantity}
+                                                className={styles.flexInput}
                                             />
-                                            <p
-                                                onClick={() =>
-                                                    handleAddSize(index)
-                                                }
-                                                className={styles.addNews}
+                                            <div
+                                                className={styles.add}
+                                                onClick={() => {
+                                                    setQuantity(quantity + 1);
+                                                }}
                                             >
-                                                Add New Size
-                                            </p>
+                                                +
+                                            </div>
                                         </div>
-                                        <select
+                                    </div>
+                                </div>
+                                <div className={styles.flexeersDiv}>
+                                    <label>Price of product</label>
+                                    <div className={styles.inputIneerDiv}>
+                                        <p>
+                                            {getSymbolFromCurrency(
+                                                countryToCurrency[
+                                                    affiliate?.substring(1)
+                                                ]
+                                            )}
+                                        </p>
+
+                                        <input
                                             onChange={(e) =>
-                                                handleSelColorChange(
-                                                    index,
+                                                setFieldValue(
+                                                    'productPrice',
                                                     e.target.value
                                                 )
                                             }
-                                        >
-                                            <option>Choose a color</option>
-                                            {colors.map((item, index) => {
-                                                return (
-                                                    <option value={item}>
-                                                        {' '}
-                                                        {item}
-                                                    </option>
-                                                );
-                                            })}
-                                        </select>
-                                    </>
-                                );
-                            })}
-                            <div>
-                                <p
-                                    className={styles.addNews}
-                                    onClick={handleAddSpecs}
-                                >
-                                    Add New Specification
-                                </p>
+                                            value={values?.productPrice}
+                                            type="text"
+                                            placeholder="100000"
+                                            className={styles.flexInput}
+                                        />
+                                    </div>
+                                </div>
                             </div>
                             <div className={styles.saveAnd}>
                                 <button>Save and continue</button>

@@ -1,3 +1,12 @@
+.inputFile {
+    position: relative;
+}
+.inputFile {
+    position: relative;
+}
+.editbtn {
+    position: absolute;
+}
 .inputFile label {
     border-radius: 5px;
     border: 1px dashed var(--primary-deep-blue, #102572);

@@ -90,6 +90,7 @@ function MyApp({ Component, pageProps, router }) {
     return (
         // <Layout>
         <>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhpfYGw58daK7Ci6HnizX2QkVBs7hfPpc&libraries=places"></script>
             <Providers>
                 <PersistGate loading={null} persistor={persistor}>
                     <DashLayout

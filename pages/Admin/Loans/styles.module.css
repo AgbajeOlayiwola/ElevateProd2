@@ -19,7 +19,12 @@
     flex-direction: column;
     gap: 32px;
 }
-
+.accountELigibility {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: space-between;
+}
 .loansBody {
     width: 100%;
     display: flex;

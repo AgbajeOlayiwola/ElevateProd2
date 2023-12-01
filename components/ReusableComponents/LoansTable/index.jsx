@@ -4,7 +4,7 @@ import SearchSvg from '../ReusableSvgComponents/SearchSvg';
 import { loansTransactions } from '../Data';
 import { formatter } from '../../../utils/formatter/formatter';
 
-const LoansTable = () => {
+const LoansTable = ({ loads, data }) => {
     return (
         <div className={styles.loansTable}>
             <div className={styles.loansAction}>

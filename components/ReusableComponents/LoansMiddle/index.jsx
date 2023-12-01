@@ -1,16 +1,13 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import {
-    useLoanBalanceMutation,
-    useLoanBookingMutation
-} from '../../../redux/api/authApi';
+import { useLoanBalanceMutation } from '../../../redux/api/authApi';
 import { formatter } from '../../../utils/formatter/formatter';
 import LoansSvg from '../LoansSvg';
 import styles from './styles.module.css';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
-const LoansMiddle = ({ status, state }) => {
+const LoansMiddle = ({ status, state, loads, data }) => {
     const affiliate = localStorage.getItem('affiliateCode');
     const [acctNummber, setAcctNumber] = useState('');
     const { allAccountInfo } = useSelector((store) => store);
@@ -25,17 +22,6 @@ const LoansMiddle = ({ status, state }) => {
             reset: loanBalanceReset
         }
     ] = useLoanBalanceMutation();
-    const [
-        loanBooking,
-        {
-            data: loanBookingData,
-            isLoading: loanBookingLoad,
-            isSuccess: loanBookingSuccess,
-            isError: loanBookingFalse,
-            error: loanBookingErr,
-            reset: loanBookingReset
-        }
-    ] = useLoanBookingMutation();
 
     useEffect(() => {
         setAcctNumber(
@@ -48,13 +34,14 @@ const LoansMiddle = ({ status, state }) => {
             account: acctNummber[0],
             prod_token: 'ECO-ZE9EGP'
         });
-        loanBooking({
-            accountNo: '6682009170',
-            affiliate: 'EKE',
-            prod_token: 'ECO-ZE9EGP',
-            amount: '800'
-        });
     }, []);
+    function formatDateString(originalDateString) {
+        const originalDate = new Date(originalDateString);
+
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+
+        return new Intl.DateTimeFormat('en-US', options).format(originalDate);
+    }
 
     const router = useRouter();
     return (
@@ -155,15 +142,30 @@ const LoansMiddle = ({ status, state }) => {
                         <>
                             <div>
                                 <p>Date Disbursed</p>
-                                <h2>N/A</h2>
+                                <h2>
+                                    {loanBalanceData?.data?.activity[0]?.date
+                                        ? formatDateString(
+                                              loanBalanceData?.data?.activity[0]
+                                                  ?.date
+                                          )
+                                        : 'N/A'}
+                                </h2>
                             </div>
                             <div>
                                 <p>Repayment period</p>
-                                <h2>N/A</h2>
+                                <h2>
+                                    {data?.data?.period
+                                        ? data?.data?.period
+                                        : 'N/A'}
+                                </h2>
                             </div>
                             <div>
                                 <p>Repayment amount</p>
-                                <h2>N/A</h2>
+                                <h2>
+                                    {data?.data?.limit
+                                        ? data?.data?.limit
+                                        : 'N/A'}
+                                </h2>
                             </div>
                             <div>
                                 <p>Next Repayment </p>

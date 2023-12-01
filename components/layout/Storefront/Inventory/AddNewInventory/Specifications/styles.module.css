@@ -1,0 +1,172 @@
+.flexrs {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+}
+.flexeersDiv {
+    width: 48%;
+}
+.firstStep {
+    display: flex;
+    gap: 30px;
+    flex-direction: column;
+}
+.colorsDiv {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+.flexInput {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: solid;
+    background: white;
+    font-size: 50px;
+    font-size: 24px;
+    border-radius: 0px;
+    padding-left: 40px;
+}
+.flexsInput {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: solid;
+    background: white;
+    font-size: 50px;
+    font-size: 24px;
+    border-radius: 0px;
+    padding-left: 40px;
+    width: 100%;
+}
+.inputIneerDiv {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.inputIneerDiv p {
+    position: absolute;
+    left: 10px;
+    z-index: 1;
+}
+.textArea {
+    display: flex;
+    flex-direction: column;
+}
+.textArea textarea {
+    display: flex;
+    padding: 16px;
+    align-items: flex-start;
+    gap: 8px;
+    align-self: stretch;
+    border-radius: 8px;
+    background: #f4f4f4;
+    border: none;
+}
+.size {
+    display: flex;
+    width: fit-content;
+    height: 48px;
+    padding: 12px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 12px;
+    border: 1px solid var(--primary-deep-blue, #102572);
+    background: #fff;
+}
+.size p {
+    color: #102572;
+    text-align: center;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+.avail {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+.addNews {
+    color: var(--primary-deep-blue, #102572);
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-decoration-line: underline;
+}
+.color {
+    color: var(--primary-deep-blue, #102572);
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    border-radius: 8px;
+    border: 0.5px solid var(--primary-deep-blue, #102572);
+    background: rgba(16, 37, 114, 0.05);
+    display: flex;
+    height: 28px;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+}
+.saveAnd {
+    display: flex;
+    justify-content: flex-end;
+}
+.saveAnd button {
+    width: fit-content;
+    padding: 18px;
+}
+.remove {
+    display: flex;
+    width: 60px;
+    height: 48px;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    font-size: 30px;
+    opacity: 0.4;
+    background: #102572;
+    color: white;
+}
+.add {
+    display: flex;
+    width: 60px;
+    height: 48px;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    font-size: 30px;
+    background: #102572;
+    color: white;
+}
+.flexeersDivs {
+    display: flex;
+    align-items: flex-end;
+}
+.flexeersDivs input {
+    width: 30%;
+}
+.firstStep {
+    width: 100%;
+}
+.removeSpec {
+    color: red;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
