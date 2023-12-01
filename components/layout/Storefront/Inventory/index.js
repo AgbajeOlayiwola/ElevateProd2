@@ -184,19 +184,13 @@ const Inventory = ({ actionText, showProduct, nextPage, storeSlice }) => {
                                                 }}
                                             >
                                                 <Image
+                                                    src={
+                                                        item?.image[0]
+                                                            ? item?.image[0]
+                                                            : '/Assets/Images/default-store.jpeg'
+                                                    }
                                                     height={188}
                                                     width={172}
-                                                    src={
-                                                        item?.image[0] &&
-                                                        (item?.image[0].startsWith(
-                                                            'data:image/png;base64,'
-                                                        ) ||
-                                                            item?.image[0].startsWith(
-                                                                'data:image/jpeg;base64,'
-                                                            ))
-                                                            ? item?.image[0]
-                                                            : `data:image/png;base64,${item?.image[0]}`
-                                                    }
                                                     alt="store front image"
                                                 />
                                                 <p className={styles.category}>

@@ -55,8 +55,9 @@ const ViewProduct = ({ retrunBack, editInventory }) => {
                         height={600}
                         width={632}
                         src={
-                            viewInventory?.image[0] ||
-                            '/Assets/Images/Rectangle45.png'
+                            viewInventory?.image[0]
+                                ? viewInventory?.image[0]
+                                : '/Assets/Images/default-store.jpeg'
                         }
                         alt="kjhgf"
                     />
@@ -67,7 +68,11 @@ const ViewProduct = ({ retrunBack, editInventory }) => {
                                     <Image
                                         height={37}
                                         width={43}
-                                        src={item}
+                                        src={
+                                            item
+                                                ? item
+                                                : '/Assets/Images/default-store.jpeg'
+                                        }
                                         alt="kjhgf"
                                     />
                                 );

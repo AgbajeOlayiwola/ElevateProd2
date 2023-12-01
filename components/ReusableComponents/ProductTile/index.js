@@ -22,7 +22,11 @@ const ProductTile = ({ data, call, addToCart }) => {
             <div style={{ cursor: 'pointer' }}>
                 <Image
                     onClick={() => viewProduct(data)}
-                    src={data?.image[0]}
+                    src={
+                        data?.image[0]
+                            ? data?.image[0]
+                            : '/Assets/Images/default-store.jpeg'
+                    }
                     width={307}
                     height={220}
                     alt="hi"

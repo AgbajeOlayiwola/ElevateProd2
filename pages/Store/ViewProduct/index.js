@@ -79,7 +79,11 @@ const ViewProduct = () => {
                         <Image
                             height={600}
                             width={632}
-                            src={viewProductSliceData?.image[0]}
+                            src={
+                                viewProductSliceData?.image[0]
+                                    ? viewProductSliceData?.image[0]
+                                    : '/Assets/Images/default-store.jpeg'
+                            }
                             alt="kjhgf"
                         />
                         <div className={styles.sample}>
@@ -91,7 +95,11 @@ const ViewProduct = () => {
                                                 <Image
                                                     height={37}
                                                     width={43}
-                                                    src={item}
+                                                    src={
+                                                        item
+                                                            ? item
+                                                            : '/Assets/Images/default-store.jpeg'
+                                                    }
                                                     alt="kjhgf"
                                                 />
                                             </>

@@ -522,7 +522,11 @@ const CustomizeStoreFront = ({
                                                                 }
                                                             ></div>
                                                             <img
-                                                                src={`${name?.image}`}
+                                                                src={
+                                                                    name?.image
+                                                                        ? name?.image
+                                                                        : '/Assets/Images/default-store.jpeg'
+                                                                }
                                                                 width={10}
                                                                 height={50}
                                                             />

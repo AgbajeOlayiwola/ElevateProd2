@@ -149,3 +149,10 @@
 .firstStep {
     width: 100%;
 }
+.removeSpec {
+    color: red;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}

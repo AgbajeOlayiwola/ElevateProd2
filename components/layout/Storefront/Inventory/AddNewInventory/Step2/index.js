@@ -83,7 +83,7 @@ const Step2 = ({ ifIsEdit, backToInventories }) => {
         };
         const updateDta = {
             ...addInventory,
-            image: imageArray,
+            // image: imageArray,
             logisticsId: selectedLogisticsIds,
             inventoryId: viewInventory?.id
         };
