@@ -48,7 +48,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [gender, setGender] = useState('');
-    const [dateOfBirh, setDateOfBirh] = useState('');
+    const [dateOfBirh, setDateOfBirh] = useState();
 
     //
     const [
@@ -144,6 +144,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         if (getProfileSuccess) {
             setProfile(getProfileData);
             console.log(getProfileData);
+            setDateOfBirh(getProfileData?.user?.dateOfBirth);
         }
     }, [getProfileSuccess]);
 
@@ -423,6 +424,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                     <select
                                         name=""
                                         id=""
+                                        value={getProfileData?.user?.gender}
                                         onChange={(e) =>
                                             setGender(e.target.value)
                                         }
@@ -461,7 +463,8 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                             value={
                                                 bName
                                                     ? bName
-                                                    : `${getProfileData?.user?.firstName} ${getProfileData?.user?.lastName}`
+                                                    : getProfileData?.user
+                                                          ?.firstName !== null
                                                     ? `${getProfileData?.user?.firstName} ${getProfileData?.user?.lastName}`
                                                     : `${lastName} ${firstName}`
                                             }

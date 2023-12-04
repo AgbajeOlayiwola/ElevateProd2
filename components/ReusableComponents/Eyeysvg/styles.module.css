@@ -18,7 +18,7 @@
 }
 .otpInps input {
     padding: 5px !important;
-    width: 21px !important;
+    width: 33px !important;
 }
 .transactPin {
     color: black;
@@ -38,6 +38,8 @@
     bottom: 24px;
     height: 136px;
     top: -58px;
+    z-index: 12345;
+    height: 170px;
 }
 .relativity {
     position: relative;

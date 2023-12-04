@@ -173,22 +173,22 @@ const Dashboard = () => {
                 );
             case 1:
                 return (
-                    <AddExistinAccount
-                        id={getIdData?.data?.customerId}
-                        close={() => {
-                            setAddAcct((prev) => !prev),
-                                showToastAddSuccessMessage();
-                        }}
-                    />
-                );
-            case 2:
-                return (
                     <StepThreeCompleteProfile1
                         type={
                             profile?.user?.customerCategory === 'INDIVIDUAL'
                                 ? true
                                 : false
                         }
+                    />
+                );
+            case 2:
+                return (
+                    <AddExistinAccount
+                        id={getIdData?.data?.customerId}
+                        close={() => {
+                            setAddAcct((prev) => !prev),
+                                showToastAddSuccessMessage();
+                        }}
                     />
                 );
         }
@@ -232,6 +232,17 @@ const Dashboard = () => {
             });
         }
     }, [getAcctBalsSuccess]);
+    const showToastCustomerErroMessage = () => {
+        toast.error('Error retrieving customer ID', {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
+    useEffect(() => {
+        if (getIdErr) {
+            showToastCustomerErroMessage();
+        }
+    }, [getIdErr]);
+
     const socialOptions = {
         loop: true,
         autoplay: true,
@@ -831,11 +842,9 @@ const Dashboard = () => {
                                                             ? '0.00'
                                                             : parseFloat(
                                                                   balance
-                                                              )
-                                                                  .toFixed(2)
-                                                                  .toLocaleString(
-                                                                      'en-US'
-                                                                  )}
+                                                              ).toLocaleString(
+                                                                  'en-US'
+                                                              )}
                                                     </h1>
                                                 )}
                                                 <Visbility
@@ -1103,7 +1112,7 @@ const Dashboard = () => {
                                 failed={failed}
                                 pending={pending}
                             />
-                            {transactionHistoryData?.data.length == 0 ? (
+                            {transactionHistoryData?.data?.length == 0 ? (
                                 <div className={styles.transactionBody}>
                                     <div className={styles.transactionSvg}>
                                         <TransactionSvg />

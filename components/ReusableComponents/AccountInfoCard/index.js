@@ -84,9 +84,9 @@ const AccountsInfoCard = ({ userProfileData }) => {
                                         {currency}{' '}
                                         {balance === '0.0'
                                             ? '0.00'
-                                            : parseFloat(balance)
-                                                  .toFixed(2)
-                                                  .toLocaleString('en-US')}
+                                            : parseFloat(
+                                                  balance
+                                              ).toLocaleString('en-US')}
                                     </h1>
                                     <Visbility color="green" typeSet={types} />
                                 </div>

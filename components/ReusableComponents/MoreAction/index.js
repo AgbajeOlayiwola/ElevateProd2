@@ -37,6 +37,7 @@ const MoreAction = ({
     isaccountId,
     dateTrans
 }) => {
+    const { profile } = useSelector((store) => store);
     const affiliate = localStorage.getItem('affiliateCode');
     const { allAccountInfo } = useSelector((store) => store);
     const [dispute, setDispute] = useState('');
@@ -87,7 +88,7 @@ const MoreAction = ({
             caseSubCategory: 'TransferError',
             caseType: 'Complaint',
             // caseType: type,
-            description: `${type} from USER about ${selectedDisputeCategory} regarding ${selectedDisputeType}. With Transaction Id:  and Transaction Ref: . Amount involved: ${transactionAmount}. Futher Insight From User:${descriptions}`
+            description: `${type} from ${profile?.user?.preferredName} about ${transactionTitle}. Amount involved: ${transactionAmount}. Futher Insight From User:${descriptions}`
         };
         logDisputeCase(data);
     };
@@ -117,6 +118,7 @@ const MoreAction = ({
 
     let newDate = dates?.split('T');
     let newTranDate = dateTrans?.split('T');
+    console.log(profile);
     return (
         <>
             <ToastContainer />

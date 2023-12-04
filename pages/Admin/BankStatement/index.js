@@ -330,28 +330,36 @@ const BankStatments = () => {
                 </div>
                 <div>
                     <p>Total Inflow</p>
-                    <h2>
-                        {' '}
-                        {getSymbolFromCurrency(
-                            countryToCurrency[`${affiliate?.substring(1)}`]
-                        )}
-                        {parseFloat(inflow)
-                            .toFixed(2)
-                            .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                    </h2>
+                    {accountMiniStatementLoad ? (
+                        <p>Loading...</p>
+                    ) : (
+                        <h2>
+                            {' '}
+                            {getSymbolFromCurrency(
+                                countryToCurrency[`${affiliate?.substring(1)}`]
+                            )}
+                            {parseFloat(inflow)
+                                .toFixed(2)
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                        </h2>
+                    )}
                 </div>
 
                 <div>
                     <p>Total Outflow</p>
-                    <h2>
-                        {' '}
-                        {getSymbolFromCurrency(
-                            countryToCurrency[`${affiliate?.substring(1)}`]
-                        )}
-                        {parseFloat(outflow)
-                            .toFixed(2)
-                            .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                    </h2>
+                    {accountMiniStatementLoad ? (
+                        <p>Loading...</p>
+                    ) : (
+                        <h2>
+                            {' '}
+                            {getSymbolFromCurrency(
+                                countryToCurrency[`${affiliate?.substring(1)}`]
+                            )}
+                            {parseFloat(outflow)
+                                .toFixed(2)
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                        </h2>
+                    )}
                 </div>
             </div>
             <div className={styles.table}>

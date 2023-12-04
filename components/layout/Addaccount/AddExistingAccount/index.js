@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useVerifyAccountMutation } from '../../../../redux/api/authApi';
 import ButtonComp from '../../../ReusableComponents/Button';
 import LivenessForAccount from './Liveness';
-
 const AddExistinAccount = ({ id, close }) => {
     const [page, setPage] = useState(0);
     const [accountNumber, setAccountNumber] = useState('');
@@ -24,6 +25,17 @@ const AddExistinAccount = ({ id, close }) => {
             accountNumber: accountNumber
         });
     };
+    const showToastErrorMessage = () => {
+        toast.error(verifyAccountErr?.data?.message, {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
+    useEffect(() => {
+        if (verifyAccountErr) {
+            showToastErrorMessage();
+        }
+    }, [verifyAccountErr]);
+
     useEffect(() => {
         if (verifyAccountSuccess) {
             setPage(1);
@@ -35,15 +47,17 @@ const AddExistinAccount = ({ id, close }) => {
             case 0:
                 return (
                     <div>
+                        <ToastContainer />
                         <lable>Input account number</lable>
                         <input
                             type="text"
+                            style={{ marginTop: '20px' }}
                             onChange={(e) => setAccountNumber(e.target.value)}
                         />
                         <br />
                         <br />
                         <ButtonComp
-                            text="Create Transaction Pin"
+                            text="Verify Account Number"
                             onClick={verify}
                             type="submit"
                             disabled={true}

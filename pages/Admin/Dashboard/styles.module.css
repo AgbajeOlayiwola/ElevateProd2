@@ -25,6 +25,9 @@
     height: fit-content;
     max-height: 88vh;
     overflow: scroll;
+    border-radius: 20px;
+    width: 50%;
+    max-width: 80%;
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none;
 }
