@@ -212,11 +212,15 @@ const Profile = () => {
         //     icon: <ManageLimitSvg />,
         //     color: '#7A7978'
         // },
-        {
-            text: 'Bank ID Number',
-            icon: <BvnSvg />,
-            color: '#7A7978'
-        },
+        affiliate !== 'ECI' || affiliate !== 'EZW'
+            ? {
+                  text: 'Bank ID Number',
+                  icon: <BvnSvg />,
+                  color: '#7A7978'
+              }
+            : null,
+
+        ,
         {
             text: 'Relationship managers Name and Contact Details',
             icon: <RmSvg />,
@@ -364,6 +368,14 @@ const Profile = () => {
         toast.error('Error Vrifying Transaction Pin', {
             position: toast.POSITION.TOP_RIGHT
         });
+    };
+    const showReferalCodeCopyMessage = () => {
+        toast.success('Referal Code Coppied', {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
+    const refferalCoppied = () => {
+        showReferalCodeCopyMessage();
     };
     useEffect(() => {
         if (verifyTransactionPinErr) {
@@ -744,60 +756,80 @@ const Profile = () => {
                 switch (count) {
                     case 0:
                         return (
-                            <form onSubmit={handleViewBvn}>
-                                <h2 className={styles.title}>
-                                    View my Bank ID Number
-                                </h2>
-                                <div className={styles.bvn}>
-                                    <p>
-                                        Kindly enter your details below to view
-                                        the BVN tied to your Ellevate account.
-                                    </p>
-                                </div>
-                                {error ? (
-                                    <p className={styles.error}>{error}</p>
-                                ) : null}
-                                <div className={styles.formGroup}>
-                                    <p>Enter Transaction Pin to view bvn</p>
-                                    <div className={styles.trans}>
-                                        <OtpInput
-                                            onOtpChange={handleOtpChange}
-                                            otpfields={6}
-                                        />
-                                    </div>
-                                </div>
-                                {verifyTransactionPinSuccess ? (
-                                    <div className={styles.formGroup}>
-                                        <label>Your BVN</label>
-                                        <div className={styles.divs}>
-                                            <input
-                                                value={profile?.user?.idNumber}
-                                                type={
-                                                    outTyped
-                                                        ? 'password'
-                                                        : 'text'
-                                                }
-                                            />
-                                            <Visbility
-                                                typeSet={typed}
-                                                input="input"
-                                            />
+                            <>
+                                {affiliate !== 'ECI' || affiliate !== 'EZW' ? (
+                                    <form onSubmit={handleViewBvn}>
+                                        <h2 className={styles.title}>
+                                            View my Bank ID Number
+                                        </h2>
+                                        <div className={styles.bvn}>
+                                            <p>
+                                                Kindly enter your details below
+                                                to view the{' '}
+                                                {affiliate === 'ENG'
+                                                    ? 'BVN'
+                                                    : 'id Number'}{' '}
+                                                tied to your SMEApp account.
+                                            </p>
                                         </div>
-                                    </div>
+                                        {error ? (
+                                            <p className={styles.error}>
+                                                {error}
+                                            </p>
+                                        ) : null}
+                                        <div className={styles.formGroup}>
+                                            <p>
+                                                Enter Transaction Pin to view{' '}
+                                                {affiliate === 'ENG'
+                                                    ? 'BVN'
+                                                    : 'id Number'}
+                                            </p>
+                                            <div className={styles.trans}>
+                                                <OtpInput
+                                                    onOtpChange={
+                                                        handleOtpChange
+                                                    }
+                                                    otpfields={6}
+                                                />
+                                            </div>
+                                        </div>
+                                        {verifyTransactionPinSuccess ? (
+                                            <div className={styles.formGroup}>
+                                                <label>Your BVN</label>
+                                                <div className={styles.divs}>
+                                                    <input
+                                                        value={
+                                                            profile?.user
+                                                                ?.idNumber
+                                                        }
+                                                        type={
+                                                            outTyped
+                                                                ? 'password'
+                                                                : 'text'
+                                                        }
+                                                    />
+                                                    <Visbility
+                                                        typeSet={typed}
+                                                        input="input"
+                                                    />
+                                                </div>
+                                            </div>
+                                        ) : null}
+                                        <div className={styles.bvnButton}>
+                                            {verifyTransactionPinLoad ? (
+                                                <Loader />
+                                            ) : (
+                                                <button type="submit">
+                                                    View my{' '}
+                                                    {affiliate === 'ENG'
+                                                        ? 'BVN'
+                                                        : 'iD Number'}
+                                                </button>
+                                            )}
+                                        </div>
+                                    </form>
                                 ) : null}
-                                <div className={styles.bvnButton}>
-                                    {verifyTransactionPinLoad ? (
-                                        <Loader />
-                                    ) : (
-                                        <button type="submit">
-                                            View my{' '}
-                                            {affiliate === 'ENG'
-                                                ? 'BVN'
-                                                : 'iD Number'}
-                                        </button>
-                                    )}
-                                </div>
-                            </form>
+                            </>
                         );
                 }
             case 'Relationship managers Name and Contact Details':
@@ -871,7 +903,7 @@ const Profile = () => {
                                                 profile?.user?.referralCode
                                             )
                                             .then(() => {
-                                                alert('Copied');
+                                                refferalCoppied();
                                             });
                                     }
                                 }}
@@ -1784,7 +1816,7 @@ const Profile = () => {
                                                             ?.referralCode
                                                     )
                                                     .then(() => {
-                                                        alert('Copied');
+                                                        refferalCoppied();
                                                     });
                                             }
                                         }}

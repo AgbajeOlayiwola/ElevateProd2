@@ -3,22 +3,16 @@ import styles from './styles.module.css';
 const SelectOption = ({ moveToAddNew, moveToAddExisting }) => {
     return (
         <div className={styles.selectDiv}>
-            <div className={styles.add}>
-                <input
-                    className={styles.check}
-                    type="checkbox"
-                    onClick={() => moveToAddNew()}
-                />
-                <p>Add a New Ecobank Account</p>
-            </div>
-            <div className={styles.add}>
-                <input
-                    className={styles.check}
-                    type="checkbox"
-                    onClick={() => moveToAddExisting()}
-                />
-                <p>Add an Existing Ecobank Account</p>
-            </div>
+            <button className={styles.check} onClick={() => moveToAddNew()}>
+                Add a New Ecobank Account
+            </button>
+
+            <button
+                className={styles.check}
+                onClick={() => moveToAddExisting()}
+            >
+                Add an Existing Ecobank Account
+            </button>
         </div>
     );
 };

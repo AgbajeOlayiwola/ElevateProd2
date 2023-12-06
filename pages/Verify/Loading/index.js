@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ButtonComp } from '../../../components';
+import Loader from '../../../components/ReusableComponents/Loader';
 import VerifyEmailSvg from '../../../components/ReusableComponents/VerifyEmailSvg';
 import {
     useResendEmailOtpMutation,
@@ -149,17 +150,22 @@ const Loading = () => {
                         <div className={styles.resendEmail}>
                             <p>
                                 Didint get mail
-                                <span
-                                    onClick={() => {
-                                        const emailData = {
-                                            email: localStorage.getItem('email')
-                                        };
-                                        resendEmailOtp(emailData);
-                                    }}
-                                >
-                                    {' '}
-                                    tap to resend Email
-                                </span>
+                                {resendEmailOtpLoad ? (
+                                    <Loader />
+                                ) : (
+                                    <span
+                                        onClick={() => {
+                                            const emailData = {
+                                                email: localStorage.getItem(
+                                                    'email'
+                                                )
+                                            };
+                                            resendEmailOtp(emailData);
+                                        }}
+                                    >
+                                        tap to resend Email
+                                    </span>
+                                )}
                             </p>
                         </div>
                         <div>

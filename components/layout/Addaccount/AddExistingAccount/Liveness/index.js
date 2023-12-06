@@ -109,8 +109,24 @@ const LivenessForAccount = ({
             });
         }
     }, [facematchithAccountnumberSuccess]);
+    const showToastErrorMessage = () => {
+        toast.error(addAccountErr?.data?.message, {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
+    useEffect(() => {
+        if (addAccountErr) {
+            showToastErrorMessage();
+        }
+    }, [addAccountErr]);
+    const showToastSuccessMessage = () => {
+        toast.success('Account Added Successfuly', {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
     useEffect(() => {
         if (addAccountSuccess) {
+            showToastSuccessMessage();
             close();
         }
     }, [addAccountSuccess]);

@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
     useCreateeInventoryMutation,
     useUpdateInventoryMutation
@@ -102,6 +104,17 @@ const Step2 = ({ ifIsEdit, backToInventories }) => {
             backToInventories();
         }
     }, [createeInventorySuccess, updateInventorySuccess]);
+    const showErrorToastMessage = () => {
+        toast.error(createeInventoryErr?.data?.message, {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+    };
+    useEffect(() => {
+        if (createeInventoryErr) {
+            showErrorToastMessage();
+        }
+    }, [createeInventoryErr]);
 
     const [image1, setImage1] = useState();
     const [image2, setImage2] = useState();
@@ -124,7 +137,8 @@ const Step2 = ({ ifIsEdit, backToInventories }) => {
     };
     return (
         <div className={styles.second}>
-            {assignLog ? (
+            <ToastContainer />
+            {/* {assignLog ? (
                 <div className={styles.assignFe}>
                     <div className={styles.assign}>
                         <p>Assign logistics</p>
@@ -165,7 +179,7 @@ const Step2 = ({ ifIsEdit, backToInventories }) => {
                         })
                     )}
                 </div>
-            )}
+            )} */}
             <br />
             <div className={styles.images}>
                 <InputFile

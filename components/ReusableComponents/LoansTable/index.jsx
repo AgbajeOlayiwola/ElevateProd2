@@ -1,10 +1,12 @@
 import React from 'react';
-import styles from './styles.module.css';
+import { useDispatch } from 'react-redux';
+import { setLoanRepayment } from '../../../redux/slices/loanRepayment';
 import SearchSvg from '../ReusableSvgComponents/SearchSvg';
-import { loansTransactions } from '../Data';
-import { formatter } from '../../../utils/formatter/formatter';
+import styles from './styles.module.css';
 
-const LoansTable = ({ loads, data }) => {
+const LoansTable = ({ loads, data, repayloan }) => {
+    const dispatch = useDispatch();
+
     return (
         <div className={styles.loansTable}>
             <div className={styles.loansAction}>
@@ -20,19 +22,19 @@ const LoansTable = ({ loads, data }) => {
             <div className={styles.loansHeader}>
                 <p>S/N</p>
                 <p>DATE</p>
-                <p>TITLE</p>
+                {/* <p>TITLE</p> */}
                 <p>AMOUNT</p>
-                <p>TRANSACTION TYPE</p>
+                <p>LOAN\ INTREST</p>
                 <p>TRANSACTION ID</p>
                 <p>STATUS</p>
             </div>
-            {loansTransactions?.map((items, index) => {
+            {data?.map((items, index) => {
                 return (
                     <div className={styles.loansSingle} key={index}>
                         <p>{index + 1}</p>
-                        <p>{items.date}</p>
-                        <p>{items.title}</p>
-                        <p
+                        <p>{items.dateCreated}</p>
+                        <p>{items.loanAmount}</p>
+                        {/* <p
                             className={
                                 items.action === 'debit'
                                     ? styles.debit
@@ -41,9 +43,9 @@ const LoansTable = ({ loads, data }) => {
                         >
                             {items.action === 'debit' ? '-' : '+'}
                             {formatter.format(items.amount)}
-                        </p>
-                        <p>{items.type}</p>
-                        <p>{items.id}</p>
+                        </p> */}
+                        <p>{items.interest === null ? 0 : items.interest}%</p>
+
                         <div
                             className={
                                 items.status === 'Pending'
@@ -56,6 +58,14 @@ const LoansTable = ({ loads, data }) => {
                             <span></span>
                             <p>{items.status}</p>
                         </div>
+                        <p
+                            className={styles.viwMore}
+                            onClick={() => {
+                                dispatch(setLoanRepayment(items)), repayloan();
+                            }}
+                        >
+                            view loan
+                        </p>
                     </div>
                 );
             })}

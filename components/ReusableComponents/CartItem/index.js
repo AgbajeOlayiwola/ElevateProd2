@@ -21,13 +21,7 @@ const CartItem = ({
         <div className={styles.cartItem}>
             <div className={styles.divImage}>
                 <Image
-                    src={
-                        items?.image &&
-                        (items?.image?.startsWith('data:image/png;base64,') ||
-                            items?.image?.startsWith('data:image/jpeg;base64,'))
-                            ? items?.image
-                            : `data:image/png;base64,${items?.image}`
-                    }
+                    src={items?.image}
                     width={88}
                     height={98}
                     alt="cart image"

@@ -1,23 +1,23 @@
 import React from 'react';
-import styles from './styles.module.css';
-import Popup from '../../layout/Popup';
+import { useSelector } from 'react-redux';
 import {
-    FacebookShareButton,
     FacebookIcon,
-    TwitterShareButton,
-    TwitterIcon,
-    LinkedinShareButton,
-    TelegramShareButton,
+    FacebookShareButton,
     TelegramIcon,
-    WhatsappShareButton,
+    TelegramShareButton,
+    TwitterIcon,
+    TwitterShareButton,
     WhatsappIcon,
-    InstapaperShareButton
+    WhatsappShareButton
 } from 'react-share';
+import Popup from '../../layout/Popup';
 import LinkSvg from '../ReusableSvgComponents/LinkSvg';
+import styles from './styles.module.css';
 
-const Share = ({ overlay, link, action, title }) => {
+const Share = ({ overlay, link, action, title, backward }) => {
+    const { ussdData } = useSelector((store) => store);
     return (
-        <Popup overlay={overlay} action={action}>
+        <Popup overlay={overlay} action={backward}>
             {title == 'ecoQr' ? (
                 <>
                     <div className={styles.shareContainer}>
@@ -129,13 +129,15 @@ const Share = ({ overlay, link, action, title }) => {
                         <input
                             styles={{ border: 'none' }}
                             type="text"
-                            value={link}
+                            value={`${ussdData?.code}${ussdData?.ussdData?.reference}#`}
                         />
                         <button
                             onClick={() => {
                                 {
                                     navigator.clipboard
-                                        .writeText(link)
+                                        .writeText(
+                                            `${ussdData?.code}${ussdData?.ussdData?.reference}#`
+                                        )
                                         .then(() => {
                                             alert('Copied');
                                         });

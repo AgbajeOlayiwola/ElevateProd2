@@ -79,21 +79,30 @@
 .loansSingle p:nth-child(2),
 .loansHeader p:nth-child(7),
 .loansSingle div {
-    width: 10%;
+    width: 19%;
 }
 
 .loansHeader p:nth-child(3),
 .loansSingle p:nth-child(3) {
-    width: 30%;
+    width: 18%;
 }
+.viwMore {
+    color: var(--primary-deep-blue, #102572);
 
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-decoration-line: underline;
+}
 .loansHeader p:nth-child(4),
 .loansSingle p:nth-child(4),
 .loansHeader p:nth-child(5),
 .loansSingle p:nth-child(5),
 .loansHeader p:nth-child(6),
 .loansSingle p:nth-child(6) {
-    width: 15%;
+    width: 21%;
 }
 
 .loansSingle {

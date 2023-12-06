@@ -6,7 +6,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDeleteByInventoryidMutation } from '../../../../../redux/api/authApi';
 import Loader from '../../../../ReusableComponents/Loader';
-import SwitchComponent from '../../../../ReusableComponents/SwitchComponent';
 import styles from './styles.module.css';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
@@ -47,6 +46,20 @@ const ViewProduct = ({ retrunBack, editInventory }) => {
             retrunBack();
         }
     }, [deleteByInventoryidSuccess]);
+    const [activeSizes, setActiveSizes] = useState([]);
+
+    const handleSizeClick = (size) => {
+        // Check if the size is already in the activeSizes array
+        if (activeSizes.includes(size)) {
+            // If it is, remove it
+            setActiveSizes(
+                activeSizes.filter((activeSize) => activeSize !== size)
+            );
+        } else {
+            // If it's not, add it
+            setActiveSizes([...activeSizes, size]);
+        }
+    };
 
     return (
         <>
@@ -96,9 +109,9 @@ const ViewProduct = ({ retrunBack, editInventory }) => {
                             <p className={styles.stock}>{quantity} in Stock</p>
                         </div>
                         <div className={styles.switcBtn}>
-                            <div className={styles.btns}>
+                            {/* <div className={styles.btns}>
                                 <SwitchComponent />
-                            </div>
+                            </div> */}
                             <div
                                 className={styles.delete}
                                 onClick={() =>
@@ -134,8 +147,19 @@ const ViewProduct = ({ retrunBack, editInventory }) => {
                                                 (items, index) => {
                                                     return (
                                                         <div
-                                                            className={
+                                                            className={`${
                                                                 styles.size
+                                                            } ${
+                                                                activeSizes.includes(
+                                                                    items.size
+                                                                )
+                                                                    ? styles.active
+                                                                    : ''
+                                                            }`}
+                                                            onClick={() =>
+                                                                handleSizeClick(
+                                                                    items.size
+                                                                )
                                                             }
                                                         >
                                                             <p>{items?.size}</p>{' '}

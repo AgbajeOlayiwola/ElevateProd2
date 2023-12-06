@@ -32,6 +32,7 @@ import dynamiQrDataReeducer from '../slices/dynamicQrSlice';
 import existingUserDetailsReducer from '../slices/existingUserData';
 import faceMatchDetailsReducr from '../slices/facematchSlice';
 import languageReducer from '../slices/language';
+import loanRequestReducer from '../slices/loanRequst';
 import moreAccountNumberDetailsReducer from '../slices/moreAccountNumberDetails';
 import pinnedReducer from '../slices/pinned';
 import profileReducer from '../slices/profile';
@@ -42,6 +43,7 @@ import transferReducer from '../slices/transferSlice';
 import ussdDataReducer from '../slices/ussddataSlice';
 import viewInventoryReducer from '../slices/viewInventorySlice';
 import viewProductDataReducer from '../slices/viewProductSlice';
+import loanRepaymentReducer from '../slices/loanRepayment';
 const reducers = combineReducers({
     [authApi.reducerPath]: authApi.reducer,
     [docsApi.reducerPath]: docsApi.reducer,
@@ -71,7 +73,9 @@ const reducers = combineReducers({
     viewInventory: viewInventoryReducer,
     allStores: allStoresReducer,
     affiliate: affiliateReducer,
-    allInventories: allStoreInventoriesReducer
+    allInventories: allStoreInventoriesReducer,
+    loanRequest: loanRequestReducer,
+    loanRepayment: loanRepaymentReducer
 });
 
 const persistConfig = {
@@ -101,7 +105,10 @@ const persistConfig = {
         'viewInventory',
         'allStores',
         'affiliate',
-        'allInventories'
+        'allInventories',
+        'loanRequest',
+        'loanScoring',
+        'loanRepayment'
     ]
 };
 

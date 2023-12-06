@@ -6,7 +6,7 @@ import { usePhysicalQrMutation } from '../../../redux/api/authApi';
 import exportAsImage from '../../../utils/exportAsImage';
 import CloseButton from '../../ReusableComponents/CloseButtonSvg';
 import Loader from '../../ReusableComponents/Loader';
-
+import { MdError } from 'react-icons/md';
 const QrFirst = ({ overlay, moveToNext, closeAction }) => {
     const exportRef = useRef();
     const [freeze, setFreeze] = useState(false);
@@ -41,62 +41,71 @@ const QrFirst = ({ overlay, moveToNext, closeAction }) => {
                         <h1>Ecobank QR Code</h1>
                         <p>Share QR code to receive money.</p>
                     </div>
-
-                    <>
-                        {physicalQrLoad ? (
-                            <Loader />
-                        ) : (
-                            <div className={styles.qrMain}>
-                                <img
-                                    ref={exportRef}
-                                    src={`data:image/png;base64,${physicalQrData?.data?.qrBase64}`}
-                                    width={156}
-                                    height={156}
-                                />
-                            </div>
-                        )}
-                        <div>
-                            <div className={styles.ids}>
-                                <p>Merchant ID</p>
-                                <p>{physicalQrData?.data?.merchantCode}</p>
-                            </div>
-                            <div className={styles.ids}>
-                                <p>Terminal ID</p>
-                                <p>{physicalQrData?.data?.terminalId}</p>
-                            </div>
+                    {physicalQrErr ? (
+                        <div className={styles.physicalQrError}>
+                            <MdError />
+                            <p>{physicalQrErr?.data?.message}</p>
                         </div>
-                        <div className={styles.qrDecal}>
-                            <p>Request QR Decal</p>
-                            <label className={styles.beneChecked}>
-                                <input type="checkbox" onChange={(e) => {}} />
-                                <span>
-                                    <i></i>
-                                </span>
-                            </label>
-                        </div>
-                        <div>
-                            <button
-                                onClick={() =>
-                                    exportAsImage(
-                                        exportRef.current,
-                                        'personalQR'
-                                    )
-                                }
-                            >
-                                Download Static QR Code
-                            </button>
-                            <p className={styles.tap}>
-                                Tap to create a
-                                <span
-                                    className={styles.tapSpan}
-                                    onClick={moveToNext}
+                    ) : (
+                        <>
+                            {physicalQrLoad ? (
+                                <Loader />
+                            ) : (
+                                <div className={styles.qrMain}>
+                                    <img
+                                        ref={exportRef}
+                                        src={`data:image/png;base64,${physicalQrData?.data?.qrBase64}`}
+                                        width={156}
+                                        height={156}
+                                    />
+                                </div>
+                            )}
+                            <div>
+                                <div className={styles.ids}>
+                                    <p>Merchant ID</p>
+                                    <p>{physicalQrData?.data?.merchantCode}</p>
+                                </div>
+                                <div className={styles.ids}>
+                                    <p>Terminal ID</p>
+                                    <p>{physicalQrData?.data?.terminalId}</p>
+                                </div>
+                            </div>
+                            <div className={styles.qrDecal}>
+                                <p>Request QR Decal</p>
+                                <label className={styles.beneChecked}>
+                                    <input
+                                        type="checkbox"
+                                        onChange={(e) => {}}
+                                    />
+                                    <span>
+                                        <i></i>
+                                    </span>
+                                </label>
+                            </div>
+                            <div>
+                                <button
+                                    onClick={() =>
+                                        exportAsImage(
+                                            exportRef.current,
+                                            'personalQR'
+                                        )
+                                    }
                                 >
-                                    {' '}
-                                    Ecobank QR Code for a transaction.
-                                </span>
-                            </p>
-                        </div>
-                    </>
+                                    Download Static QR Code
+                                </button>
+                                <p className={styles.tap}>
+                                    Tap to create a
+                                    <span
+                                        className={styles.tapSpan}
+                                        onClick={moveToNext}
+                                    >
+                                        {' '}
+                                        Ecobank QR Code for a transaction.
+                                    </span>
+                                </p>
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
         </Overlay>

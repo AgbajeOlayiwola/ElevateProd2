@@ -34,6 +34,7 @@ const MoreAction = ({
     sendBank,
     narr,
     bene,
+    transactionDate,
     isaccountId,
     dateTrans
 }) => {
@@ -99,7 +100,7 @@ const MoreAction = ({
         });
     };
     const showErrorToastMessage = () => {
-        toast.success('Disput Log Failed', {
+        toast.error('Disput Log Failed', {
             position: toast.POSITION.TOP_RIGHT,
             className: 'toast-message'
         });
@@ -346,7 +347,7 @@ const MoreAction = ({
                                 <div>
                                     <h1>{transactionTitle}</h1>
                                 </div>
-                                {bene === null ? null : (
+                                {bene === null || bene === undefined ? null : (
                                     <>
                                         <div className={styles.senderInfo}>
                                             <p>Beneficiary</p>
@@ -365,7 +366,15 @@ const MoreAction = ({
                                     </>
                                 )}
 
-                                {senders === null ? null : (
+                                {senders === null || senders === undefined ? (
+                                    <>
+                                        <div className={styles.senderInfo}>
+                                            <p>Transaction Date</p>
+                                            <p>{transactionDate}</p>
+                                        </div>
+                                        <hr />
+                                    </>
+                                ) : (
                                     <>
                                         <div className={styles.senderInfo}>
                                             <p>Sender Account</p>
@@ -375,7 +384,16 @@ const MoreAction = ({
                                     </>
                                 )}
 
-                                {sendBank === null ? null : (
+                                {destinationBank === null ||
+                                destinationBank === undefined ? (
+                                    <>
+                                        <div className={styles.senderInfo}>
+                                            <p>Transacion Type</p>
+                                            <p>{transactionTitle}</p>
+                                        </div>
+                                        <hr />
+                                    </>
+                                ) : (
                                     <>
                                         <div className={styles.senderInfo}>
                                             <p>Destination Bank</p>
@@ -384,7 +402,7 @@ const MoreAction = ({
                                         <hr />
                                     </>
                                 )}
-                                {narr === null ? null : (
+                                {narr === null || narr === undefined ? null : (
                                     <>
                                         <div className={styles.senderInfo}>
                                             <p>Narration</p>

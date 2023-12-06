@@ -1,7 +1,14 @@
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { useLoanBookingMutation } from '../../../../redux/api/authApi';
-import { loansDetails } from '../../../ReusableComponents/Data';
+import { useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {
+    useLoanBookingMutation,
+    useLoanRepaymntMutation,
+    useVerifyTransactionPinMutation
+} from '../../../../redux/api/authApi';
+import Loader from '../../../ReusableComponents/Loader';
 import LoansDetails from '../../../ReusableComponents/LoanDetails';
 import LoanLayout from '../../../ReusableComponents/LoanLayout';
 import OtpInput from '../../../ReusableComponents/Otpinput';
@@ -10,63 +17,91 @@ import Success from '../../../ReusableComponents/Success';
 import styles from './styles.module.css';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
-
-const ConfirmLoan = ({ backward }) => {
+const ConfirmLoan = ({ backward, comingFrom }) => {
     const [otpValue, setOtpValue] = useState('');
     const affiliate = localStorage.getItem('affiliateCode');
+    const { loanRequest } = useSelector((store) => store);
+    const { loanScoring } = useSelector((store) => store);
+    const { loanRepayment } = useSelector((store) => store);
     const [alert, setAlert] = useState(false);
-    // const loanDetails = [
-    //     {
-    //         id: 1,
-    //         name: 'Loan Amount',
-    //         value: `${
-    //             countryToCurrency[`${affiliate?.substring(1)}`]
-    //         } ${formatNumberWithComma(data?.loanAmount)}`
-    //     },
-    //     {
-    //         id: 1,
-    //         name: 'Request date',
-    //         value: moment(data?.repaymentDate, 'YYYY-MM-DD').format(
-    //             'DD MMM, YYYY'
-    //         )
-    //     },
-    //     { id: 2, name: 'Loan interest', value: `${data?.interest}%` },
-    //     {
-    //         id: 3,
-    //         name: 'Repayment duration',
-    //         value: `${
-    //             moment(data?.repaymentDate, 'YYYY-MM-DD').diff(
-    //                 moment(data?.dateCreated, 'YYYY-MM-DD'),
-    //                 'months'
-    //             ) || 0
-    //         } ${
-    //             moment(data?.repaymentDate, 'YYYY-MM-DD').diff(
-    //                 moment(data?.dateCreated, 'YYYY-MM-DD'),
-    //                 'months'
-    //             ) > 1
-    //                 ? ' months'
-    //                 : ' month'
-    //         }`
-    //     },
-    //     { id: 3, name: 'Repayment schedule', value: 'Monthly' },
-    //     {
-    //         id: 4,
-    //         name: 'Repayment date',
-    //         value: `${Number(day)}${getNumberSuffix(
-    //             Number(day)
-    //         )} of every month`
-    //     },
-    //     {
-    //         id: 5,
-    //         name: 'Monthly payment',
-    //         value: `${
-    //             countryToCurrency[`${affiliate?.substring(1)}`]
-    //         } ${formatNumberWithComma(monthlyAmount)}`
-    //     }
-    // ];
+    const loanDetails = [
+        {
+            id: 1,
+            title: 'Loan Amount',
+            value: `${getSymbolFromCurrency(
+                countryToCurrency[`${affiliate?.substring(1)}`]
+            )}
+                                            ${parseFloat(
+                                                loanRequest?.loanAmount
+                                            ).toLocaleString('en-US')}`
+        },
+        {
+            id: 1,
+            title: 'Request date',
+            value: moment(
+                // data?.repaymentDate,
+                'YYYY-MM-DD'
+            ).format('DD MMM, YYYY')
+        },
+        { id: 2, title: 'Loan interest', value: `${loanScoring?.interest}%` }
+        // {
+        //     id: 3,
+        //     title: 'Repayment duration',
+        //     value: `${
+        //         moment(data?.repaymentDate, 'YYYY-MM-DD').diff(
+        //             moment(data?.dateCreated, 'YYYY-MM-DD'),
+        //             'months'
+        //         ) || 0
+        //     } ${
+        //         moment(data?.repaymentDate, 'YYYY-MM-DD').diff(
+        //             moment(data?.dateCreated, 'YYYY-MM-DD'),
+        //             'months'
+        //         ) > 1
+        //             ? ' months'
+        //             : ' month'
+        //     }`
+        // },
+        // { id: 3, title: 'Repayment schedule', value: 'Monthly' },
+        // {
+        //     id: 4,
+        //     title: 'Repayment date',
+        //     value: `${Number(day)}${getNumberSuffix(
+        //         Number(day)
+        //     )} of every month`
+        // },
+        // {
+        //     id: 5,
+        //     title: 'Monthly payment',
+        //     value: `${
+        //         countryToCurrency[`${affiliate?.substring(1)}`]
+        //     } ${formatter(monthlyAmount)}`
+        // }
+    ];
     const handleOtpChange = (otp) => {
         setOtpValue(otp);
     };
+    const [
+        verifyTransactionPin,
+        {
+            data: verifyTransactionPinData,
+            isLoading: verifyTransactionPinLoad,
+            isSuccess: verifyTransactionPinSuccess,
+            isError: verifyTransactionPinFalse,
+            error: verifyTransactionPinErr,
+            reset: verifyTransactionPinReset
+        }
+    ] = useVerifyTransactionPinMutation();
+    const showToastErrorMessage = () => {
+        toast.error(verifyTransactionPinErr?.data?.message, {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
+
+    useEffect(() => {
+        if (verifyTransactionPinErr) {
+            showToastErrorMessage();
+        }
+    }, [verifyTransactionPinErr]);
     const [
         loanBooking,
         {
@@ -78,19 +113,92 @@ const ConfirmLoan = ({ backward }) => {
             reset: loanBookingReset
         }
     ] = useLoanBookingMutation();
-    useEffect(() => {
-        loanBooking({
-            accountNo: 'datas',
-            prod_token: 'ECO-ZE9EGP',
-            amount: '100',
-            repaymentDate: moment().format('YYYYMMDD'),
-            interest: 'loanData?.data?.interest'
+    const showToastRepaymentErrorMessage = () => {
+        toast.error(loanRepaymntErr?.data?.message, {
+            position: toast.POSITION.TOP_RIGHT
         });
-    }, []);
+    };
+
+    useEffect(() => {
+        if (loanRepaymntErr) {
+            showToastRepaymentErrorMessage();
+        }
+    }, [loanRepaymntErr]);
+    const [
+        loanRepaymnt,
+        {
+            data: loanRepaymntData,
+            isLoading: loanRepaymntLoad,
+            isSuccess: loanRepaymntSuccess,
+            isError: loanRepaymntFalse,
+            error: loanRepaymntErr,
+            reset: loanRepaymntReset
+        }
+    ] = useLoanRepaymntMutation();
+
+    const bookLoan = () => {
+        verifyTransactionPin({
+            transactionPin: otpValue
+        });
+    };
+
+    useEffect(() => {
+        if (verifyTransactionPinSuccess) {
+            loanBooking({
+                accountNo: loanRequest?.loanAccount,
+                prod_token: 'ECO-ZE9EGP',
+                amount: loanRequest?.loanAmount,
+                repaymentDate: moment().format('YYYYMMDD'),
+                interest: 1.5
+            });
+        }
+    }, [verifyTransactionPinSuccess]);
+    const showToastBookingErrorMessage = () => {
+        toast.error(loanBookingErr?.data?.message, {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
+    useEffect(() => {
+        if (loanBookingErr) {
+            showToastBookingErrorMessage();
+        }
+    }, [loanBookingErr]);
+    useEffect(() => {
+        if (loanBookingSuccess) {
+            setAlert(true);
+        }
+    }, [loanBookingSuccess]);
+
+    const repayLoan = () => {
+        const data = {
+            transactionID: 'T000191',
+            transactionDate: '20230925',
+            details: [
+                {
+                    sourceAccount: loanRepayment?.accountNo,
+                    destinationAccount: '311100017',
+                    amount: loanRepayment?.loanAmount,
+                    type: 'Interest'
+                }
+            ],
+            action: 'LRP',
+            mobileNumber: '233249284166'
+        };
+        loanRepaymnt(data);
+    };
     return (
         <>
-            <LoanLayout title="Request loan confirmation" backward={backward}>
-                <LoansDetails amount={2300000} loansDetails={loansDetails}>
+            <ToastContainer />
+
+            <LoanLayout
+                title="Request loan confirmation"
+                backward={backward}
+                comingFrom={comingFrom}
+            >
+                <LoansDetails
+                    amount={loanRequest?.loanAmount}
+                    loansDetails={loanDetails}
+                >
                     <div className={styles.pinContainer}>
                         <div>
                             <h2>Enter your PIN to proceed</h2>
@@ -101,15 +209,33 @@ const ConfirmLoan = ({ backward }) => {
                                     pin={true}
                                 />
                             </div>
-                            <p>Forgot PIN</p>
                         </div>
-                        <button
-                            onClick={() => {
-                                setAlert(true);
-                            }}
-                        >
-                            Request loan
-                        </button>
+                        {comingFrom === 'loan' ? (
+                            <button
+                                onClick={() => {
+                                    repayLoan();
+                                }}
+                            >
+                                {verifyTransactionPinLoad ||
+                                loanRepaymntLoad ? (
+                                    <Loader />
+                                ) : (
+                                    'Repay loan'
+                                )}
+                            </button>
+                        ) : (
+                            <button
+                                onClick={() => {
+                                    bookLoan();
+                                }}
+                            >
+                                {verifyTransactionPinLoad || loanBookingLoad ? (
+                                    <Loader />
+                                ) : (
+                                    'Request loan'
+                                )}
+                            </button>
+                        )}
                     </div>
                     {alert ? (
                         <StorePopup type={true} overlay={alert}>
@@ -121,8 +247,17 @@ const ConfirmLoan = ({ backward }) => {
                                     <h2>Loan application submitted</h2>
                                     <p>
                                         Your loan application of{' '}
-                                        <span>N2,300,000.00</span> has been sent
-                                        for approval.
+                                        <span>
+                                            {getSymbolFromCurrency(
+                                                countryToCurrency[
+                                                    `${affiliate?.substring(1)}`
+                                                ]
+                                            )}
+                                            {parseFloat(
+                                                loanRequest?.loanAmount
+                                            ).toLocaleString('en-US')}
+                                        </span>{' '}
+                                        has been sent for approval.
                                     </p>
                                 </div>
                                 <button

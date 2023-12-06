@@ -38,10 +38,12 @@ const RecievePaymentShare = ({
     link,
     track,
     amount,
-    allLink
+    allLink,
+    backward
 }) => {
     return (
         <Overlay overlay={overlay}>
+            <p onClick={backward}>Back</p>
             <div className={styles.generatedOver}>
                 <div className={styles.generated}>
                     <div className={styles.cancel}>

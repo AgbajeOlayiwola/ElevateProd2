@@ -12,6 +12,21 @@
     display: flex;
     justify-content: flex-end;
 }
+.physicalQrError {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+}
+.physicalQrError svg {
+    font-size: 250px;
+    color: orange;
+}
+.physicalQrError p {
+    font-size: 20px;
+    text-align: center;
+}
 .qrDecal {
     display: flex;
     justify-content: space-between;

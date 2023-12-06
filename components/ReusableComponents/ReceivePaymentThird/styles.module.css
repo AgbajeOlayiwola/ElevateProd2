@@ -30,6 +30,11 @@
     gap: 10px;
     flex-direction: column;
 }
+.statusMoreFlex {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
 .amountTrans p {
     font-size: 15px !important;
 }

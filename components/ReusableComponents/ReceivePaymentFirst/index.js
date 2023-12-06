@@ -281,9 +281,8 @@ const ReceivePaymentFirst = ({
                                 handleSubmit
                             }) => (
                                 <form onSubmit={handleSubmit}>
-                                    <div className={styles.narration}>
-                                        <label>Source Account</label>
-                                        <select
+                                    {/* <label>Source Account</label> */}
+                                    {/* <select
                                             name="ecoSourceAccount"
                                             onChange={(e) => {
                                                 const selectedAccount =
@@ -336,9 +335,8 @@ const ReceivePaymentFirst = ({
                                                         </>
                                                     );
                                                 })}
-                                        </select>
-                                        <br />
-                                    </div>
+                                        </select> */}
+
                                     <br />
                                     <div className={styles.formGroup}>
                                         {/* <label>Account Number</label>

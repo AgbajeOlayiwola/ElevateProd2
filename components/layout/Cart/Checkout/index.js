@@ -294,7 +294,7 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                             {isGift ? (
                                 <>
                                     <h1 className={styles.dets}>
-                                        Your details
+                                        Recipint details
                                     </h1>
                                     <div className={styles.names}>
                                         <div className={styles.inputDiv}>
@@ -302,14 +302,16 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                                             <input
                                                 onChange={(e) => {
                                                     setFieldValue(
-                                                        'firstName',
+                                                        'recipientFirstName',
                                                         e.target.value
                                                     );
                                                 }}
                                                 name="firstname"
-                                                value={values?.firstName}
+                                                value={
+                                                    values?.recipientFirstName
+                                                }
                                                 type="text"
-                                                placeholder="first name"
+                                                placeholder="Recipient first name"
                                             />
                                         </div>
                                         <div className={styles.inputDiv}>
@@ -317,14 +319,16 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                                             <input
                                                 onChange={(e) => {
                                                     setFieldValue(
-                                                        'lastName',
+                                                        'recipientLastName',
                                                         e.target.value
                                                     );
                                                 }}
                                                 name="lastname"
-                                                value={values?.lastName}
+                                                value={
+                                                    values?.recipientLastName
+                                                }
                                                 type="text"
-                                                placeholder="first name"
+                                                placeholder="Recipient last name"
                                             />
                                         </div>
                                     </div>
@@ -412,14 +416,16 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                                             <input
                                                 onChange={(e) => {
                                                     setFieldValue(
-                                                        'yourPhoneNumber',
+                                                        'senderPhoneNumber',
                                                         e.target.value
                                                     );
                                                 }}
                                                 name="phone number"
-                                                value={values?.yourPhoneNumber}
+                                                value={
+                                                    values?.senderPhoneNumber
+                                                }
                                                 type="number"
-                                                placeholder="first name"
+                                                placeholder="081 234 5678"
                                             />
                                         </div>
                                         <div className={styles.inputDiv}>
@@ -429,14 +435,14 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                                             <input
                                                 onChange={(e) => {
                                                     setFieldValue(
-                                                        'yourEmail',
+                                                        'recipientEmail',
                                                         e.target.value
                                                     );
                                                 }}
                                                 name="email"
-                                                value={values?.yourEmail}
+                                                value={values?.recipientEmail}
                                                 type="text"
-                                                placeholder="first name"
+                                                placeholder="email@email.com"
                                             />
                                         </div>
                                     </div>
@@ -444,39 +450,35 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                             ) : (
                                 <>
                                     <h1 className={styles.dets}>
-                                        Recipient details
+                                        Your details
                                     </h1>
                                     <div className={styles.names}>
                                         <div className={styles.inputDiv}>
-                                            <label>Recipient first name</label>
+                                            <label>First name</label>
                                             <input
                                                 onChange={(e) => {
                                                     setFieldValue(
-                                                        'recipientFirstName',
+                                                        'firstName',
                                                         e.target.value
                                                     );
                                                 }}
-                                                value={
-                                                    values?.recipientFirstName
-                                                }
+                                                value={values?.firstName}
                                                 type="text"
-                                                placeholder="first name"
+                                                placeholder="First name"
                                             />
                                         </div>
                                         <div className={styles.inputDiv}>
-                                            <label>Recipient last name</label>
+                                            <label>Last name</label>
                                             <input
                                                 onChange={(e) => {
                                                     setFieldValue(
-                                                        'recipientLastName',
+                                                        'lastName',
                                                         e.target.value
                                                     );
                                                 }}
-                                                value={
-                                                    values?.recipientLastName
-                                                }
+                                                value={values?.lastName}
                                                 type="text"
-                                                placeholder="first name"
+                                                placeholder="Last name"
                                             />
                                         </div>
                                     </div>
@@ -484,63 +486,37 @@ const Checkout = ({ num, items, upgradeOrder }) => {
                                     <div className={styles.names}>
                                         <div className={styles.inputDiv}>
                                             <label>
-                                                Recipient’s email address
-                                                (optional)
+                                                Email address (optional)
                                             </label>
                                             <input
                                                 onChange={(e) => {
                                                     setFieldValue(
-                                                        'recipientEmail',
+                                                        'yourEmail',
                                                         e.target.value
                                                     );
                                                 }}
-                                                value={values?.recipientEmail}
+                                                value={values?.yourEmail}
                                                 type="text"
-                                                placeholder="first name"
+                                                placeholder="Email@email.com"
                                             />
                                         </div>
                                         <div className={styles.inputDiv}>
-                                            <label>
-                                                Recipient phone number
-                                            </label>
+                                            <label>Your phone number</label>
                                             <input
                                                 onChange={(e) => {
                                                     setFieldValue(
-                                                        'senderPhoneNumber',
+                                                        'yourPhoneNumber',
                                                         e.target.value
                                                     );
                                                 }}
-                                                value={
-                                                    values?.senderPhoneNumber
-                                                }
+                                                value={values?.yourPhoneNumber}
                                                 type="number"
-                                                placeholder="first name"
+                                                placeholder="081 234 5678"
                                             />
                                         </div>
                                     </div>
 
-                                    <div className={styles.isGift}>
-                                        <input
-                                            type="checkbox"
-                                            onChange={() =>
-                                                setInformEMail((prev) => !prev)
-                                            }
-                                        />
-                                        <p>Inform recipient via email</p>
-                                    </div>
-
                                     <br />
-                                    <hr />
-                                    <br />
-                                    <div className={styles.inputDivs}>
-                                        <label>Your phone number</label>
-                                        <input
-                                            type="number"
-                                            placeholder="first name"
-                                        />
-                                    </div>
-                                    <br />
-                                    <hr />
                                 </>
                             )}
                             <br />

@@ -383,6 +383,16 @@ const Dashboard = () => {
             dispatch(setProfile(getProfileData));
         }
     }, [getProfileSuccess]);
+    const showToastAccountBalsrErroMessage = () => {
+        toast.error('Error retrieving account balance', {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
+    useEffect(() => {
+        if (getAcctBalsErr) {
+            showToastAccountBalsrErroMessage();
+        }
+    }, [getAcctBalsErr]);
     useEffect(() => {
         if (createTransactionPinSuccess) {
             showToastTransactionPinSuccessMessage();
@@ -427,14 +437,17 @@ const Dashboard = () => {
                     <div className={styles.overlayBg}>
                         <div className={styles.back}>
                             <p>
-                                <FaArrowLeftLong onClick={() => setPage(0)} />
+                                <FaArrowLeftLong
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={() => setPage(0)}
+                                />
                             </p>
                             <p
                                 onClick={() => {
                                     setAddAcct((prev) => !prev), setPage(0);
                                 }}
                             >
-                                <MdCancel />{' '}
+                                <MdCancel style={{ cursor: 'pointer' }} />{' '}
                             </p>
                         </div>
                         {conditionalComponent()}
@@ -649,24 +662,7 @@ const Dashboard = () => {
                                                                 )}
                                                             </p>
                                                         </div>
-                                                        <div
-                                                            className={
-                                                                styles.type
-                                                            }
-                                                        >
-                                                            <p>
-                                                                {
-                                                                    item?.beneficiary
-                                                                }
-                                                            </p>
-                                                        </div>
-                                                        <div
-                                                            className={
-                                                                styles.money
-                                                            }
-                                                        >
-                                                            <p></p>
-                                                        </div>
+
                                                         <div
                                                             className={
                                                                 item.transactionStatus ===
@@ -930,7 +926,10 @@ const Dashboard = () => {
                         </div>
 
                         <div className={styles.otherAccounts}>
-                            <h2>Other Accounts</h2>
+                            <div>
+                                <h2>Other Accounts</h2>
+                                {/* <p>scroll</p> */}
+                            </div>
 
                             <Overlay overlay={overlay}>
                                 <Addaccounts

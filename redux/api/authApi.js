@@ -13,7 +13,8 @@ export const authApi = createApi({
         prepareHeaders: (headers, { getState }) => {
             const token = getState().token;
             headers.set('Accept', 'application/json'),
-                headers.set('Content-Type', 'application/json'); // Set Content-Type here
+                headers.set('Content-Type', 'application/json');
+            // Set Content-Type here
             // Add other allowed headers here
             headers.set(
                 'x-affiliate-code',
@@ -751,12 +752,12 @@ export const authApi = createApi({
                 };
             }
         }),
-        loanRepayment: builder.mutation({
-            query: (body) => {
+        getLoans: builder.mutation({
+            query: () => {
                 return {
-                    url: 'loan-repayment',
+                    url: 'get-loans',
                     method: 'post',
-                    body
+                    body: {}
                 };
             }
         }),
@@ -1250,7 +1251,7 @@ export const authApi = createApi({
                 };
             }
         })
-        //         logistics-disable-provider
+        // logistics-disable-provider
         // logistics-enable-provider
         // logistics-gig-capture-shipment
         // logistics-gig-shipment-price
@@ -1260,6 +1261,7 @@ export const authApi = createApi({
 });
 
 export const {
+    useGetLoansMutation,
     useLogisticsGigStationsMutation,
     useLogisticsEnableProviderMutation,
     useLogisticsDisableProviderMutation,

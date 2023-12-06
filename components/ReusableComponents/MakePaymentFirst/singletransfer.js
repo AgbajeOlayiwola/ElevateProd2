@@ -261,6 +261,19 @@ const SingleTransfer = ({
         });
         // closeAction();
     };
+    const showBankListToastMessage = () => {
+        toast.error('Error Getting Bank List', {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+        // closeAction();
+    };
+    useEffect(() => {
+        if (paymentbanklistErr) {
+            showBankListToastMessage();
+        }
+    }, [paymentbanklistErr]);
+
     const { transfer } = useSelector((store) => store);
     useEffect(() => {
         if (paymentFetchtransactionfeeErr) {

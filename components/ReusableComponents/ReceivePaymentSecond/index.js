@@ -455,7 +455,7 @@ const ReceivePaymentSecond = ({
                             </p>
                         </div>
                     </div>
-                    <div className={styles.deadline}>
+                    {/* <div className={styles.deadline}>
                         <p>Ref ID</p>
 
                         <p>
@@ -482,7 +482,7 @@ const ReceivePaymentSecond = ({
                                 {isCopied ? 'Copied!' : 'Copy'}
                             </div>
                         </p>
-                    </div>
+                    </div> */}
                     {title === 'Confirm mPOS Payment Details' ? (
                         <p className={styles.NFC}>
                             Turn on NFC now to activate your phone as mPOS
@@ -637,11 +637,11 @@ const ReceivePaymentSecond = ({
                     ) : (
                         <button onClick={action}>{buttonText}</button>
                     )}
-                    {title === 'USSD' ? (
+                    {/* {title === 'USSD' ? (
                         <button onClick={ussdStatusClick}>
                             View USSD Status
                         </button>
-                    ) : null}
+                    ) : null} */}
                     {title === 'Confirm mPOS Payment Details' ? null : (
                         <p className={styles.allLinks}>
                             Tap to view all your{' '}

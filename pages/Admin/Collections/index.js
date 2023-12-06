@@ -448,6 +448,7 @@ const Collections = () => {
                         return (
                             <Share
                                 overlay={overlay}
+                                backward={() => setCount(2)}
                                 link={codes}
                                 action={handleClose}
                             />

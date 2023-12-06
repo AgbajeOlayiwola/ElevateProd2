@@ -187,51 +187,55 @@ const ReceivePaymentThird = ({
                                                                 }
                                                             </p>
                                                         </div>
-                                                        <div>
-                                                            <p
-                                                                className={
-                                                                    data?.transactionStatus ===
-                                                                    'FAILED'
-                                                                        ? styles.failed
-                                                                        : data?.transactionStatus ===
-                                                                          'PENDING'
-                                                                        ? styles.pending
-                                                                        : styles.success
-                                                                }
-                                                            >
-                                                                {
+                                                        <div
+                                                            className={
+                                                                styles.statusMoreFlex
+                                                            }
+                                                        >
+                                                            <div>
+                                                                <p
+                                                                    className={
+                                                                        data?.transactionStatus ===
+                                                                        'FAILED'
+                                                                            ? styles.failed
+                                                                            : data?.transactionStatus ===
+                                                                              'PENDING'
+                                                                            ? styles.pending
+                                                                            : styles.success
+                                                                    }
+                                                                >
+                                                                    {
+                                                                        data?.transactionStatus
+                                                                    }
+                                                                </p>
+                                                                <p>
+                                                                    {
+                                                                        data?.transactionDate
+                                                                    }
+                                                                </p>
+                                                            </div>
+                                                            <MoreAction
+                                                                transactionStatus={
                                                                     data?.transactionStatus
                                                                 }
-                                                            </p>
-                                                            <p>
-                                                                {
+                                                                transactionDate={
                                                                     data?.transactionDate
                                                                 }
-                                                            </p>
+                                                                sender={
+                                                                    data?.sourceAccount
+                                                                }
+                                                                transactionTitle={data?.transactionType.replace(
+                                                                    '_',
+                                                                    ' '
+                                                                )}
+                                                                transactionAmount={parseFloat(
+                                                                    data?.transactionAmount
+                                                                ).toLocaleString(
+                                                                    'en-US'
+                                                                )}
+                                                            />
                                                         </div>
-                                                        <MoreAction
-                                                            transactionStatus={
-                                                                data?.transactionType
-                                                            }
-                                                            narr={`${data?.transactionStatus} Recieve Payment`}
-                                                            bene={data?.transactionType.replace(
-                                                                '_',
-                                                                ' '
-                                                            )}
-                                                            transactionTitle={
-                                                                data?.transactionDate
-                                                            }
-                                                            sender={
-                                                                data?.sourceAccount
-                                                            }
-                                                            transactionAmount={parseFloat(
-                                                                data?.transactionAmount
-                                                            ).toLocaleString(
-                                                                'en-US'
-                                                            )}
-                                                        />
                                                     </div>
-
                                                     <hr />
                                                     <br />
                                                 </>

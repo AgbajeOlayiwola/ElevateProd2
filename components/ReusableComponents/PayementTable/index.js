@@ -451,11 +451,17 @@ const PaymentTable = ({ title, page }) => {
                                                 item?.transactionStatus
                                             }
                                             narr={item?.Narration}
-                                            bene={item?.beneficiary}
+                                            bene={item?.beneficiaryName}
                                             transactionTitle={item?.transactionType.replace(
                                                 '_',
                                                 ' '
                                             )}
+                                            transactionDate={
+                                                item?.transactionDate
+                                            }
+                                            destinationBank={
+                                                item?.destinationBankName
+                                            }
                                             sender={item?.sourceAccount}
                                             transactionAmount={parseFloat(
                                                 item?.transactionAmount

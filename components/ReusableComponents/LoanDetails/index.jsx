@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './styles.module.css';
 import { formatter } from '../../../utils/formatter/formatter';
+import styles from './styles.module.css';
 
 const LoansDetails = ({ amount, loansDetails, children }) => {
     return (
@@ -21,7 +21,7 @@ const LoansDetails = ({ amount, loansDetails, children }) => {
                                 key={index}
                             >
                                 <p>{items.title}</p>
-                                <h2>{items.text}</h2>
+                                <h2>{items.value}</h2>
                             </div>
                         );
                     })}
