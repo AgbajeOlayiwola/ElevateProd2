@@ -172,9 +172,18 @@ const BankStatments = () => {
             setInflow(inflowValue);
         }
     }, [accountMiniStatementData]);
+    const showErrorToastMessage = () => {
+        toast.error(accountMiniStatementErr?.data?.message, {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+    };
+    useEffect(() => {
+        if (accountMiniStatementErr) {
+            showErrorToastMessage();
+        }
+    }, [accountMiniStatementErr]);
 
-    console.log(inflow, outflow);
-    console.log(accountMiniStatementData);
     return (
         <div className={styles.statementCover}>
             <ToastContainer />
@@ -190,20 +199,22 @@ const BankStatments = () => {
                         }
                     }}
                 >
-                    {allAccountInfo
-                        .filter((account) => account.accountNo)
-                        .map((account) => {
-                            return (
-                                <>
-                                    <option
-                                        className={styles.accntP}
-                                        value={account?.accountNo}
-                                    >
-                                        <p>{account?.accountNo}</p>
-                                    </option>
-                                </>
-                            );
-                        })}
+                    {allAccountInfo.length > 0
+                        ? allAccountInfo
+                              .filter((account) => account.accountNo)
+                              .map((account) => {
+                                  return (
+                                      <>
+                                          <option
+                                              className={styles.accntP}
+                                              value={account?.accountNo}
+                                          >
+                                              <p>{account?.accountNo}</p>
+                                          </option>
+                                      </>
+                                  );
+                              })
+                        : null}
                 </select>
                 <div
                     onClick={() => {
@@ -332,13 +343,23 @@ const BankStatments = () => {
                     <p>Total Inflow</p>
                     {accountMiniStatementLoad ? (
                         <p>Loading...</p>
-                    ) : (
+                    ) : accountMiniStatementSuccess ? (
                         <h2>
                             {' '}
                             {getSymbolFromCurrency(
                                 countryToCurrency[`${affiliate?.substring(1)}`]
                             )}
                             {parseFloat(inflow)
+                                .toFixed(2)
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                        </h2>
+                    ) : (
+                        <h2>
+                            {' '}
+                            {getSymbolFromCurrency(
+                                countryToCurrency[`${affiliate?.substring(1)}`]
+                            )}
+                            {parseFloat(0)
                                 .toFixed(2)
                                 .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                         </h2>
@@ -349,13 +370,23 @@ const BankStatments = () => {
                     <p>Total Outflow</p>
                     {accountMiniStatementLoad ? (
                         <p>Loading...</p>
-                    ) : (
+                    ) : accountMiniStatementSuccess ? (
                         <h2>
                             {' '}
                             {getSymbolFromCurrency(
                                 countryToCurrency[`${affiliate?.substring(1)}`]
                             )}
                             {parseFloat(outflow)
+                                .toFixed(2)
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                        </h2>
+                    ) : (
+                        <h2>
+                            {' '}
+                            {getSymbolFromCurrency(
+                                countryToCurrency[`${affiliate?.substring(1)}`]
+                            )}
+                            {parseFloat(0)
                                 .toFixed(2)
                                 .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                         </h2>

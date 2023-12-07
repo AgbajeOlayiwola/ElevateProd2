@@ -23,19 +23,7 @@ const Navbar = ({
     profileImg
 }) => {
     const router = useRouter();
-    // const [userProfile, setUserProfile] = useState();
-    // const [userProfileData, setUserProfileData] = useState();
-    // useEffect(() => {
-    //     if (typeof window !== 'undefined') {
-    //         setUserProfile(window.localStorage.getItem('user'));
-    //     }
-    // }, []);
-    // useEffect(() => {
-    //     if (userProfile !== undefined) {
-    //         setUserProfileData(JSON.parse(userProfile));
-    //     }
-    // }, [userProfile]);
-    //  //console.log(userProfileData);
+
     const { profile } = useSelector((store) => store);
     const affiliate = localStorage.getItem('affiliateCode');
     const [flagSvgUrl, setFlagSvgUrl] = useState(null);
@@ -154,13 +142,13 @@ const Navbar = ({
                     <div className={styles.rightNav}>
                         {page === 'Payments' ? null : (
                             <form>
-                                <div className={styles.navSearchWrapper}>
+                                {/* <div className={styles.navSearchWrapper}>
                                     <SearchSvg color="#CCCCCC" />
                                     <input
                                         type="text"
                                         placeholder="Search Products"
                                     />
-                                </div>
+                                </div> */}
                             </form>
                         )}
                         {flagSvgUrl ? (

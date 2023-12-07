@@ -104,29 +104,35 @@ const Loans = () => {
                                     <option value="">
                                         Select Account To Use
                                     </option>
-                                    {allAccountInfo
-                                        .filter((account) => account.accountNo)
-                                        .map((account) => {
-                                            return (
-                                                <>
-                                                    <option
-                                                        className={
-                                                            styles.accntP
-                                                        }
-                                                        value={
-                                                            account?.accountNo
-                                                        }
-                                                    >
-                                                        <p>
-                                                            {account?.accountNo}
-                                                        </p>
-                                                        {/* <p>
+                                    {allAccountInfo.length > 0
+                                        ? allAccountInfo
+                                              .filter(
+                                                  (account) => account.accountNo
+                                              )
+                                              .map((account) => {
+                                                  return (
+                                                      <>
+                                                          <option
+                                                              className={
+                                                                  styles.accntP
+                                                              }
+                                                              value={
+                                                                  account?.accountNo
+                                                              }
+                                                          >
+                                                              <p>
+                                                                  {
+                                                                      account?.accountNo
+                                                                  }
+                                                              </p>
+                                                              {/* <p>
                                                         {account?.availableBal.toLocaleString()}
                                                     </p> */}
-                                                    </option>
-                                                </>
-                                            );
-                                        })}
+                                                          </option>
+                                                      </>
+                                                  );
+                                              })
+                                        : null}
                                 </select>
                             </div>
                             <LoansHeader

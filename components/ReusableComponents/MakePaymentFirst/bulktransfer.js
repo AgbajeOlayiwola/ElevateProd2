@@ -363,26 +363,31 @@ const BulkTransfer = ({
                                         <option value="">
                                             Select Account To Use
                                         </option>
-                                        {allAccountInfo
-                                            .filter(
-                                                (account) => account?.accountNo
-                                            )
-                                            .map((account) => {
-                                                return (
-                                                    <>
-                                                        <option
-                                                            className={
-                                                                styles.accntP
-                                                            }
-                                                            value={
-                                                                account?.accountNo
-                                                            }
-                                                        >
-                                                            {account?.accountNo}
-                                                        </option>
-                                                    </>
-                                                );
-                                            })}
+                                        {allAccountInfo.length > 0
+                                            ? allAccountInfo
+                                                  .filter(
+                                                      (account) =>
+                                                          account?.accountNo
+                                                  )
+                                                  .map((account) => {
+                                                      return (
+                                                          <>
+                                                              <option
+                                                                  className={
+                                                                      styles.accntP
+                                                                  }
+                                                                  value={
+                                                                      account?.accountNo
+                                                                  }
+                                                              >
+                                                                  {
+                                                                      account?.accountNo
+                                                                  }
+                                                              </option>
+                                                          </>
+                                                      );
+                                                  })
+                                            : null}
                                     </select>
                                     <p className={styles.error}>
                                         {/* {errors?.sourceAccount?.message} */}

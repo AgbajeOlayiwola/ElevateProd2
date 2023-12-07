@@ -167,7 +167,7 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
-    color: #a5a5a5;
+    color: #1d1c1c;
 }
 
 .phone {
@@ -187,7 +187,7 @@
 }
 
 .phone .phoneHeader {
-    width: 30%;
+    width: fit-content;
     display: flex;
     align-items: center;
     border-right: 1px solid #7a7978;

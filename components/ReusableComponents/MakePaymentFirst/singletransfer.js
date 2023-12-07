@@ -485,7 +485,7 @@ const SingleTransfer = ({
                                         name="ecoSourceAccount"
                                         onChange={(e) => {
                                             const selectedAccount =
-                                                allAccountInfo.find(
+                                                allAccountInfo?.find(
                                                     (account) =>
                                                         account?.accountNo ===
                                                         e.target.value
@@ -509,33 +509,36 @@ const SingleTransfer = ({
                                         <option value="">
                                             Select Account To Use
                                         </option>
-                                        {allAccountInfo
-                                            .filter(
-                                                (account) => account.accountNo
-                                            )
-                                            .map((account) => {
-                                                return (
-                                                    <>
-                                                        <option
-                                                            className={
-                                                                styles.accntP
-                                                            }
-                                                            value={
-                                                                account?.accountNo
-                                                            }
-                                                        >
-                                                            <p>
-                                                                {
-                                                                    account?.accountNo
-                                                                }
-                                                            </p>
-                                                            {/* <p>
+                                        {allAccountInfo?.length > 0
+                                            ? allAccountInfo
+                                                  ?.filter(
+                                                      (account) =>
+                                                          account.accountNo
+                                                  )
+                                                  .map((account) => {
+                                                      return (
+                                                          <>
+                                                              <option
+                                                                  className={
+                                                                      styles.accntP
+                                                                  }
+                                                                  value={
+                                                                      account?.accountNo
+                                                                  }
+                                                              >
+                                                                  <p>
+                                                                      {
+                                                                          account?.accountNo
+                                                                      }
+                                                                  </p>
+                                                                  {/* <p>
                                                         {account?.availableBal.toLocaleString()}
                                                     </p> */}
-                                                        </option>
-                                                    </>
-                                                );
-                                            })}
+                                                              </option>
+                                                          </>
+                                                      );
+                                                  })
+                                            : null}
                                     </select>
                                     <p className={styles.error}>
                                         {errors ? (
@@ -781,7 +784,7 @@ const SingleTransfer = ({
                                         name="ecoSourceAccount"
                                         onChange={(e) => {
                                             const selectedAccount =
-                                                allAccountInfo.find(
+                                                allAccountInfo?.find(
                                                     (account) =>
                                                         account?.accountNo ===
                                                         e.target.value
@@ -806,7 +809,7 @@ const SingleTransfer = ({
                                             Select Account To Use
                                         </option>
                                         {allAccountInfo
-                                            .filter(
+                                            ?.filter(
                                                 (account) => account.accountNo
                                             )
                                             .map((account) => {

@@ -4,11 +4,15 @@ import React, { useEffect, useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { clearAccountNumber } from '../../../redux/slices/accountNumberSlice';
+import { clearAddInventory } from '../../../redux/slices/addInventorySlice';
 import { clearAllAccountInfo } from '../../../redux/slices/allAccountInfoSlice';
 import { clearanalyticsData } from '../../../redux/slices/analyticsData';
 import { clearDynamicQrData } from '../../../redux/slices/dynamicQrSlice';
 import { clearExistingUserDetails } from '../../../redux/slices/existingUserData';
 import { clearfaceMatchDetails } from '../../../redux/slices/facematchSlice';
+import { clearLoanRepayment } from '../../../redux/slices/loanRepayment';
+import { clearLoanRequest } from '../../../redux/slices/loanRequst';
+import { clearLoanScoring } from '../../../redux/slices/loanScoring';
 import { clearMoreAccountNumberDetails } from '../../../redux/slices/moreAccountNumberDetails';
 import { clearProfile } from '../../../redux/slices/profile';
 import { clearToken } from '../../../redux/slices/tokenSlice';
@@ -28,7 +32,6 @@ const Sidebar = ({ showSubnav }) => {
     const handleLogOut = async () => {
         // Clear local storage
         await localStorage.clear();
-
         // Dispatch actions to clear Redux state
         await dispatch(clearProfile());
         await dispatch(clearfaceMatchDetails());
@@ -40,6 +43,13 @@ const Sidebar = ({ showSubnav }) => {
         await dispatch(clearAllAccountInfo());
         await dispatch(clearDynamicQrData());
         await dispatch(clearanalyticsData());
+        await dispatch(clearDynamicQrData());
+        await dispatch(clearAddInventory());
+        // await dispatch(clearAllStars());
+        await dispatch(clearLoanRequest());
+        await dispatch(clearLoanRepayment());
+        await dispatch(clearLoanScoring());
+
         // Redirect the user to the login page (you may use React Router for this)
         router.push('/Auth/Login');
     };

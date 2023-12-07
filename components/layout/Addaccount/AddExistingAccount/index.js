@@ -48,11 +48,12 @@ const AddExistinAccount = ({ id, close }) => {
                 return (
                     <div>
                         <ToastContainer />
-                        <lable>Input account number</lable>
                         <input
                             type="text"
                             style={{ marginTop: '20px' }}
                             onChange={(e) => setAccountNumber(e.target.value)}
+                            placeholder="Input account number"
+                            name="number"
                         />
                         <br />
                         <br />
@@ -89,7 +90,7 @@ const AddExistinAccount = ({ id, close }) => {
     };
     return (
         <div>
-            <h1>Add Existing Account Number</h1>
+            {page === 1 ? null : <h1>Add Existing Account Number</h1>}
             {conditionalComponent()}
         </div>
     );

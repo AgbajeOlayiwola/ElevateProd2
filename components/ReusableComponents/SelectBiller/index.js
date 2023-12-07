@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useBillerDetailsMutation } from '../../../redux/api/authApi';
 import Loader from '../Loader';
 import styles from './styles.module.css';
-
 const SlectBiller = ({ biller, loads, load, loadBillerForm }) => {
     console.log(biller);
 
@@ -34,9 +35,21 @@ const SlectBiller = ({ biller, loads, load, loadBillerForm }) => {
             loadBillerForm(billerDetailsData);
         }
     }, [billerDetailsSuccess]);
+    const showErrorToastMessage = () => {
+        toast.error('Error Loading Biller Details', {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+    };
+    useEffect(() => {
+        if (billerDetailsErr) {
+            showErrorToastMessage();
+        }
+    }, [billerDetailsErr]);
 
     return (
         <div>
+            <ToastContainer />
             {loads ? (
                 <Loader />
             ) : (

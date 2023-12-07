@@ -1,5 +1,6 @@
 import { Formik } from 'formik';
 import React, { useEffect, useRef, useState } from 'react';
+import { IoMdArrowRoundBack } from 'react-icons/io';
 import { useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -20,7 +21,11 @@ import SuccessCheckSvg from '../ReusableSvgComponents/SuccessCheckSvg';
 import styles from './styles.module.css';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
-const SelectBillerForms = ({ billerDatails, closeAction }) => {
+const SelectBillerForms = ({
+    billerDatails,
+    closeAction,
+    backtoCategories
+}) => {
     const [activeBtn, setActiveBtn] = useState(true);
     const { profile } = useSelector((store) => store);
     const [showOtherFields, setShowOtherFields] = useState(false);
@@ -184,6 +189,14 @@ const SelectBillerForms = ({ billerDatails, closeAction }) => {
     return (
         <>
             <ToastContainer />
+            <div
+                className={styles.returnButton}
+                onClick={() => backtoCategories()}
+            >
+                <IoMdArrowRoundBack />
+
+                <p>Back</p>
+            </div>
             <div>
                 <h4>{billerDatails?.billerDetail?.billerName}</h4>
                 {/* <p>{billerDatails?.billerDetail?.billerDescription}</p> */}
@@ -296,26 +309,32 @@ const SelectBillerForms = ({ billerDatails, closeAction }) => {
                                     <option value="">
                                         Select Account To Use
                                     </option>
-                                    {allAccountInfo
-                                        .filter((account) => account.accountNo)
-                                        .map((account) => {
-                                            return (
-                                                <>
-                                                    <option
-                                                        value={
-                                                            account?.accountNo
-                                                        }
-                                                    >
-                                                        <p>
-                                                            {account?.accountNo}
-                                                        </p>
-                                                        {/* <p>
+                                    {allAccountInfo > length > 0
+                                        ? allAccountInfo
+                                              .filter(
+                                                  (account) => account.accountNo
+                                              )
+                                              .map((account) => {
+                                                  return (
+                                                      <>
+                                                          <option
+                                                              value={
+                                                                  account?.accountNo
+                                                              }
+                                                          >
+                                                              <p>
+                                                                  {
+                                                                      account?.accountNo
+                                                                  }
+                                                              </p>
+                                                              {/* <p>
                                                         {account?.availableBal.toLocaleString()}
                                                     </p> */}
-                                                    </option>
-                                                </>
-                                            );
-                                        })}
+                                                          </option>
+                                                      </>
+                                                  );
+                                              })
+                                        : null}
                                 </select>
                             </div>
                             <br />

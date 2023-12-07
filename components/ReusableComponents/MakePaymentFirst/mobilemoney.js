@@ -243,31 +243,33 @@ const MobileMoney = ({ firstTitle, closeAction }) => {
                                                 <option value="">
                                                     Select Account To Use
                                                 </option>
-                                                {allAccountInfo
-                                                    .filter(
-                                                        (account) =>
-                                                            account.accountNo
-                                                    )
-                                                    .map((account) => {
-                                                        return (
-                                                            <>
-                                                                <option
-                                                                    className={
-                                                                        styles.accntP
-                                                                    }
-                                                                    value={
-                                                                        account?.accountNo
-                                                                    }
-                                                                >
-                                                                    <p>
-                                                                        {
-                                                                            account?.accountNo
-                                                                        }
-                                                                    </p>
-                                                                </option>
-                                                            </>
-                                                        );
-                                                    })}
+                                                {allAccountInfo.length > 0
+                                                    ? allAccountInfo
+                                                          .filter(
+                                                              (account) =>
+                                                                  account.accountNo
+                                                          )
+                                                          .map((account) => {
+                                                              return (
+                                                                  <>
+                                                                      <option
+                                                                          className={
+                                                                              styles.accntP
+                                                                          }
+                                                                          value={
+                                                                              account?.accountNo
+                                                                          }
+                                                                      >
+                                                                          <p>
+                                                                              {
+                                                                                  account?.accountNo
+                                                                              }
+                                                                          </p>
+                                                                      </option>
+                                                                  </>
+                                                              );
+                                                          })
+                                                    : null}
                                             </select>
                                             <p className={styles.error}>
                                                 {errors ? (

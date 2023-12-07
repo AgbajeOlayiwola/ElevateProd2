@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import styles from './styles.module.css';
-
 import { useDispatch } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
     useBillerCategoriesMutation,
     useBillersMutation
@@ -9,6 +9,7 @@ import {
 import Loader from '../Loader';
 import SelectBillerCategory from '../SelectBillerCategory';
 import SelectBillerForms from '../SelectBillerForms';
+import styles from './styles.module.css';
 
 const BillPayment = ({
     action,
@@ -69,15 +70,27 @@ const BillPayment = ({
         console.log['bills'];
         setLoads(true);
     };
-    console.log(billerDatails);
+    const showErrorToastMessage = () => {
+        toast.error(billerCategoriesErr?.data?.message, {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+    };
+    useEffect(() => {
+        if (billerCategoriesErr) {
+            showErrorToastMessage();
+        }
+    }, [billerCategoriesErr]);
     return (
         <div>
+            <ToastContainer />
             {billerCategoriesLoad ? (
                 <Loader />
             ) : loads ? (
                 <SelectBillerForms
                     billerDatails={billerDatails}
                     closeAction={() => closeAction()}
+                    backtoCategories={() => setLoads(false)}
                 />
             ) : (
                 <>

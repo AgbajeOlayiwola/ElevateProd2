@@ -284,12 +284,14 @@ const Profile = () => {
     console.log(countryCodes, flags);
     useEffect(() => {
         countries(affiliate);
-        setAcctNumber(
-            allAccountInfo
-                .filter((account) => account?.isPrimaryAccount === 'Y') // Filter by primary flag
-                .map((account) => account.accountNo)
-                .filter(Boolean)
-        );
+        if (allAccountInfo.length > 0) {
+            setAcctNumber(
+                allAccountInfo
+                    ?.filter((account) => account?.isPrimaryAccount === 'Y') // Filter by primary flag
+                    .map((account) => account.accountNo)
+                    .filter(Boolean)
+            );
+        }
     }, []);
     const [
         verifyTransactionPin,

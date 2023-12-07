@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 
 import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 import ReactPaginate from 'react-paginate';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useTransactionHistoryMutation } from '../../../redux/api/authApi';
 import Loader from '../Loader';
 import MoreAction from '../MoreAction';
@@ -194,9 +196,22 @@ const PaymentTable = ({ title, page }) => {
             (pageNumber + 1) * transactionsPerPage
         );
     console.log(transactions);
+    const showTransHistErrorToastMessage = () => {
+        toast.error('Error Fetching Transaction Fee', {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+        // closeAction();
+    };
+    useEffect(() => {
+        if (transactionHistoryErr) {
+            showTransHistErrorToastMessage();
+        }
+    }, [transactionHistoryErr]);
 
     return (
         <div className={styles.table}>
+            <ToastContainer />
             <div className={styles.tableHeader}>
                 <h2>{title}</h2>
                 <div className={styles.tableFilter}>

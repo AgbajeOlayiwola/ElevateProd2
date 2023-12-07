@@ -14,7 +14,7 @@ import {
     useGetCategoriesMutation,
     useGetProfileMutation
 } from '../../../../redux/api/authApi';
-import { lgasArr } from '../../../ReusableComponents/Data';
+import { affiliateCountries, lgasArr } from '../../../ReusableComponents/Data';
 import DropdownSvg from '../../../ReusableComponents/ReusableSvgComponents/DropdownSvg';
 import SearchSvg from '../../../ReusableComponents/ReusableSvgComponents/SearchSvg';
 const countryToCurrency = require('country-to-currency');
@@ -321,7 +321,20 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         }
     }, [createIAcctSuccess, createIAcctErr]);
 
-    console.log(affiliate);
+    const [flagSvgUrl, setFlagSvgUrl] = useState(null);
+    const desiredAffiliateCode = affiliate;
+
+    useEffect(() => {
+        // Find the affiliate with the matching code
+        const matchedAffiliate = affiliateCountries?.find(
+            (affiliate) => affiliate?.affiliateCode === desiredAffiliateCode
+        );
+
+        // Set the SVG URL of the flag if a matching affiliate is found
+        if (matchedAffiliate) {
+            setFlagSvgUrl(matchedAffiliate?.flags?.svg);
+        }
+    }, [desiredAffiliateCode]);
     return (
         <div className={styles.bodyWrapper}>
             <ToastContainer />
@@ -552,7 +565,11 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                             <div className={styles.phoneHeader}>
                                                 <span>
                                                     <img
-                                                        src={formData?.flag}
+                                                        src={
+                                                            formData?.flag
+                                                                ? formData?.flag
+                                                                : flagSvgUrl
+                                                        }
                                                         alt=""
                                                     />
                                                 </span>
@@ -563,11 +580,15 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                             >
                                                 <p>{formData?.countryCode}</p>
                                                 <input
-                                                    type="number"
+                                                    type="tel" // Change to type="tel" if the input may contain non-numeric characters
                                                     placeholder="812 345 6789"
                                                     value={
                                                         getProfileData?.user
                                                             ?.phoneNumber
+                                                            ? getProfileData
+                                                                  .user
+                                                                  .phoneNumber
+                                                            : ''
                                                     }
                                                     disabled
                                                 />

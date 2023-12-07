@@ -554,8 +554,9 @@
     justify-content: center;
 }
 .diclaimer > p {
-    font-size: 10px;
-    color: #3e3e3e;
+    font-size: 10px !important;
+    color: #3e3e3e85 !important;
+    line-height: 10px !important;
 }
 .recieptDiv {
     padding-bottom: 0px;

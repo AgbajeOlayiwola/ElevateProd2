@@ -2,7 +2,6 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useVerifyTransactionPinMutation } from '../../../../redux/api/authApi';
 import { setLoanRequest } from '../../../../redux/slices/loanRequst';
 import { formatter } from '../../../../utils/formatter/formatter';
 import styles from './styles.module.css';
@@ -103,7 +102,7 @@ const RequestCont = ({ type, title, topup, nextPage }) => {
                         name="ecoSourceAccount"
                         value={acctNummber}
                         onChange={(e) => {
-                            const selectedAccount = allAccountInfo.find(
+                            const selectedAccount = allAccountInfo?.find(
                                 (account) =>
                                     account?.accountNo === e.target.value
                             );
@@ -113,23 +112,25 @@ const RequestCont = ({ type, title, topup, nextPage }) => {
                         }}
                     >
                         <option value="">Select Account To Use</option>
-                        {allAccountInfo
-                            .filter((account) => account.accountNo)
-                            .map((account) => {
-                                return (
-                                    <>
-                                        <option
-                                            className={styles.accntP}
-                                            value={account?.accountNo}
-                                        >
-                                            <p>{account?.accountNo}</p>
-                                            {/* <p>
+                        {allAccountInfo.length > 0
+                            ? allAccountInfo
+                                  ?.filter((account) => account.accountNo)
+                                  .map((account) => {
+                                      return (
+                                          <>
+                                              <option
+                                                  className={styles.accntP}
+                                                  value={account?.accountNo}
+                                              >
+                                                  <p>{account?.accountNo}</p>
+                                                  {/* <p>
                                                         {account?.availableBal.toLocaleString()}
                                                     </p> */}
-                                        </option>
-                                    </>
-                                );
-                            })}
+                                              </option>
+                                          </>
+                                      );
+                                  })
+                            : null}
                     </select>
                 </div>
                 <div className={styles.loanRequestBottom}>

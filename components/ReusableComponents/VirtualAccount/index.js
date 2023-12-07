@@ -1,7 +1,7 @@
 import { Formik } from 'formik';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useOrdrVirtualAccountMutation } from '../../../redux/api/authApi';
 import ButtonComp from '../Button';
@@ -59,6 +59,17 @@ const VirtualAccountFirst = ({
             reset: ordrVirtualAccountReset
         }
     ] = useOrdrVirtualAccountMutation();
+    const showQrToastMessage = () => {
+        toast.error(ordrVirtualAccountErr?.data?.message, {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+    };
+    useEffect(() => {
+        if (ordrVirtualAccountErr) {
+            showQrToastMessage();
+        }
+    }, [ordrVirtualAccountErr]);
     return (
         <Overlay overlay={overlay}>
             <ToastContainer />
@@ -125,31 +136,33 @@ const VirtualAccountFirst = ({
                                                 <option value="">
                                                     Select Account To Use
                                                 </option>
-                                                {allAccountInfo
-                                                    .filter(
-                                                        (account) =>
-                                                            account.accountNo
-                                                    )
-                                                    .map((account) => {
-                                                        return (
-                                                            <>
-                                                                <option
-                                                                    className={
-                                                                        styles.accntP
-                                                                    }
-                                                                    value={
-                                                                        account?.accountNo
-                                                                    }
-                                                                >
-                                                                    <p>
-                                                                        {
-                                                                            account?.accountNo
-                                                                        }
-                                                                    </p>
-                                                                </option>
-                                                            </>
-                                                        );
-                                                    })}
+                                                {allAccountInfo.length > 0
+                                                    ? allAccountInfo
+                                                          .filter(
+                                                              (account) =>
+                                                                  account.accountNo
+                                                          )
+                                                          .map((account) => {
+                                                              return (
+                                                                  <>
+                                                                      <option
+                                                                          className={
+                                                                              styles.accntP
+                                                                          }
+                                                                          value={
+                                                                              account?.accountNo
+                                                                          }
+                                                                      >
+                                                                          <p>
+                                                                              {
+                                                                                  account?.accountNo
+                                                                              }
+                                                                          </p>
+                                                                      </option>
+                                                                  </>
+                                                              );
+                                                          })
+                                                    : null}
                                             </select>
                                             <p className={styles.error}>
                                                 {errors ? (
@@ -201,6 +214,7 @@ const VirtualAccountFirst = ({
                                                         e.target.value
                                                     );
                                                 }}
+                                                type="number"
                                             />
                                         </div>
                                         <br />

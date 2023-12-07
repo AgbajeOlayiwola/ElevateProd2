@@ -32,3 +32,11 @@
     align-items: center;
     height: 100%;
 }
+.returnButton {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    cursor: pointer;
+    width: fit-content;
+    cursor: pointer;
+}
