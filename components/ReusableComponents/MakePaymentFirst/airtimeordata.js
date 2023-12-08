@@ -284,7 +284,7 @@ const AirtimeOrData = ({
                                             <option value="">
                                                 Select Account To Use
                                             </option>
-                                            {allAccountInfo.lenght > 0
+                                            {allAccountInfo.length > 0
                                                 ? allAccountInfo
                                                       .filter(
                                                           (account) =>
