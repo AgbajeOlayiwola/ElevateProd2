@@ -197,7 +197,7 @@ const PaymentTable = ({ title, page }) => {
         );
     console.log(transactions);
     const showTransHistErrorToastMessage = () => {
-        toast.error('Error Fetching Transaction Fee', {
+        toast.error(transactionHistoryErr?.data?.message, {
             position: toast.POSITION.TOP_RIGHT,
             className: 'toast-message'
         });
