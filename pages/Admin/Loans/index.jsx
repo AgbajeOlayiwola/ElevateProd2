@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import EmptyState from '../../../components/ReusableComponents/EmptyState';
@@ -21,6 +22,7 @@ const Loans = () => {
     const [loanRepayment, setLoanRepayment] = useState(false);
     const { allAccountInfo } = useSelector((store) => store);
     const dispatch = useDispatch();
+    const router = useRouter();
     const [
         loanScoring,
         {
@@ -46,16 +48,17 @@ const Loans = () => {
     useEffect(() => {
         getLoans();
     }, []);
-
+    const [filteredData, setFilteredData] = useState();
     useEffect(() => {
         setAcctNumber(
             allAccountInfo
                 ?.filter((account) => account?.isPrimaryAccount === 'Y') // Filter by primary flag
                 .map((account) => account.accountNo)
                 .filter(Boolean)
+                .join(', ') // Join array elements into a string
         );
     }, []);
-    const [filteredData, setFilteredData] = useState();
+
     useEffect(() => {
         loanScoring({
             account: acctNummber,
@@ -64,7 +67,11 @@ const Loans = () => {
         setFilteredData(
             getLoansData?.data?.filter((loan) => loan.accountNo === acctNummber)
         );
-    }, [acctNummber]);
+
+        if (filteredData?.length <= 0) {
+            setStatus('request granted');
+        }
+    }, [acctNummber, getLoansSuccess]);
 
     useEffect(() => {
         if (loanScoringSuccess) {
@@ -138,9 +145,6 @@ const Loans = () => {
                             <LoansHeader
                                 state={state}
                                 status={status}
-                                action={() => {
-                                    setStatus('request granted');
-                                }}
                                 loads={loanScoringLoad}
                                 data={loanScoringData}
                             />
@@ -150,6 +154,7 @@ const Loans = () => {
                             status={status}
                             loads={loanScoringLoad}
                             data={loanScoringData}
+                            account={acctNummber}
                         />
                         {getLoansLoad ? (
                             <Loader />
@@ -162,7 +167,7 @@ const Loans = () => {
                         ) : (
                             <div className={styles.loansBody}>
                                 <EmptyState />
-                                {status === 'default' ? (
+                                {/* {status === 'default' ? (
                                     <p>
                                         Do you want a loan? Confirm your
                                         eligibility.
@@ -177,15 +182,21 @@ const Loans = () => {
                                         You currently do not qualify for a loan.
                                         Keep transacting to qualify.
                                     </p>
-                                ) : status === 'request granted' ? (
-                                    <p>
-                                        You do not have a loan yet. Your loan
-                                        activity will appear here once you
-                                        request for one.
-                                    </p>
-                                ) : null}
+                                ) : status === 'request granted' ? (*/}
+                                <p>
+                                    You do not have a loan yet. Your loan
+                                    activity will appear here once you request
+                                    for one.
+                                </p>
+
                                 {status === 'request granted' ? (
-                                    <button>Request Loan</button>
+                                    <button
+                                        onClick={() => {
+                                            router.push('/Admin/Loans/Request');
+                                        }}
+                                    >
+                                        Request Loan
+                                    </button>
                                 ) : (
                                     <button>Confirm eligibility</button>
                                 )}
