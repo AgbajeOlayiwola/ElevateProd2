@@ -137,7 +137,9 @@ const Liveness = ({ nextStep }) => {
                         'data:image/jpeg;base64,',
                         ''
                     ).trim(),
-                    bvn: profileSetupData?.bvn
+                    bvn: profile?.user?.idNumber
+                        ? profile?.user?.idNumber
+                        : profileSetupData?.bvn
                 };
                 // Perform a facial match with the data
                 faceMatch(faceMMatchData);
@@ -149,7 +151,9 @@ const Liveness = ({ nextStep }) => {
                         'data:image/jpeg;base64,',
                         ''
                     ).trim(),
-                    bvn: profileSetupData?.bvn
+                    bvn: profile?.user?.idNumber
+                        ? profile?.user?.idNumber
+                        : profileSetupData?.bvn
                 };
                 // Perform a facial match with the data
                 faceMatch(faceMMatchData);
@@ -163,7 +167,9 @@ const Liveness = ({ nextStep }) => {
                         'data:image/jpeg;base64,',
                         ''
                     ).trim(),
-                    idNumber: profileSetupData?.bvn.trim()
+                    idNumber: profile?.user?.idNumber
+                        ? profile?.user?.idNumber
+                        : profileSetupData?.bvn.trim()
                 };
                 // Perform a facial match with the data
                 faceMatchWithoutBvn(faceMMatchData);
@@ -175,7 +181,9 @@ const Liveness = ({ nextStep }) => {
                         'data:image/jpeg;base64,',
                         ''
                     ).trim(),
-                    idNumber: profileSetupData?.bvn.trim()
+                    idNumber: profile?.user?.idNumber
+                        ? profile?.user?.idNumber
+                        : profileSetupData?.bvn.trim()
                 };
                 // Perform a facial match with the data
                 faceMatchWithoutBvn(faceMMatchData);
