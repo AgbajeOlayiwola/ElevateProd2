@@ -298,7 +298,6 @@ const Liveness = ({ nextStep }) => {
                     </div>
                 </div>
             </div>
-            // )}
         </>
     );
 };
