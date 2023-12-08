@@ -5,7 +5,7 @@ import Close from '../Close';
 import StorePopup from '../StorePopup';
 import styles from './styles.module.css';
 
-const LoansHeader = ({ state, status, action }) => {
+const LoansHeader = ({ state, status, action, data }) => {
     const router = useRouter();
     const [popup, setPopup] = useState(false);
 

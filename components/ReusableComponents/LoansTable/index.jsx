@@ -28,13 +28,14 @@ const LoansTable = ({ loads, data, repayloan }) => {
                 <p>TRANSACTION ID</p>
                 <p>STATUS</p>
             </div>
-            {data?.map((items, index) => {
-                return (
-                    <div className={styles.loansSingle} key={index}>
-                        <p>{index + 1}</p>
-                        <p>{items.dateCreated}</p>
-                        <p>{items.loanAmount}</p>
-                        {/* <p
+            {data.length > 0
+                ? data?.map((items, index) => {
+                      return (
+                          <div className={styles.loansSingle} key={index}>
+                              <p>{index + 1}</p>
+                              <p>{items.dateCreated}</p>
+                              <p>{items.loanAmount}</p>
+                              {/* <p
                             className={
                                 items.action === 'debit'
                                     ? styles.debit
@@ -44,31 +45,36 @@ const LoansTable = ({ loads, data, repayloan }) => {
                             {items.action === 'debit' ? '-' : '+'}
                             {formatter.format(items.amount)}
                         </p> */}
-                        <p>{items.interest === null ? 0 : items.interest}%</p>
+                              <p>
+                                  {items.interest === null ? 0 : items.interest}
+                                  %
+                              </p>
 
-                        <div
-                            className={
-                                items.status === 'Pending'
-                                    ? styles.pending
-                                    : items.status === 'Failed'
-                                    ? styles.failed
-                                    : styles.success
-                            }
-                        >
-                            <span></span>
-                            <p>{items.status}</p>
-                        </div>
-                        <p
-                            className={styles.viwMore}
-                            onClick={() => {
-                                dispatch(setLoanRepayment(items)), repayloan();
-                            }}
-                        >
-                            view loan
-                        </p>
-                    </div>
-                );
-            })}
+                              <div
+                                  className={
+                                      items.status === 'Pending'
+                                          ? styles.pending
+                                          : items.status === 'Failed'
+                                          ? styles.failed
+                                          : styles.success
+                                  }
+                              >
+                                  <span></span>
+                                  <p>{items.status}</p>
+                              </div>
+                              <p
+                                  className={styles.viwMore}
+                                  onClick={() => {
+                                      dispatch(setLoanRepayment(items)),
+                                          repayloan();
+                                  }}
+                              >
+                                  view loan
+                              </p>
+                          </div>
+                      );
+                  })
+                : null}
         </div>
     );
 };

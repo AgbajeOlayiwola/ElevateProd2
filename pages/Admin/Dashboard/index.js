@@ -44,6 +44,7 @@ import {
     useTransactionsSummaryMutation
 } from '../../../redux/api/authApi';
 import { setAllAccountInfo } from '../../../redux/slices/allAccountInfoSlice';
+import { setCustomerCategory } from '../../../redux/slices/customerCatgory';
 import { setProfile } from '../../../redux/slices/profile';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
@@ -381,6 +382,9 @@ const Dashboard = () => {
     useEffect(() => {
         if (getProfileSuccess) {
             dispatch(setProfile(getProfileData));
+            dispatch(
+                setCustomerCategory(getProfileData?.user?.customerCategory)
+            );
         }
     }, [getProfileSuccess]);
     const showToastAccountBalsrErroMessage = () => {

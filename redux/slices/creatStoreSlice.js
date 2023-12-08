@@ -16,4 +16,3 @@ const createStoreSlice = createSlice({
 const { reducer, actions } = createStoreSlice;
 export const { setCreateStore, clearCreateStore } = actions;
 export default reducer;
-``;

@@ -10,11 +10,10 @@ import {
     useGetLoansMutation,
     useLoanScoringMutation
 } from '../../../redux/api/authApi';
-import { setLoanScoring } from '../../../redux/slices/loanScoring';
 import styles from './styles.module.css';
 
 const Loans = () => {
-    const [status, setStatus] = useState('request granted');
+    const [status, setStatus] = useState('');
     const [state, setState] = useState(false);
     const [sourceAccount, setSourceAccount] = useState();
     const [acctNummber, setAcctNumber] = useState('');
@@ -46,32 +45,37 @@ const Loans = () => {
     useEffect(() => {
         getLoans();
     }, []);
-
     useEffect(() => {
         setAcctNumber(
             allAccountInfo
                 ?.filter((account) => account?.isPrimaryAccount === 'Y') // Filter by primary flag
                 .map((account) => account.accountNo)
                 .filter(Boolean)
+                .join(', ') // Join array elements into a string
         );
     }, []);
     const [filteredData, setFilteredData] = useState();
     useEffect(() => {
-        loanScoring({
-            account: acctNummber,
-            prod_token: 'ECO-ZE9EGP'
-        });
+        // loanScoring({
+        //     account: acctNummber,
+        //     prod_token: 'ECO-ZE9EGP'
+        // });
         setFilteredData(
             getLoansData?.data?.filter((loan) => loan.accountNo === acctNummber)
         );
+        if (filteredData?.length <= 0) {
+            setStatus('request granted');
+        } else {
+            setStatus('');
+        }
     }, [acctNummber]);
 
-    useEffect(() => {
-        if (loanScoringSuccess) {
-            console.log(loanScoringData?.data);
-            dispatch(setLoanScoring(loanScoringData?.data));
-        }
-    }, [loanScoringSuccess]);
+    // useEffect(() => {
+    //     if (loanScoringSuccess) {
+    //         console.log(loanScoringData?.data);
+    //         dispatch(setLoanScoring(loanScoringData?.data));
+    //     }
+    // }, [loanScoringSuccess]);
 
     return (
         <>
@@ -138,11 +142,9 @@ const Loans = () => {
                             <LoansHeader
                                 state={state}
                                 status={status}
-                                action={() => {
-                                    setStatus('request granted');
-                                }}
                                 loads={loanScoringLoad}
                                 data={loanScoringData}
+                                datas={filteredData}
                             />
                         </div>
                         <LoansMiddle
@@ -162,7 +164,7 @@ const Loans = () => {
                         ) : (
                             <div className={styles.loansBody}>
                                 <EmptyState />
-                                {status === 'default' ? (
+                                {/* {status === 'default' ? (
                                     <p>
                                         Do you want a loan? Confirm your
                                         eligibility.
@@ -177,13 +179,13 @@ const Loans = () => {
                                         You currently do not qualify for a loan.
                                         Keep transacting to qualify.
                                     </p>
-                                ) : status === 'request granted' ? (
-                                    <p>
-                                        You do not have a loan yet. Your loan
-                                        activity will appear here once you
-                                        request for one.
-                                    </p>
-                                ) : null}
+                                ) : status === 'request granted' ? ( */}
+                                <p>
+                                    You do not have a loan yet. Your loan
+                                    activity will appear here once you request
+                                    for one.
+                                </p>
+                                {/* ) : null} */}
                                 {status === 'request granted' ? (
                                     <button>Request Loan</button>
                                 ) : (

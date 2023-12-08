@@ -28,10 +28,12 @@ import analyticsDataReducer from '../slices/analyticsData';
 import cartReducer from '../slices/cart';
 import cartItemReducer from '../slices/cartItems';
 import createSToreReducer from '../slices/creatStoreSlice';
+import customerCategoryReducer from '../slices/customerCatgory';
 import dynamiQrDataReeducer from '../slices/dynamicQrSlice';
 import existingUserDetailsReducer from '../slices/existingUserData';
 import faceMatchDetailsReducr from '../slices/facematchSlice';
 import languageReducer from '../slices/language';
+import loanRepaymentReducer from '../slices/loanRepayment';
 import loanRequestReducer from '../slices/loanRequst';
 import moreAccountNumberDetailsReducer from '../slices/moreAccountNumberDetails';
 import pinnedReducer from '../slices/pinned';
@@ -43,7 +45,6 @@ import transferReducer from '../slices/transferSlice';
 import ussdDataReducer from '../slices/ussddataSlice';
 import viewInventoryReducer from '../slices/viewInventorySlice';
 import viewProductDataReducer from '../slices/viewProductSlice';
-import loanRepaymentReducer from '../slices/loanRepayment';
 const reducers = combineReducers({
     [authApi.reducerPath]: authApi.reducer,
     [docsApi.reducerPath]: docsApi.reducer,
@@ -75,7 +76,8 @@ const reducers = combineReducers({
     affiliate: affiliateReducer,
     allInventories: allStoreInventoriesReducer,
     loanRequest: loanRequestReducer,
-    loanRepayment: loanRepaymentReducer
+    loanRepayment: loanRepaymentReducer,
+    customerCategory: customerCategoryReducer
 });
 
 const persistConfig = {
@@ -108,7 +110,8 @@ const persistConfig = {
         'allInventories',
         'loanRequest',
         'loanScoring',
-        'loanRepayment'
+        'loanRepayment',
+        'customerCategory'
     ]
 };
 

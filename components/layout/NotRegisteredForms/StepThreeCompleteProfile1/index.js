@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ButtonComp from '../../../ReusableComponents/Button';
 import { ButtonWrapper, CardHeadingBVN, LeftHeading } from './styles.module';
 import styles from './styles.module.css';
@@ -49,7 +49,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     const [lastName, setLastName] = useState('');
     const [gender, setGender] = useState('');
     const [dateOfBirh, setDateOfBirh] = useState();
-
+    const { customerCategory } = useSelector((store) => store);
     //
     const [
         getProfile,
