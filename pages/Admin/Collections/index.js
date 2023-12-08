@@ -90,9 +90,10 @@ const Collections = () => {
     useEffect(() => {
         setAcctNumber(
             allAccountInfo
-                .filter((account) => account?.isPrimaryAccount === 'Y') // Filter by primary flag
+                ?.filter((account) => account?.isPrimaryAccount === 'Y') // Filter by primary flag
                 .map((account) => account.accountNo)
                 .filter(Boolean)
+                .join(', ') // Join array elements into a string
         );
     }, []);
     // console.log(acctNummber[0].toString());
@@ -102,9 +103,9 @@ const Collections = () => {
             mobileNumber: profile?.user?.phoneNumber,
             merchantName: profile?.user?.firstName,
             merchantAddress: profile?.user?.address,
-            area: '',
-            city: '',
-            accountNumber: acctNummber[0],
+            area: profile?.user?.address,
+            city: profile?.user?.address,
+            accountNumber: acctNummber,
             nameOnQrCode: profile?.user?.firstName,
 
             referalCode: ''
