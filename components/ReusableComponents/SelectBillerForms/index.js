@@ -309,7 +309,7 @@ const SelectBillerForms = ({
                                     <option value="">
                                         Select Account To Use
                                     </option>
-                                    {allAccountInfo > length > 0
+                                    {allAccountInfo.length > 0
                                         ? allAccountInfo
                                               .filter(
                                                   (account) => account.accountNo

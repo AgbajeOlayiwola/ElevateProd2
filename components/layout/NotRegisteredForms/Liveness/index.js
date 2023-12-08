@@ -1,5 +1,4 @@
 import { Formik } from 'formik';
-import Script from 'next/script';
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import 'react-toastify/dist/ReactToastify.css';
@@ -185,12 +184,11 @@ const Liveness = ({ nextStep }) => {
     }, [webcamRef]);
     return (
         <>
-            {affiliatData === 'ENG' ? (
-                <div className={styles.body}>
+            {/* {affiliatData === 'ENG' ? ( */}
+            {/* <div className={styles.body}>
                     <Script src="https://cdn.smileidentity.com/inline/v1/js/script.min.js"></Script>
                     {/* <ToastContainer /> */}
-
-                    <div className={styles.cover}>
+            {/* <div className={styles.cover}>
                         <div className={styles.imageOut}>
                             <p className={styles.headerSub}>
                                 We will need to check face liveliness to verify
@@ -211,98 +209,96 @@ const Liveness = ({ nextStep }) => {
                             />
                         </div>
                     </div>
-                </div>
-            ) : (
-                <div className={styles.body}>
-                    <div className={styles.cover}>
-                        <div className={styles.imageOut}>
-                            <Formik
-                                onSubmit={(values, { setSubmitting }) => {
-                                    setSubmitting(false);
-                                }}
-                            >
-                                {({
-                                    values,
-                                    errors,
-                                    touched,
-                                    handleChange,
-                                    setFieldValue,
-                                    handleSubmit
-                                }) => (
-                                    <form>
-                                        <div>
-                                            <p className={styles.takeSelf}>
-                                                Take a Lively Selfie
-                                            </p>
-                                            <p className={styles.finish}>
-                                                Finish up with a clear photo of
-                                                your face to verify your
-                                                identity.
-                                            </p>
+                </div>  */}
+            <div className={styles.body}>
+                <div className={styles.cover}>
+                    <div className={styles.imageOut}>
+                        <Formik
+                            onSubmit={(values, { setSubmitting }) => {
+                                setSubmitting(false);
+                            }}
+                        >
+                            {({
+                                values,
+                                errors,
+                                touched,
+                                handleChange,
+                                setFieldValue,
+                                handleSubmit
+                            }) => (
+                                <form>
+                                    <div>
+                                        <p className={styles.takeSelf}>
+                                            Take a Lively Selfie
+                                        </p>
+                                        <p className={styles.finish}>
+                                            Finish up with a clear photo of your
+                                            face to verify your identity.
+                                        </p>
 
-                                            {faceMatchErr ? (
-                                                <p className={styles.error}>
-                                                    {faceMatchErr.data.message}
-                                                </p>
-                                            ) : null}
-                                            <div
-                                                className={
-                                                    succes ===
-                                                    'facial verification successful'
-                                                        ? // succes === 'success'
-                                                          styles.imageOuter
-                                                        : faceMatchErr ||
-                                                          faceMatchWithoutBvnErr
-                                                        ? styles.errorInner
-                                                        : styles.imageInner
-                                                }
-                                            >
-                                                <Webcam
-                                                    audio={false}
-                                                    screenshotFormat="image/jpeg"
-                                                    videoConstraints={
-                                                        videoConstraints
-                                                    }
-                                                    ref={webcamRef}
-                                                />
-                                            </div>
-                                        </div>
-                                        {faceMatchLoad ? (
-                                            <p>
-                                                Hold On Your Face Is Being
-                                                Verified.....
+                                        {faceMatchErr ? (
+                                            <p className={styles.error}>
+                                                {faceMatchErr.data.message}
                                             </p>
                                         ) : null}
-
-                                        <ButtonComp
-                                            active={'active'}
-                                            disabled={true}
-                                            // onClick={
-                                            //     succes ===
-                                            //     'facial verification successful'
-                                            //         ? action
-                                            //         : capture
-                                            // }
-                                            onClick={capture}
-                                            type="button"
-                                            loads={
-                                                faceMatchLoad ||
-                                                faceMatchWithoutBvnLoad
-                                            }
-                                            text={
+                                        <div
+                                            className={
                                                 succes ===
                                                 'facial verification successful'
-                                                    ? 'Continue'
-                                                    : 'Snap'
+                                                    ? // succes === 'success'
+                                                      styles.imageOuter
+                                                    : faceMatchErr ||
+                                                      faceMatchWithoutBvnErr
+                                                    ? styles.errorInner
+                                                    : styles.imageInner
                                             }
-                                        />
-                                    </form>
-                                )}
-                            </Formik>
-                        </div>
+                                        >
+                                            <Webcam
+                                                audio={false}
+                                                screenshotFormat="image/jpeg"
+                                                videoConstraints={
+                                                    videoConstraints
+                                                }
+                                                ref={webcamRef}
+                                            />
+                                        </div>
+                                    </div>
+                                    {faceMatchLoad ? (
+                                        <p>
+                                            Hold On Your Face Is Being
+                                            Verified.....
+                                        </p>
+                                    ) : null}
+
+                                    <ButtonComp
+                                        active={'active'}
+                                        disabled={true}
+                                        // onClick={
+                                        //     succes ===
+                                        //     'facial verification successful'
+                                        //         ? action
+                                        //         : capture
+                                        // }
+                                        onClick={capture}
+                                        type="button"
+                                        loads={
+                                            faceMatchLoad ||
+                                            faceMatchWithoutBvnLoad
+                                        }
+                                        text={
+                                            succes ===
+                                            'facial verification successful'
+                                                ? 'Continue'
+                                                : 'Snap'
+                                        }
+                                    />
+                                </form>
+                            )}
+                        </Formik>
                     </div>
                 </div>
-            )}
+            </div>
+            // )}
         </>
     );
 };
