@@ -22,7 +22,13 @@ import styles from './styles.module.css';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
+const EditStores = ({
+    showProduct,
+    inventory,
+    nextPage,
+    goBackward,
+    viewOrderDetails
+}) => {
     const { storeSlice } = useSelector((store) => store);
     const [preview, setPreview] = useState(false);
     const [previewSingle, setPreviewSingle] = useState(false);
@@ -604,7 +610,10 @@ const EditStores = ({ showProduct, inventory, nextPage, goBackward }) => {
                         nextPage={nextPage}
                     />
                 ) : actionText == 'Orders' ? (
-                    <Orders actionText={actionText} />
+                    <Orders
+                        actionText={actionText}
+                        viewOrderDetails={viewOrderDetails}
+                    />
                 ) : actionText === 'Logistics' ? (
                     <h2 className={styles.actionText}>{actionText}</h2>
                 ) : null}

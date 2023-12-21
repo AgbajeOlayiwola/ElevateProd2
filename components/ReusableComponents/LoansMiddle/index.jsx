@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
     useLoanBalanceMutation,
     useLoanScoringMutation
 } from '../../../redux/api/authApi';
+import { setLoanData } from '../../../redux/slices/loansData';
 import { formatter } from '../../../utils/formatter/formatter';
 import { getMonthlyPayment } from '../../../utils/getNumberSuffix';
 import LoansSvg from '../LoansSvg';
@@ -12,13 +13,13 @@ import styles from './styles.module.css';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
 const LoansMiddle = ({ status, state, loads, data, account }) => {
+    const dispatch = useDispatch();
     const affiliate = localStorage.getItem('affiliateCode');
     const [acctNummber, setAcctNumber] = useState('');
     const { allAccountInfo } = useSelector((store) => store);
     const [
         loanBalance,
         {
-            data: loanBalanceData,
             isLoading: loanBalanceLoad,
             isSuccess: loanBalanceSuccess,
             isError: loanBalanceFalse,
@@ -62,6 +63,11 @@ const LoansMiddle = ({ status, state, loads, data, account }) => {
 
         return new Intl.DateTimeFormat('en-US', options).format(originalDate);
     }
+    useEffect(() => {
+        if (loanScoringSuccess || loanBalanceSuccess) {
+            dispatch(setLoanData(loanScoringData, loanBalanceData));
+        }
+    }, [loanScoringSuccess, loanBalanceSuccess]);
 
     const router = useRouter();
     return (

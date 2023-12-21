@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import EditStores from '../../../components/layout/Storefront/EditStores';
 import ViewProduct from '../../../components/layout/Storefront/EditStores/ViewProduct';
 import AddNewInventoryForm from '../../../components/layout/Storefront/Inventory/NewInventoryForm';
+import OrderDetails from '../../../components/layout/Storefront/OrderDetails';
 import Stores from '../../../components/layout/Storefront/Stores';
 import styles from './styles.module.css';
 
@@ -36,6 +37,7 @@ const Storefront = () => {
                 return (
                     <EditStores
                         goBackward={() => setPage(0)}
+                        viewOrderDetails={() => setPage(4)}
                         showProduct={showProduct}
                         inventory={inventory}
                         nextPage={nextPage}
@@ -57,6 +59,8 @@ const Storefront = () => {
                         backToInventories={() => setPage(1)}
                     />
                 );
+            case 4:
+                return <OrderDetails back={() => setPage(1)} />;
         }
     };
     return <>{multi()}</>;

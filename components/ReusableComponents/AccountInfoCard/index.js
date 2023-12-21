@@ -172,58 +172,69 @@ const AccountsInfoCard = ({ userProfileData }) => {
                     <h2>Other Accounts</h2>
                     <div className={styles.otherAccounts}>
                         {allAccountInfo?.length > 0
-                            ? allAccountInfo?.map((account) => {
-                                  return (
-                                      <div>
-                                          <div className={styles.accntP}>
-                                              <p
-                                                  onClick={(e) => {
-                                                      setCopyAcctInfo(
-                                                          account?.accountNo
-                                                      );
-                                                  }}
-                                              >
-                                                  {account?.accountNo}
-                                              </p>
-
-                                              {outType ? (
-                                                  <p>******</p>
-                                              ) : (
-                                                  <p>
-                                                      {getSymbolFromCurrency(
-                                                          countryToCurrency[
-                                                              `${affiliate?.substring(
-                                                                  1
-                                                              )}`
-                                                          ]
-                                                      )}
-                                                      {account?.availableBal ===
-                                                      0
-                                                          ? '0.00'
-                                                          : parseFloat(
-                                                                account?.availableBal
-                                                            )
-                                                                .toFixed(2)
-                                                                .toLocaleString(
-                                                                    'en-US'
-                                                                )}
+                            ? allAccountInfo
+                                  ?.filter((account) => account.accountNo)
+                                  .filter(
+                                      (account) =>
+                                          account?.isPrimaryAccount !== 'Y'
+                                  )
+                                  .map((account) => {
+                                      return (
+                                          <div>
+                                              <div className={styles.accntP}>
+                                                  <p
+                                                      onClick={(e) => {
+                                                          setCopyAcctInfo(
+                                                              account?.accountNo
+                                                          );
+                                                      }}
+                                                  >
+                                                      {account?.accountNo}
                                                   </p>
+
+                                                  {outType ? (
+                                                      <p>******</p>
+                                                  ) : (
+                                                      <p>
+                                                          {getSymbolFromCurrency(
+                                                              countryToCurrency[
+                                                                  `${affiliate?.substring(
+                                                                      1
+                                                                  )}`
+                                                              ]
+                                                          )}
+                                                          {account?.availableBal ===
+                                                          0
+                                                              ? '0.00'
+                                                              : parseFloat(
+                                                                    account?.availableBal
+                                                                )
+                                                                    .toFixed(2)
+                                                                    .toLocaleString(
+                                                                        'en-US'
+                                                                    )}
+                                                      </p>
+                                                  )}
+                                              </div>
+                                              {account?.isPrimaryAccount ===
+                                              'Y' ? (
+                                                  <div
+                                                      className={styles.success}
+                                                  >
+                                                      <AiFillCheckCircle />
+                                                  </div>
+                                              ) : (
+                                                  <div>
+                                                      {' '}
+                                                      <FaRegCircle />
+                                                  </div>
                                               )}
+                                              <hr
+                                                  className={styles.accountHr}
+                                              />
                                           </div>
-                                          {account?.isPrimaryAccount === 'Y' ? (
-                                              <div className={styles.success}>
-                                                  <AiFillCheckCircle />
-                                              </div>
-                                          ) : (
-                                              <div>
-                                                  {' '}
-                                                  <FaRegCircle />
-                                              </div>
-                                          )}
-                                          <hr className={styles.accountHr} />
-                                      </div>
-                                  );
-                              })
+                                      );
+                                  })
                             : null}
                     </div>
                 </>

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import styles from './styles.module.css';
+import React, { useEffect, useState } from 'react';
 import Loader from '../Loader';
+import styles from './styles.module.css';
 
 const ButtonComp = ({
     width,
@@ -32,7 +31,9 @@ const ButtonComp = ({
             {disabled ? (
                 <button
                     className={
-                        active == 'active' ? styles.abled : styles.disabled
+                        active == 'active' || loads
+                            ? styles.abled
+                            : styles.disabled
                     }
                     style={{
                         width,
@@ -44,13 +45,16 @@ const ButtonComp = ({
                     }}
                     type={type}
                     onClick={onClick}
+                    disabled={loads}
                 >
                     {loading ? <Loader /> : text}
                 </button>
             ) : (
                 <button
                     className={
-                        active == 'active' ? styles.abled : styles.disabled
+                        active == 'active' || loads
+                            ? styles.abled
+                            : styles.disabled
                     }
                     style={{
                         width,
