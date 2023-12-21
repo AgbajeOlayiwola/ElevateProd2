@@ -495,11 +495,7 @@ const Dashboard = () => {
                                 <TotalCollections />
                                 <p>Total Outflow</p>
                                 <p className={styles.Success}>
-                                    {getSymbolFromCurrency(
-                                        countryToCurrency[
-                                            `${affiliate?.substring(1)}`
-                                        ]
-                                    )}
+                                    {currency}
                                     {transactionsSummaryLoad ? (
                                         <Loader />
                                     ) : (
@@ -514,11 +510,7 @@ const Dashboard = () => {
                                 <TotalPendingCollections />
                                 <p>Total Inflow</p>
                                 <p className={styles.pending}>
-                                    {getSymbolFromCurrency(
-                                        countryToCurrency[
-                                            `${affiliate?.substring(1)}`
-                                        ]
-                                    )}
+                                    {currency}
                                     {transactionsSummaryLoad ? (
                                         <Loader />
                                     ) : (
@@ -533,11 +525,7 @@ const Dashboard = () => {
                                 <TotlaCollctionsSvg />
                                 <p>Total Transaction</p>
                                 <p className={styles.filed}>
-                                    {getSymbolFromCurrency(
-                                        countryToCurrency[
-                                            `${affiliate?.substring(1)}`
-                                        ]
-                                    )}
+                                    {currency}
                                     {transactionsSummaryLoad ? (
                                         <Loader />
                                     ) : (
@@ -648,13 +636,7 @@ const Dashboard = () => {
                                                             }
                                                         >
                                                             <p>
-                                                                {getSymbolFromCurrency(
-                                                                    countryToCurrency[
-                                                                        `${affiliate?.substring(
-                                                                            1
-                                                                        )}`
-                                                                    ]
-                                                                )}{' '}
+                                                                {currency}
                                                                 {parseFloat(
                                                                     item.transactionAmount
                                                                 ).toLocaleString(
@@ -756,13 +738,9 @@ const Dashboard = () => {
                                                                         }
                                                                     >
                                                                         <p>
-                                                                            {getSymbolFromCurrency(
-                                                                                countryToCurrency[
-                                                                                    `${affiliate?.substring(
-                                                                                        1
-                                                                                    )}`
-                                                                                ]
-                                                                            )}{' '}
+                                                                            {
+                                                                                currency
+                                                                            }
                                                                             {parseFloat(
                                                                                 item.transactionAmount
                                                                             ).toLocaleString(
@@ -951,6 +929,11 @@ const Dashboard = () => {
                                         {getAcctBalsData?.data
                                             .filter(
                                                 (account) => account.accountNo
+                                            )
+                                            .filter(
+                                                (account) =>
+                                                    account?.isPrimaryAccount !==
+                                                    'Y'
                                             )
                                             .map((account) => {
                                                 return (
@@ -1158,13 +1141,7 @@ const Dashboard = () => {
                                                                 }
                                                             >
                                                                 <p>
-                                                                    {getSymbolFromCurrency(
-                                                                        countryToCurrency[
-                                                                            `${affiliate?.substring(
-                                                                                1
-                                                                            )}`
-                                                                        ]
-                                                                    )}{' '}
+                                                                    {currency}{' '}
                                                                     {parseFloat(
                                                                         item.transactionAmount
                                                                     ).toLocaleString(
@@ -1287,13 +1264,9 @@ const Dashboard = () => {
                                                                             }
                                                                         >
                                                                             <p>
-                                                                                {getSymbolFromCurrency(
-                                                                                    countryToCurrency[
-                                                                                        `${affiliate?.substring(
-                                                                                            1
-                                                                                        )}`
-                                                                                    ]
-                                                                                )}{' '}
+                                                                                {
+                                                                                    currency
+                                                                                }{' '}
                                                                                 {parseFloat(
                                                                                     item.transactionAmount
                                                                                 ).toLocaleString(

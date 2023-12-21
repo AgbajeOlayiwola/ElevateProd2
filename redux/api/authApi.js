@@ -1250,10 +1250,155 @@ export const authApi = createApi({
                     body: {}
                 };
             }
+        }),
+        createInvoice: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'create-e-invoice',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        getInvoice: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'get-e-invoice',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        markInvoice: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'invoice-mark-paid',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        getAllInvoice: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'get-e-invoices',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        deleteInvoice: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'delete-e-invoice',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        invoiceStats: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'overview-stats',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        createCustomer: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'create-customer',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        getAllCustomers: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'get-all-customers',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        deleteAllCustomers: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'delete-all-customers',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        deleteCustomer: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'customer-delete-all',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        getCustomer: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'get-customer',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        editCustomer: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'customer-edit',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+
+        unblockCard: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'unblock-card',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        blockCard: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'block-card',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        getDebitCards: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'get-debitcard',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        createDebit: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'card-request',
+                    method: 'post',
+                    body
+                };
+            }
         })
         // logistics-disable-provider
         // logistics-enable-provider
-        // logistics-gig-capture-shipment
+        // lo~gistics-gig-capture-shipment
         // logistics-gig-shipment-price
         // logistics-gig-stations
         // logistics-providers

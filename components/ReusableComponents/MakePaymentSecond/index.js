@@ -111,8 +111,16 @@ const MakePaymentSecond = ({
     }, [singleTransferSuccess]);
     const bulkTransferAction = (e) => {
         e.preventDefault();
+        const transactionsWithoutAccountNumber = transfer.map(
+            ({ accountNumber, ...rest }) => rest
+        );
+        const accountNumbersString = transfer
+            .map(({ accountNumber }) => accountNumber)
+            .join(',');
+
         const data = {
-            ...transfer,
+            accountNumber: accountNumbersString,
+            transactions: transactionsWithoutAccountNumber,
             transactionPin: otpValue
         };
         console.log(data);
@@ -149,15 +157,26 @@ const MakePaymentSecond = ({
     };
     useEffect(() => {
         if (bulkTransferSuccess) {
-            showBulkSuccessToastMessage();
+            if (bulkTransferData?.responseCode === 'E04') {
+                showBulkErrorToastMessage();
+            } else {
+                showBulkSuccessToastMessage();
+            }
         }
     }, [bulkTransferSuccess]);
 
     const showBulkErrorToastMessage = () => {
-        toast.error(bulkTransferErr?.data?.message, {
-            position: toast.POSITION.TOP_RIGHT,
-            className: 'toast-message'
-        });
+        if (bulkTransferData?.responseCode === 'E04') {
+            toast.error(bulkTransferData?.responseMessage, {
+                position: toast.POSITION.TOP_RIGHT,
+                className: 'toast-message'
+            });
+        } else {
+            toast.error(bulkTransferErr?.data?.message, {
+                position: toast.POSITION.TOP_RIGHT,
+                className: 'toast-message'
+            });
+        }
         // closeAction();
     };
     useEffect(() => {
@@ -189,7 +208,7 @@ const MakePaymentSecond = ({
         createTxBeneficiary(data);
     };
     const showBeneToast = () => {
-        toast.success('Bneficiary Addd Successfuly', {
+        toast.success('Bneficiary Added Successfuly', {
             position: toast.POSITION.TOP_RIGHT,
             className: 'toast-message'
         });
@@ -205,7 +224,8 @@ const MakePaymentSecond = ({
         <Overlay overlay={overlay}>
             <ToastContainer />
             <>
-                {singleTransferSuccess || bulkTransferSuccess ? (
+                {singleTransferSuccess ||
+                !bulkTransferData?.responseCode === 'E04' ? (
                     <>
                         <div className={styles.PaymentSecond}>
                             <div className={styles.successPage}>
