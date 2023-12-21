@@ -1,0 +1,367 @@
+.loanLiquidation {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.loanLiquidationHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.loanLiquidationHeader p {
+    color: var(--neutral-color-ecobank-dark-gray, #4e4e4e);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px; /* 106.667% */
+    letter-spacing: 0.2px;
+    margin: 0px;
+}
+
+.loanLiquidationHeader h2 {
+    color: #08102d;
+    font-family: 'Inter', sans-serif;
+    margin: 0px;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 16px; /* 106.667% */
+    letter-spacing: 0.2px;
+}
+
+.loanLiquidationMiddle {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.loanLiquidationMiddle > p {
+    margin: 0px;
+    color: #3e3e3e;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.loanLiquidationType {
+    display: flex;
+    border: 1px solid #dbdbdb;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.loanLiquidationType h2 {
+    margin: 0px;
+    background: #f8f8f8;
+    width: 50%;
+    color: #7a7978;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    padding: 16px 0px;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    box-sizing: border-box;
+    line-height: normal;
+    cursor: pointer;
+}
+
+.loanLiquidationType .active {
+    background: #6ccf00;
+    border-radius: 8px;
+    color: #fff;
+}
+
+.loanLiquidationBottom {
+    border-radius: 12px;
+    border: 1px solid #dbdbdb;
+    background: #f8f8f8;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    box-sizing: border-box;
+}
+
+.loanLiquidationPeer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.loanLiquidationGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.loanLiquidationGroup label {
+    color: #3e3e3e;
+    font-family: 'Inter', sans-serif;
+    margin: 0px;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.loanLiquidationGroup input {
+    border-radius: 8px;
+    border: 1px solid #dbdbdb;
+    background: #fff;
+}
+
+.loanDrag {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.loanAmount {
+    width: 424px;
+    margin: 0px auto;
+    height: 4px;
+    border-radius: 22px;
+    background: #dbdbdb;
+}
+
+.thumb {
+    width: 20px;
+    border: 1px solid #fff;
+    height: 20px;
+    border-radius: 50%;
+    position: relative;
+    left: 0px;
+    top: -7px;
+    background: #6ccf00;
+    cursor: pointer;
+}
+
+.sliderText {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sliderText p {
+    color: #3e3e3e;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.loanLiquidateMethod {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.loanLiquidateMethod > p {
+    color: #3e3e3e;
+    font-family: 'Inter', sans-serif;
+    margin: 0px;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.loanLiquidateMethods {
+    display: flex;
+    width: 100%;
+    gap: 12px;
+}
+
+.loanLiquidateMethods div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    flex-direction: column;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 0px 27px 13px rgba(204, 204, 204, 0.2);
+    padding: 10px 4px;
+    box-sizing: border-box;
+    width: 100%;
+    cursor: pointer;
+}
+
+.loanLiquidateMethods div p {
+    margin: 0px;
+    color: #102572;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 15px; /* 125% */
+}
+
+.loanLiquidationGroups {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.loanLiquidateMethods .active {
+    border-radius: 8px;
+    border: 2px solid rgba(0, 91, 130, 0.1);
+    background: var(--primary-deep-blue, #102572);
+    box-shadow: 0px 0px 27px 13px rgba(204, 204, 204, 0.2);
+}
+
+.loanLiquidateMethods .active p {
+    color: #fff;
+}
+
+.loansLiquidateBank {
+    display: flex;
+    flex-direction: column;
+    /* gap: 12px; */
+}
+
+.loansLiquidateBank div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0px;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.loansLiquidateBank div:last-child {
+    border: none;
+}
+
+.loansLiquidateBank div p {
+    margin: 0px;
+    color: #7a7978;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.loansLiquidateBank div h2 {
+    margin: 0px;
+    color: #2b4551;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.loansLiquidateBank div h2 span {
+    border-radius: 4px;
+    background: rgba(16, 37, 114, 0.1);
+    padding: 4px 8px;
+    box-sizing: border-box;
+    color: var(--primary-deep-blue, #102572);
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.loanTerms {
+    display: flex;
+    align-items: center;
+}
+
+.loanTerms input {
+    width: 20px;
+}
+
+.loanTerms p {
+    color: #2f2f2f;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.loanTerms p span {
+    color: var(--primary-deep-blue, #102572);
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration-line: underline;
+}
+
+.loanButtons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.loanButtons button {
+    width: 174px;
+}
+
+.successCont {
+    width: 100%;
+    padding: 40px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.successSvg {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.successText {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.successText h2 {
+    color: #2b4551;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    margin: 0px;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.successText p {
+    color: #121212;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    margin: 0px;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 21px */
+}
+
+.successText p span {
+    color: var(--primary-deep-blue, #102572);
+    font-weight: 700;
+}
+
+.successCont button {
+    width: 255px;
+    margin: 0px auto;
+}

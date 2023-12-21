@@ -1,0 +1,55 @@
+.txtDiv {
+    display: flex;
+    flex-direction: column;
+}
+
+.txtDiv textarea {
+    display: flex;
+    height: 153px;
+    padding: 16px;
+    align-items: flex-start;
+    gap: 8px;
+    align-self: stretch;
+    border-radius: 8px;
+    background: #f4f4f4;
+    border: none;
+    margin-top: 10px;
+}
+.stepThree {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.stepThree label {
+    color: #7a7978;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+.stepThree input {
+    margin-top: 10px;
+    border: none;
+}
+.stepThree select {
+    margin-top: 10px;
+    border: none;
+}
+.button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.button button {
+    width: 45%;
+}
+.saveAsDrafr {
+    cursor: pointer;
+    color: var(--primary-deep-blue, #102572);
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}

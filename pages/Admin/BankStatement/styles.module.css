@@ -1,0 +1,444 @@
+.chooseDate {
+    /* width: fit-content; */
+    display: flex;
+    justify-content: space-between;
+}
+.statementCover {
+    height: fit-content;
+    /* background: #fefefe;
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08); */
+    border-radius: 15px;
+    padding: 20px 15px;
+}
+.chooseDate > select {
+    width: 30%;
+}
+.errorP {
+    width: 100%;
+    text-align: center;
+    color: red !important;
+}
+.chooseDate div {
+    cursor: pointer;
+    background: #7fbb01;
+    border-radius: 16px;
+    padding: 12px 24px;
+}
+.italisize {
+    font-size: 13px;
+    color: #102572;
+}
+.chooseDate p {
+    margin: 0px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #ffffff;
+}
+
+.balanceStatement {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.balanceStatement div {
+    width: 32%;
+    background: #f8f8f8;
+    border: 1px solid #dbdbdb;
+    box-sizing: border-box;
+    padding: 32px;
+    border-radius: 24px;
+}
+
+.balanceStatement div p {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 18px;
+    margin-bottom: 12px;
+    color: #545454;
+}
+
+.balanceStatement div h2 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    letter-spacing: 0.02em;
+    color: #001e28;
+}
+
+.generateHead {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    cursor: pointer;
+    margin-bottom: 64px;
+}
+
+.formGroup {
+    margin-top: 24px;
+}
+
+.formGroup label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    display: block;
+    margin-bottom: 8px;
+    color: #7a7978;
+}
+
+.formGroup input {
+    background: #f4f4f4;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3e3e3e;
+}
+
+.table {
+    padding: 1px 32px;
+    box-shadow: 4px 14px 34px -11px #ededed;
+    border-radius: 16px;
+    background-color: white;
+    margin-top: 32px;
+}
+.tables {
+    width: 100%;
+}
+
+.tableHeader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.tableHeader h2 {
+    color: #102572;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    line-height: 19.36px;
+}
+
+.tableHeader svg {
+    margin-left: 20px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.tableFilter {
+    display: flex;
+    /* width: 40%; */
+    justify-content: space-between;
+}
+
+.tableFilter div {
+    width: 239px !important;
+    border-radius: 8px;
+    border: 1px solid #dae1ff;
+    display: flex;
+    background-color: transparent;
+}
+
+.tableFilter div img {
+    margin-left: 16px;
+    width: 10px;
+}
+
+.tableFilter input {
+    border: none;
+    padding: 8px 16px;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: transparent;
+}
+
+.tableFilter input::placeholder {
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'Inter', sans-serif;
+    line-height: 17px;
+    color: #bfbfbf;
+}
+
+.tableFilter select {
+    width: 107px;
+    margin: 0px;
+    background-color: #005b82;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    padding: 8px 16px;
+    margin-left: 16px;
+    color: white;
+    border: none;
+    background-image: url(/Assets/Svgs/Vector\ 26.svg);
+    background-position-x: 90%;
+    background-position-y: 55%;
+}
+
+.tableFilter button span {
+    margin-left: 16px;
+}
+
+.TableDetailHeader {
+    display: flex;
+    width: 100%;
+    background: #f5f6fa;
+    padding: 16px 0px 16px 24px;
+    border-radius: 16px;
+}
+
+.tables {
+    width: 100%;
+    display: none;
+}
+
+.TableDetailHeader p {
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: #3e3e3e;
+    line-height: 17px;
+    margin: 0px;
+    text-align: left;
+}
+
+.beneficiary {
+    width: 40%;
+}
+
+.type {
+    width: 15%;
+}
+
+.amount {
+    width: 15%;
+    text-align: center;
+}
+.error {
+    width: 14%;
+    color: red !important;
+}
+
+.bank {
+    width: 14%;
+    color: green !important;
+}
+
+.date {
+    width: 12%;
+}
+
+.more {
+    width: 4%;
+}
+.benes {
+    padding-right: 42px;
+    overflow: scroll;
+    width: 40%;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+}
+.benes::-webkit-scrollbar {
+    display: none;
+}
+
+.beneNar {
+    display: inline-block;
+    white-space: nowrap;
+    width: 97%;
+    color: #102572;
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+}
+
+.beneNar::-webkit-scrollbar {
+    display: none;
+}
+.paginationBtns {
+    display: flex;
+    width: 40%;
+    justify-content: space-between;
+    margin: 20px auto;
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+.paginationBtns li {
+    padding: 10px;
+    border-radius: 5px;
+    /* border: 1px solid #6ccf00; */
+    color: #6ccf00;
+    /* cursor: pointer; */
+    font-size: 15px;
+}
+
+.paginationBtns a {
+    cursor: pointer;
+}
+
+.paginationActive {
+    background-color: #6ccf00;
+    color: white;
+}
+
+.paginationActive a {
+    color: white;
+}
+
+.TableDetailBody {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0px 0px 0px 24px;
+    align-items: center;
+    border-bottom: 2px solid #f6f6f6;
+    justify-content: space-between;
+}
+
+.TableDetailBody > p {
+    color: #455a64;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17%;
+    font-family: 'Inter', sans-serif;
+    text-align: left;
+    margin: 0px;
+}
+.TableDetailBody .bene {
+    font-size: 16px;
+    color: #102572;
+    width: 40%;
+    line-height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-align: left;
+}
+
+.TableDetailBody .transfer {
+    color: #2f2f2f;
+    width: 15%;
+}
+
+.TableDetailBody .amount {
+    font-weight: 700;
+    color: #455a64;
+    width: 15%;
+    text-align: center;
+}
+
+.bank {
+    width: 14%;
+}
+.accountNumbers {
+    width: 20%;
+}
+.date {
+    width: 30%;
+}
+
+.noRecent {
+    text-align: center;
+    margin: 20px 0px;
+}
+.generateCover {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 60px;
+}
+.tableFilters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 36px;
+}
+
+.tableFilters > h2 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    padding: 16px 32px;
+    background: #ffffff;
+    border: 1px solid #7fbb01;
+    border-radius: 12px;
+    cursor: pointer;
+    color: #7fbb01;
+}
+@media screen and (max-width: 995px) {
+    .balanceStatement div {
+        width: 80%;
+        background: #f8f8f8;
+        border: 1px solid #dbdbdb;
+        box-sizing: border-box;
+        padding: 15px;
+        border-radius: 24px;
+    }
+    .balanceStatement {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 30px;
+    }
+    .balanceStatement div p {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 18px;
+        margin-bottom: 12px;
+        color: #545454;
+    }
+
+    .balanceStatement div h2 {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 29px;
+        letter-spacing: 0.02em;
+        color: #001e28;
+    }
+    .tableMain {
+        display: flex;
+    }
+    .TableDetailHeader {
+        display: none;
+    }
+    .beneficiariesMobile {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .beneficiariesMobile div {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+}

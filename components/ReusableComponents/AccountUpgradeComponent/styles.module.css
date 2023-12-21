@@ -1,0 +1,101 @@
+.accountCont {
+    background-color: #c6c6c6;
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+    padding: 97px 0px;
+    min-height: 100vh;
+}
+
+.accountUpgradePopup {
+    background: #fefefe;
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+    border-radius: 50px;
+    width: 40%;
+    height: 80vh;
+    padding-bottom: 6%;
+    overflow: scroll;
+    max-width: 600px;
+    margin: 0px auto;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.accountUpgradePopup::-webkit-scrollbar {
+    display: none;
+}
+
+.accountUpgradePopup .accountUpgradeSingle {
+    width: 69%;
+    max-width: 401px;
+    margin: 0px auto;
+    padding: 64px 0px;
+    position: relative;
+}
+
+.accountUpgradeSingleHeader {
+    display: flex;
+    align-items: center;
+}
+
+.accountUpgradeSingleHeader svg {
+    cursor: pointer;
+}
+
+.accountUpgradeSingleHeader h2 {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: #005b82;
+    margin-left: 16px;
+}
+
+@media screen and (max-width: 1101px) {
+    .accountUpgradePopup {
+        width: 60%;
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 913px) {
+    .accountUpgradePopup {
+        width: 70%;
+    }
+
+    .accountUpgradePopup .accountUpgradeSingle {
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 807px) {
+    .accountCont {
+        padding: 30px 0px;
+    }
+
+    .accountUpgradePopup {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 707px) {
+    .accountUpgradePopup .accountUpgradeSingle {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 475px) {
+    .accountUpgradePopup .accountUpgradeSingle {
+        width: 90%;
+    }
+    .accountUpgradePopup {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .accountUpgradeSingleHeader h2 {
+        font-size: 17px;
+    }
+}

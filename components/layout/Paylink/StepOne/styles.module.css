@@ -1,0 +1,99 @@
+.generatedOver{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.generated{
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    width: 42%;
+    position: relative;
+    flex-direction: row-reverse;
+}
+.generatedData{
+    width: 85%;
+}
+.generated h1{
+    font-family: 'Inter';
+font-style: normal;
+font-weight: 700;
+font-size: 24px;
+line-height: 29px;
+/* identical to box height */
+
+
+color: #005B82;
+
+}
+.generated p{
+    font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 19px;
+
+color: #B5B5B5;
+
+}
+.copy{
+    display: flex;
+    margin-top: 48px;
+    align-items: center;
+}
+.copyText{
+    margin-left: -60px;
+    z-index: 10;
+    font-style: normal;
+font-weight: 500;
+font-size: 12px;
+line-height: 15px;
+/* identical to box height */
+
+text-align: right;
+
+color: #529B03 !important;
+}
+.create{
+    margin-top: 37px;
+}
+.btmComp{
+    margin-top: 32px;
+}
+.create a{
+    color: #5F8903;
+}
+.cancel{
+    display: flex;
+    justify-content: flex-end;
+   flex-direction: row-reverse;
+}
+.cancelBtn{
+    font-size: 26px;
+    color:#CCCCCC;
+    position: absolute;
+}
+.copyBs{
+    margin-right: -22px;
+    z-index: 2;
+}
+.copyInput{
+   
+    padding-left: 50px;
+    padding-right: 65px;
+
+}
+.create span{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    /* identical to box height */
+    
+    text-align: right;
+    
+    color: #529B03 !important;
+}

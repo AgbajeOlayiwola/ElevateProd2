@@ -1,0 +1,91 @@
+.TableDetailHeader {
+    display: flex;
+    width: 100%;
+    background: #f5f6fa;
+    border-radius: 4px;
+    padding: 10px 0px 10px 24px;
+}
+
+.TableDetailHeader p {
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: #3e3e3e;
+    line-height: 17px;
+    text-align: left;
+}
+.TableDetailHeaders {
+    display: flex;
+    width: 100%;
+    border-radius: 4px;
+    padding: 10px 0px 10px 24px;
+}
+
+.TableDetailHeaders p {
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: #3e3e3e;
+    line-height: 17px;
+    text-align: left;
+}
+
+.beneficiary {
+    width: 19%;
+}
+
+.type {
+    width: 12%;
+}
+
+.amount {
+    width: 20%;
+}
+
+.status {
+    width: 10%;
+    margin-left: 59px;
+}
+
+.more {
+    width: 5%;
+}
+
+.date {
+    width: 30%;
+}
+.statementCover {
+    background-color: white;
+    padding: 16px;
+}
+
+.paginationBtns {
+    display: flex;
+    width: 40%;
+    justify-content: space-between;
+    margin: 0px;
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+.paginationBtns li {
+    padding: 10px;
+    border-radius: 5px;
+    /* border: 1px solid #6ccf00; */
+    color: #6ccf00;
+    /* cursor: pointer; */
+    font-size: 15px;
+}
+
+.paginationBtns a {
+    cursor: pointer;
+}
+
+.paginationActive {
+    background-color: #6ccf00;
+    color: white;
+}
+
+.paginationActive a {
+    color: white;
+}

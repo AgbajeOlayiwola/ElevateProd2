@@ -1,0 +1,130 @@
+.recievePaymentBox{
+
+    background: #FEFEFE;
+border: 1px solid rgba(219, 219, 219, 0.6);
+border-radius: 12px;
+min-width:918px;
+max-width:918px;
+height: 790px;
+min-height: 790px;
+max-height: 790px;
+overflow: scroll;
+-ms-overflow-style: none;  /* IE and Edge */
+scrollbar-width: none; 
+}
+.recievePaymentBox::-webkit-scrollbar {
+    display: none;
+  }
+  
+.recievePaymentBox::-webkit-scrollbar {
+    display: none;
+  }
+  
+.logoLeft{
+    
+    display: flex;
+}
+
+.recievePaymentBox p{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    
+    color: #B5B5B5;
+}
+.cardDets{
+    display: flex;
+
+    height: 100%;
+}
+.cardDetsCard{
+    padding: 131px 36px;
+    width: 35%;
+    height: 100%;
+    background: #F1F9E8;
+border-radius: 20px 0px 0px 20px;
+}
+.cardDetsCard p:nth-child(1){
+    font-family: 'Inter';
+font-style: normal;
+font-weight: 700;
+font-size: 20px;
+line-height: 24px;
+
+color: #2F2F2F;
+}
+.marvel{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-family: 'Inter';
+    color: #6CCF00 !important;
+    font-size: 35px;
+}
+.marvel p{
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: #6CCF00 !important;
+}
+.cardDtsInputs{
+    padding: 40px 32px;
+    width: 100%;
+}
+.cardDtsInputs input{
+    background: #FFFFFF;
+border: 1px solid #DBDBDB;
+border-radius: 12px;
+}
+.logos{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.moreCardDets{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+}
+.moreCardDets div{
+    width: 100%;
+}
+.allCardDets{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column; 
+    gap: 24px;
+    margin-top: 24px;
+}.enter{
+    margin-top: 91px;
+text-align: center;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    /* identical to box height */
+    margin-bottom: 24px;
+    
+    color: #005B82;
+    
+}
+.cardNum{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 12px;
+}
+.moreCardDets div{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 12px;
+}
+.buttonTop{
+    margin-top: 24px;
+}

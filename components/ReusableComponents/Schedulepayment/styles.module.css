@@ -1,0 +1,148 @@
+.schedulepayment {
+    width: 52%;
+    max-width: 787px;
+    background-color: white;
+    border-radius: 50px;
+    margin: 32px auto;
+    display: flex;
+    position: absolute;
+    top: 3%;
+    left: 30%;
+    z-index: 10;
+}
+
+.schedulepaymentCont {
+    width: 70%;
+}
+
+.schedulepaymentCont > div {
+    width: 72%;
+    margin: 48px auto;
+}
+
+.schedulepayment > div:last-child {
+    /* height: 100%; */
+    width: 30%;
+    background-color: #102572;
+    border-radius: 0px 50px 50px 0px;
+    overflow: hidden;
+}
+
+.schedulepayment > div:last-child .greenImg {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.closebtn {
+    position: absolute;
+    right: 5%;
+    top: 5%;
+    cursor: pointer;
+}
+
+.heading {
+    display: flex;
+    align-items: center;
+}
+
+.heading svg {
+    cursor: pointer;
+}
+
+.heading h2 {
+    margin: 0px;
+    margin-left: 21px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 33px;
+    color: #102572;
+}
+
+.scheduleHeader {
+    display: flex;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.scheduleHeader p {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 23px;
+    color: #a5a5a5;
+    margin-left: 16px;
+}
+
+.formGroup {
+    margin-bottom: 16px;
+}
+
+.formGroup label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #7a7978;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.transactiondetails {
+    width: 100%;
+    margin: 48px 0px;
+}
+
+.transactionsingle {
+    display: flex;
+    width: 100%;
+    padding: 16px 24px;
+    border-bottom: 1px solid #dbdbdb;
+}
+
+.transactionsingles {
+    display: flex;
+    width: 100%;
+    padding: 16px 24px;
+    border-top: 1px solid #dbdbdb;
+    border-bottom: 1px solid #dbdbdb;
+}
+
+.transactionsingle p,
+.transactionsingles p,
+.transactionsingle h3,
+.transactionsingles h3 {
+    width: 50%;
+    margin: 0px;
+}
+
+.transactionsingle p,
+.transactionsingles p {
+    color: #7a7978;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    line-height: 15px;
+}
+
+.transactionsingle h3,
+.transactionsingles h3 {
+    color: #102572;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    line-height: 15px;
+}
+
+.amount {
+    font-weight: 700 !important;
+}
+
+.transactiondetails button {
+    margin-top: 48px;
+}

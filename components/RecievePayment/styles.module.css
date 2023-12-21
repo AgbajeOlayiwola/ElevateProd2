@@ -1,0 +1,251 @@
+.recievePaymentBox{
+
+    background: #FEFEFE;
+border: 1px solid rgba(219, 219, 219, 0.6);
+border-radius: 12px;
+min-width:918px;
+max-width:918px;
+height: 790px;
+min-height: 790px;
+max-height: 790px;
+overflow: scroll;
+-ms-overflow-style: none;  /* IE and Edge */
+scrollbar-width: none; 
+}
+.recievePaymentBox::-webkit-scrollbar {
+    display: none;
+  }
+  
+.logoLeft{
+    
+    display: flex;
+}
+.recievePaymentBox h1{
+    font-family: 'Inter';
+font-style: normal;
+font-weight: 700;
+font-size: 24px;
+line-height: 29px;
+/* identical to box height */
+
+
+color: #005B82;
+}
+.recievePaymentBox p{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    
+    color: #B5B5B5;
+}
+.cardDets{
+    display: flex;
+    /* gap: 122px; */
+    height: 100%;
+}
+.cardDetsCard{
+    padding: 131px 36px;
+    width: 35%;
+    background: #F1F9E8;
+    height: 100%;
+border-radius: 20px 0px 0px 20px;
+}
+.cardDetsCard p:nth-child(1){
+    font-family: 'Inter';
+font-style: normal;
+font-weight: 700;
+font-size: 20px;
+line-height: 24px;
+
+color: #2F2F2F;
+}
+.marvel{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-family: 'Inter';
+    color: #6CCF00 !important;
+    font-size: 35px;
+}
+.marvel p{
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: #6CCF00 !important;
+}
+.cardDtsInputs{
+    padding: 40px 32px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.cardDtsInputs h1{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    color: #005B82;
+}
+.logos{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.moreCardDets{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+}
+.allCardDets{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column; 
+    gap: 24px;
+    margin-top: 24px;
+}.enter{
+    margin-top: 91px;
+}
+.cardNum{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 12px;
+}
+.moreCardDets div{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 12px;
+}
+.button{
+    width: 100%;
+}
+.load{
+    width: 80%;
+    height: 6px;
+    background: #CFCFCF;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+.loadFlex{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 42.2px;
+    font-size: 30px;
+    color:#6CCF00;
+}
+.cancelBtn{
+    border: 1px solid #6CCF00;
+border-radius: 12px;
+padding-top: 22px;
+padding-bottom: 22px;
+margin-top: 17px;
+}
+.cancelBtn p{
+    font-family: 'Inter';
+font-style: normal;
+font-weight: 800;
+font-size: 16px;
+line-height: 19px;
+text-align: center;
+margin: 0px;
+color: #6CCF00;
+
+}
+.pls{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+}
+.please{
+    border: 1px solid #3E3E3E;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-top:20px;
+}
+.showP{
+    text-decoration: underline;
+    margin-top: 10px;
+}
+.please p{
+    color: #3E3E3E !important;
+    margin: 0px;
+}
+.recSent{
+    font-family: 'Inter';
+font-style: normal;
+font-weight: 500;
+font-size: 14px !important;
+line-height: 148.52%;
+/* identical to box height, or 21px */
+
+text-align: center;
+
+color: #3E3E3E !important;
+}
+.takeP{
+    margin: 0px;
+    text-align: center;
+    
+    font-family: 'Inter';
+font-style: normal;
+font-weight: 500;
+font-size: 14px !important;
+line-height: 148.52%;
+/* or 21px */
+
+text-align: center;
+
+color: #3E3E3E !important;
+
+}
+.takeDiv{
+    display: flex;
+    justify-content: center;
+    margin-top:56px;
+    margin-bottom: 31px;
+}
+@media screen and (max-width: 990px) {
+.cardDets{
+    display: flex;
+    /* gap: 122px; */
+    height: 100%;
+    flex-direction: column;
+}
+.recievePaymentBox {
+    background: #FEFEFE;
+    border: 1px solid rgba(219, 219, 219, 0.6);
+    border-radius: 12px;
+  width: 97%;
+      min-width: 10px;
+     max-width: none;
+    height: 790px;
+    min-height: 790px;
+    max-height: 790px;
+    overflow: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.cardDetsCard {
+    padding: 131px 36px;
+    width: 100%;
+    background: #F1F9E8;
+    height: 100%;
+    border-radius: 20px 0px 0px 20px;
+    overflow: scroll;
+    display: flex;
+    gap: 40px;
+}
+.cardDtsInputs{
+    /* padding: 40px 32px; */
+    width: fit-content;
+}
+}

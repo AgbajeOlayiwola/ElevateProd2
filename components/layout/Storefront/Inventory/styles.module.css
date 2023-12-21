@@ -1,0 +1,100 @@
+.addNw {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2%;
+}
+.addNw button {
+    width: 30%;
+}
+
+.actionText {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.dropDOwn {
+    display: flex;
+    gap: 20px;
+}
+.actionText h2 {
+    color: #2b4551;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0px;
+}
+.actionText p {
+    margin: 0px;
+    color: #6d6d6d;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.inventroeyItm {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border: solid 1px #d3d3d3;
+    height: 250px;
+    border-radius: 8px;
+    padding: 8px;
+}
+.category {
+    color: #121212;
+    border-radius: 200px;
+    background: rgba(16, 37, 114, 0.15);
+    display: flex;
+    padding: 1px 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+    font-family: Inter;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    width: fit-content;
+    margin: 0px;
+}
+.name {
+    color: #263238;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 16px; /* 114.286% */
+    margin: 0px;
+}
+.currncy {
+    display: flex;
+    justify-content: space-between;
+}
+.currncy p {
+    margin: 0px;
+}
+.allInventory {
+    display: grid;
+    grid-template-columns: 32% 32% 32%;
+    gap: 2%;
+    /* Firefox */
+}
+.allInventory::-webkit-scrollbar {
+    display: none;
+}
+.Name {
+    color: #005b82;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

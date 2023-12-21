@@ -1,0 +1,55 @@
+.storefrontPopup {
+    width: 48%;
+    max-width: 600px;
+    background-color: white;
+    border-radius: 50px;
+    position: absolute;
+    z-index: 100;
+}
+
+.innerDiv {
+    margin: 0px;
+    padding: 0px;
+    /* height: 80vh; */
+    overflow: scroll;
+    width: 100%;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.innerDiv::-webkit-scrollbar {
+    display: none;
+}
+
+.storefrontPopups {
+    width: 30%;
+    max-width: 428px;
+    background-color: white;
+    border-radius: 16px;
+    position: absolute;
+    z-index: 100;
+}
+
+.innerDivs {
+    margin: 0px;
+    padding: 0px;
+    /* height: 80vh; */
+    /* overflow: scroll; */
+    width: 100%;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+/* .innerDivs::-webkit-scrollbar {
+    display: none;
+} */
+
+@media screen and (max-width: 500px) {
+    .storefrontPopup {
+        width: 90%;
+        left: 4%;
+    }
+
+    .innerDiv {
+        width: 100%;
+        max-width: 100%;
+    }
+}

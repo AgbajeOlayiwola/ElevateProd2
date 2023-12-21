@@ -1,0 +1,61 @@
+.inflowOutFlow {
+    padding: 20px;
+    border-radius: 8px;
+    background: #f8f8f8;
+    width: 100%;
+    display: flex;
+    gap: 11px;
+    flex-direction: column;
+}
+.inflowOutFlow p {
+    margin: 0px;
+    /* color: #000; */
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.inflowOutFlow h1 {
+    margin: 0px;
+    color: #000;
+    font-family: Inter;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+.row {
+    padding: 2px;
+    border-radius: 3px;
+    background: rgba(84, 158, 4, 0.12);
+    display: flex;
+    padding: 2px;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    color: #549e04;
+    font-family: Lato;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    width: 27%;
+}
+.rows {
+    padding: 2px;
+    border-radius: 3px;
+    background: rgba(255, 0, 0, 0.12);
+    display: flex;
+    padding: 2px;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    color: #f00;
+    font-family: Lato;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    width: 27%;
+}

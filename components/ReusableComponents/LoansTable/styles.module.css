@@ -1,0 +1,195 @@
+.loansTable {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    background: #fff;
+}
+
+.loansAction {
+    display: flex;
+    justify-content: space-between;
+    padding: 24px;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.loansAction > h2 {
+    color: #005b82;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0px;
+}
+
+.loansAction div {
+    width: 445px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    background: var(--White, #fff);
+    box-shadow: 0px 0px 0px 1px rgba(104, 113, 130, 0.16),
+        0px 1px 2px 0px rgba(0, 0, 0, 0.06);
+    box-sizing: border-box;
+}
+
+.loansAction div input {
+    border: none;
+    background-color: transparent;
+    margin: 0px;
+    padding: 10px 0px;
+    color: var(--gray-300, #a1a9b8);
+
+    /* Body/b2 */
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */
+}
+
+.loansHeader {
+    display: flex;
+    width: 100%;
+    background: rgba(16, 37, 114, 0.04);
+    padding: 20px 0px;
+}
+
+.loansHeader p {
+    margin: 0px;
+    color: #455a64;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.loansHeader p:first-child,
+.loansSingle p:first-child {
+    width: 5%;
+    text-align: center;
+}
+
+.loansHeader p:nth-child(2),
+.loansSingle p:nth-child(2),
+.loansHeader p:nth-child(7),
+.loansSingle div {
+    width: 19%;
+}
+
+.loansHeader p:nth-child(3),
+.loansSingle p:nth-child(3) {
+    width: 18%;
+}
+.viwMore {
+    color: var(--primary-deep-blue, #102572);
+
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-decoration-line: underline;
+}
+.loansHeader p:nth-child(4),
+.loansSingle p:nth-child(4),
+.loansHeader p:nth-child(5),
+.loansSingle p:nth-child(5),
+.loansHeader p:nth-child(6),
+.loansSingle p:nth-child(6) {
+    width: 21%;
+}
+
+.loansSingle {
+    padding: 20px 0px;
+    display: flex;
+    width: 100%;
+}
+
+.loansSingle:nth-child(even) {
+    background: #fafafa;
+}
+
+.loansSingle p {
+    margin: 0px;
+}
+
+.loansSingle > p {
+    color: var(--color-black-500, #000b0f);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.loansSingle .debit {
+    color: #f00;
+    font-weight: 600;
+}
+
+.loansSingle .credit {
+    color: var(--primary-deep-blue, #102572);
+    font-weight: 600;
+}
+
+.loansSingle div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.loansSingle div span {
+    width: 8px;
+    height: 8px;
+}
+
+.loansSingle .failed span {
+    border-radius: 8px;
+    background: #f00;
+    box-shadow: 0px 0px 37px 0px rgba(157, 147, 147, 0.12);
+}
+
+.loansSingle .failed p {
+    color: #f00;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.loansSingle .success span {
+    border-radius: 8px;
+    background: #6ccf00;
+    box-shadow: 0px 0px 37px 0px rgba(157, 147, 147, 0.12);
+}
+
+.loansSingle .success p {
+    color: #6ccf00;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.loansSingle .pending span {
+    border-radius: 8px;
+    background: var(--secondary-color-orange-highlight, #f5a623);
+    box-shadow: 0px 0px 37px 0px rgba(157, 147, 147, 0.12);
+}
+
+.loansSingle .pending p {
+    color: var(--secondary-color-orange-highlight, #f5a623);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}

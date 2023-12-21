@@ -1,0 +1,176 @@
+.sideNav {
+    height: 100vh;
+    width: 288px;
+    padding: 64px 10px;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: scroll;
+    position: fixed;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.sideNav::-webkit-scrollbar {
+    display: none;
+}
+
+.closeIcon {
+    display: none;
+}
+
+.sideNav::-webkit-scrollbar {
+    display: none;
+}
+
+.ellevate {
+    margin-left: 32px;
+    cursor: pointer;
+    width: 30%;
+}
+
+.track {
+    margin-top: 29px;
+}
+
+.inActive {
+    padding: 16px 25px;
+    margin-bottom: 8px;
+    background: rgba(108, 207, 0, 0.11);
+    border-radius: 19px;
+}
+
+.inActive .title {
+    color: #000000;
+}
+
+.cont {
+    margin-bottom: 8px;
+    padding: 16px 25px;
+    cursor: pointer;
+}
+
+.cont:hover {
+    background: rgba(108, 207, 0, 0.11);
+    border-radius: 19px;
+}
+
+.contWrapper {
+    display: flex;
+    align-items: center;
+}
+
+.contWrapper div {
+    width: 95%;
+    margin-left: 30px;
+    /* margin: 0px; */
+    display: block;
+    text-align: left;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #878787;
+}
+
+.title {
+    width: 90%;
+    margin: 0px;
+    display: block;
+    text-align: left;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #878787;
+}
+
+.titleIcon {
+    width: 25px;
+}
+
+.titleIcon svg {
+    width: 100%;
+}
+
+.subMenuLink a {
+    margin: 0px;
+    display: block;
+    text-align: left;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 11px;
+    padding: 8px 0px;
+    line-height: 17px;
+    color: #878787;
+}
+
+.drops {
+    margin-left: 50px;
+    margin-top: 8px;
+}
+
+@media screen and (max-width: 676px) {
+    .sideNav {
+        width: 200px;
+    }
+
+    .drops {
+        margin-left: 0px;
+    }
+}
+
+@media screen and (max-width: 519px) {
+    .sideNav {
+        width: 100%;
+        padding: 32px 10px;
+        transition: all 33s ease-in;
+    }
+
+    .closeIcon {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .closeIcon svg {
+        font-size: 35px;
+        cursor: pointer;
+        color: red;
+    }
+
+    /* .ellevate {
+        margin-left: 0px;
+    }
+
+    .inActive,
+    .cont {
+        padding: 16px;
+    }
+
+    .contWrapper span {
+        width: 15%;
+    } */
+
+    /* .titleIcon svg {
+        width: 100%;
+    } */
+
+    /* .contWrapper {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .contWrapper div {
+        width: 50%;
+        margin-left: 0px;
+        margin: 0px 8px;
+    }
+
+    .subMenuLink p {
+        font-size: 10px;
+    } */
+}

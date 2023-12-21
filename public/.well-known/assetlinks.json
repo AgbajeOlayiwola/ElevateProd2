@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.mysmeapp",
+      "sha256_cert_fingerprints": [
+        "FB:5A:E1:DD:86:68:CE:60:32:E2:0B:C2:E5:B4:AF:AB:D3:A0:E1:9A:82:30:B7:08:23:49:AF:94:CD:32:7C:72"
+      ]
+    }
+  }
+]

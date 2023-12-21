@@ -1,0 +1,79 @@
+.receive {
+    color: #69940d;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    line-height: 17px;
+}
+.PaymentSingle div:nth-child(1) {
+    background: none !important;
+    width: 100%;
+}
+.PaymentSingle div:nth-child(2) {
+    background: #ba00e80d !important;
+    width: 100%;
+}
+.PaymentSingle div:nth-child(2) div {
+    background: none !important;
+}
+.PaymentSingle div:nth-child(1) div {
+    background: none !important;
+}
+.PaymentSingle div:nth-child(3) {
+    background: #d5f7e5 !important;
+    width: 100%;
+}
+.PaymentSingle div:nth-child(3) div {
+    background: none !important;
+}
+.PaymentSingle div:nth-child(4) {
+    background: none !important;
+    width: 100%;
+}
+.PaymentSingle div:nth-child(4) div {
+    background: none !important;
+}
+.make {
+    color: #102572;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    line-height: 17px;
+}
+
+.paymentTypeCont {
+    padding: 24px 32px;
+    background-color: #fff;
+    overflow: scroll;
+    width: 100%;
+    border-radius: 16px;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.paymentTypeCont::-webkit-scrollbar {
+    display: none;
+}
+
+.PaymentSingle {
+    display: grid;
+    grid-template-columns: 30% 30% 30%;
+    width: 100%;
+    margin-top: 16px;
+    flex-wrap: wrap;
+    text-align: center;
+    gap: 30px;
+    padding-bottom: 34px;
+}
+
+@media screen and (max-width: 1301px) {
+    .paymentTypeCont {
+        width: 100%;
+        margin-top: 16px;
+    }
+}
+
+@media screen and (max-width: 851px) {
+    .PaymentSingle {
+        flex-direction: column;
+    }
+}

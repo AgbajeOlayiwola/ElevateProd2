@@ -1,0 +1,1129 @@
+.sectionII {
+    width: 55%;
+}
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #0000001a;
+    z-index: 10;
+}
+.overlay {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    background: #00000049;
+}
+.overlayBg {
+    background: white;
+    padding: 20px;
+    height: fit-content;
+    max-height: 88vh;
+    overflow: scroll;
+    border-radius: 20px;
+    width: 50%;
+    max-width: 80%;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+}
+.overlayBg::-webkit-scrollbar {
+    display: none;
+}
+.noTrans {
+    text-align: center;
+}
+.inner {
+    width: 50%;
+    height: 50%;
+    padding: 20px 60px;
+    background-color: white;
+    border-radius: 50px;
+}
+.back {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.back p:nth-child(1) {
+    color: #005b82;
+    font-size: 20px;
+}
+.back p:nth-child(2) {
+    color: red;
+    font-size: 25px;
+}
+.handleForm {
+    display: flex;
+    justify-content: center;
+}
+.inn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    height: 100%;
+}
+.trans > div {
+    display: flex;
+    gap: 50px;
+}
+.sectionI {
+    width: 42%;
+}
+.cove {
+    display: flex;
+    justify-content: space-between;
+}
+.addAccount {
+    background: #6bcf003a;
+    border-radius: 10px;
+    padding: 8px;
+    width: fit-content;
+    color: #6ccf00;
+    transition: all 0.2s ease-in-out;
+    font-size: 20px;
+}
+.addAccount:hover {
+    background: #6bcf003a;
+    border-radius: 10px;
+    padding: 10px;
+    transition: all 0.2s ease-in-out;
+    width: fit-content;
+    color: #6ccf00;
+    font-size: 20px;
+    cursor: pointer;
+}
+.accountNumbers {
+    padding: 0px;
+    background: no-repeat;
+    border: navajowhite;
+    color: white;
+}
+.accountsALl {
+    overflow: scroll;
+    display: flex;
+    gap: 30px;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+}
+.accountsALl::-webkit-scrollbar {
+    display: none;
+}
+.accountDetails {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #efffcc;
+}
+
+.accountNumber {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 15px;
+    color: #ffffff;
+}
+
+.bagMoney {
+    position: absolute;
+    right: 10%;
+    top: 30%;
+}
+.assctDrop {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.assctDrop div:last-child {
+    cursor: pointer;
+    position: relative;
+    z-index: 20;
+}
+
+.mdCopy {
+    cursor: pointer;
+    font-size: 20px;
+}
+.symb {
+    display: flex;
+    gap: 5px;
+    align-items: baseline;
+}
+.filed {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    line-height: 14px !important;
+    text-align: center;
+    color: #394f5c !important;
+    margin: 0px !important;
+}
+.seeAll {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+.seeAll a {
+    color: #102572;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+.pending {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    line-height: 14px !important;
+    text-align: center !important;
+    color: #102572 !important;
+    margin: 0px !important;
+}
+
+.Success {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    line-height: 14px !important;
+    /* identical to box height, or 99% */
+
+    text-align: center !important;
+
+    color: #c28cae !important;
+    margin: 0px !important;
+}
+.Tpwhflex div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.card {
+    background: linear-gradient(124.52deg, #7fbb01 -34.31%, #2f2f2f 115.35%);
+    position: relative;
+    width: 100%;
+    border-radius: 16px;
+    color: white;
+    padding: 11px;
+}
+.Top {
+    display: flex;
+    justify-content: space-between;
+}
+.Tpwh {
+    background: white;
+    border-radius: 16px;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    display: flex;
+    padding: 24px;
+    overflow: scroll;
+    height: 19vh;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+}
+.accountsALl {
+    display: flex;
+    gap: 30px;
+    /* justify-content: space-between; */
+    align-items: center;
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+}
+.accountsALl::-webkit-scrollbar {
+    display: none;
+}
+
+.statementCover {
+    height: fit-content;
+    /* background: #fefefe;
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08); */
+    border-radius: 15px;
+    padding: 20px 15px;
+}
+
+.accntP p:nth-child(1) {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 16px;
+    line-height: 19px;
+    color: #7fbb01;
+    margin-bottom: 6px;
+    cursor: pointer;
+}
+.accntP p:nth-child(2) {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+    color: #2f2f2f;
+    margin: 0px;
+    cursor: pointer;
+}
+
+.failed p {
+    color: #ff2e00 !important;
+}
+
+.success p {
+    color: #6ccf00 !important;
+}
+.success {
+    color: #69940d;
+    cursor: pointer;
+}
+.nothing {
+    cursor: pointer;
+}
+
+.pending p {
+    color: #ceb407 !important;
+}
+
+.accountHr {
+    height: 46px;
+    border-color: #756c6c2b;
+    margin: 0px;
+}
+.Tpwh::-webkit-scrollbar {
+    display: none;
+}
+.Tpwh p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 18px;
+    text-align: center;
+    color: #a4a4a4;
+    /* width: 34%; */
+    max-width: 162px;
+    margin: 23px auto 4px;
+}
+.transPs {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    color: #102572;
+    margin-bottom: 40px;
+}
+
+.transP {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    color: #102572;
+    margin: 0px;
+}
+.h5 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 14px;
+    /* identical to box height, or 87% */
+    margin-top: 0px;
+    text-align: center;
+    margin-bottom: 0px;
+    color: #005b82;
+}
+.payp {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 14px;
+    /* identical to box height, or 99% */
+    margin-top: 0px;
+    margin-bottom: 7px;
+    color: #bcbcbc;
+}
+.svgTxt {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    border: solid;
+    border-width: 1px;
+    border-color: #d3d3d3;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+}
+.svgCov {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    background: rgba(218, 240, 194, 0.62);
+    height: 45px;
+    width: 45px;
+    margin-right: 14px;
+}
+.ecop {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 14px;
+    /* identical to box height, or 99% */
+    margin-top: 0px;
+    margin-bottom: 7px;
+    color: #bcbcbc;
+}
+.payEco {
+    display: flex;
+    justify-content: space-between;
+}
+/* .cardMone {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 43%;
+} */
+.avail {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #efffcc;
+    margin: 0px;
+    margin-top: 4px;
+}
+.recMak {
+    display: flex;
+    justify-content: space-between;
+    width: 58%;
+    max-width: 329px;
+}
+.rec {
+    padding: 16px;
+    background: #7fbb01;
+    border-radius: 12px;
+    cursor: pointer;
+}
+.make {
+    padding: 16px;
+    background: #005b82;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.cardMone {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#green {
+    margin-left: 0px;
+}
+
+.cardMone h1 {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 29px;
+    margin-right: 8px;
+}
+.otherTrans {
+    margin: 24px 0px 16px;
+}
+
+.otherTrans p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    color: #102572;
+    margin: 0px;
+}
+
+.name {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    margin: 0px;
+    margin-top: 14px;
+    text-align: center;
+    line-height: 14px;
+    color: #102572;
+}
+.svg {
+    display: flex;
+    justify-content: center;
+}
+.dinCLass {
+    padding: 25px 21px 19px 21px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    border-radius: 12px;
+    cursor: pointer;
+    height: 105.01px;
+    width: 23%;
+    background: #ffffff;
+    box-shadow: 0px 0px 20px rgba(176, 173, 173, 0.39);
+    border-radius: 16px;
+}
+
+.divCover {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.cards {
+    /* display: flex;
+    justify-content: space-between; */
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+.cardII {
+    background: #102572;
+    border-radius: 12px;
+
+    display: flex;
+    justify-content: space-between;
+    width: 96%;
+    padding: 23px 1.5rem 19px 1.5rem;
+}
+.cardII div h2 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    margin: 0px;
+    color: #ffffff;
+}
+.cardII div p {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    width: 201px;
+    margin-top: 10px;
+    margin-bottom: 13px;
+    line-height: 17px;
+
+    color: #ffffff;
+}
+.cardI {
+    background: linear-gradient(126.25deg, #01bb8a -4.11%, #2f2f2f 115.93%);
+    box-shadow: 0px 3px 12px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    width: 96%;
+    padding: 1.5rem 1.5rem 0rem 1.5rem;
+}
+.cardI div h2 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    width: 100%;
+    max-width: 340.29px;
+
+    color: #ffffff;
+}
+.cardI div p {
+    font-family: 'Inter', sans-serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+
+    color: #ffffff;
+}
+.btm {
+    /* display: flex;
+    justify-content: space-between; */
+    width: 100%;
+}
+.btmI {
+    height: 602px;
+    /* max-width: 478px; */
+    background: #ffffff;
+    box-shadow: 4px 14px 34px -11px #ededed;
+    border-radius: 16px;
+    padding: 1.5rem 1.25rem 1.5rem 1.25rem;
+    margin-top: 32px;
+}
+.btmItop {
+    justify-content: space-between;
+    margin-bottom: 29.1px;
+    height: 575px;
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+}
+.btmItop::-webkit-scrollbar {
+    display: none;
+}
+.Tpwhflex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.btmItop p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #102572;
+}
+.btmItop div {
+    border-radius: 8px;
+    padding: 0.2rem 0.5rem;
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.sliderImage {
+    margin-right: 40px;
+}
+
+.btmI div::-webkit-scrollbar {
+    display: none;
+}
+.btmI::-webkit-scrollbar {
+    display: none;
+}
+.btmItop div p {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 14px;
+    /* identical to box height, or 99% */
+
+    color: #005b82;
+}
+.btmII {
+    /* width: 51%;
+    max-width: 378px; */
+    height: 519px;
+    background: #ffffff;
+    box-shadow: 4px 14px 34px -11px #ededed;
+    border-radius: 16px;
+    padding: 3rem 1.25rem 1.5rem 1.25rem;
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.btmII::-webkit-scrollbar {
+    display: none;
+}
+
+.btmIII {
+    width: 43%;
+    max-width: 279px;
+    height: 352px;
+    background: #ffffff;
+    box-shadow: 4px 14px 34px -11px #ededed;
+    border-radius: 16px;
+    padding: 1.5rem 1.25rem 1.5rem 1.25rem;
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.btmIII::-webkit-scrollbar {
+    display: none;
+}
+.btmIIp p:nth-child(1) {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #102572;
+}
+.btmIIp p:nth-child(2) {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+    color: #455a64;
+}
+.select {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+
+    color: #455a64;
+}
+.btmIIp {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.transaction {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0px;
+}
+.names {
+    width: 35%;
+}
+.type {
+    width: 30%;
+}
+
+.money {
+    width: 15%;
+}
+
+.money p {
+    margin: 0px;
+}
+
+.status {
+    width: 13%;
+}
+
+.more {
+    width: 5%;
+}
+
+/* .transaction div > p {
+    text-align: left;
+} */
+
+.statusColor p {
+    font-size: 10px;
+    margin: 0px;
+}
+
+.names p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    margin: 0px;
+    color: #102572;
+}
+.type p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    margin: 0px;
+    text-transform: capitalize;
+    color: #2f2f2f;
+}
+.hr {
+    border: 1px solid #f5f5f5;
+}
+.money p:nth-child(1) {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    /* identical to box height */
+    color: #2f2f2f;
+}
+.greendot {
+    width: 9px;
+    height: 9px;
+    background: #6ccf00;
+    box-shadow: 0px 0px 37px rgba(157, 147, 147, 0.12);
+    border-radius: 8px;
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+}
+.reddot {
+    width: 9px;
+    height: 9px;
+    background: #cf0000;
+    box-shadow: 0px 0px 37px rgba(157, 147, 147, 0.12);
+    border-radius: 8px;
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+}
+.day {
+    width: 30%;
+    height: 17%;
+    padding: 7px 13px;
+    background: #f5f6fa;
+    border-radius: 8px;
+}
+.dayPie {
+    width: 69%;
+    height: 11%;
+    background: #ebf7ff;
+    box-shadow: 0px 0px 20px rgb(244 244 244 / 41%);
+    border-radius: 8px;
+    margin-bottom: 41px;
+    padding: 8px 9px;
+}
+.paylink {
+    margin-bottom: 19px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #102572;
+}
+.othAccount p:nth-child(1) {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #7fbb01;
+
+    opacity: 0.94;
+}
+.othAccount p:nth-child(2) {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+
+    color: #2f2f2f;
+}
+
+.moneyCont {
+    width: 100%;
+    background: #ffffff;
+    margin-bottom: 20px;
+    border-radius: 16px;
+    padding: 24px 36px;
+    /* box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08); */
+}
+.coppied {
+    position: absolute;
+    top: 10px;
+    padding: 10px;
+    left: 40%;
+    background-color: #6ccf00;
+    color: white;
+    border-radius: 20px;
+}
+.moneyBody {
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    width: 100%;
+    padding: 16px 23px;
+    position: relative;
+}
+
+.moneybodyDiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.cardRight {
+    position: relative;
+}
+
+.otherAccounts {
+    margin-top: 15px;
+}
+
+.otherAccounts h2 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    margin: 0px;
+    color: #102572;
+}
+
+.otherAccountsDiv {
+    margin-top: 0px;
+}
+
+.otherAccounts button {
+    background: rgba(105, 148, 13, 0.08);
+    border-radius: 8px;
+    width: 80px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #69940d;
+    cursor: pointer;
+}
+
+.transactionBody {
+    width: 60%;
+    max-width: 219px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px auto;
+}
+.transactionSvg {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+}
+
+.transactionBody .transactionSvg {
+    margin: 0px auto;
+    text-align: center;
+}
+
+.transactionBody p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 18px;
+    text-align: center;
+    color: #a4a4a4;
+    margin: 0px;
+}
+
+@media screen and (max-width: 1484px) {
+    .moneybodyDiv {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 1376px) {
+    .recMak {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 1320px) {
+    .bagMoney {
+        display: none;
+    }
+
+    .recMak {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .moneybodyDiv {
+        width: 100%;
+    }
+
+    .name {
+        font-size: 12px;
+    }
+    .pending {
+        font-family: 'Inter';
+        font-style: normal;
+        display: flex;
+        gap: 10px;
+    }
+    .failed {
+        display: flex;
+        gap: 10px;
+    }
+    .success {
+        font-family: 'Inter';
+        font-style: normal;
+
+        /* identical to box height, or 99% */
+        display: flex;
+        gap: 10px;
+    }
+}
+
+@media screen and (max-width: 1163px) {
+    .name {
+        font-size: 10px;
+    }
+    .transactionStatus {
+        display: flex;
+        flex-direction: column;
+        gap: 11px;
+    }
+    .transactionStatus div > p {
+        display: flex;
+        flex-direction: column;
+        gap: 11px;
+    }
+}
+
+@media screen and (max-width: 1098px) {
+    .cove {
+        flex-direction: column-reverse;
+    }
+
+    .sectionI,
+    .sectionII {
+        width: 100%;
+    }
+
+    .sectionI {
+        margin-top: 24px;
+    }
+
+    .btmI {
+        height: unset;
+    }
+
+    .name {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 731px) {
+    .moneyBody {
+        padding: 16px 12px;
+    }
+
+    .recMak {
+        flex-direction: column;
+    }
+    .mobileTable {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .mobileStatus {
+        display: flex;
+    }
+    .transactionStatus > div p {
+        display: flex;
+        flex-direction: column;
+        gap: 11px;
+    }
+    .typeMobile {
+        font-size: 12px;
+    }
+    .hrMobile {
+        border: 1px solid #ecebeb;
+    }
+}
+
+@media screen and (max-width: 712px) {
+    .moneybodyDiv {
+        flex-direction: column;
+    }
+
+    .accountNumber {
+        text-align: center;
+    }
+
+    .accountDetails {
+        margin-top: 4px;
+    }
+
+    .name {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 684px) {
+    .name {
+        font-size: 10px;
+    }
+}
+
+@media screen and (max-width: 584px) {
+    .divCover {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .dinCLass {
+        width: 100%;
+        margin-top: 8px;
+    }
+}
+
+@media screen and (max-width: 539px) {
+    .card {
+        padding: 16px;
+    }
+
+    .btmIIp p:nth-child(1) {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 496px) {
+    .avail {
+        text-align: center;
+        font-size: 12px;
+    }
+
+    .cardMone h1 {
+        font-size: 20px;
+    }
+
+    .moneyCont {
+        padding: 32px 16px;
+    }
+}
+
+@media screen and (max-width: 433px) {
+    .moneyCont {
+        padding: 32px 8px;
+    }
+
+    .card {
+        padding: 8px;
+    }
+}
+
+@media screen and (max-width: 368px) {
+    .Tpwh {
+        padding: 8px;
+    }
+}
+
+@media screen and (max-width: 354px) {
+    .cardMone h1 {
+        font-size: 15px;
+    }
+}

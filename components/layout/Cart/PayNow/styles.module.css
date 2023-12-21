@@ -1,0 +1,159 @@
+.overflow {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #0000003d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.overLayWhite {
+    width: 33%;
+    height: fit-content;
+    padding: 30px;
+    background: white;
+    border-radius: 8px;
+}
+.ammt {
+    display: flex;
+    justify-content: space-between;
+}
+.cancel {
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-end;
+}
+.ammt p:nth-child(1) {
+    color: var(--neutral-color-ecobank-dark-gray, #4e4e4e);
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px; /* 133.333% */
+    letter-spacing: 0.2px;
+}
+.ammt p:nth-child(2) {
+    color: #08102d;
+    text-align: right;
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 0.2px;
+}
+.payment {
+    display: flex;
+    justify-content: space-between;
+}
+.payment div {
+    border-radius: 8px;
+    border: 2px solid rgba(0, 91, 130, 0.1);
+    background: var(--primary-deep-blue, #102572);
+    box-shadow: 0px 0px 27px 13px rgba(204, 204, 204, 0.2);
+    color: #fff;
+    text-align: center;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 15px; /* 125% */
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    align-items: center;
+    gap: 10px;
+    width: 30%;
+}
+.inputDiv {
+    border-radius: 4px;
+    border: 1px solid #e4e4e4;
+    background: rgba(16, 37, 114, 0.05);
+    display: flex;
+    padding: 16px 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    align-self: stretch;
+}
+.moreCardInfo {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+.cardNo {
+    width: 100%;
+}
+.paidBtn {
+    display: flex;
+    justify-content: flex-end;
+}
+.paidBtn button {
+    width: fit-content;
+    padding: 18px;
+}
+.trsfData {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.trsfData p:nth-child(1) {
+    color: #7a7978;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.trsfData p:nth-child(2) {
+    color: #2b4551;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+.trsfData p:nth-child(2) span {
+    display: flex;
+    padding: 4px 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    border-radius: 4px;
+    background: rgba(16, 37, 114, 0.1);
+    color: var(--primary-deep-blue, #102572);
+    text-align: center;
+    font-family: Inter;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.inputDivs {
+    border-radius: 4px;
+    border: 1px solid #e4e4e4;
+    background: rgba(16, 37, 114, 0.05);
+    display: flex;
+    padding: 16px 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+}
+.inputDivs hr {
+    border: 1px solid #eaeaea;
+}
+.inputQrs {
+    border-radius: 4px;
+    border: 1px solid #e4e4e4;
+    background: rgba(16, 37, 114, 0.05);
+    display: flex;
+    justify-content: center;
+    padding: 16px 12px;
+    flex-direction: column;
+    align-items: center;
+}

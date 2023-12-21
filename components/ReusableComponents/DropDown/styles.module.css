@@ -1,0 +1,25 @@
+.select {
+    background: #102572;
+    padding: 4px 12px;
+    border: none;
+    color: white;
+    border-radius: 12px;
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 15px;
+    letter-spacing: 0em;
+    text-align: center;
+    padding-right: 32px;
+    height: 26px;
+}
+.dropDOwn {
+    display: flex;
+    align-items: center;
+}
+.dropDOwn svg {
+    margin-left: -22px;
+    font-weight: 900;
+    width: 15%;
+    color: white;
+}

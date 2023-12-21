@@ -1,0 +1,89 @@
+.accountUpgradeSingle {
+    display: flex;
+    padding: 16px 60px 16px 24px;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 24px;
+    border-bottom: 2px solid #f6f6f6;
+    cursor: pointer;
+}
+
+.accountUpgradeSingle:hover {
+    background: #f5f6fa;
+}
+.moreInfo{
+    color: #E7C161 !important;
+}
+.accountUpgradeSingleText {
+    width: 50%;
+}
+.accountUpgradeSingleIcon {
+    width: 10%;
+}
+.accountUpgradeSingleChecked {
+    width: 41%;
+    display: flex;
+    align-items: center;
+}
+
+.accountUpgradeSingleChecked p {
+    font-family: 'Inter';
+    font-style: italic;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    margin: 0px;
+    margin-left: 24px;
+    color: #303030;
+}
+
+.accountUpgradeSingleText div {
+    display: flex;
+}
+.downLine{
+    font-size: 20px;
+}
+.accountUpgradeSingleText h2 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    line-height: 17px;
+    color: #303030;
+    margin: 0px;
+    margin-bottom: 4px;
+    cursor: pointer;
+}
+
+.accountUpgradeSingleText p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #455a64;
+    margin: 0px;
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 606px) {
+    .accountUpgradeSingle {
+        padding: 16px 24px 16px 24px;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .accountUpgradeSingleChecked p {
+        margin-left: 8px;
+    }
+}
+
+@media screen and (max-width: 495px) {
+    .accountUpgradeSingleText h2 {
+        font-size: 12px;
+    }
+}

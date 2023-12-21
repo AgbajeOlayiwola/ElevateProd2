@@ -1,0 +1,138 @@
+.inputFile {
+    position: relative;
+}
+.inputFile {
+    position: relative;
+}
+.editbtn {
+    position: absolute;
+}
+.inputFile label {
+    border-radius: 5px;
+    border: 1px dashed var(--primary-deep-blue, #102572);
+    padding-top: 43px;
+    padding-bottom: 43px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 91, 130, 0.05);
+    width: 100%;
+    flex-direction: column;
+}
+.inputFiles label {
+    border-radius: 5px;
+    border: none;
+    padding-top: 0px;
+    /* padding-bottom: 43px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background: rgba(0, 91, 130, 0.05); */
+    width: 100%;
+    flex-direction: column;
+}
+.fullImage {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+}
+.fullImage img {
+    width: 90%;
+    border: 0.5px solid var(--primary-deep-blue, #102572);
+}
+.image {
+    display: flex;
+    justify-content: center;
+}
+.image img {
+    width: 50%;
+    border-radius: 20px;
+    border-radius: 200px;
+    border: 0.5px solid var(--primary-deep-blue, #102572);
+}
+.inputFile label p {
+    margin: 0px;
+}
+.labelP {
+    color: #7b9994;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+.lblDiclaimr p {
+    margin: 0px;
+}
+.lblDiclaimr {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.disclaim {
+    color: var(--primary-700, #a2a2a2);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+.label {
+    display: flex !important;
+    gap: 10px;
+}
+.inputFile label input {
+    display: none;
+}
+.inputFiles label input {
+    display: none;
+}
+.inputFile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 16px;
+    border-radius: 24px;
+    width: 95%;
+}
+.inputFile > p {
+    color: #3e3e3e;
+    margin: 0px;
+    text-align: center;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.inputFiles {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 16px;
+    border-radius: 24px;
+    width: 95%;
+}
+.inputFiles > p {
+    color: #3e3e3e;
+    margin: 0px;
+    text-align: center;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.upload {
+    color: var(--primary-400, #4c8e00);
+    text-align: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+.icon {
+    background: blue;
+    padding: 12px;
+    border-radius: 12px;
+}

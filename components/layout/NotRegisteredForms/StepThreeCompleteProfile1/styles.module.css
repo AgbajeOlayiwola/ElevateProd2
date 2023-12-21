@@ -1,0 +1,462 @@
+.cover {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    padding: 0px 133px 0px 96px;
+}
+
+.sectionI {
+    width: 37%;
+    max-width: 470px;
+    height: 100%;
+}
+
+.sectionI img {
+    height: 100%;
+    width: 100%;
+    object-fit: scale-down;
+}
+.error {
+    color: red;
+    font-size: 12px;
+    /* margin-top: -1rem; */
+}
+
+.sectionII {
+    flex: 1;
+    padding: 70px 0px 120px 131px;
+}
+
+.bodyWrapper {
+    width: 100%;
+}
+
+.second,
+.first {
+    display: flex;
+    align-items: center;
+    margin-right: 32px;
+}
+
+.second h2 {
+    padding: 9px 14px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 14px;
+    line-height: 17px;
+    background: #f5f5f5;
+    color: #bdbdbd;
+    border-radius: 8px;
+    margin-right: 16px;
+    cursor: pointer;
+}
+
+.second p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #bdbdbd;
+    margin: 0px;
+}
+
+.first h2 {
+    padding: 9px 14px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 14px;
+    line-height: 17px;
+    border-radius: 8px;
+    margin-right: 16px;
+    cursor: pointer;
+    color: #ffffff;
+    background: #6ccf00;
+}
+
+.first p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    margin: 0px;
+    color: #102572;
+}
+
+.nameDiv {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 48px;
+    padding-bottom: 32px;
+    border-bottom: 2px solid #f6f6f6;
+}
+
+.formGroup,
+.formGroups {
+    width: 43%;
+    max-width: 296px;
+}
+
+.formGroups label {
+    color: #bdbdbd;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.formGroups input {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #c6c6c6;
+}
+
+.formGroup label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #7a7978;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.formGroup label span {
+    color: #a5a5a5;
+    font-style: italic;
+}
+
+.formGroup select {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3e3e3e;
+}
+
+.formCont {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.singleFormGroup {
+    margin-top: 32px;
+}
+
+.singleFormGroup:last-child {
+    margin-top: 24px;
+}
+
+.singleFormGroup select {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #1d1c1c;
+}
+
+.phone {
+    display: flex;
+    margin-top: 8px;
+    background: #f8f8f8;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    padding: 16px 24px;
+}
+
+.phone input {
+    padding: 0px;
+    background-color: transparent;
+    border: 0px;
+    padding-left: 12px;
+}
+
+.phone .phoneHeader {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    border-right: 1px solid #7a7978;
+}
+
+.phone .phoneHeader p {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #7a7978;
+    margin-left: 5px;
+}
+
+.phone span {
+    width: 26px;
+}
+
+.phone span img {
+    width: 100%;
+}
+
+.phoneDetails {
+    display: flex;
+    width: 70%;
+    align-items: center;
+}
+
+.phoneDetails p {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #a5a5a5;
+    margin-left: 12px;
+}
+
+.phoneDetails input,
+.phoneDetails input::placeholder {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #a5a5a5;
+}
+
+.addressNumber {
+    display: flex;
+    /* justify-content: space-between; */
+    background: #f4f4f4;
+    border-radius: 8px;
+    width: 100%;
+    padding: 12px 0px;
+}
+
+.addressNumber input {
+    width: 73%;
+    border: none;
+    background-color: transparent;
+    padding: 0px;
+    /* padding-left: 16px; */
+    padding: 4px 16px;
+}
+
+.number {
+    width: 22% !important;
+    border-right: 1px solid rgba(122, 121, 120, 0.21) !important;
+    border-radius: 0px;
+    padding-left: 24px !important;
+    padding-right: 16px !important;
+}
+
+.sign {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    background: #f4f4f4;
+    border-radius: 8px;
+    padding: 10px 10px 10px 24px;
+}
+
+.sign p {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #a5a5a5;
+}
+
+.sign label {
+    width: 32%;
+    max-width: 95px;
+    background: #6ccf00;
+    border-radius: 8px;
+    text-align: center;
+    padding: 8px 0px;
+    margin-bottom: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 15px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.formGroup input[type='file'] {
+    display: none;
+}
+
+.businessCont {
+    height: 70vh;
+    overflow-y: scroll;
+}
+
+.businessCont::-webkit-scrollbar {
+    display: none;
+}
+
+.businessCont button {
+    margin-top: 48px;
+}
+
+.cov {
+    height: 100vh;
+    width: 100%;
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.cov::-webkit-scrollbar {
+    display: none;
+}
+
+.prog {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.dets {
+    border: 1px solid #d3d3d3;
+    padding: 2rem;
+    border-radius: 12px;
+}
+.label {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #3e3e3e;
+}
+.male {
+    /* width: 64%; */
+    /* display: flex; */
+    align-items: baseline;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #a5a5a5;
+}
+.female {
+    /* width: 64%; */
+    display: flex;
+    align-items: baseline;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #a5a5a5;
+}
+.genderInps {
+    display: flex;
+    /* justify-content: space-between; */
+    /* width: 30%; */
+    align-items: center;
+}
+.fmLabel {
+    color: #a5a5a5;
+}
+
+.businessCat {
+    position: relative;
+}
+
+.businessCategories {
+    display: flex;
+    width: 100%;
+    padding: 16px 24px;
+    background: #f4f4f4;
+    border-radius: 8px;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+
+.businessCategories p {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #1d1c1c;
+}
+
+.businessGroup {
+    position: absolute;
+    background: #f4f4f4;
+    width: 100%;
+    height: 35vh;
+    overflow-y: scroll;
+    margin: 0px;
+    padding: 0px;
+    z-index: 5;
+}
+
+.businessGroup li {
+    list-style-type: none;
+    cursor: pointer;
+    padding: 16px 24px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #1d1c1c;
+}
+
+@media screen and (max-width: 1110px) {
+    .formGroup,
+    .formGroups {
+        width: 48%;
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 901px) {
+    .businessCont {
+        height: unset;
+        overflow: unset;
+    }
+}
+
+@media screen and (max-width: 701px) {
+    .nameDiv,
+    .formCont {
+        flex-direction: column;
+    }
+
+    .formGroups,
+    .formGroup {
+        width: 100%;
+    }
+
+    .formGroup {
+        margin-top: 24px;
+    }
+}

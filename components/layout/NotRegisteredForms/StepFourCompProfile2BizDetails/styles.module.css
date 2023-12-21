@@ -1,0 +1,164 @@
+.cover {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.dets {
+    border: 1px solid #d3d3d3;
+    padding: 0px 2rem 2rem;
+    border-radius: 12px;
+    margin-top: 2rem;
+}
+.busAdd {
+    background: #f8f8f8;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    padding: 0px 24px 24px;
+}
+
+.busAdd div {
+    margin-top: 16px;
+}
+
+.busAdd select {
+    background-color: #ffffff;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+}
+
+.busAdd input {
+    background: #ffffff;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+}
+
+.addressNumber {
+    display: flex;
+    justify-content: space-between;
+}
+
+.addressNumber input {
+    width: 73%;
+}
+
+.number {
+    width: 25% !important;
+}
+
+.busInp {
+    background: #ffffff;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    margin-top: 8px;
+}
+.inputFile::-webkit-file-upload-button {
+    visibility: hidden;
+}
+.signa {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+
+    color: #7a7978;
+}
+.inputFile {
+    margin-top: 8px;
+}
+.inputFile::before {
+    content: 'Click to upload';
+    /* background: #e8e8e8; */
+    border-radius: 12px;
+    /* color: #e8e8e8; */
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+    /* -webkit-user-select: none; */
+    color: #7a7978;
+}
+.phone {
+    display: flex;
+    margin-top: 8px;
+    background: #f8f8f8;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    padding: 16px 24px;
+}
+
+.phone input {
+    padding: 0px;
+    background-color: transparent;
+    border: 0px;
+    padding-left: 12px;
+}
+
+.phone .phoneHeader {
+    width: 30%;
+    display: flex;
+    align-items: center;
+    border-right: 1px solid #7a7978;
+}
+
+.phone .phoneHeader p {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #7a7978;
+    margin-left: 5px;
+}
+
+.phone span {
+    width: 26px;
+}
+
+.phone span img {
+    width: 100%;
+}
+
+.phoneDetails {
+    display: flex;
+    width: 70%;
+    align-items: center;
+}
+
+.phoneDetails p {
+    margin: 0px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    margin-left: 12px;
+    color: #6ccf00;
+    margin-top: 2px;
+}
+
+.terms {
+    display: flex;
+    align-items: center;
+}
+.terms label {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    color: #2f2f2f;
+    margin-left: 12px;
+}
+
+.terms label span {
+    cursor: pointer;
+    color: #005b82;
+}

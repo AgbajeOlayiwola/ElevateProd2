@@ -1,0 +1,15 @@
+.selectDiv {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+.add {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.check {
+    width: 54%;
+}

@@ -1,0 +1,68 @@
+.items {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #dbdbdb;
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.addtoCrta {
+    border: 1px solid #dbdbdb;
+    background: rgba(16, 37, 114, 0.05);
+    display: flex;
+    height: 48px;
+    padding: 8px 0px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+    color: var(--primary-deep-blue, #102572);
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.proce {
+    display: flex;
+    gap: 5px;
+}
+.proce h1 {
+    color: #7a7978;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0px;
+}
+.proce p {
+    color: #7a7978;
+    font-family: Inter;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-decoration-line: strikethrough;
+    margin: 0px;
+}
+.round {
+    overflow: hidden;
+    color: #263238;
+    text-overflow: ellipsis;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+.roundDiv {
+    margin-left: 10px;
+}

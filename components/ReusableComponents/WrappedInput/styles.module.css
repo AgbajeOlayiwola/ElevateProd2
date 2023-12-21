@@ -1,0 +1,28 @@
+.inputWrap {
+    display: flex;
+    flex-direction: row !important;
+    align-items: center;
+    padding-left: 60px;
+    border-radius: 8px;
+    background: #f4f4f4;
+    position: relative;
+}
+.inputWrap input {
+    border: none;
+    background: #f4f4f4;
+}
+.inputWrap svg {
+    position: absolute;
+    z-index: 999;
+    left: 20px;
+    font-size: 25px;
+    color: #005b82;
+}
+.inputWrap p {
+    color: #797979;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}

@@ -1,0 +1,151 @@
+.inventorySingle {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-radius: 8px;
+    border: 1.5px solid #ededed;
+    margin-top: 20px;
+}
+.delDiv {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 20px;
+}
+.delDiv div:nth-child(1) {
+    padding: 10px 26px;
+    border: solid 1px #000;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.delDiv div:nth-child(2) {
+    padding: 10px 26px;
+    background-color: #6ccf00;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.outer {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background: #00000052;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100000000;
+}
+.inner {
+    background: white;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    border-radius: 15px;
+    padding: 30px;
+}
+.inventorySingle p {
+    margin: 0px;
+}
+.inventorySingleFirs {
+    display: flex;
+    gap: 5px;
+}
+.ammount {
+    display: flex;
+}
+.ammount > p:nth-child(1) {
+    color: #616161;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 0.12px;
+}
+.ammount > p:nth-child(2) {
+    color: #616161;
+    font-family: Inter;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0.11px;
+}
+.nameLocation {
+    display: flex;
+    gap: 5px;
+}
+.dets {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.nameLocation > p:nth-child(1) {
+    color: #121212;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 0.12px;
+}
+.nameLocation > p:nth-child(2) {
+    color: #616161;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0.12px;
+}
+.time {
+    color: #000;
+    text-align: right;
+    font-family: Inter;
+    font-size: 10px;
+    font-style: italic;
+    font-weight: 300;
+    line-height: normal;
+    letter-spacing: 0.1px;
+    display: flex;
+}
+.divDets {
+    display: flex;
+    gap: 20px;
+}
+.ship {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+.ship > div {
+    color: #fff;
+
+    text-align: center;
+    font-family: Inter;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    border-radius: 200px;
+    background: var(--secondary-green, #549e04);
+    display: flex;
+    padding: 2px 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+.ship > p {
+    color: #121212;
+    text-align: right;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}

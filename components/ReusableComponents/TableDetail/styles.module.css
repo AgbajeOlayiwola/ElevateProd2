@@ -1,0 +1,76 @@
+.TableDetailBody {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 10px 0px 10px 24px;
+    border-bottom: 2px solid #f6f6f6;
+    align-items: center;
+}
+
+.TableDetailBody > p {
+    color: #455a64;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 100%;
+    font-family: 'Inter', sans-serif;
+    text-align: left;
+}
+.TableDetailBody .bene {
+    font-size: 16px;
+    color: #102572;
+    width: 24%;
+    text-transform: capitalize !important;
+}
+
+.TableDetailBody .transfer {
+    color: #2f2f2f;
+    width: 17%;
+}
+
+.TableDetailBody .amount {
+    font-weight: 700;
+    color: #455a64;
+    width: 20%;
+}
+
+.date {
+    width: 20%;
+}
+
+.status {
+    width: 14%;
+    color: #ff2e00 !important;
+}
+
+.pending {
+    width: 14%;
+    color: #ceb407 !important;
+}
+
+.success {
+    width: 14%;
+    color: #5dbe3f !important;
+}
+
+.more {
+    width: 5%;
+}
+@media screen and (max-width: 996px) {
+  
+   
+    .mobilleMovement{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .statusAmmountMobile{
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+    .paymentMobileHr{
+        border: 1px solid #e8e7e7;
+    }
+    
+    
+}

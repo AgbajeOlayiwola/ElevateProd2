@@ -1,0 +1,44 @@
+.check {
+    transform: translate(87px, 94px);
+    animation: stroke 1s ease-in-out forwards 1;
+}
+@keyframes stroke {
+    from {
+        stroke-dashoffset: 1;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+.checkBox {
+    transform: translate(52px, 47px);
+}
+.successSvg path:nth-child(1) {
+    transform: translate(0px, 10px);
+    animation: conf1A 1s ease infinite;
+}
+@keyframes conf1A {
+    0% {
+        transform: translate(0px, 10px);
+    }
+    700% {
+        transform: translate(32px, 10px);
+    }
+    100% {
+        transform: translate(0px, 10px);
+    }
+}
+.sparks {
+    animation: sparkle1A 1s ease infinite;
+}
+@keyframes sparkle1A {
+    0% {
+        opacity: 0;
+    }
+    70% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}

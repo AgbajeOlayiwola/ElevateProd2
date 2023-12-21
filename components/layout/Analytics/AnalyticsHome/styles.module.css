@@ -1,0 +1,49 @@
+.empty {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 30%;
+    height: 70vh;
+}
+.empty button {
+    width: 60%;
+}
+.analytics h1 {
+    font-family: Inter;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 29px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #005b82;
+    margin-bottom: 10px;
+}
+.analytics p {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #545454;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.empty p {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: center;
+}
+
+.emptyDiv {
+    background-color: white;
+    border-radius: 12px;
+    height: 60%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}

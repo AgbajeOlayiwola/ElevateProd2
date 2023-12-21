@@ -1,0 +1,11 @@
+.inputTag {
+    background: #f4f4f4;
+    border-radius: 8px;
+    padding: 16px 24px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #a5a5a5;
+}

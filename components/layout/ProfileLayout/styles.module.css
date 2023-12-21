@@ -1,0 +1,59 @@
+.profileLayoutCont {
+    display: flex;
+    width: 100%;
+}
+
+.profileLayoutHead {
+    width: 37%;
+    background-color: #ffffff;
+    border-radius: 16px;
+    height: 76vh;
+    overflow: scroll;
+    height: -moz-fit-content;
+    /* height: fit-content; */
+    padding-bottom: 47px;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.profileLayoutHead::-webkit-scrollbar {
+    display: none;
+}
+
+.profileLayoutBody {
+    width: 58%;
+    background: #ffffff;
+    border-radius: 16px;
+    margin-left: 20px;
+    height: 76vh;
+    overflow: scroll;
+    padding: 48px 48px 48px 48px;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.profileLayoutBody::-webkit-scrollbar {
+    display: none;
+}
+
+@media screen and (max-width: 1000px) {
+    .profileLayoutCont {
+        flex-direction: column;
+    }
+
+    .profileLayoutBody,
+    .profileLayoutHead {
+        width: 80%;
+        margin: 0px auto;
+    }
+
+    .profileLayoutBody {
+        margin-top: 10px;
+        padding-bottom: 50px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .profileLayoutBody,
+    .profileLayoutHead {
+        width: 100%;
+    }
+}

@@ -1,0 +1,209 @@
+.moneyCont {
+    width: 100%;
+    background: #ffffff;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    padding: 32px 36px;
+    /* box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08); */
+}
+.accntP {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline !important;
+}
+.otherAccounts {
+    align-items: center;
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.otherAccounts::-webkit-scrollbar {
+    display: none;
+}
+.otherAccounts div {
+    display: flex;
+
+    align-items: center;
+    gap: 10px;
+}
+.card {
+    background: linear-gradient(124.52deg, #7fbb01 -34.31%, #2f2f2f 115.35%);
+    position: relative;
+    width: 100%;
+    border-radius: 16px;
+    color: white;
+    padding: 11px;
+}
+.setAccountNumberAsPrimary {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+}
+.success {
+    color: #69940d;
+    cursor: pointer;
+}
+.nothing {
+    cursor: pointer;
+}
+.cardRight {
+    position: relative;
+}
+.moneybodyDiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.cardMone {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#green {
+    margin-left: 0px;
+}
+.avail {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #efffcc;
+    margin: 0px;
+    margin-top: 4px;
+}
+.cardMone h1 {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 14px;
+    line-height: 29px;
+    margin-right: 8px;
+}
+.assctDrop {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+.assctDrop:last-child {
+    cursor: pointer;
+}
+
+.accountNumbers {
+    padding: 0px;
+    background: no-repeat;
+    border: navajowhite;
+    color: white;
+}
+.accountsALl {
+    display: flex;
+    gap: 30px;
+}
+.accountDetails {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #efffcc;
+}
+.otherAccountsDiv {
+    margin-top: 0px;
+}
+.sliderImage {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+.accntP p:nth-child(1) {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 16px;
+    line-height: 19px;
+    color: #7fbb01;
+    margin-bottom: 6px;
+    cursor: pointer;
+}
+.accntP p:nth-child(2) {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+    color: #2f2f2f;
+    margin: 0px;
+}
+.accountHr {
+    height: 46px;
+    border-color: #756c6c2b;
+    margin: 0px;
+}
+.otherAccounts button {
+    background: rgba(105, 148, 13, 0.08);
+    border-radius: 8px;
+    width: 80px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #69940d;
+    cursor: pointer;
+}
+.accountNumber {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 15px;
+    color: #ffffff;
+}
+.coppied {
+    position: absolute;
+    top: 10px;
+    padding: 10px;
+    left: 40%;
+    background-color: #6ccf00;
+    color: white;
+    border-radius: 20px;
+}
+.moneyBody {
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    width: 100%;
+    padding: 16px 23px;
+    position: relative;
+}
+.bagMoney {
+    position: absolute;
+    right: 5%;
+    top: 30%;
+}
+@media screen and (max-width: 975px) {
+    .moneybodyDiv {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        width: 80%;
+    }
+    .sliderImage {
+        margin-top: 20px;
+        display: none;
+        justify-content: center;
+    }
+    .bagMoney {
+        position: absolute;
+        right: 5%;
+        top: 30%;
+        display: none;
+    }
+}

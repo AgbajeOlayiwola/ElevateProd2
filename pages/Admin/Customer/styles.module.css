@@ -1,0 +1,237 @@
+.title {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 135.52%;
+    margin: 0px;
+    color: #3e3e3e;
+}
+
+.title span {
+    margin-right: 21px;
+    cursor: pointer;
+}
+
+.profileBodyHead {
+    margin-top: 64px;
+}
+
+.profileBodyHeadImg {
+    width: 100px;
+}
+
+.formGroup {
+    margin-top: 24px;
+}
+
+.formGroup label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    display: block;
+    margin-bottom: 8px;
+    color: #7a7978;
+}
+
+.formGroup input {
+    background: #f4f4f4;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3e3e3e;
+}
+
+.phone {
+    display: flex;
+    margin-top: 8px;
+    background: #f8f8f8;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    padding: 16px 24px;
+}
+
+.phone input {
+    padding: 0px;
+    background-color: transparent;
+    border: 0px;
+    padding-left: 12px;
+}
+
+.phone .phoneHeader {
+    width: 15%;
+    display: flex;
+    align-items: center;
+    border-right: 1px solid #7a7978;
+}
+
+.phone .phoneHeader p {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #7a7978;
+    margin-left: 5px;
+}
+
+.phone span {
+    width: 26px;
+}
+
+.phone span img {
+    width: 100%;
+}
+
+.phoneDetails {
+    display: flex;
+    width: 70%;
+    align-items: center;
+}
+
+.phoneDetails p {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #a5a5a5;
+    margin-left: 12px;
+}
+
+.phoneDetails input,
+.phoneDetails input::placeholder {
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3e3e3e;
+}
+
+.customerBody button {
+    font-family: 'Inter' sans-serif;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 14px;
+    line-height: 17px;
+    color: #ffffff;
+    margin-top: 48px;
+}
+
+.profileBodyButton {
+    max-width: 232px;
+    width: 35%;
+}
+
+.confirmCheque {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 27px;
+    margin: 16px 0px 32px;
+    color: #7a7978;
+    width: 364px;
+}
+
+.chequeButton {
+    width: 37%;
+    max-width: 232px;
+}
+
+.chequeButton button {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 14px;
+    line-height: 17px;
+    color: #ffffff;
+}
+
+.confirmChequeButton {
+    width: 37%;
+    max-width: 232px;
+    margin-top: 16px !important;
+}
+
+.confirmChequeButton button {
+    margin-top: 0px;
+    background-color: #e7f2db;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #549e04;
+}
+
+.customerForm {
+    margin-top: 49px;
+}
+
+.customerFormGroup {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.customerFormGroup .formGroup {
+    width: 49%;
+}
+
+.customerFormGroup .formGroup input,
+.disputeCont input {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #a5a5a5;
+}
+
+.formGroup textarea {
+    width: 100%;
+    height: 100px;
+    background: #f4f4f4;
+    border-radius: 8px;
+    border: 0px;
+    padding: 16px 24px;
+}
+
+.disputeCont button {
+    margin-bottom: 50px;
+}
+
+@media screen and (max-width: 1418px) {
+    .chequeImg {
+        width: 100%;
+    }
+
+    .confirmCheque {
+        max-width: 100%;
+    }
+
+    .chequeButton,
+    .confirmChequeButton,
+    .profileBodyButton {
+        width: 70%;
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .chequeButton,
+    .confirmChequeButton,
+    .profileBodyButton {
+        width: 100%;
+    }
+}

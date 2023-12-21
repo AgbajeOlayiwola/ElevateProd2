@@ -1,0 +1,112 @@
+.images {
+    display: flex;
+}
+.fas {
+    display: flex;
+    gap: 10px;
+}
+.fas input {
+    width: 3%;
+}
+.fas p {
+    color: #535353;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+.fas p span {
+    color: var(--primary-deep-blue, #102572);
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-decoration-line: underline;
+}
+.faReturn {
+    color: #7a7978;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+.second {
+    width: 100%;
+}
+.saveAnd {
+    display: flex;
+    justify-content: flex-end;
+}
+.saveAnd button {
+    width: fit-content;
+    padding: 18px;
+}
+.assignFe {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.assign {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.assign p {
+    color: #292929;
+    text-align: center;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.assign div {
+    border-radius: 8px;
+    border: 1px solid #102572;
+    background: rgba(16, 37, 114, 0.1);
+    cursor: pointer;
+    display: flex;
+    height: 48px;
+    padding: 18px 56px;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    color: #235b7f;
+    text-align: center;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.companys {
+    display: grid;
+    grid-template-columns: 30% 30% 30%;
+    gap: 4%;
+    grid-row-gap: 17%;
+}
+.fass {
+    display: flex;
+    width: 172px;
+    height: 48px;
+    padding: 12px;
+    align-items: center;
+    gap: 8px;
+    border-radius: 5px;
+    border: 0.5px solid var(--primary-deep-blue, #102572);
+    background: rgba(16, 37, 114, 0.1);
+}
+.fass input {
+    width: fit-content;
+}
+.fass p {
+    color: var(--primary-deep-blue, #102572);
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}

@@ -1,0 +1,49 @@
+.backYourCart {
+    color: #005b82;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+.yourCart {
+    margin-bottom: 12px;
+    color: var(--color-black-500, #000b0f);
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.cover {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.emptySVg {
+    width: 100%;
+    height: 58vh;
+    display: flex;
+    justify-content: center;
+    background: white;
+}
+.emptySVg div {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    width: 18%;
+}
+.emptySVg div > p {
+    text-align: center;
+}
+.divs {
+    display: flex;
+    justify-content: space-between;
+}

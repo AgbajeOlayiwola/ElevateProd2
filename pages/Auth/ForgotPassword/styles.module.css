@@ -1,0 +1,204 @@
+.cov {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 7% auto;
+    width: 40%;
+    max-width: 600px;
+    background: #fefefe;
+    /* box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08); */
+    border-radius: 20px;
+}
+.error {
+    font-size: 12px;
+    color: red;
+}
+.Inpdivs > div {
+    display: flex;
+    gap: 10px;
+}
+.Inpdivs > div input {
+    text-align: center;
+}
+.covWrapper {
+    width: 90%;
+    /* max-width: 400px; */
+    margin: 64px auto;
+}
+
+.back {
+    display: flex;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.back p {
+    margin: 0px;
+    margin-left: 12px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 33px;
+    color: #102572;
+}
+.back svg {
+    cursor: pointer;
+}
+
+.emailP p {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 27px;
+    color: #7a7978;
+    margin-bottom: 48px;
+}
+
+.form label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    display: block;
+    margin-bottom: 8px;
+    color: #7a7978;
+}
+.divs {
+    display: flex;
+    align-items: center;
+    background: #f4f4f4;
+    border-radius: 8px;
+    padding: 16px 24px 16px 16px;
+}
+
+.divs input {
+    height: 100%;
+    padding: 0px;
+    border: 0px;
+    background-color: transparent;
+    padding-left: 24px;
+}
+
+.form button {
+    margin-top: 48px;
+}
+
+.last {
+    max-width: 315px;
+    margin: 24px auto 0px;
+}
+
+.last p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #3e3e3e;
+    margin: 0px;
+}
+
+.last span {
+    color: #102572;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.emailSent {
+    width: 100%;
+    text-align: center;
+}
+
+.check {
+    margin: 0px;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    color: #102572;
+    margin-top: 24px;
+}
+
+.recover {
+    margin: 16px auto 0px;
+    width: 70%;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 23px;
+    color: #a5a5a5;
+}
+
+.emailSent button {
+    margin-top: 48px;
+}
+
+.create h2 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 33px;
+    margin: 0px;
+    color: #102572;
+    margin-bottom: 32px;
+}
+
+.create p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 27px;
+    margin: 0px;
+    color: #7a7978;
+    margin-bottom: 32px;
+}
+
+.formCre label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    display: block;
+    margin-bottom: 8px;
+    color: #7a7978;
+}
+
+.formCre > div {
+    margin-bottom: 24px;
+}
+
+.errors {
+    color: red;
+    font-size: 12px;
+    margin: 0px;
+}
+
+@media screen and (max-width: 901px) {
+    .cov {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 7% auto;
+        width: 91%;
+        max-width: 600px;
+        background: #fefefe;
+        box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+        border-radius: 50px;
+    }
+    .covWrapper {
+        width: 91%;
+        max-width: 400px;
+        margin: 64px auto;
+    }
+}

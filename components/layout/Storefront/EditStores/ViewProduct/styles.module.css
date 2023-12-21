@@ -1,0 +1,222 @@
+.viewProduct {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.right {
+    padding: 40px;
+    background: white;
+    width: 50%;
+}
+.left {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+.sample {
+    display: flex;
+    justify-content: center;
+}
+.sampleImh {
+    display: flex;
+    gap: 15px;
+}
+.rightDiv {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+.rightDiv div h1 {
+    color: #2b4551;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin: 0px;
+}
+.name {
+    color: #121212;
+    text-align: center;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    display: flex;
+    padding: 2px 8px;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    gap: 8px;
+    border-radius: 200px;
+    background: rgba(16, 37, 114, 0.15);
+    margin: 0px;
+}
+.stock {
+    color: #545454;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin: 0px;
+}
+.switcBtn {
+    display: flex;
+    gap: 60px;
+    align-items: center;
+}
+.switcBtn button {
+    padding-left: 12px;
+    padding-right: 12px;
+    margin-top: 0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.desc {
+    overflow: scroll;
+}
+.desc h1 {
+    color: #121212;
+    font-family: Inter;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.desc h1 span {
+    color: #121212;
+    font-family: Inter;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.desc div p {
+    color: #3e3e3e;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 140%; /* 19.6px */
+}
+.size {
+    display: flex;
+    width: 48px;
+    height: 48px;
+    padding: 12px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    border: 1px solid var(--primary-deep-blue, #102572);
+    background: #fff;
+}
+.active {
+    display: flex;
+    width: 48px;
+    height: 48px;
+    padding: 12px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    border: 1px solid var(--primary-deep-blue, #102572);
+    background: #102572;
+}
+.active p {
+    color: #fff !important;
+    text-align: center;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+.size p {
+    color: #102572;
+    text-align: center;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+.btns {
+    padding-bottom: 20px;
+}
+.round {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.avail {
+    display: flex;
+    gap: 12px;
+    flex-direction: column;
+}
+.avail div {
+    display: flex;
+    gap: 10px;
+}
+.delete {
+    padding: 10px 8px;
+    background: rgba(255, 0, 0, 0.462);
+    color: red;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 7px;
+    width: 100%;
+}
+.col {
+    display: flex;
+    gap: 4px;
+}
+.edit {
+    color: #102572;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--primary-deep-blue, #102572);
+    background: rgba(16, 37, 114, 0.05);
+    display: flex;
+    height: 48px;
+    padding: 12px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+.price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.prMoney p {
+    margin: 0px;
+}
+.prMoney h1 {
+    margin: 0px;
+}
+.backArrow {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #005b82;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    cursor: pointer;
+}

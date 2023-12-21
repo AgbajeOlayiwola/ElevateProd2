@@ -1,0 +1,7 @@
+.oute {
+    display: flex;
+    justify-content: center;
+}
+.inner {
+    width: 90%;
+}

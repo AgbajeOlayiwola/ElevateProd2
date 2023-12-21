@@ -1,0 +1,123 @@
+.verifyAddress {
+    background-color: #e5e5e5;
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+    padding: 97px 0px;
+}
+
+.verifyAddressPopup {
+    background: #fefefe;
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    width: 43%;
+    max-width: 644px;
+    margin: 0px auto;
+}
+
+.verifyAddressPopup .verifyAddressSingle {
+    width: 73%;
+    max-width: 470px;
+    margin: 0px auto;
+    padding: 64px 0px;
+}
+
+.verifyAddressSingle h2 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: #005b82;
+}
+
+.verifyAddressSingle p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 23px;
+    color: #a5a5a5;
+    width: 87%;
+}
+
+.verifyAddressSingle label {
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 8px;
+    display: block;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #3e3e3e;
+}
+
+.addressGroup {
+    margin-top: 32px;
+}
+
+.addressGroup input {
+    padding: 22px 24px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #bdbdbd;
+    background: #f8f8f8;
+    border: 1px solid #dbdbdb;
+}
+
+.addressGroup input::placeholder {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #bdbdbd;
+}
+
+.jointGroup {
+    display: flex;
+    width: 100%;
+    margin-top: 24px;
+    justify-content: space-between;
+}
+
+.addressJointGroup {
+    width: 48%;
+}
+
+.addressJointGroup select {
+    background-color: #f8f8f8;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    padding: 22px 24px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #bdbdbd;
+}
+
+.addressJointGroup input {
+    padding: 22px 24px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #bdbdbd;
+    background: #f8f8f8;
+    border: 1px solid #dbdbdb;
+}
+
+.addressJointGroup input::placeholder {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #bdbdbd;
+}

@@ -1,0 +1,38 @@
+.outerCover{
+    padding-top: 31px;
+    padding-bottom: 42px;
+    background: rgba(173, 205, 57, 0.23);
+    margin-top: 60px;
+}
+.monitorPhoneImage{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.monitorPhoneImages{
+    display: flex;
+    align-items: flex-end
+
+    
+}
+.monitorPhoneImages span > img:nth-child(1){
+    margin-right: -30px;
+}
+.downBtns{
+    display: flex;
+    justify-content: center;
+}
+.downBtns div{
+    display: flex;
+    gap: 19px;
+}
+@media screen and (max-width: 1098px) { 
+
+.monitorPhoneImage {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 30px;
+}
+}

@@ -1,0 +1,251 @@
+.greencard {
+    padding: 16px 24px;
+    background: #ffffff;
+    border-radius: 16px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.statementCover {
+    height: fit-content;
+    /* background: #fefefe;
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08); */
+    border-radius: 15px;
+    padding: 20px 15px;
+}
+
+.greencard h3 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    color: #102572;
+    margin: 0px;
+}
+
+.greencardDetails {
+    display: flex;
+    align-items: center;
+}
+
+.detailsText {
+    margin-left: 28px;
+}
+
+.greencard p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 25px;
+    color: #7a7978;
+    margin: 0px;
+    margin-top: 4px;
+}
+
+.greencard p span {
+    font-weight: 700;
+}
+
+.closeButton {
+    cursor: pointer;
+}
+
+.visibility {
+    display: flex;
+    align-items: center;
+}
+
+.visibility span {
+    margin-left: 8px;
+    margin-top: 0px;
+    z-index: 1 !important;
+}
+
+.cov {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    margin-top: 20px;
+    border-radius: 20px;
+    /* box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08); */
+    height: 338px;
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+}
+.cov::-webkit-scrollbar {
+    display: none;
+}
+
+.whiteboard {
+    height: 310px;
+    overflow: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    padding: 39px 32px 39px 48px;
+    background-color: #69940d;
+    width: 100%;
+    border-radius: 16px;
+}
+.whiteboard::-webkit-scrollbar {
+    display: none;
+}
+.balance {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.thousand {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 29px;
+    color: #ffffff;
+    margin: 0px;
+    /* width: 220px; */
+}
+
+.avail {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #ffffff;
+    margin: 0px;
+}
+
+.percentage {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: #3e3e3e;
+    line-height: 16px;
+}
+
+.percentage span {
+    color: #69940d;
+    font-size: 24px;
+    font-weight: 900;
+    line-height: 29px;
+    margin-right: 8px;
+}
+
+.balanceButtons {
+    width: 28%;
+    max-width: 329px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.balanceButtons .first {
+    width: 46%;
+    max-width: 152px;
+    cursor: pointer;
+    background: #7fbb01;
+    border-radius: 12px;
+    padding: 16px 0px;
+}
+
+.balanceButtons div p {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 15px;
+    text-align: center;
+    color: #ffffff;
+}
+
+.balanceButtons .second {
+    background: #005b82;
+    width: 46%;
+    max-width: 152px;
+    cursor: pointer;
+    border-radius: 12px;
+    padding: 16px 0px;
+}
+
+.allTypes {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+/* .NFCScanner {
+    width: 40%;
+    max-width: 496px;
+    background: #fefefe;
+    border: 1px solid rgba(219, 219, 219, 0.6);
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    margin: auto;
+    position: absolute;
+    top: 20%;
+    left: 41%;
+    padding: 48px;
+    z-index: 10;
+} */
+
+.NFCScanner h2 {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 161%;
+    font-family: 'Inter', sans-serif;
+    color: #3e3e3e;
+    margin-bottom: 32px;
+}
+
+.NFCScanner p {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 23px;
+    font-family: 'Inter', sans-serif;
+    color: #3e3e3e;
+    margin-bottom: 32px;
+}
+
+.NFCScanner button {
+    margin-top: 0px;
+}
+@media screen and (max-width: 1366px) {
+    .allTypes {
+        display: block;
+        justify-content: space-between;
+        gap: 30px;
+    }
+}
+@media screen and (max-width: 1366px) {
+    .balanceButtons {
+        width: 40%;
+    }
+}
+
+@media screen and (max-width: 1301px) {
+    .cov {
+        flex-direction: column;
+        width: 100%;
+    }
+}
+@media screen and (max-width: 1391px) {
+    .cov {
+        flex-direction: column;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 1081px) {
+    .balanceButtons {
+        width: 60%;
+    }
+    .cov {
+        flex-direction: column;
+        width: 100%;
+    }
+}

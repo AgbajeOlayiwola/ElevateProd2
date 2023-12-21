@@ -1,0 +1,15 @@
+.searchItem {
+    position: absolute;
+    z-index: 10000;
+    background: #dcdcdc;
+    border-radius: 10px;
+    padding: 20px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 21px;
+}
+
+.input {
+    position: relative;
+}

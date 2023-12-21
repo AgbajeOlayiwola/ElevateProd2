@@ -1,0 +1,90 @@
+/* Select style */
+.selectI {
+    width: 100%;
+    padding: 22px 33px 22px 22px;
+    margin-top: 8px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #235b7f;
+    text-transform: uppercase;
+    background-image: url(/Assets/Svgs/dropdownSvg.svg);
+}
+
+.select2 {
+    width: 100%;
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+    margin-top: 1rem;
+}
+
+.selectCont {
+    position: relative;
+    width: 100%;
+}
+
+.selectCountry {
+    width: 100%;
+    /* background: #f8f8f8;
+    border: 1px solid #dbdbdb; */
+    border-radius: 12px;
+    /* padding: 22px 33px 22px 22px; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.selectCountry p {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #235b7f;
+    text-transform: uppercase;
+}
+
+.selectOption {
+    height: 25vh;
+    /* overflow-y: scroll; */
+    width: 100%;
+    position: absolute;
+    background-color: #f8f8f8;
+    border-radius: 12px;
+    margin: 0px;
+    padding: 0px;
+    z-index: 2;
+}
+
+.selectOption li {
+    list-style-type: none;
+    display: flex;
+    cursor: pointer;
+    padding: 12px 6px;
+}
+
+.selectOption li p {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #235b7f;
+    text-transform: uppercase;
+}
+
+@media screen and (max-width: 681px) {
+    .selectCountry p {
+        color: #fff;
+        margin-right: 16px;
+    }
+}

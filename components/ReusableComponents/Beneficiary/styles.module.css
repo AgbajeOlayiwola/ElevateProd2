@@ -1,0 +1,136 @@
+.beneficiary {
+    /* margin-bottom: 48px; */
+}
+
+.beneficiaryHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.beneficiaryHeader h2 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #7a7978;
+    margin: 0px;
+}
+
+.beneficiaryHeader p {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    margin: 0px;
+    color: #bdbdbd;
+    cursor: pointer;
+}
+
+.beneficiaryBody {
+    margin-top: 12px;
+    width: 100%;
+    height: 10vh;
+    overflow: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.beneficiaryBody::-webkit-scrollbar {
+    display: none;
+}
+
+.beneficiaryBody h2 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 15px;
+    color: #7a7978;
+    margin: 0px;
+    margin-top: 8px;
+}
+
+.beneficiarySearch {
+    width: 50%;
+    display: flex;
+    border-radius: 8px;
+    /* border: 1px solid #dae1ff; */
+    background-color: #f7f7f7;
+    padding-left: 12px;
+}
+
+.beneficiarySearch input {
+    border: none !important;
+    padding: 8px 16px !important;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: transparent !important;
+}
+
+.beneficiarySingle:first-child {
+    margin-left: 0px;
+}
+
+.beneficiarySingle {
+    width: 30%;
+    max-width: 100px;
+    margin-left: 40px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.beneficiarySingle svg {
+    margin: 0px auto;
+    display: block;
+}
+
+/* .beneficiarySingle div {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    background: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+
+.beneficiarySingle div img {
+    margin: auto;
+}
+
+.beneficiaryIcon {
+    height: 33px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+.name {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    text-align: center;
+    color: #a4a4a4;
+    margin-top: 5px;
+}
+
+.benebank {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    margin: 0px;
+    margin-top: 2px;
+    color: #a4a4a4;
+    text-align: center;
+}
