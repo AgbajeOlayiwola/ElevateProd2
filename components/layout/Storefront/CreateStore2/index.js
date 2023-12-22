@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useCreatStorefrontMutation } from '../../../../redux/api/authApi';
+import {
+    useCreatStorefrontMutation,
+    useLogisticsGigStationsMutation
+} from '../../../../redux/api/authApi';
 import { useGetStationsQuery } from '../../../../redux/api/logisticsApi';
 import ButtonComp from '../../../ReusableComponents/Button';
 import InputFile from '../../../ReusableComponents/InputFile';
@@ -15,6 +18,7 @@ import PlacesAutocomplete, {
     geocodeByAddress,
     getLatLng
 } from 'react-places-autocomplete';
+import { lgasArr } from '../../../ReusableComponents/Data';
 const CreateStore2 = ({ nextPage }) => {
     const [succes, setSucces] = useState(false);
     const [selectedLogisticsIds, setSelectedLogisticsIds] = useState([]);
@@ -50,6 +54,17 @@ const CreateStore2 = ({ nextPage }) => {
             reset: creatStorefrontReset
         }
     ] = useCreatStorefrontMutation();
+    const [
+        logisticsGigStations,
+        {
+            data: logisticsGigStationsData,
+            isLoading: logisticsGigStationsLoad,
+            isSuccess: logisticsGigStationsSuccess,
+            isError: logisticsGigStationsFalse,
+            error: logisticsGigStationsErr,
+            reset: logisticsGigStationsReset
+        }
+    ] = useLogisticsGigStationsMutation();
     const saveandcontinue = (e) => {
         e.preventDefault();
         const data = {
@@ -81,6 +96,17 @@ const CreateStore2 = ({ nextPage }) => {
             className: 'toast-message'
         });
     };
+    const showToastLogisticsMessage = () => {
+        toast.error(logisticsGigStationsErr?.data?.message, {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+    };
+    useEffect(() => {
+        if (logisticsGigStationsErr) {
+            showToastLogisticsMessage();
+        }
+    }, [logisticsGigStationsErr]);
     useEffect(() => {
         if (creatStorefrontErr) {
             showToastMessage();
@@ -251,6 +277,7 @@ const CreateStore2 = ({ nextPage }) => {
                                         placeholder: 'Search Places ...',
                                         className: 'location-search-input'
                                     })}
+                                    value={typeAddress}
                                 />
                                 <div className="autocomplete-dropdown-container">
                                     {loading && <div>Loading...</div>}
@@ -277,6 +304,11 @@ const CreateStore2 = ({ nextPage }) => {
                                                         style
                                                     }
                                                 )}
+                                                onClick={() =>
+                                                    setTypeAddress(
+                                                        suggestion.description
+                                                    )
+                                                }
                                             >
                                                 <span>
                                                     {suggestion.description}
@@ -293,11 +325,43 @@ const CreateStore2 = ({ nextPage }) => {
                     <div className={styles.stateLocal}>
                         <div>
                             <label>State/Province</label>
-                            <select>
+                            <select
+                                onChange={(e) => {
+                                    logisticsGigStations({
+                                        stateName: e.target.value.toUpperCase()
+                                    });
+                                }}
+                            >
                                 <option>Choose</option>
+                                {lgasArr.map((item, index) => {
+                                    return (
+                                        <option value={item.state} key={index}>
+                                            {item.state}
+                                        </option>
+                                    );
+                                })}
                             </select>
                         </div>
-                        <div>
+                        {logisticsGigStationsLoad ? (
+                            <Loader />
+                        ) : logisticsGigStationsSuccess ? (
+                            <div>
+                                <label>Delivery Locations</label>
+                                <select>
+                                    <option>Choose</option>
+                                    {logisticsGigStationsData?.data?.map(
+                                        (item, index) => {
+                                            return (
+                                                <option value={item?.id}>
+                                                    {item?.stationName}
+                                                </option>
+                                            );
+                                        }
+                                    )}
+                                </select>
+                            </div>
+                        ) : null}
+                        {/* <div>
                             <label>Local Government</label>
                             <input
                                 type="text"
@@ -305,8 +369,9 @@ const CreateStore2 = ({ nextPage }) => {
                                 value={localGove}
                                 onChange={(e) => setLocalGov(e.target.value)}
                             />
-                        </div>
+                        </div> */}
                     </div>
+
                     <InputFile
                         icon={<PlusSvg />}
                         name="Upload your store logo"

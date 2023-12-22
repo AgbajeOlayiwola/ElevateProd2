@@ -106,7 +106,7 @@ const Checkout = ({ num, items, upgradeOrder }) => {
     }, [createOrderSuccess]);
 
     const callLogistics = () => {
-        logisticsGigStations({ stateName: 'Lagos' });
+        logisticsGigStations({ stateName: 'LAGOS' });
     };
 
     const initialValues = {

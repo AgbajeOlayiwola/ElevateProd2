@@ -257,7 +257,7 @@ export const authApi = createApi({
         bulkTransfer: builder.mutation({
             query: (body) => {
                 return {
-                    url: 'bulk-transfer',
+                    url: 'payment-bulk-transfer',
                     method: 'post',
                     body
                 };
@@ -622,6 +622,15 @@ export const authApi = createApi({
                     url: 'dispute-history',
                     method: 'post',
                     body
+                };
+            }
+        }),
+        virtualAccountTransLog: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'virtual-account-trans-log',
+                    method: 'post',
+                    body: {}
                 };
             }
         }),
@@ -1406,6 +1415,7 @@ export const authApi = createApi({
 });
 
 export const {
+    useVirtualAccountTransLogMutation,
     useGetLoansMutation,
     useLogisticsGigStationsMutation,
     useLogisticsEnableProviderMutation,
