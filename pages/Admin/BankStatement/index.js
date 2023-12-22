@@ -574,9 +574,21 @@ const BankStatments = () => {
                                                             styles.amount
                                                         }
                                                     >
-                                                        {formatter.format(
-                                                            items.amount
+                                                        {getSymbolFromCurrency(
+                                                            countryToCurrency[
+                                                                `${affiliate?.substring(
+                                                                    1
+                                                                )}`
+                                                            ]
                                                         )}
+                                                        {parseFloat(
+                                                            items.amount
+                                                        )
+                                                            .toFixed(2)
+                                                            .replace(
+                                                                /\B(?=(\d{3})+(?!\d))/g,
+                                                                ','
+                                                            )}
                                                     </p>
                                                     {/* <p
                                                         className={

@@ -197,7 +197,8 @@
 }
 .fronts {
     display: flex;
-    gap: 25px;
+    gap: 8px;
+    /* justify-content: space-between; */
     width: 100%;
     overflow: scroll;
     scrollbar-width: none;

@@ -111,9 +111,18 @@ const MakePaymentSecond = ({
     }, [singleTransferSuccess]);
     const bulkTransferAction = (e) => {
         e.preventDefault();
+        const transactionsWithoutAccountNumber = transfer.map(
+            ({ accountNumber, ...rest }) => rest
+        );
+        const accountNumbersString = transfer
+            .map(({ accountNumber }) => accountNumber)
+            .join(',');
+        const accountNumbers = accountNumbersString.split(',');
+        const firstAccountNumber = accountNumbers[0];
         const data = {
-            ...transfer,
-            transactionPin: otpValue
+            accountNumber: firstAccountNumber,
+            transactionPin: otpValue,
+            transactions: transactionsWithoutAccountNumber
         };
         console.log(data);
         bulkTransfer(data);
@@ -137,7 +146,7 @@ const MakePaymentSecond = ({
     }, []);
 
     const showBulkSuccessToastMessage = () => {
-        toast.success(bulkTransferData?.responseMessage, {
+        toast.success(bulkTransferData?.message, {
             autoClose: 10000,
             position: toast.POSITION.TOP_RIGHT,
             className: 'toast-message'
@@ -149,15 +158,26 @@ const MakePaymentSecond = ({
     };
     useEffect(() => {
         if (bulkTransferSuccess) {
-            showBulkSuccessToastMessage();
+            if (bulkTransferData?.responseCode === 'E04') {
+                showBulkErrorToastMessage();
+            } else {
+                showBulkSuccessToastMessage();
+            }
         }
     }, [bulkTransferSuccess]);
 
     const showBulkErrorToastMessage = () => {
-        toast.error(bulkTransferErr?.data?.message, {
-            position: toast.POSITION.TOP_RIGHT,
-            className: 'toast-message'
-        });
+        if (bulkTransferData?.responseCode === 'E04') {
+            toast.error(bulkTransferData?.responseMessage, {
+                position: toast.POSITION.TOP_RIGHT,
+                className: 'toast-message'
+            });
+        } else {
+            toast.error(bulkTransferErr?.data?.message, {
+                position: toast.POSITION.TOP_RIGHT,
+                className: 'toast-message'
+            });
+        }
         // closeAction();
     };
     useEffect(() => {
@@ -189,7 +209,7 @@ const MakePaymentSecond = ({
         createTxBeneficiary(data);
     };
     const showBeneToast = () => {
-        toast.success('Bneficiary Addd Successfuly', {
+        toast.success('Bneficiary Added Successfuly', {
             position: toast.POSITION.TOP_RIGHT,
             className: 'toast-message'
         });
@@ -205,7 +225,9 @@ const MakePaymentSecond = ({
         <Overlay overlay={overlay}>
             <ToastContainer />
             <>
-                {singleTransferSuccess || bulkTransferSuccess ? (
+                {singleTransferSuccess ||
+                (bulkTransferSuccess &&
+                    bulkTransferData?.responseCode !== 'E04') ? (
                     <>
                         <div className={styles.PaymentSecond}>
                             <div className={styles.successPage}>
@@ -220,7 +242,11 @@ const MakePaymentSecond = ({
                                         Transfer Successful
                                     </SuccessMainHeading>
 
-                                    {title === 'Bulk Payments' ? null : (
+                                    {title === 'Bulk Payments' ? (
+                                        <p style={{ textAlign: 'center' }}>
+                                            {bulkTransferData?.message}
+                                        </p>
+                                    ) : (
                                         <p style={{ textAlign: 'center' }}>
                                             {getSymbolFromCurrency(
                                                 countryToCurrency[
@@ -475,7 +501,7 @@ const MakePaymentSecond = ({
                                             </p>
                                             <h3>
                                                 {title === 'Bulk Payments'
-                                                    ? transfer[0].accountNumber
+                                                    ? transfer?.accountNumber
                                                     : transfer?.accountNumber}
                                             </h3>
                                         </div>

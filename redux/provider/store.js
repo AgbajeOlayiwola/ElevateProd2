@@ -17,6 +17,7 @@ import { authApi } from '../api/authApi';
 import { cacApi } from '../api/cacApi';
 import { docsApi } from '../api/docsApi';
 import { logisticsApi } from '../api/logisticsApi';
+import { unifiedApi } from '../api/unifiedApi';
 import { usersApi } from '../api/usersApi';
 import accountNumberReducer from '../slices/accountNumberSlice';
 import addInventoryReducer from '../slices/addInventorySlice';
@@ -32,8 +33,11 @@ import dynamiQrDataReeducer from '../slices/dynamicQrSlice';
 import existingUserDetailsReducer from '../slices/existingUserData';
 import faceMatchDetailsReducr from '../slices/facematchSlice';
 import languageReducer from '../slices/language';
+import loanRepaymentReducer from '../slices/loanRepayment';
 import loanRequestReducer from '../slices/loanRequst';
+import loanDataReducer from '../slices/loansData';
 import moreAccountNumberDetailsReducer from '../slices/moreAccountNumberDetails';
+import orderDetailsReducer from '../slices/orderDetails';
 import pinnedReducer from '../slices/pinned';
 import profileReducer from '../slices/profile';
 import resetPasswordReducer from '../slices/resetpasswordslice';
@@ -43,13 +47,13 @@ import transferReducer from '../slices/transferSlice';
 import ussdDataReducer from '../slices/ussddataSlice';
 import viewInventoryReducer from '../slices/viewInventorySlice';
 import viewProductDataReducer from '../slices/viewProductSlice';
-import loanRepaymentReducer from '../slices/loanRepayment';
 const reducers = combineReducers({
     [authApi.reducerPath]: authApi.reducer,
     [docsApi.reducerPath]: docsApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
     [cacApi.reducerPath]: cacApi.reducer,
     [logisticsApi.reducerPath]: logisticsApi.reducer,
+    [unifiedApi.reducerPath]: unifiedApi.reducer,
     profile: profileReducer,
     language: languageReducer,
     existingUserDetails: existingUserDetailsReducer,
@@ -75,7 +79,9 @@ const reducers = combineReducers({
     affiliate: affiliateReducer,
     allInventories: allStoreInventoriesReducer,
     loanRequest: loanRequestReducer,
-    loanRepayment: loanRepaymentReducer
+    loanRepayment: loanRepaymentReducer,
+    loanData: loanDataReducer,
+    orderDetails: orderDetailsReducer
 });
 
 const persistConfig = {
@@ -108,7 +114,9 @@ const persistConfig = {
         'allInventories',
         'loanRequest',
         'loanScoring',
-        'loanRepayment'
+        'loanRepayment',
+        'loanData',
+        'orderDetails'
     ]
 };
 
@@ -133,7 +141,8 @@ export const store = configureStore({
             authApi.middleware,
             docsApi.middleware,
             cacApi.middleware,
-            logisticsApi.middleware
+            logisticsApi.middleware,
+            unifiedApi.middleware
         )
 });
 

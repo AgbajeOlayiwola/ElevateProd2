@@ -6,13 +6,7 @@ const LoansRequest = () => {
     const multiStep = () => {
         switch (page) {
             case 0:
-                return (
-                    <RequestCont
-                        type={true}
-                        title="Request loan"
-                        nextPage={() => setPage(1)}
-                    />
-                );
+                return <RequestCont type={true} title="Request loan" />;
             case 1:
                 return <ConfirmLoan backward={() => setPage(0)} />;
         }

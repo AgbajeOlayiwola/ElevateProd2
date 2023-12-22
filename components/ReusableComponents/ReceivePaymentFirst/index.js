@@ -399,7 +399,7 @@ const ReceivePaymentFirst = ({
                                     <div className={styles.formGroup}>
                                         {firstTitle ===
                                         'Create USSD Payment Code' ? (
-                                            <label>Sub Merchant</label>
+                                            <label>Payer name</label>
                                         ) : (
                                             <label>Payment title</label>
                                         )}

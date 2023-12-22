@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useViewOrderByStatusMutation } from '../../../../../redux/api/authApi';
+import { setOrderDetails } from '../../../../../redux/slices/orderDetails';
 import Loader from '../../../../ReusableComponents/Loader';
 import styles from '../styles.module.css';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
 
-const Orders = ({ actionText }) => {
+const Orders = ({ actionText, viewOrderDetails }) => {
     const [orderType, setOrderType] = useState('open');
     const { storeSlice } = useSelector((store) => store);
+    const dispatch = useDispatch();
     const affiliate = localStorage.getItem('affiliateCode');
 
     const [
@@ -77,124 +79,126 @@ const Orders = ({ actionText }) => {
                 <>
                     {viewOrderByStatusLoad ? (
                         <Loader />
-                    ) : viewOrderByStatusData?.data?.cartItems?.length === 0 ? (
+                    ) : viewOrderByStatusData?.data?.length === 0 ? (
                         <p>No item found</p>
                     ) : (
-                        viewOrderByStatusData?.data?.cartItems?.map(
-                            (item, index) => {
-                                return (
-                                    <>
-                                        <div className={styles.inventorySingle}>
-                                            <div
-                                                className={
-                                                    styles.inventorySingleFirst
-                                                }
-                                            >
-                                                <div className={styles.divDets}>
-                                                    <img
-                                                        src={
-                                                            item?.data
-                                                                ?.image[0] !==
-                                                            undefined
-                                                                ? item?.data
-                                                                      ?.image[0]
-                                                                : '/Assets/Images/default-store.jpeg'
-                                                        }
-                                                        width={70}
-                                                        height={70}
-                                                        alt=""
-                                                    />
+                        viewOrderByStatusData?.data?.map((item, index) => {
+                            return (
+                                <>
+                                    <div
+                                        className={styles.inventorySingle}
+                                        key={index}
+                                        onClick={() => {
+                                            viewOrderDetails(),
+                                                dispatch(setOrderDetails(item));
+                                        }}
+                                    >
+                                        <div
+                                            className={
+                                                styles.inventorySingleFirst
+                                            }
+                                        >
+                                            <div className={styles.divDets}>
+                                                <img
+                                                    src={
+                                                        item?.data?.image[0] !==
+                                                        undefined
+                                                            ? item?.data
+                                                                  ?.image[0]
+                                                            : '/Assets/Images/default-store.jpeg'
+                                                    }
+                                                    width={70}
+                                                    height={70}
+                                                    alt=""
+                                                />
+                                                <div className={styles.dets}>
                                                     <div
-                                                        className={styles.dets}
+                                                        className={
+                                                            styles.details
+                                                        }
                                                     >
-                                                        <div
+                                                        <p
                                                             className={
-                                                                styles.details
+                                                                styles.productName
                                                             }
                                                         >
-                                                            <p
-                                                                className={
-                                                                    styles.productName
-                                                                }
-                                                            >
+                                                            Order {item?.id}
+                                                        </p>
+                                                        <div
+                                                            className={
+                                                                styles.ammount
+                                                            }
+                                                        >
+                                                            <p>
                                                                 {
                                                                     item?.data
-                                                                        ?.name
+                                                                        ?.cartItems
+                                                                        .length
+                                                                }{' '}
+                                                                Pcs
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div
+                                                            className={
+                                                                styles.nameLocation
+                                                            }
+                                                        >
+                                                            <p>
+                                                                {
+                                                                    item?.senderEmail
                                                                 }
                                                             </p>
-                                                            <div
-                                                                className={
-                                                                    styles.ammount
-                                                                }
-                                                            >
-                                                                <p>
-                                                                    {
-                                                                        item
-                                                                            ?.data
-                                                                            ?.quantity
-                                                                    }
-                                                                    Pcs
-                                                                </p>
-                                                                <p>
-                                                                    {
-                                                                        item
-                                                                            ?.data
-                                                                            ?.color
-                                                                    }
-                                                                </p>
-                                                            </div>
-                                                            <h5>
-                                                                Order
-                                                                #1234567890
-                                                            </h5>
                                                         </div>
-                                                        <div>
-                                                            <div
-                                                                className={
-                                                                    styles.nameLocation
+                                                        <div
+                                                            className={
+                                                                styles.nameLocation
+                                                            }
+                                                        >
+                                                            <p>
+                                                                {
+                                                                    item?.shippingAddress
                                                                 }
-                                                            >
-                                                                <p>
-                                                                    Issac Adyemi
-                                                                </p>
-                                                                <p>Lagos</p>
-                                                            </div>
-                                                            <div
-                                                                className={
-                                                                    styles.time
+                                                            </p>
+                                                        </div>
+                                                        <div
+                                                            className={
+                                                                styles.time
+                                                            }
+                                                        >
+                                                            <p>
+                                                                {
+                                                                    item?.orderDate
                                                                 }
-                                                            >
-                                                                <p>
-                                                                    {
-                                                                        item?.dateAdded
-                                                                    }
-                                                                </p>
-                                                            </div>
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className={styles.ship}>
-                                                <div>SHipped</div>
-                                                <p>
-                                                    {' '}
-                                                    {getSymbolFromCurrency(
-                                                        countryToCurrency[
-                                                            `${affiliate?.substring(
-                                                                1
-                                                            )}`
-                                                        ]
-                                                    )}{' '}
-                                                    {parseFloat(
-                                                        item?.data?.price
-                                                    ).toLocaleString('en-US')}
-                                                </p>
-                                            </div>
                                         </div>
-                                    </>
-                                );
-                            }
-                        )
+                                        <div className={styles.ship}>
+                                            <div className={styles.itemStatus}>
+                                                {item?.status}
+                                            </div>
+                                            <p>
+                                                {' '}
+                                                {getSymbolFromCurrency(
+                                                    countryToCurrency[
+                                                        `${affiliate?.substring(
+                                                            1
+                                                        )}`
+                                                    ]
+                                                )}{' '}
+                                                {parseFloat(
+                                                    item?.totalCost
+                                                ).toLocaleString('en-US')}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </>
+                            );
+                        })
                     )}
                 </>
             ) : orderType === 'close' ? (

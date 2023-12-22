@@ -20,6 +20,27 @@
     gap: 30px;
     overflow: scroll;
 }
+.acctIngo {
+    display: grid;
+    grid-template-columns: 41% 58%;
+    height: 50px;
+    overflow: hidden;
+    transition: all ease-in-out 0.7s;
+}
+.acctIngo:hover {
+    display: grid;
+    grid-template-columns: 41% 58%;
+    height: 240px;
+
+    transition: all ease-in-out 0.7s;
+}
+.save {
+    color: blue;
+}
+.delSave {
+    display: flex;
+    justify-content: space-between;
+}
 .benerInner {
     display: flex;
     align-items: center;
@@ -84,6 +105,7 @@
     font-size: 12px;
     font-family: 'Inter', sans-serif;
     font-weight: 400;
+    cursor: pointer;
 }
 
 .firstDiv > div:last-child {

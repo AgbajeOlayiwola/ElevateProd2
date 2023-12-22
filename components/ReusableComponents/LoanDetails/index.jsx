@@ -1,15 +1,20 @@
 import React from 'react';
-import { formatter } from '../../../utils/formatter/formatter';
 import styles from './styles.module.css';
-
+const getSymbolFromCurrency = require('currency-symbol-map');
+const countryToCurrency = require('country-to-currency');
 const LoansDetails = ({ amount, loansDetails, children }) => {
+    const affiliate = localStorage.getItem('affiliateCode');
+    // console.log(amount);
     return (
         <div className={styles.loanDetailsCont}>
             <div className={styles.loanDetailsHead}>
                 <div className={styles.loanDetailsAmount}>
                     <h2>Loan Amount</h2>
                     <div>
-                        <p>{formatter.format(amount)}</p>
+                        <p>
+                            {countryToCurrency[affiliate?.substring(1)] +
+                                parseFloat(amount)}
+                        </p>
                     </div>
                 </div>
                 <h2>Loan Details</h2>

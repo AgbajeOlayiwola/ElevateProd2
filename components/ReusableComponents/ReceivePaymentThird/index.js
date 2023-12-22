@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Lottie from 'react-lottie';
 import { useDispatch } from 'react-redux';
 import { getDisputCategoryGen } from '../../../redux/actions/getDisputeInfoAction';
-import { useTransactionHistoryMutation } from '../../../redux/api/authApi';
+import {
+    useTransactionHistoryMutation,
+    useVirtualAccountTransLogMutation
+} from '../../../redux/api/authApi';
 import socialdata from '../../ReusableComponents/Lotties/loading.json';
 import CloseButton from '../CloseButtonSvg';
 import MoreAction from '../MoreAction';
@@ -32,6 +35,18 @@ const ReceivePaymentThird = ({
             reset: transactionHistoryReset
         }
     ] = useTransactionHistoryMutation();
+
+    const [
+        virtualAccountTransLog,
+        {
+            data: virtualAccountTransLogData,
+            isLoading: virtualAccountTransLogLoad,
+            isSuccess: virtualAccountTransLogSuccess,
+            isError: virtualAccountTransLogFalse,
+            error: virtualAccountTransLogErr,
+            reset: virtualAccountTransLogReset
+        }
+    ] = useVirtualAccountTransLogMutation();
     const [destinationTrue, setDestinationTrue] = useState(true);
     const [addnew, setAddnew] = useState(false);
     const [newAmount, setNewAmount] = useState('');
@@ -100,6 +115,19 @@ const ReceivePaymentThird = ({
                     value: ''
                 }
             });
+        } else if (title === 'View accounts') {
+            virtualAccountTransLog();
+            transactionHistory({
+                limit: 12,
+                fromDate: '',
+                toDate: '',
+                order: 'DESC',
+                filter: {
+                    type: 'PUP',
+                    field: '',
+                    value: ''
+                }
+            });
         }
 
         getCurrentDate();
@@ -149,7 +177,8 @@ const ReceivePaymentThird = ({
                         <div className={styles.Tpwh}>
                             <div>
                                 {/* { //console.log(trans)} */}
-                                {transactionHistoryLoad ? (
+                                {transactionHistoryLoad ||
+                                virtualAccountTransLogLoad ? (
                                     <Lottie
                                         options={socialOptions}
                                         height={200}

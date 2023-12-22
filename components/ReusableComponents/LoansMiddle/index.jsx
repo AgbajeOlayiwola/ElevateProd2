@@ -1,20 +1,25 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useLoanBalanceMutation } from '../../../redux/api/authApi';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+    useLoanBalanceMutation,
+    useLoanScoringMutation
+} from '../../../redux/api/authApi';
+import { setLoanData } from '../../../redux/slices/loansData';
 import { formatter } from '../../../utils/formatter/formatter';
+import { getMonthlyPayment } from '../../../utils/getNumberSuffix';
 import LoansSvg from '../LoansSvg';
 import styles from './styles.module.css';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
-const LoansMiddle = ({ status, state, loads, data }) => {
+const LoansMiddle = ({ status, state, loads, data, account }) => {
+    const dispatch = useDispatch();
     const affiliate = localStorage.getItem('affiliateCode');
     const [acctNummber, setAcctNumber] = useState('');
     const { allAccountInfo } = useSelector((store) => store);
     const [
         loanBalance,
         {
-            data: loanBalanceData,
             isLoading: loanBalanceLoad,
             isSuccess: loanBalanceSuccess,
             isError: loanBalanceFalse,
@@ -22,19 +27,35 @@ const LoansMiddle = ({ status, state, loads, data }) => {
             reset: loanBalanceReset
         }
     ] = useLoanBalanceMutation();
+    const [
+        loanScoring,
+        {
+            data: loanScoringData,
+            isLoading: loanScoringLoad,
+            isSuccess: loanScoringSuccess,
+            isError: loanScoringFalse,
+            error: loanScoringErr,
+            reset: loanScoringReset
+        }
+    ] = useLoanScoringMutation();
 
     useEffect(() => {
         setAcctNumber(
             allAccountInfo
-                .filter((account) => account?.isPrimaryAccount === 'Y') // Filter by primary flag
+                ?.filter((account) => account?.isPrimaryAccount === 'Y') // Filter by primary flag
                 .map((account) => account.accountNo)
                 .filter(Boolean)
+                .join(', ') // Join array elements into a string
         );
-        loanBalance({
-            account: acctNummber[0],
+        loanScoring({
+            account: acctNummber,
             prod_token: 'ECO-ZE9EGP'
         });
-    }, []);
+        loanBalance({
+            account: acctNummber,
+            prod_token: 'ECO-ZE9EGP'
+        });
+    }, [account]);
     function formatDateString(originalDateString) {
         const originalDate = new Date(originalDateString);
 
@@ -42,6 +63,11 @@ const LoansMiddle = ({ status, state, loads, data }) => {
 
         return new Intl.DateTimeFormat('en-US', options).format(originalDate);
     }
+    useEffect(() => {
+        if (loanScoringSuccess || loanBalanceSuccess) {
+            dispatch(setLoanData(loanScoringData, loanBalanceData));
+        }
+    }, [loanScoringSuccess, loanBalanceSuccess]);
 
     const router = useRouter();
     return (
@@ -62,28 +88,17 @@ const LoansMiddle = ({ status, state, loads, data }) => {
                             </h2>
                         ) : (
                             <>
-                                {loanBalanceData?.data?.activity?.map(
-                                    (item, index) => {
-                                        console.log(item);
-                                        return (
-                                            <h2 key={index}>
-                                                {getSymbolFromCurrency(
-                                                    countryToCurrency[
-                                                        `${affiliate.substring(
-                                                            1
-                                                        )}`
-                                                    ]
-                                                )}
-                                                {parseFloat(item?.amount)
-                                                    .toFixed(2)
-                                                    .replace(
-                                                        /\B(?=(\d{3})+(?!\d))/g,
-                                                        ','
-                                                    )}
-                                            </h2>
-                                        );
-                                    }
-                                )}
+                                <h2>
+                                    {getSymbolFromCurrency(
+                                        countryToCurrency[
+                                            `${affiliate.substring(1)}`
+                                        ]
+                                    )}
+                                    {parseFloat(loanBalanceData?.data?.loan)
+                                        .toFixed(2)
+                                        .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                </h2>
+
                                 {/* <span>/{formatter.format(0)}</span> */}
                             </>
                         )}
@@ -135,7 +150,19 @@ const LoansMiddle = ({ status, state, loads, data }) => {
                             </div>
                             <div>
                                 <p>Next Repayment </p>
-                                <h2>July 4, 2022</h2>
+                                <h2>
+                                    {' '}
+                                    {
+                                        countryToCurrency[
+                                            `${affiliate?.substring(1)}`
+                                        ]
+                                    }
+                                    {getMonthlyPayment(
+                                        Number(loanScoringData?.data?.interest),
+                                        Number(loanScoringData?.data?.period),
+                                        Number(loanScoringData?.data?.loan)
+                                    ) || 0.0}
+                                </h2>
                             </div>
                         </>
                     ) : (
@@ -163,13 +190,39 @@ const LoansMiddle = ({ status, state, loads, data }) => {
                                 <p>Repayment amount</p>
                                 <h2>
                                     {data?.data?.limit
-                                        ? data?.data?.limit
+                                        ? countryToCurrency[
+                                              affiliate?.substring(1)
+                                          ] +
+                                          parseFloat(data?.data?.limit)
+                                              .toFixed(2)
+                                              .replace(
+                                                  /\B(?=(\d{3})+(?!\d))/g,
+                                                  ','
+                                              )
                                         : 'N/A'}
                                 </h2>
                             </div>
                             <div>
                                 <p>Next Repayment </p>
-                                <h2>N/A</h2>
+                                <h2>
+                                    {loanScoringSuccess
+                                        ? countryToCurrency[
+                                              affiliate?.substring(1)
+                                          ] +
+                                          (getMonthlyPayment(
+                                              Number(
+                                                  loanScoringData?.data
+                                                      ?.interest
+                                              ),
+                                              Number(
+                                                  loanScoringData?.data?.period
+                                              ),
+                                              Number(
+                                                  loanScoringData?.data?.loan
+                                              )
+                                          ) || 0.0)
+                                        : 'N/A'}
+                                </h2>
                             </div>
                         </>
                     )}
