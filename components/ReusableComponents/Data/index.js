@@ -165,7 +165,7 @@ export const SidebarData = [
             },
             {
                 title: 'eInvoice and eReceipt',
-                path: '#'
+                path: '/Admin/Invoices'
                 // icon: <NairaSvg />
             },
             {
