@@ -578,6 +578,20 @@ const Collections = () => {
                                 }}
                             />
                         );
+                    case 2:
+                        return (
+                            <ReceivePaymentThird
+                                overlay={overlay}
+                                title="View accounts"
+                                action={buttonHandleClose}
+                                buttonText="Send Qr"
+                                type="Qr"
+                                closeAction={(data) => {
+                                    // //console.logdata);
+                                    setCount(count - 1);
+                                }}
+                            />
+                        );
                 }
             case 'phone Pos':
                 switch (count) {

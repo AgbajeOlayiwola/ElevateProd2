@@ -20,8 +20,6 @@
     gap: 30px;
     overflow: scroll;
 }
-<<<<<<< HEAD
-=======
 .acctIngo {
     display: grid;
     grid-template-columns: 41% 58%;
@@ -43,7 +41,6 @@
     display: flex;
     justify-content: space-between;
 }
->>>>>>> bf0c0ab0 (fronts css)
 .benerInner {
     display: flex;
     align-items: center;
@@ -108,10 +105,7 @@
     font-size: 12px;
     font-family: 'Inter', sans-serif;
     font-weight: 400;
-<<<<<<< HEAD
-=======
     cursor: pointer;
->>>>>>> bf0c0ab0 (fronts css)
 }
 
 .firstDiv > div:last-child {

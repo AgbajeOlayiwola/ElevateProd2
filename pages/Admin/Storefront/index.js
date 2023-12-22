@@ -6,7 +6,8 @@ import AddNewInventoryForm from '../../../components/layout/Storefront/Inventory
 import OrderDetails from '../../../components/layout/Storefront/OrderDetails';
 import Stores from '../../../components/layout/Storefront/Stores';
 import styles from './styles.module.css';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Storefront = () => {
     const [page, setPage] = useState(0);
 
