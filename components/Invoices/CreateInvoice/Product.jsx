@@ -2,8 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import IconSearch from '../../ReusableComponents/IconComponents/IconSearch';
 import { FlexBadgeContainer } from '../InvoicesStyle';
-import CustomDropdown from '../../CustomSelect';
-const options = ['Item 1', 'Item 2', 'Item 3'];
+
 const Product = () => {
   return (
     <>
