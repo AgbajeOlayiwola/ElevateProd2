@@ -1,0 +1,88 @@
+.cardContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 28px;
+}
+.firstBoxContainer {
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 28px;
+}
+.secondBoxContainer {
+    width: 30%;
+    padding: 40px 24px;
+    background-color: #69940d;
+    border-radius: 8px;
+}
+.secondBoxContainer p {
+    color: white;
+    font-weight: 400;
+    font-size: 12px;
+    margin: 0;
+    padding-top: 5px;
+}
+.secondBoxContainer h2 {
+    color: white;
+    font-weight: 700;
+    margin: 0;
+    font-size: 28px;
+}
+.whiteBox {
+    flex-basis: 217px;
+    flex-grow: 1;
+    background-color: white;
+    padding: 40px 24px;
+    border-radius: 8px;
+}
+.greenBox {
+    flex-basis: 217px;
+    flex-grow: 1;
+    background-color: #69940d;
+    padding: 40px 24px;
+    border-radius: 8px;
+}
+.greenBox p {
+    color: white;
+    font-weight: 400;
+    font-size: 12px;
+    margin: 0;
+    padding-top: 5px;
+}
+.greenBox h2 {
+    color: white;
+    font-weight: 700;
+    margin: 0;
+    font-size: 28px;
+}
+.whiteBox p {
+    color: #000b0f;
+    font-weight: 400;
+    font-size: 12px;
+    margin: 0;
+    padding-top: 5px;
+}
+.whiteBox h2 {
+    color: #000b0f;
+    font-weight: 700;
+    margin: 0;
+    font-size: 28px;
+}
+.flexHeaderContainer{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+.headerBtnContainer{
+  display: flex;
+  column-gap: 23px;
+}
+.flexHeaderContainer p{
+  margin: 0;
+  font-size: 24px;
+  color: #005B82;
+  font-weight: 600;
+}

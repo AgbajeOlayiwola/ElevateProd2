@@ -1,0 +1,33 @@
+.emptyStateContainer {
+    border-radius: 12px;
+    margin-top: 47px;
+    background: #fff;
+    padding: 40px 12px;
+}
+.emptyStateInnerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.emptyStateInnerContainer section{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.emptyStateInnerContainer p{
+  text-align: center;
+  margin-top: 12px;
+  line-height: 19.6px;
+  font-size: 14px;
+}
+.buttonContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.emptyStateHolder{
+  padding-bottom: 40px;
+  padding-top: 40px;
+}
