@@ -29,6 +29,9 @@
 .large {
   width: 800px;
 }
+.product{
+  width: 428px !important;
+}
 
 .close-btn {
   position: absolute;

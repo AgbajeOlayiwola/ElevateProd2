@@ -35,7 +35,7 @@ import BadgeCard from '../../ReusableComponents/BadgeCard';
 import IconPlus from '../../ReusableComponents/IconComponents/IconPlus';
 import Previewer from '../../ReusableComponents/UploadPlaceholder/previewer';
 
-const InventoryDetails = () => {
+const InventoryDetails = ( { nextPage } ) => {
   const [showAddCustomer, setShowAddCustomer] = useState( "" );
   const [imageURL, setImageURL] = useState( '' );
   const handleImageUpload = async ( e ) => {
@@ -280,7 +280,7 @@ const InventoryDetails = () => {
         <p>
           Not creating now? <SaveAsDraft>Save as Draft</SaveAsDraft>
         </p>
-        <button style={ { width: 176, marginTop: 0 } }>
+        <button style={ { width: 176, marginTop: 0 } } onClick={ nextPage }>
           Save and Continue
         </button>
       </SaveAndContinueFlex>

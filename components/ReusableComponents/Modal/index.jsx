@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import './style.css';
 
 const Modal = ( { size, children, onClose } ) => {
     const modalClassName = `modal ${ size }`;
@@ -44,7 +43,7 @@ const Modal = ( { size, children, onClose } ) => {
 };
 
 Modal.propTypes = {
-    size: PropTypes.oneOf( ['small', 'medium', 'large'] ),
+    size: PropTypes.oneOf( ['small', 'medium', 'large', 'product'] ),
     children: PropTypes.node,
     onClose: PropTypes.func.isRequired
 };
