@@ -17,6 +17,7 @@ import { UploadPlaceholder } from '../../ReusableComponents/UploadPlaceholder';
 import IconRemove from '../../ReusableComponents/IconComponents/IconRemove';
 import IconAdd from '../../ReusableComponents/IconComponents/IconAdd';
 import AddTax from './AddTax';
+import AddDiscount from './AddDiscount';
 const TaxDiscount = ( { nextPage } ) => {
   const [showAddProduct, setShowAddProduct] = useState( false );
   const [selectedOption, setSelectedOption] = useState( false )
@@ -79,7 +80,7 @@ const TaxDiscount = ( { nextPage } ) => {
           <IconRemove />
           Remove tax
         </RemoveBtn>
-        <AddBtn>
+        <AddBtn onClick={ () => setSelectedOption( 'AddDiscount' ) }> 
           <IconAdd /> Add discount
         </AddBtn>
       </DiscountTaxFlexContainer>
@@ -118,6 +119,12 @@ const TaxDiscount = ( { nextPage } ) => {
         <Modal size="product"
           onClose={ () => setSelectedOption( "" ) }>
           <AddTax />
+        </Modal>
+      ) }
+      { selectedOption === "AddDiscount" && (
+        <Modal size="product"
+          onClose={ () => setSelectedOption( "" ) }>
+          <AddDiscount />
         </Modal>
       ) }
       { showAddProduct && (
@@ -303,7 +310,7 @@ const TextBtn = styled.div`
     margin-top: 16px;
     margin-bottom: 24px;
 `;
-const Dashed = styled.div`
+export const Dashed = styled.div`
     stroke-width: 0.5px;
     border-bottom: 1.5px dashed #000;
     width: 100%;

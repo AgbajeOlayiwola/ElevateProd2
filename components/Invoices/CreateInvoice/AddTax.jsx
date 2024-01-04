@@ -1,6 +1,6 @@
 import React from 'react';
 import { SelectCustomerText } from '../InvoicesStyle';
-
+import styled from 'styled-components';
 const AddTax = () => {
   return (
     <section>
@@ -16,8 +16,8 @@ const AddTax = () => {
         </select>
       </div>
       <div style={ { marginTop: '24px', marginBottom: '24px' } }>
-        <label style={ { marginBottom: '8px', display: 'inline-block' } }>Tax code name</label>
-        <input
+        <label style={ { marginBottom: '8px', display: 'inline-block' } }>Tax code name %</label>
+        <StyledInput
           type="text"
           placeholder="Enter customer’s email address"
           value={ '7.5' }
@@ -29,3 +29,17 @@ const AddTax = () => {
 };
 
 export default AddTax;
+const StyledInput = styled.input`
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  &::after {
+    content: '%';
+    position: absolute;
+    top: 50%;
+    right: 10px; /* Adjust as needed */
+    transform: translateY(-50%);
+    color: #000; /* Adjust the color as needed */
+    font-weight: bold; /* Adjust as needed */
+  }
+`;
