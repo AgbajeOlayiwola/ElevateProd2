@@ -175,7 +175,7 @@ export const SidebarData = [
             },
             {
                 title: 'Cards',
-                path: '#'
+                path: '/Admin/cards'
                 // icon: <FaIcons.FaHandHoldingUsd />
             },
             {

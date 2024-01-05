@@ -3,7 +3,7 @@ import styles from './styles.module.css';
 import InvoiceEmptyStateIcon from '../ReusableComponents/InvoiceSvg/InvoiceEmptyStateIcon';
 import ButtonComp from '../ReusableComponents/Button';
 import { useRouter } from 'next/router';
-const EmptyState = () => {
+const EmptyState = ( { message = "  Your eInvoices will appear here when you create one.<br>eReceipts are made available for paid invoices.", btnText = "Create eInvoice", path = "/Admin/Invoices/create-invoice" } ) => {
     const router = useRouter();
     return (
         <div className={styles.emptyStateContainer}>
@@ -12,19 +12,16 @@ const EmptyState = () => {
                     <section>
                         <InvoiceEmptyStateIcon />
                     </section>
-                    <p>
-                        Your eInvoices will appear here when you create one.
-                        <br></br> eReceipts are made available for paid
-                        invoices.
+                    <p dangerouslySetInnerHTML={ { __html: message } }>
                     </p>
                     <div className={styles.buttonContainer}>
                         <button
                             onClick={() =>
-                                router.push('/Admin/Invoices/create-invoice')
+                                router.push( path )
                             }
                             style={{ width: '218px' }}
                         >
-                            Create eInvoice
+                            { btnText }
                         </button>
                     </div>
                 </div>

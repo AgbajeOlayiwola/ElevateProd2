@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Modal = ( { size, children, onClose } ) => {
+const Modal = ( { size, children, onClose, withCloseButton = true } ) => {
     const modalClassName = `modal ${ size }`;
 
     return (
@@ -10,7 +10,7 @@ const Modal = ( { size, children, onClose } ) => {
                 className={ modalClassName }
                 onClick={ ( e ) => e.stopPropagation() }
             >
-                <span className="close-btn" onClick={ onClose }>
+                <span className="close-btn" style={ { visibility: withCloseButton ? "visible" : "hidden" } } onClick={ onClose }>
                     <svg
                         width={ 24 }
                         height={ 24 }
@@ -43,7 +43,7 @@ const Modal = ( { size, children, onClose } ) => {
 };
 
 Modal.propTypes = {
-    size: PropTypes.oneOf( ['small', 'medium', 'large', 'product'] ),
+    size: PropTypes.oneOf( ['small', 'medium', 'large', 'product', "share"] ),
     children: PropTypes.node,
     onClose: PropTypes.func.isRequired
 };

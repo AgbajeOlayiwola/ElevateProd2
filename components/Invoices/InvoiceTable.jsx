@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './styles.module.css';
 import { TableContainer, TbodyRow, Thead, TheadRow, TableBody, StatusFlexContainer, CircleBox, CustomText } from './InvoicesStyle';
 
 const InvoiceTable = () => {

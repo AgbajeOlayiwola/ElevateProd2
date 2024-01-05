@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import LogoSVG from '../../ReusableComponents/IconComponents/LogoSVG';
 import { SaveAndContinueFlex, SaveAsDraft, Seperator } from '../InvoicesStyle';
@@ -12,7 +12,11 @@ import {
     SecondFlexOuter
 } from './Product';
 import { Dashed } from './TaxDiscount';
-
+import Modal from '../../ReusableComponents/Modal';
+import SuccessDialog from '../../ReusableComponents/SuccessDialog';
+import IconShare from '../../ReusableComponents/IconComponents/IconShare';
+import IconDownload from '../../ReusableComponents/IconComponents/IconDownload';
+import ShareComponent from '../../ReusableComponents/ShareModalDisplay';
 
 const product = [
     {
@@ -37,6 +41,8 @@ const product = [
     }
 ];
 const Review = () => {
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [openShareModal, setOpenShareModal] = useState(false);
     return (
         <section>
             <Text>
@@ -60,7 +66,7 @@ const Review = () => {
                 </Box>
                 <BoxInvoice>Invoice #ISC - 09829</BoxInvoice>
             </Flex>
-            <Seperator width={ 100 } style={ { margin: '20px 0' } } />
+            <Seperator width={100} style={{ margin: '20px 0' }} />
             <FlexTwo>
                 <section className="account">Account number:</section>
                 <section>
@@ -99,59 +105,59 @@ const Review = () => {
                     </FlexNumber>
                 </section>
             </FlexTwo>
-            <Seperator width={ 70 } style={ { margin: '20px 0' } } />
+            <Seperator width={70} style={{ margin: '20px 0' }} />
             <IntroText>Item details</IntroText>
             <ScrollAreas>
                 <Spacer>
-                    { product.map( ( value ) => {
-                        return <ProductCard key={ value.id } { ...value } />;
-                    } ) }
+                    {product.map((value) => {
+                        return <ProductCard key={value.id} {...value} />;
+                    })}
                 </Spacer>
             </ScrollAreas>
-            <Seperator width={ 100 } style={ { margin: '20px 0' } } />
+            <Seperator width={100} style={{ margin: '20px 0' }} />
             <IntroText>Payment details</IntroText>
             <FlexTwo>
-                <section className="account" style={ { color: '#7A7978' } }>
+                <section className="account" style={{ color: '#7A7978' }}>
                     Subtotal
                 </section>
                 <section>
-                    <AccountNumber style={ { color: '#455A64' } }>
+                    <AccountNumber style={{ color: '#455A64' }}>
                         N45,000.00
                     </AccountNumber>
                 </section>
             </FlexTwo>
             <FlexTwo>
-                <section className="account" style={ { color: '#7A7978' } }>
+                <section className="account" style={{ color: '#7A7978' }}>
                     Tax (VAT) - 7.5%
                 </section>
                 <section>
-                    <AccountNumber style={ { color: '#455A64' } }>
+                    <AccountNumber style={{ color: '#455A64' }}>
                         +N5,750.00
                     </AccountNumber>
                 </section>
             </FlexTwo>
-            <FlexTwo style={ { marginTop: '2px' } }>
-                <section className="account" style={ { color: '#7A7978' } }>
+            <FlexTwo style={{ marginTop: '2px' }}>
+                <section className="account" style={{ color: '#7A7978' }}>
                     Discount - 5%
                 </section>
                 <section>
-                    <AccountNumber style={ { color: '#455A64' } }>
+                    <AccountNumber style={{ color: '#455A64' }}>
                         -N4,500.00
                     </AccountNumber>
                 </section>
             </FlexTwo>
             <Dashed></Dashed>
-            <FlexTwo style={ { marginTop: '16px' } }>
-                <section className="account" style={ { color: '#7A7978' } }>
+            <FlexTwo style={{ marginTop: '16px' }}>
+                <section className="account" style={{ color: '#7A7978' }}>
                     Amount due to pay:
                 </section>
                 <section>
                     <AccountNumber
-                        style={ {
+                        style={{
                             color: '#102572',
                             fontWeight: 800,
                             fontSize: '20px'
-                        } }
+                        }}
                     >
                         N49,500.00
                     </AccountNumber>
@@ -161,72 +167,144 @@ const Review = () => {
                 <Button>Pay vendor now</Button>
             </BtnContainer>
             <FooterText>This invoice was created using</FooterText>
-            <BtnContainer >
+            <BtnContainer>
                 <img src="/MY_SME_LOGO_GREEN_RGB@4x1.png" loading="lazy" />
             </BtnContainer>
             <SaveAndContinueFlex>
                 <p>
                     Not creating now? <SaveAsDraft>Save as Draft</SaveAsDraft>
                 </p>
-                <button style={ { width: 176, marginTop: 0 } } onClick={ () => alert( "Successfully done" ) }>
+                <button
+                    style={{ width: 176, marginTop: 0 }}
+                    onClick={() => setShowSuccess(true)}
+                >
                     Create invoice
                 </button>
             </SaveAndContinueFlex>
-            
+            {showSuccess && (
+                <Modal
+                    size={'product'}
+                    onClose={() => setShowSuccess(false)}
+                    withCloseButton={false}
+                >
+                    <SuccessDialog
+                        path="/Admin/Invoices"
+                        btnComponent={
+                            <FlexBtn>
+                                <ShareAccess
+                                    onClick={() => setOpenShareModal(true)}
+                                >
+                                    <IconShare />
+                                    <a>Share invoice</a>
+                                </ShareAccess>
+                                <ShareAccess
+                                    style={{
+                                        background: 'rgba(16, 37, 114, 0.10)'
+                                    }}
+                                >
+                                    <IconDownload />
+                                    <a>Download</a>
+                                </ShareAccess>
+                            </FlexBtn>
+                        }
+                    />
+                </Modal>
+            )}
+            {openShareModal && (
+                <Modal
+                    size={'product'}
+                    onClose={() => setOpenShareModal(false)}
+                    withCloseButton={true}
+                >
+                    <ShareComponent
+                       
+                    />
+                </Modal>
+            )}
         </section>
     );
 };
 
 export default Review;
-const ProductCard = ( { name, description, gross, unitPrice, count } ) => {
+const ProductCard = ({ name, description, gross, unitPrice, count }) => {
     return (
         <ProductCardStyled>
             <FirstFlexOuter>
                 <ProductDetailContainer>
                     <img
                         src="https://res.cloudinary.com/rashot/image/upload/v1704297812/Frame_427321487_k6irtq.png"
-                        styles={ {
+                        styles={{
                             borderRadius: '2px',
                             width: '56px',
                             height: '56px'
-                        } }
+                        }}
                         alt="product image"
                     />
                     <FlexThreeContainer>
-                        <p className="name_product">{ name }</p>
-                        <p style={ { marginTop: '4px' } } className="twopcs">
-                            { description }
+                        <p className="name_product">{name}</p>
+                        <p style={{ marginTop: '4px' }} className="twopcs">
+                            {description}
                         </p>
-                        <p style={ { marginTop: '4px' } } className="twopcs">
-                            Unit price: <SpanPrice>{ unitPrice } </SpanPrice>
+                        <p style={{ marginTop: '4px' }} className="twopcs">
+                            Unit price: <SpanPrice>{unitPrice} </SpanPrice>
                         </p>
                     </FlexThreeContainer>
                 </ProductDetailContainer>
             </FirstFlexOuter>
             <SecondFlexOuter
-                style={ {
+                style={{
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'flex-end'
-                } }
+                }}
             >
-                <Count className="count">{ count }</Count>
-                <p className="amount">{ gross }</p>
+                <Count className="count">{count}</Count>
+                <p className="amount">{gross}</p>
             </SecondFlexOuter>
         </ProductCardStyled>
     );
 };
 
 const FooterText = styled.section`
-color: #323232;
-text-align: center;
-font-family: Inter;
-font-size: 12px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-margin-top: 16px;
-`
+    color: #323232;
+    text-align: center;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-top: 16px;
+`;
+const FlexBtn = styled.section`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    column-gap: 20px;
+    margin-bottom: 20px;
+`;
+const ShareAccess = styled.section`
+    display: flex;
+    height: 48px;
+    align-items: center;
+    box-sizing: border-box;
+    gap: 12px;
+    flex: 1 0 0;
+    border-radius: 8px;
+    border: 1px solid #102572;
+    padding-left: 25px;
+    padding-right: 16px;
+    cursor: pointer;
+    a {
+        color: #102572;
+        text-align: center;
+        font-family: Inter;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+    }
+`;
 const Button = styled.button`
     width: 364px;
     height: 48px;
@@ -298,8 +376,8 @@ const AccountNumber = styled.section`
     line-height: normal;
 `;
 const CircleBox = styled.div`
-    background-color: ${ ( props ) =>
-        props.color ? `${ props.color }` : '#B9B9B9' };
+    background-color: ${(props) =>
+        props.color ? `${props.color}` : '#B9B9B9'};
     box-shadow: 0px 0px 37px 0px rgba(157, 147, 147, 0.12);
     width: 4px;
     height: 4px;
