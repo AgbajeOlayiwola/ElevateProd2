@@ -24,7 +24,8 @@ const SuccessDialog = ( {
         ></Message>
       </section>
       { btnComponent }
-      <Button onClick={ () => router.push( path ) }>{ btnText }</Button>
+      { !btnComponent &&
+        <Button onClick={ () => router.push( path ) }>{ btnText }</Button> }
     </div>
   );
 };

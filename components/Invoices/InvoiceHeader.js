@@ -10,7 +10,7 @@ const filtersList = [
     'Overdue(12)'
 ];
 
-const InvoiceHeader = ( { title = 'Created invoices' } ) => {
+const InvoiceHeader = ( { title = 'Created invoices', showUtilze = true } ) => {
     return (
         <div className={ styles.invoiceHeaderBg }>
             <div className={ styles.invoiceHeaderBoxContaniner } style={ { marginBottom: title === "Paid invoices" ? "18px" : 0 } }>
@@ -22,13 +22,15 @@ const InvoiceHeader = ( { title = 'Created invoices' } ) => {
                     <input placeholder="Search by title, amount or date" />
                 </div>
             </div>
-            { title !== 'Paid invoices' && (
+            { showUtilze && <>
+                { title !== 'Paid invoices' && (
                 <div className={ styles.filterFlexContainer }>
                     { filtersList.map( ( value, index ) => {
                         return <div key={ index }>{ value }</div>;
                     } ) }
                 </div>
-            ) }
+                ) }
+            </> }
         </div>
     );
 };

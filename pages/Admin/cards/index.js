@@ -1,8 +1,11 @@
 import React from 'react'
+import CardsInterface from '../../../components/Cards'
 
 const CardsPage = () => {
   return (
-    <div>CardsPage</div>
+    <>
+      <CardsInterface />
+    </>
   )
 }
 
