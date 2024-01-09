@@ -437,7 +437,7 @@ const ForgetPin = styled.a`
     margin-right: auto;
     cursor: pointer;
 `;
-const TotalAmount = styled.section`
+export const TotalAmount = styled.section`
     color: var(--Neutral-Color-Ecobank-Dark-Gray, #4e4e4e);
     font-family: Inter;
     font-size: 12px;
@@ -446,7 +446,7 @@ const TotalAmount = styled.section`
     line-height: 16px; /* 133.333% */
     letter-spacing: 0.2px;
 `;
-const Amount = styled.section`
+export const Amount = styled.section`
     color: #08102d;
     text-align: right;
     font-family: Inter;
@@ -456,7 +456,7 @@ const Amount = styled.section`
     line-height: normal;
     letter-spacing: 0.2px;
 `;
-const TextLeft = styled.p`
+export const TextLeft = styled.p`
     margin: 0;
     color: var(--Neutral-Color-Ecobank-Dark-Gray, #4e4e4e);
     font-family: Inter;
@@ -466,7 +466,7 @@ const TextLeft = styled.p`
     line-height: 16px; /* 133.333% */
     letter-spacing: 0.4px;
 `;
-const TextRight = styled.p`
+export const TextRight = styled.p`
     margin: 0;
     color: #08102d;
 
@@ -496,7 +496,7 @@ const AvailableBalance = styled.section`
         letter-spacing: 0.5px;
     }
 `;
-const BoxBorder = styled.section`
+export const BoxBorder = styled.section`
     border-radius: 5px;
     border: 0.25px solid #979797;
     padding: 24px 16px;
@@ -511,7 +511,7 @@ const BoxBorder = styled.section`
     }
 `;
 
-const BoxContainer = styled.section`
+export const BoxContainer = styled.section`
     padding: 24px 23px 40px 23px;
     background: white;
     width: 55%;
@@ -530,7 +530,7 @@ const BoxContainer = styled.section`
         }
     }
 `;
-const Label = styled.label`
+export const Label = styled.label`
     margin-bottom: 8px;
     color: #7a7978;
     font-family: Inter;
@@ -540,7 +540,7 @@ const Label = styled.label`
     line-height: normal;
     display: inline-block;
 `;
-const Flex = styled.section`
+export const Flex = styled.section`
     display: flex;
     align-items: center;
     gap: 20px;
