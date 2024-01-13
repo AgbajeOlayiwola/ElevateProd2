@@ -52,7 +52,7 @@ const PaymentTable = ({ title, page }) => {
         'BULK_TRANSFER',
         'AIRTIME_TOPUP'
     ];
-    console.log(billPayments);
+    // console.log(billPayments);
 
     useEffect(() => {
         if (page === 'Collections') {
@@ -65,7 +65,7 @@ const PaymentTable = ({ title, page }) => {
                             'BULK_TRANSFER',
                             'AIRTIME_TOPUP'
                         ];
-                        console.log('Transaction Type:', item?.transactionType);
+                        // console.log('Transaction Type:', item?.transactionType);
                         return !excludedTypes.includes(item?.transactionType);
                     });
 
@@ -84,12 +84,12 @@ const PaymentTable = ({ title, page }) => {
                         return includedTypes.includes(item?.transactionType);
                     });
 
-                console.log('Filtered Transactions:', filteredTransactions);
+                // console.log('Filtered Transactions:', filteredTransactions);
 
                 setTransactions(filteredTransactions);
             }
         } else if (page === 'Reports') {
-            console.log('Setting Reports');
+            // console.log('Setting Reports');
             setNewestTableDetails([]);
             setNewTableDetails(tableDetails);
         }
@@ -117,7 +117,7 @@ const PaymentTable = ({ title, page }) => {
             setDisplayType('Date');
         }
     }, [searchType]);
-    console.log(searchType);
+    // console.log(searchType);
     const filterCondition = (searchType) => {
         switch (searchType) {
             case 'transactionType':
@@ -142,14 +142,14 @@ const PaymentTable = ({ title, page }) => {
                 'USSD'.toLowerCase().includes(searchValue.toLowerCase());
         }
     };
-    console.log(filterCondition());
+    // console.log(filterCondition());
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
 
     const handleWindowResize = () => {
         setWidth(window.innerWidth);
         setHeight(window.innerHeight);
-        console.log(width);
+        // console.log(width);
     };
 
     useEffect(() => {
@@ -195,7 +195,7 @@ const PaymentTable = ({ title, page }) => {
             pageNumber * transactionsPerPage,
             (pageNumber + 1) * transactionsPerPage
         );
-    console.log(transactions);
+    // console.log(transactions);
     const showTransHistErrorToastMessage = () => {
         toast.error(transactionHistoryErr?.data?.message, {
             position: toast.POSITION.TOP_RIGHT,

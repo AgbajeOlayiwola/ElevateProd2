@@ -138,14 +138,14 @@ const Checkout = ({ num, items, upgradeOrder }) => {
         const ll = await getLatLng(result[0]);
 
         setCoordinate(ll);
-        console.log(coordinate);
+        // console.log(coordinate);
     };
     const handleSenderSelect = async (value) => {
         const result = await geocodeByAddress(value);
         const ll = await getLatLng(result[0]);
 
         setSenderCoordinate(ll);
-        console.log(coordinate);
+        // console.log(coordinate);
     };
     return (
         <div className={styles.Checkout}>

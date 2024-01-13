@@ -20,6 +20,7 @@ const LoansMiddle = ({ status, state, loads, data, account }) => {
     const [
         loanBalance,
         {
+            data: loanBalanceData,
             isLoading: loanBalanceLoad,
             isSuccess: loanBalanceSuccess,
             isError: loanBalanceFalse,

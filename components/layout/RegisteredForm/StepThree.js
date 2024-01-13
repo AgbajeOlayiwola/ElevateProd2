@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import ButtonComp from '../../ReusableComponents/Button';
-import styles from './styles.module.css';
-import Link from 'next/link';
-import Progressbar from '../../ReusableComponents/Progressbar';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useGetAccountNoMutation } from '../../../redux/api/authApi';
 import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
 import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
-import { useDispatch, useSelector } from 'react-redux';
-import { bankAccountsData } from '../../../redux/actions/bankAccountsDetailsAction';
-import { useGetAccountNoMutation } from '../../../redux/api/authApi';
+import styles from './styles.module.css';
 
 const StepThree = ({
     action,
@@ -42,7 +38,7 @@ const StepThree = ({
         }
     }, [countryNames]);
     const { moreAccountNumberDetails } = useSelector((store) => store);
-    console.log(moreAccountNumberDetails);
+    // console.log(moreAccountNumberDetails);
     const [
         getAccountNo,
         {

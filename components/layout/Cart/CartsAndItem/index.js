@@ -11,7 +11,7 @@ const CartsAndItem = ({ nextStep, gatNumber }) => {
     const [cartItems, setCartItems] = useState(cartItem);
     const [num, setNum] = useState(1);
     const dispatch = useDispatch();
-    console.log(cartItems);
+    // console.log(cartItems);
     const procced = () => {
         dispatch(setCartItem(cartItems));
         nextStep();
@@ -54,12 +54,12 @@ const CartsAndItem = ({ nextStep, gatNumber }) => {
         });
     };
 
-    console.log(cartItems);
+    // console.log(cartItems);
     return (
         <div className={styles.CartsAndItem}>
             <div className={styles.cartItems}>
                 {cartItems?.map((item, index) => {
-                    console.log(index);
+                    // console.log(index);
                     return (
                         <CartItem
                             removeFromCart={removeFromCart}

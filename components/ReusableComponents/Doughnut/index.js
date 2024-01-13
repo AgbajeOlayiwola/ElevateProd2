@@ -1,9 +1,19 @@
 import 'chart.js/auto';
 import React, { useState } from 'react';
 import { Doughnut } from 'react-chartjs-2';
-
-const DoughNut = ({ data1, data2, data3, data4 }) => {
-    console.log(data1, data2, data3, data4);
+const getSymbolFromCurrency = require('currency-symbol-map');
+const countryToCurrency = require('country-to-currency');
+const DoughNut = ({
+    data1,
+    data2,
+    data3,
+    data4,
+    label1,
+    label2,
+    label3,
+    label4
+}) => {
+    const affiliate = localStorage.getItem('affiliateCode');
     const [chartData, setChartData] = useState({
         datasets: [
             {
@@ -15,8 +25,21 @@ const DoughNut = ({ data1, data2, data3, data4 }) => {
                 radius: '150'
                 // circumference: '100'
             }
+        ],
+        labels: [
+            `${label1.replace('_', '')}: ${data1} ${getSymbolFromCurrency(
+                countryToCurrency[affiliate?.substring(1)]
+            )}`,
+            `${label2.replace('_', '')}: ${data2} ${getSymbolFromCurrency(
+                countryToCurrency[affiliate?.substring(1)]
+            )}`,
+            `${label3.replace('_', '')}: ${data3} ${getSymbolFromCurrency(
+                countryToCurrency[affiliate?.substring(1)]
+            )}`,
+            `${label4.replace('_', '')}: ${data4} ${getSymbolFromCurrency(
+                countryToCurrency[affiliate?.substring(1)]
+            )}`
         ]
-        // labels: ['Red: 75.3% NGN', 'Amber:11.5%, NGN', 'Green: 13.1%, NGN']
     });
     // const options = {
     //   plugins: {

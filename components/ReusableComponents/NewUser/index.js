@@ -150,7 +150,7 @@ const NewUser = ({ selectCountry, selectedOption, onSelectChange }) => {
                 initialValues={initialValues}
                 // validateOnChange={true}
                 onSubmit={(values, { setSubmitting }) => {
-                    console.log('click');
+                    // console.log('click');
                     register(values);
                     setLoading(true);
                     localStorage.setItem('email', values?.email);

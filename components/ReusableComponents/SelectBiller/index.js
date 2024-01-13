@@ -5,7 +5,7 @@ import { useBillerDetailsMutation } from '../../../redux/api/authApi';
 import Loader from '../Loader';
 import styles from './styles.module.css';
 const SlectBiller = ({ biller, loads, load, loadBillerForm }) => {
-    console.log(biller);
+    // console.log(biller);
 
     // const toggleDropdown = () => {
     //     setIsOpen(!isOpen);

@@ -1,15 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
-import styles from './styles.module.css';
+import { useRouter } from 'next/router';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import {
     useResendEmailOtpMutation,
     useVerifyEmailMutation
 } from '../../../../redux/api/authApi';
-import { useDispatch } from 'react-redux';
-import { useRouter } from 'next/router';
 import ButtonComp from '../../../ReusableComponents/Button';
-import VerifyEmailSvg from '../../../ReusableComponents/VerifyEmailSvg';
 import ProfileSetupSide from '../../../ReusableComponents/ProfileSetupSide';
-import { setProfile } from '../../../../redux/slices/profile';
+import VerifyEmailSvg from '../../../ReusableComponents/VerifyEmailSvg';
+import styles from './styles.module.css';
 
 const VerifyEmail = ({ nextStep }) => {
     const router = useRouter();
@@ -86,7 +85,7 @@ const VerifyEmail = ({ nextStep }) => {
         const data = {
             token: otpData
         };
-        console.log(data);
+        // console.log(data);
         verifyEmail(data);
     };
     return (

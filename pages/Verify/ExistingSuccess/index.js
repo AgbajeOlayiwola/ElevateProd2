@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import styles from './styles.module.css';
-import Card from '../../../components/layout/NotRegisteredForms/Card';
 import Link from 'next/link';
-import Success from '../../../components/ReusableComponents/Success';
-import { ButtonComp } from '../../../components';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { ButtonComp } from '../../../components';
+import Success from '../../../components/ReusableComponents/Success';
 import { bankAccountsData } from '../../../redux/actions/bankAccountsDetailsAction';
+import styles from './styles.module.css';
 
 const ExistingSuccess = ({ handleShowSuccessStep }) => {
     const dispatch = useDispatch();
@@ -26,7 +25,7 @@ const ExistingSuccess = ({ handleShowSuccessStep }) => {
     );
     useEffect(() => {
         dispatch(bankAccountsData());
-        // //console.log(bankAccounts[0].accountNumber);
+        // //// console.log(bankAccounts[0].accountNumber);
 
         setActNo(bankAccounts[0]?.accountNumber);
     }, [bankAccounts[0]?.accountNumber]);

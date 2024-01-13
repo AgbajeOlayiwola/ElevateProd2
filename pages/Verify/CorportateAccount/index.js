@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
-import styles from './styles.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
 import { getCookie } from 'cookies-next';
-import axiosInstance from '../../../redux/helper/apiClient';
-import apiRoutes from '../../../redux/helper/apiRoutes';
+import { useRouter } from 'next/router';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { logoutAction } from '../../../redux/actions/logOutAction';
 import { newAccountStatusData } from '../../../redux/actions/newAccountStatusAction';
+import axiosInstance from '../../../redux/helper/apiClient';
+import apiRoutes from '../../../redux/helper/apiRoutes';
+import styles from './styles.module.css';
 
 const CorporateAccount = () => {
     const [accountInfo, setAccountInfo] = useState('');
@@ -125,7 +125,7 @@ const CorporateAccount = () => {
                 }
             )
             .then((response) => {
-                // //console.log'create New Account', response.data);
+                // //// console.log'create New Account', response.data);
                 if (response.data.message === 'success') {
                     axiosInstance
                         .get(
@@ -139,16 +139,16 @@ const CorporateAccount = () => {
                             }
                         )
                         .then((response) => {
-                            // //console.log'Accoutn Status', response);
+                            // //// console.log'Accoutn Status', response);
                             setAccountDone(response.data.message);
                         })
                         .catch((error) => {
-                            // //console.logerror.response.data.message);
+                            // //// console.logerror.response.data.message);
                         });
                 }
             })
             .catch((error) => {
-                // //console.log
+                // //// console.log
                 // 'create new account Error:',
                 // error.response.data.message
                 // );
@@ -170,16 +170,16 @@ const CorporateAccount = () => {
                             }
                         )
                         .then((response) => {
-                            // //console.log'Accoutn Status', response);
+                            // //// console.log'Accoutn Status', response);
                             setAccountDone(response.data.message);
                         })
                         .catch((error) => {
-                            // //console.logerror.response.data.message);
+                            // //// console.logerror.response.data.message);
                         });
                 }
             });
     };
-    // //console.log(accountDone);
+    // //// console.log(accountDone);
     useEffect(() => {
         if (accountDone === 'success') {
             router.push('/Success/CorpSuccess');
@@ -199,7 +199,7 @@ const CorporateAccount = () => {
         }
 
         if (accountDone.message === 'success') {
-            // //console.logaccountStatus.messages, errorMessages);
+            // //// console.logaccountStatus.messages, errorMessages);
             router.push('/Success');
         }
 

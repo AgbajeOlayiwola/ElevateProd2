@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const logoutReducer = (state = initialState, { type, payload }) => {
-    // //console.log(payload);÷ss
+    // //// console.log(payload);÷ss
     switch (type) {
         case logout.LOGOUT_START:
             return {

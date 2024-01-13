@@ -5,6 +5,7 @@ import { AiFillCheckCircle } from 'react-icons/ai';
 import { FaRegCircle } from 'react-icons/fa6';
 import { IoMdCopy } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
+import { createFormatter } from '../../../utils/formatter/formatter';
 import Visbility from '../Eyeysvg';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
@@ -51,7 +52,7 @@ const AccountsInfoCard = ({ userProfileData }) => {
     const { allAccountInfo } = useSelector((store) => store);
     const { profile } = useSelector((store) => store);
     const [currency, setCurrency] = useState();
-    console.log(allAccountInfo);
+    // console.log(allAccountInfo);
     useEffect(() => {
         if (allAccountInfo && allAccountInfo.length > 0) {
             setAcctNumber(
@@ -79,6 +80,8 @@ const AccountsInfoCard = ({ userProfileData }) => {
             setCurrency([]);
         }
     }, [allAccountInfo]);
+    const formater = createFormatter(affiliate);
+
     return (
         <div className={styles.moneyCont}>
             <div className={styles.card}>
@@ -89,11 +92,7 @@ const AccountsInfoCard = ({ userProfileData }) => {
                                 <div className={styles.cardMone}>
                                     <h1>
                                         {currency}{' '}
-                                        {balance === '0.0'
-                                            ? '0.00'
-                                            : parseFloat(
-                                                  balance
-                                              ).toLocaleString('en-US')}
+                                        {formater?.format(Number(balance))}
                                     </h1>
                                     <Visbility color="green" typeSet={types} />
                                 </div>
@@ -203,16 +202,11 @@ const AccountsInfoCard = ({ userProfileData }) => {
                                                                   )}`
                                                               ]
                                                           )}
-                                                          {account?.availableBal ===
-                                                          0
-                                                              ? '0.00'
-                                                              : parseFloat(
-                                                                    account?.availableBal
-                                                                )
-                                                                    .toFixed(2)
-                                                                    .toLocaleString(
-                                                                        'en-US'
-                                                                    )}
+                                                          {formater?.format(
+                                                              Number(
+                                                                  account?.availableBal
+                                                              )
+                                                          )}
                                                       </p>
                                                   )}
                                               </div>

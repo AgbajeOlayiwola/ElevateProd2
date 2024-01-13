@@ -204,7 +204,7 @@ const ReceivePaymentFirst = ({
     }, []);
     useEffect(() => {
         if (paymentbanklistSuccess) {
-            console.log(paymentbanklistData);
+            // console.log(paymentbanklistData);
         }
     }, [paymentbanklistSuccess]);
 

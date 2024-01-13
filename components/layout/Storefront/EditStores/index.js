@@ -61,7 +61,7 @@ const EditStores = ({
     const [checkd, setChecked] = useState(true);
     const router = useRouter();
     const [alert, setAlert] = useState(false);
-    console.log(storeSlice);
+    // console.log(storeSlice);
     const storeAction = [
         {
             title: 'Customize Storefront',
@@ -167,7 +167,7 @@ const EditStores = ({
 
     const handleSubmit = () => {
         // Handle submission of phoneNumbers
-        console.log(phoneNumbers);
+        // console.log(phoneNumbers);
         // Add logic to send data to the server or perform other actions
     };
     const [sure, setSure] = useState(false);
@@ -195,6 +195,7 @@ const EditStores = ({
                                 Cancel
                             </div>
                             <div
+                                className={styles.deleteBtn}
                                 onClick={() => {
                                     deletStorefront({
                                         storeFrontId: storeSlice?.id
@@ -257,8 +258,8 @@ const EditStores = ({
                                     <div
                                         className={styles.Logoeditbtn}
                                         onClick={() => {
-                                            setEditLogo((prev) => !prev),
-                                                console.log(editBanner);
+                                            setEditLogo((prev) => !prev);
+                                            // console.log(editBanner);
                                         }}
                                     >
                                         <EditSvg />
@@ -314,8 +315,8 @@ const EditStores = ({
                             <div
                                 className={styles.Logoeditbtn}
                                 onClick={() => {
-                                    setEditNameDesc((prev) => !prev),
-                                        console.log(editBanner);
+                                    setEditNameDesc((prev) => !prev);
+                                    // console.log(editBanner);
                                 }}
                             >
                                 {/* <EditSvg /> */}

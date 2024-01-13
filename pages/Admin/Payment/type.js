@@ -138,7 +138,7 @@ const PaymentTypes = () => {
         setFormType(formTitle);
         setOverlay(true);
         if (profile?.user?.hasSetTransactionPin === 'N') {
-            //console.log(userProfileData.createdFromEcobankCred);
+            //// console.log(userProfileData.createdFromEcobankCred);
             if (profile?.data?.user?.createdFromEcobankCred === 'N') {
                 router.push({
                     pathname: '/AccountUpgrade',
@@ -150,14 +150,14 @@ const PaymentTypes = () => {
                     query: { id: 'Transaction Pin' }
                 });
             }
-            console.log('Test');
+            // console.log('Test');
         } else if (profile?.data?.user?.hasSetTransactionPin === 'Y') {
             setFormType(formTitle);
             setOverlay(true);
         }
     };
     useEffect(() => {
-        console.log(formType);
+        // console.log(formType);
     }, [formType]);
 
     const handleClose = () => {
@@ -185,7 +185,7 @@ const PaymentTypes = () => {
         );
     }, [csvData]);
 
-    console.log(formType);
+    // console.log(formType);
     const renderForm = () => {
         switch (formType) {
             case 'single transfer':
@@ -285,7 +285,7 @@ const PaymentTypes = () => {
                                 action={(data) => {
                                     setPaymentDetails(data);
                                     setSenderDetails(data.sourceAccount);
-                                    // //console.log(data);
+                                    // //// console.log(data);
                                     setCount(count + 1);
                                 }}
                             />
@@ -434,7 +434,7 @@ const PaymentTypes = () => {
                                         setIsLoading(true);
                                     }
 
-                                    // //console.logdata);
+                                    // //// console.logdata);
                                 }}
                                 // scheduleLater={() => {
                                 //     setCount(count + 3);
@@ -709,7 +709,7 @@ const PaymentTypes = () => {
                                 closeAction={handleClose}
                                 buttonText="Send Now"
                                 action={(data) => {
-                                    // //console.logdata);
+                                    // //// console.logdata);
                                     setCount(count + 1);
                                 }}
                                 scheduleLater={() => {
@@ -728,7 +728,7 @@ const PaymentTypes = () => {
                                 closeAction={handleClose}
                                 buttonText="Send Now"
                                 secondAction={(data) => {
-                                    // //console.logdata);
+                                    // //// console.logdata);
                                     setCount(count + 1);
                                 }}
                                 scheduleLater={() => {
@@ -744,7 +744,7 @@ const PaymentTypes = () => {
                                 overlay={overlay}
                                 closeAction={handleClose}
                                 transferAction={(data) => {
-                                    // //console.logdata);
+                                    // //// console.logdata);
                                     setCount(count + 1);
                                 }}
                             />

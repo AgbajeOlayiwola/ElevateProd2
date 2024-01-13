@@ -1,4 +1,4 @@
-import { accountNumber, qrInfoType } from '../types/actionTypes';
+import { qrInfoType } from '../types/actionTypes';
 
 const initialState = {
     isLoading: false,
@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const qrInfoReducer = (state = initialState, { type, payload }) => {
-    // //console.log(payload);÷ss
+    // //// console.log(payload);÷ss
     switch (type) {
         case qrInfoType.QR_INFO_START:
             return {

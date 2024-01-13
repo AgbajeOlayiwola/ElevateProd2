@@ -206,7 +206,7 @@ const CustomizeStoreFront = ({
 
     const handleSubmitFaqs = () => {
         // Handle submission of faqData
-        console.log(faqData);
+        // console.log(faqData);
         // Add logic to send data to the server or perform other actions
         updateFaqs(faqData);
     };

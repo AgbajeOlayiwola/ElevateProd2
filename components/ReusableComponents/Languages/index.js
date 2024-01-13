@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import styles from './styles.module.css';
-import { set, useForm } from 'react-hook-form';
-import Axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
 
 const Langauges = () => {
     const [languages, setLanguages] = useState([]);
@@ -12,7 +11,7 @@ const Langauges = () => {
 
     const dispatch = useDispatch();
 
-    // //console.log(language);
+    // //// console.log(language);
     const {
         register,
         handleSubmit,

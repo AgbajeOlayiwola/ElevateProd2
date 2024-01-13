@@ -1,7 +1,7 @@
 import { getCookie } from 'cookies-next';
+import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
 import { completeProfile } from '../types/actionTypes';
-import axiosInstance from '../helper/apiClient';
 export const completeProfileLoadStart = (errorMessages) => ({
     type: completeProfile.COMP_PROFILE_LOAD_START,
     payload: errorMessages
@@ -37,11 +37,11 @@ export const CompleteBusinessProfile = (completeProfileData) => {
                 }
             )
             .then((response) => {
-                // //console.log'complete business profiler', response.data);
+                // //// console.log'complete business profiler', response.data);
                 dispatch(completeProfileLoadSuccess(response?.data));
             })
             .catch((error) => {
-                // //console.logerror);
+                // //// console.logerror);
                 dispatch(completeProfileLoadError(error?.response?.data));
             });
     };

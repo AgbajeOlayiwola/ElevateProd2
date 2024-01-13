@@ -1,5 +1,6 @@
 import { Formik } from 'formik';
 import React, { useEffect, useRef, useState } from 'react';
+import { FaAngleDoubleDown } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 import {
@@ -80,11 +81,11 @@ const BulkTransfer = ({
 
         let bankList = [];
         let bankDets = bankArray.split('~');
-        //   // //console.log("bankDets", bankDets);
+        //   // //// console.log("bankDets", bankDets);
 
         for (var bankdet of bankDets) {
             let split = bankdet.split(':');
-            // //console.log('split', split);
+            // //// console.log('split', split);
 
             if (isValidNUBAN(accountNo, split[1])) {
                 bankList.push({
@@ -205,7 +206,7 @@ const BulkTransfer = ({
     ]);
 
     const addFormFields = (formik) => {
-        console.log('Button clicked');
+        // console.log('Button clicked');
         setFormFields([
             ...formFields,
             {
@@ -235,7 +236,7 @@ const BulkTransfer = ({
             ...prevTransactions,
             newTransaction
         ]);
-        console.log(transactionsArray);
+        // console.log(transactionsArray);
         setAccountName('');
     };
     useEffect(() => {
@@ -244,7 +245,7 @@ const BulkTransfer = ({
 
     // const handleAccountNumberChange = (index) => {
     //     const updatedFormFields = [...formFields];
-    //     // console.log(updatedFormFields);
+    //     // // console.log(updatedFormFields);
     //     updatedFormFields[index].accountName =
     //         accountInquiryData?.data?.accountName;
     //     formRef?.current?.setFieldValue(
@@ -264,7 +265,7 @@ const BulkTransfer = ({
     const handleBankSelect = (bank) => {
         setSelectedBank(bank);
     };
-    console.log(transactionsArray);
+    // console.log(transactionsArray);
 
     const { allAccountInfo } = useSelector((store) => store);
     const handleBlur = (val) => {
@@ -285,7 +286,7 @@ const BulkTransfer = ({
             // Dispatch the action after transactionsArray has been updated
             dispatch(setTransfer(transactionsArray));
             forwardPage();
-            console.log(transactionsArray);
+            // console.log(transactionsArray);
         }
     };
     const deleteTransaction = (index) => {
@@ -358,7 +359,9 @@ const BulkTransfer = ({
                             >
                                 Delete
                             </p>
-                            <p className={styles.save}></p>
+                            <p className={styles.save}>
+                                <FaAngleDoubleDown />
+                            </p>
                         </div>
                         <hr />
                     </>
@@ -685,7 +688,7 @@ const BulkTransfer = ({
                                                     type="file"
                                                     accept=".csv, .xlsm"
                                                     onChange={(e) => {
-                                                        //  //console.log(e.target.files[0]);
+                                                        //  //// console.log(e.target.files[0]);
                                                         if (
                                                             e.target.files[0].name.split(
                                                                 '.'
@@ -780,7 +783,7 @@ const BulkTransfer = ({
                     innerRef={formRef}
                     initialValues={initialValues}
                     onSubmit={(values, { setSubmitting }) => {
-                        console.log(values);
+                        // console.log(values);
                         setFormValues(values);
                         transferMoney();
                         setSubmitting(false);
@@ -1090,7 +1093,7 @@ const BulkTransfer = ({
                                                     type="file"
                                                     accept=".csv, .xlsm"
                                                     onChange={(e) => {
-                                                        //  //console.log(e.target.files[0]);
+                                                        //  //// console.log(e.target.files[0]);
                                                         if (
                                                             e.target.files[0].name.split(
                                                                 '.'

@@ -96,7 +96,7 @@ const Collections = () => {
                 .join(', ') // Join array elements into a string
         );
     }, []);
-    // console.log(acctNummber[0].toString());
+    // // console.log(acctNummber[0].toString());
     useEffect(() => {
         const data = {
             email: profile?.user?.email,
@@ -248,12 +248,12 @@ const Collections = () => {
         setLink({ id }.id);
 
         setFormType(link.toLowerCase());
-        console.log(formType);
+        // console.log(formType);
     }, []);
     const [merchantInf, setMerchantInfo] = useState();
     const handleFormChange = (formTitle) => {
         // if (userProfileData.hasSetTransactionPin === false) {
-        //     //console.log(userProfileData.createdFromEcobankCred);
+        //     //// console.log(userProfileData.createdFromEcobankCred);
         //     if (userProfileData.createdFromEcobankCred === false) {
         //         router.push({
         //             pathname: '/AccountUpgrade',
@@ -305,7 +305,7 @@ const Collections = () => {
                     //             buttonText="Generate Payment Link"
                     //             closeAction={handleClose}
                     //             action={(data) => {
-                    //                 // //console.logdata);
+                    //                 // //// console.logdata);
                     //                 setCount(count + 1);
                     //             }}
                     //             createLink={() => setCount(count + 2)}
@@ -326,7 +326,7 @@ const Collections = () => {
                                 buttonText="Generate Payment Link"
                                 closeAction={handleClose}
                                 action={(data) => {
-                                    // //console.logdata);
+                                    // //// console.logdata);
                                     setPaymentDetails(data);
                                     const paylinkData = {
                                         allowPartialPayments: true,
@@ -352,7 +352,7 @@ const Collections = () => {
                                 overlay={overlay}
                                 title="Payment Link Generated"
                                 allLink={(data) => {
-                                    // //console.logdata);
+                                    // //// console.logdata);
                                     setCount(count + 2);
                                 }}
                                 amountPaylink={paymentDetails.amount}
@@ -373,7 +373,7 @@ const Collections = () => {
                                 action={buttonHandleClose}
                                 buttonText="Send Paylink"
                                 closeAction={(data) => {
-                                    // //console.logdata);
+                                    // //// console.logdata);
                                     setCount(count - 1);
                                 }}
                                 type="PAYMENT_LINK"
@@ -463,7 +463,7 @@ const Collections = () => {
                                 buttonText="Send Qr"
                                 type="USSD"
                                 closeAction={(data) => {
-                                    // //console.logdata);
+                                    // //// console.logdata);
                                     setCount(count - 2);
                                 }}
                             />
@@ -476,7 +476,7 @@ const Collections = () => {
                                 action={handleClose}
                                 type="USSD"
                                 back={(data) => {
-                                    // //console.logdata);
+                                    // //// console.logdata);
                                     setCount(2);
                                 }}
                             />
@@ -489,7 +489,7 @@ const Collections = () => {
                             <QrFirst
                                 overlay={overlay}
                                 moveToNext={(data) => {
-                                    // //console.logdata);
+                                    // //// console.logdata);
                                     setCount(count + 1);
                                 }}
                                 closeAction={buttonHandleClose}
@@ -534,7 +534,7 @@ const Collections = () => {
                                 buttonText="Send Qr"
                                 type="Qr"
                                 closeAction={(data) => {
-                                    // //console.logdata);
+                                    // //// console.logdata);
                                     setCount(count - 1);
                                 }}
                             />
@@ -587,7 +587,7 @@ const Collections = () => {
                                 buttonText="Send Qr"
                                 type="Qr"
                                 closeAction={(data) => {
-                                    // //console.logdata);
+                                    // //// console.logdata);
                                     setCount(count - 1);
                                 }}
                             />

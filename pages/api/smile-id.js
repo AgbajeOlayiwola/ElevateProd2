@@ -15,10 +15,10 @@ export async function POST(req) {
         'Cache-Control': 'no-cache'
     };
 
-    // console.log("Req::", req);
-    console.log('Url::', url);
-    // console.log("Body::", requestPayload);
-    console.log('Headers::', headers);
+    // // console.log("Req::", req);
+    // console.log('Url::', url);
+    // // console.log("Body::", requestPayload);
+    // console.log('Headers::', headers);
 
     try {
         const response = await apiCallInit(headers).post(url, {
@@ -29,12 +29,12 @@ export async function POST(req) {
         // });
 
         const data = response.data;
-        console.log('Data from InitializeSmileIdTokenCall::' + data);
+        // console.log('Data from InitializeSmileIdTokenCall::' + data);
         // res.status(200).json(data);
         return NextResponse.json({ data });
     } catch (e) {
         console.error(e.response.data);
-        // console.log(`API: ${e?.name}, ${e?.message}`);
+        // // console.log(`API: ${e?.name}, ${e?.message}`);
         // res.status(500).json({ message: "Error fetching token" });
     }
 }

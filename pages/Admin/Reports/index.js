@@ -1,11 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Layout } from '../../../components';
-import DashLayout from '../../../components/layout/Dashboard';
+import React, { useState } from 'react';
 import styles from './styles.module.css';
-import { BsChevronDown } from 'react-icons/bs';
-import { AiOutlineSearch } from 'react-icons/ai';
-import ReportsData from '../../../components/ReusableComponents/ReportsData';
-import { BiFilter } from 'react-icons/bi';
 // import {
 //     // getTransactionElevate,
 //     getTransactionHistory,
@@ -13,15 +7,8 @@ import { BiFilter } from 'react-icons/bi';
 //     // loadAccountPrimary,
 //     loadbankStatement
 // } from '../../../redux/actions/actions';
-import { useDispatch, useSelector } from 'react-redux';
-import StorePopup from '../../../components/ReusableComponents/StorePopup';
-import CloseButton from '../../../components/ReusableComponents/CloseButtonSvg';
-import Loader from '../../../components/ReusableComponents/Loader';
-import PaymentSuccess from '../../../components/ReusableComponents/PaymentSuccess';
-import TableDetail from '../../../components/ReusableComponents/TableDetail';
-import ReactPaginate from 'react-paginate';
-import PaymentTable from '../../../components/ReusableComponents/PayementTable';
 import withAuth from '../../../components/HOC/withAuth';
+import PaymentTable from '../../../components/ReusableComponents/PayementTable';
 
 const Report = () => {
     // const dispatch = useDispatch();
@@ -78,10 +65,10 @@ const Report = () => {
     // useEffect(() => {
     // if (transactionElevate !== null) {
     //     setTableDetails(transactionElevate.transactions);
-    //      //console.log(transactionElevate.transactions);
+    //      //// console.log(transactionElevate.transactions);
     //     tableDetails?.filter((item) => {
     //         const newDate = item.transactionDate.split('T');
-    //          //console.log(newDate[0], time);
+    //          //// console.log(newDate[0], time);
     //         if (newDate[0] !== time) {
     //             setDateState(true);
     //         } else {
@@ -90,7 +77,7 @@ const Report = () => {
     //     });
 
     //     // tableDetails.data?.map((item) => {
-    //     //     // //console.log(item.transactionDate);
+    //     //     // //// console.log(item.transactionDate);
     //     // });
     // } else
     // if (transactionHistory !== null) {
@@ -104,7 +91,7 @@ const Report = () => {
     //     }
     // });
     // }
-    //  //console.log(transactionElevate);
+    //  //// console.log(transactionElevate);
     // }, [transactionHistory]);
     // useEffect(() => {
     //     if (accountPrimarys !== null) {
@@ -123,7 +110,7 @@ const Report = () => {
     // useEffect(() => {
     //     if (bankStatement !== null) {
     //         setLoading(false);
-    //          //console.log(bankStatement);
+    //          //// console.log(bankStatement);
     //     } else if (errorMessagebankStatement !== null) {
     //         setLoading(false);
     //         setSuccess(true);

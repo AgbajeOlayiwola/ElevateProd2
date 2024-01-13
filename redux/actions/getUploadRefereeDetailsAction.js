@@ -1,7 +1,7 @@
 import { getCookie } from 'cookies-next';
+import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
 import { uploadreffereeType } from '../types/actionTypes';
-import axiosInstance from '../helper/apiClient';
 export const getUploadRefereeLoad = () => ({
     type: uploadreffereeType.UPLOAD_REFEREE_START
 });
@@ -31,7 +31,7 @@ export const getUploadReffereeDetails = (uploadrefereeData) => (dispatch) => {
             }
         })
         .then((response) => {
-            // //console.logresponse.data.data);
+            // //// console.logresponse.data.data);
             dispatch(getUploadReffereeSuccess(response));
         })
         .catch((error) => dispatch(getUploadReffereeError(error?.response)));

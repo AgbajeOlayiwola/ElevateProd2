@@ -41,7 +41,7 @@ const Step2 = ({ ifIsEdit, backToInventories }) => {
         }
     ] = useUpdateInventoryMutation();
 
-    console.log(addInventory);
+    // console.log(addInventory);
 
     const {
         data: getStationsData,

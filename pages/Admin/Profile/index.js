@@ -122,11 +122,11 @@ const Profile = () => {
 
         let bankList = [];
         let bankDets = bankArray.split('~');
-        //   // //console.log("bankDets", bankDets);
+        //   // //// console.log("bankDets", bankDets);
 
         for (var bankdet of bankDets) {
             let split = bankdet.split(':');
-            // //console.log('split', split);
+            // //// console.log('split', split);
 
             if (isValidNUBAN(accountNo, split[1])) {
                 bankList.push({
@@ -267,7 +267,7 @@ const Profile = () => {
     };
 
     const { allAccountInfo } = useSelector((store) => store);
-    console.log(allAccountInfo);
+    // console.log(allAccountInfo);
     function countries(affiliate) {
         const selectedCountries = affiliateCountries.filter(
             (country) => country.affiliateCode === affiliate
@@ -281,7 +281,7 @@ const Profile = () => {
         setCountryCodes(selectedCountryCodes);
         setFlags(selectedFlags);
     }
-    console.log(countryCodes, flags);
+    // console.log(countryCodes, flags);
     useEffect(() => {
         countries(affiliate);
         if (allAccountInfo.length > 0) {
@@ -403,7 +403,7 @@ const Profile = () => {
     useEffect(() => {
         getProfile();
     }, []);
-    console.log(getProfileData);
+    // console.log(getProfileData);
     const [openDelete, setOpenDelete] = useState(false);
     const renderForm = () => {
         switch (text) {
@@ -1422,7 +1422,7 @@ const Profile = () => {
                                                 bankName: data.bankName,
                                                 bankCode: data.bankName
                                             };
-                                            // //console.log(beneData);
+                                            // //// console.log(beneData);
                                             dispatch(
                                                 postBeneficiariesData(beneData)
                                             );
@@ -1719,7 +1719,7 @@ const Profile = () => {
                                                                 const inputValue =
                                                                     e.target
                                                                         .value;
-                                                                //  //console.log(
+                                                                //  //// console.log(
                                                                 //     parseInt(inputValue).toFixed(2)
                                                                 // );
                                                                 // setAmount(parseInt(inputValue).toFixed(2));

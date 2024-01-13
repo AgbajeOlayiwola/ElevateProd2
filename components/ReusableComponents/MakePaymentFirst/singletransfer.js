@@ -97,7 +97,7 @@ const SingleTransfer = ({
 
         let accountNumberDigits = accountNumber.split('');
 
-        //   // //console.log("accountNumberDigits: ", accountNumberDigits);
+        //   // //// console.log("accountNumberDigits: ", accountNumberDigits);
 
         let sum =
             accountNumberDigits[0] * 3 +
@@ -165,7 +165,7 @@ const SingleTransfer = ({
     const handleBankSelect = (bank) => {
         setSelectedBank(bank);
     };
-    // console.log(accountInquiryErr);
+    // // console.log(accountInquiryErr);
     useEffect(() => {
         setNewBeneficiarieso([]);
         setNewBeneficiaries([]);
@@ -203,7 +203,7 @@ const SingleTransfer = ({
     let beneficiaryName;
     const { allAccountInfo } = useSelector((store) => store);
     const { profile } = useSelector((store) => store);
-    console.log(profile);
+    // console.log(profile);
     // paymentbanklist;
     const [
         paymentbanklist,
@@ -286,7 +286,7 @@ const SingleTransfer = ({
     }, []);
     useEffect(() => {
         if (paymentbanklistSuccess) {
-            console.log(paymentbanklistData);
+            // console.log(paymentbanklistData);
         }
     }, [paymentbanklistSuccess]);
 
@@ -349,7 +349,7 @@ const SingleTransfer = ({
         ecoCurrency: '',
         destinationBankCode: ''
     };
-    console.log(beneficiaries);
+    // console.log(beneficiaries);
     return (
         <div>
             <ToastContainer />
@@ -439,7 +439,7 @@ const SingleTransfer = ({
                         innerRef={formRef}
                         initialValues={initialValues}
                         onSubmit={(values, { setSubmitting }) => {
-                            // console.log(values);
+                            // // console.log(values);
                             const data = {
                                 isEcobankToEcobankTransaction: true,
                                 currency: values?.ecoCurrency,
@@ -458,7 +458,7 @@ const SingleTransfer = ({
                                 accountNumber: values?.ecoSourceAccount
                             };
                             nextPage();
-                            console.log(data);
+                            // console.log(data);
                             dispatch(setTransfer(data));
 
                             setSubmitting(false);
@@ -740,7 +740,7 @@ const SingleTransfer = ({
                         initialValues={initialValues}
                         innerRef={formRef}
                         onSubmit={(values, { setSubmitting }) => {
-                            // console.log(values);
+                            // // console.log(values);
 
                             const transferFee = {
                                 transactionType: 'INTERBANK',

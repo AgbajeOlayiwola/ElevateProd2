@@ -62,12 +62,12 @@ const BillPayment = ({
         billerCategories(null);
     }, []);
     const [clickedItem, setClickedItem] = useState(null);
-    console.log(loadBillerForm);
+    // console.log(loadBillerForm);
 
     const loadBillerForm = (val) => {
-        console.log(val);
+        // console.log(val);
         setBillerDetails(val?.data);
-        console.log['bills'];
+        // console.log['bills'];
         setLoads(true);
     };
     const showErrorToastMessage = () => {

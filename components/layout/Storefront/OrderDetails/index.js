@@ -20,7 +20,7 @@ const OrderDetails = ({ back }) => {
     const [isShipOrder, setIsShipOrder] = useState(false);
     const [activeBtn, setActiveBtn] = useState(true);
     const [page, setPage] = useState(0);
-    console.log(orderDetails);
+    // console.log(orderDetails);
     const dispatch = useDispatch();
     const affiliate = localStorage.getItem('affiliateCode');
 

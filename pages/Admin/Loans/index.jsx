@@ -75,7 +75,7 @@ const Loans = () => {
 
     useEffect(() => {
         if (loanScoringSuccess) {
-            console.log(loanScoringData?.data);
+            // console.log(loanScoringData?.data);
             dispatch(setLoanScoring(loanScoringData?.data));
         }
     }, [loanScoringSuccess]);
@@ -143,6 +143,7 @@ const Loans = () => {
                                 </select>
                             </div>
                             <LoansHeader
+                                filter={filteredData}
                                 state={state}
                                 status={status}
                                 loads={loanScoringLoad}
@@ -189,7 +190,7 @@ const Loans = () => {
                                     for one.
                                 </p>
 
-                                {status === 'request granted' ? (
+                                {filteredData?.length == 0 ? (
                                     <button
                                         onClick={() => {
                                             router.push('/Admin/Loans/Request');

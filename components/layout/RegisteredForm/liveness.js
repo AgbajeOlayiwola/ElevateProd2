@@ -95,7 +95,7 @@ const Liveness = ({ formData, type, action, back }) => {
         const ImageSrcII = image;
         // webcamRef?.current?.getScreenshot();
         setImage(ImageSrcII);
-        console.log(ImageSrcII);
+        // console.log(ImageSrcII);
         // const faceMMatchData = {
         //     userFaceBase64: ImageSrcII?.replace(
         //         'data:image/jpeg;base64,',
@@ -126,7 +126,7 @@ const Liveness = ({ formData, type, action, back }) => {
         }
     }, [getMoreAccountNumberDetailsSuccess]);
 
-    console.log(moreAccountNumberDetails);
+    // console.log(moreAccountNumberDetails);
     const showToastErrorMessage = () => {
         toast.error(faceMatchWithoutBvnErr?.data?.message, {
             position: toast.POSITION.TOP_RIGHT
@@ -151,7 +151,7 @@ const Liveness = ({ formData, type, action, back }) => {
 
     useEffect(() => {
         if (facematchithAccountnumberSuccess || faceMatchWithoutBvnSuccess) {
-            console.log(facematchithAccountnumberData);
+            // console.log(facematchithAccountnumberData);
             dispatch(setfaceMatchDetails(facematchithAccountnumberData));
             action();
         }

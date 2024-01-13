@@ -1,7 +1,7 @@
 import { getCookie } from 'cookies-next';
+import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
 import { shareRefFormtype } from '../types/actionTypes';
-import axiosInstance from '../helper/apiClient';
 //upload share reffernce form start
 export const shareRefFormStart = () => ({
     type: shareRefFormtype.GET_SHARE_REFFERENCE_START
@@ -34,7 +34,7 @@ export const shareRefFormData = (sharerefformdata) => (dispatch) => {
         })
         .then((response) => {
             dispatch(shareRefFormSuccess(response?.data[0]?.accountNumber));
-            // //console.logresponse.data.accountNumber);
+            // //// console.logresponse.data.accountNumber);
         })
         .catch((error) =>
             dispatch(shareRefFormError(error?.response?.data?.message))
