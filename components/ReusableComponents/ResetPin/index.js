@@ -1,10 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import Popup from '../../layout/Popup';
 import ButtonComp from '../Button';
-import CloseBtnSvg from '../ClosebtnSvg';
 import Visbility from '../Eyeysvg';
 import styles from './styles.module.css';
-import { useForm } from 'react-hook-form';
 
 const ResetPin = ({ overlay, title, label1, label2, action, formAction }) => {
     const {
@@ -39,7 +38,7 @@ const ResetPin = ({ overlay, title, label1, label2, action, formAction }) => {
     };
 
     // const onSubmit = async (data) => {
-    //     // //console.log(data);
+    //     // //// console.log(data);
     // };
     const myref = useRef();
     useEffect(() => {

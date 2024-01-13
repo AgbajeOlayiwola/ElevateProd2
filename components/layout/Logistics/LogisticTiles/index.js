@@ -47,7 +47,7 @@ const LogisticsTile = ({ data, isCommon }) => {
         logisticsnableProviders({ providerId: data?.id.toString() });
         setCheckStates((prev) => !prev);
     };
-    console.log(data?.id.toString());
+    // console.log(data?.id.toString());
     const changeCHeck = () => {
         logisticsDisableProvider({ providerId: data?.id.toString() });
         setCheckStates((prev) => !prev);

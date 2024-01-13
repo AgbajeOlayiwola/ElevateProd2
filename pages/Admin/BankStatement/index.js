@@ -76,7 +76,7 @@ const BankStatments = () => {
     const handleWindowResize = () => {
         setWidth(window.innerWidth);
         setHeight(window.innerHeight);
-        console.log(width);
+        // console.log(width);
     };
 
     useEffect(() => {
@@ -247,7 +247,7 @@ const BankStatments = () => {
                                             e.target.value
                                     );
                                     if (selectedAccount) {
-                                        console.log(selectedAccount);
+                                        // console.log(selectedAccount);
                                         setSelectAcct(
                                             selectedAccount?.accountNo
                                         );
@@ -532,7 +532,7 @@ const BankStatments = () => {
                             // )
                             accountMiniStatementData?.data?.map(
                                 (items, index) => {
-                                    console.log(items);
+                                    // console.log(items);
                                     // const newDate =
                                     //     items?.transactionTime?.split(' ');
                                     return (

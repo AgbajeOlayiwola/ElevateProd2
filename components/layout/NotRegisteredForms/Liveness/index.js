@@ -52,7 +52,7 @@ const Liveness = ({ nextStep }) => {
                 }
             );
             const data = await response.json();
-            console.log('::WebtokenData::' + data);
+            // console.log('::WebtokenData::' + data);
             return data;
         } catch (error) {
             console.error('Error fetching token:', error);
@@ -86,7 +86,7 @@ const Liveness = ({ nextStep }) => {
         setLoading((prev) => !prev);
         // const token =
         //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJ0bmVyX3BhcmFtcyI6eyJqb2JfaWQiOiJqb2JfdGVzdF9lY29fZG9jdl8yIiwiam9iX3R5cGUiOjYsInVzZXJfaWQiOiJ1c2VyX3Rlc3RfZWNvX2RvY3ZfMSJ9LCJjYWxsYmFja191cmwiOiJodHRwczovL3dlYmhvb2suc2l0ZS8wNjY1MGRhNi05OTNlLTQzNGQtOGMzNy1iMjlmMGNlOTVhMTAiLCJpYXQiOjE2ODkxNTQ3MjAsImV4cCI6MTY5MDg0Mzg2OH0.GzHJF05iZyRf3II9tA0MXkYQP9LTBJPNoce8pwazUqg";
-        console.log('token::', token);
+        // console.log('token::', token);
         configureSmileIdentityWebIntegration(token);
     };
     const webcamRef = React.useRef(null);
@@ -115,7 +115,7 @@ const Liveness = ({ nextStep }) => {
         }
     ] = useFaceMatchWithoutBvnMutation();
 
-    // console.log(affiliatData);
+    // // console.log(affiliatData);
     const faceMtch = () => {};
 
     useEffect(() => {
@@ -126,7 +126,7 @@ const Liveness = ({ nextStep }) => {
     const capture = React.useCallback(() => {
         const ImageSrcII = webcamRef?.current?.getScreenshot();
         setImage(ImageSrcII);
-        // console.log(ImageSrcII);
+        // // console.log(ImageSrcII);
 
         if (affiliatData === 'ENG') {
             if (localStorage.getItem('regprofilesetupdata')) {

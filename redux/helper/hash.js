@@ -1,4 +1,3 @@
-import React from 'react';
 import CryptoJS from 'crypto-js';
 
 export const encrypt = (content) => {
@@ -10,7 +9,7 @@ export const encrypt = (content) => {
     });
     return encryptResult.toString();
 };
-// //console.log(encrypt('password'));
+// //// console.log(encrypt('password'));
 
 export const decrypt = (content) => {
     var key = CryptoJS.enc.Utf8.parse('TheBestSecretKey');

@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import styles from './styles.module.css';
 import Popup from '../../layout/Popup';
-import ButtonComp from '../Button';
-import Loader from '../Loader';
+import styles from './styles.module.css';
 
 const UssdFirst = ({ overlay, isLoading, action, closeAction, share }) => {
     // This is the function we wrote earlier
@@ -26,7 +24,7 @@ const UssdFirst = ({ overlay, isLoading, action, closeAction, share }) => {
                 }, 1500);
             })
             .catch((err) => {
-                //console.log(err);
+                //// console.log(err);
             });
     };
     return (

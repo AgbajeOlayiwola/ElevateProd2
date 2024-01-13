@@ -1,6 +1,6 @@
+import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
 import { auth2Fa_Type } from '../types/actionTypes';
-import axiosInstance from '../helper/apiClient';
 export const auth2FaCodeLoad = () => ({
     type: auth2Fa_Type.AUTH_2FA_START
 });
@@ -33,8 +33,8 @@ export const auth2FaCodeDetails = (auth2FaCodeData) => (dispatch) => {
                 secure: 'true'
             });
 
-            //console.log(response);
-            // //console.logresponse.data.data);
+            //// console.log(response);
+            // //// console.logresponse.data.data);
             dispatch(auth2FaCodeSuccess(response));
         })
         .catch((error) => dispatch(auth2FaCodeError(error?.response)));

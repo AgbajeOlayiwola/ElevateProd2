@@ -1,7 +1,7 @@
 import { getCookie } from 'cookies-next';
-import { compProfile, login } from '../types/actionTypes';
-import apiRoutes from '../helper/apiRoutes';
 import axiosInstance from '../helper/apiClient';
+import apiRoutes from '../helper/apiRoutes';
+import { compProfile, login } from '../types/actionTypes';
 //Complete Profile Action
 export const profileLoadStart = (errorMessages) => ({
     type: compProfile.PROFILE_LOAD_START,
@@ -32,7 +32,7 @@ export const CompProfile = () => {
                 dispatch(profileLoadSuccess(response));
             })
             .catch((error) => {
-                // //console.logerror);
+                // //// console.logerror);
             });
     };
 };

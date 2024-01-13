@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const ecobankOnlineReducer = (state = initialState, { type, payload }) => {
-    // //console.log(payload);÷ss
+    // //// console.log(payload);÷ss
     switch (type) {
         case ecobankOnline.ECOBANKONLINE_LOAD_START:
             return {

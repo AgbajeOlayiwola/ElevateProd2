@@ -11,7 +11,7 @@ const countryToCurrency = require('country-to-currency');
 const PaymentAnalytics = ({ nextPage, prevPage }) => {
     const { analyticsData } = useSelector((store) => store);
     const affiliate = localStorage.getItem('affiliateCode');
-    console.log(analyticsData);
+    // console.log(analyticsData);
     return (
         <div>
             <div>
@@ -52,6 +52,10 @@ const PaymentAnalytics = ({ nextPage, prevPage }) => {
                     <hr />
                     <p className={styles.chann}>Channels</p>
                     <DoughNut
+                        label1={'qr'}
+                        label2={'ussd'}
+                        label3={'paylink'}
+                        label4={'others'}
                         data1={(
                             (analyticsData?.qr /
                                 analyticsData?.total_transaction_amount) *
@@ -98,6 +102,10 @@ const PaymentAnalytics = ({ nextPage, prevPage }) => {
                     <hr />
                     <p className={styles.chann}>Channels</p>
                     <DoughNut
+                        label1={'single_transfer'}
+                        label2={'bulk_transfer'}
+                        label3={'bills'}
+                        label4={'others'}
                         data1={(
                             (analyticsData?.bills /
                                 analyticsData?.total_transaction_amount) *

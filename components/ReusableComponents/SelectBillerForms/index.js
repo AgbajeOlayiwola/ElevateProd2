@@ -102,11 +102,11 @@ const SelectBillerForms = ({
         billerDatails?.billFormData
     );
     useEffect(() => {
-        console.log(formRef?.current?.values);
+        // console.log(formRef?.current?.values);
         if (prodCode.length > 1 && formRef?.current?.values) {
             if (billerDatails?.billerDetail?.validationRequired === 'Y') {
                 const formVal = formRef?.current?.values;
-                console.log(formVal.ammount);
+                // console.log(formVal.ammount);
                 const formDataValue = processObjects(
                     formVal,
                     billerDatails?.billFormData
@@ -130,7 +130,7 @@ const SelectBillerForms = ({
                     formDataValue
                 };
                 billerValidation(data);
-                console.log(data);
+                // console.log(data);
             }
         }
     }, [prodCode]);
@@ -185,7 +185,7 @@ const SelectBillerForms = ({
             showSuccessToastMessage();
         }
     }, [billerPaymentSuccess]);
-    console.log(profile);
+    // console.log(profile);
     return (
         <>
             <ToastContainer />
@@ -233,7 +233,7 @@ const SelectBillerForms = ({
                     initialValues={initialValues}
                     onSubmit={(values, { setSubmitting }) => {
                         const formVal = formRef?.current?.values;
-                        console.log(formVal.ammount);
+                        // console.log(formVal.ammount);
                         const formDataValue = processObjects(
                             formVal,
                             billerDatails?.billFormData
@@ -368,7 +368,7 @@ const SelectBillerForms = ({
                                     <select
                                         onChange={(e) => {
                                             setProdCode(e.target.value);
-                                            console.log(prodCode);
+                                            // console.log(prodCode);
                                             const selBiller =
                                                 billerDatails?.billerProductInfo.find(
                                                     (item) =>
@@ -376,9 +376,9 @@ const SelectBillerForms = ({
                                                         item?.productCode
                                                 );
                                             if (selBiller) {
-                                                // console.log(selBiller?.prod);
+                                                // // console.log(selBiller?.prod);
                                                 setCurrency(selBiller?.ccy);
-                                                console.log(
+                                                // console.log(
                                                     selBiller?.amountType
                                                 );
                                                 if (selBiller?.amount) {

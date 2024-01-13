@@ -1,4 +1,4 @@
-import { existingUserProfile, forgotPasswordtype } from '../types/actionTypes';
+import { forgotPasswordtype } from '../types/actionTypes';
 
 const initialState = {
     isLoading: false,
@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const fogrotPasswordReducer = (state = initialState, { type, payload }) => {
-    // //console.log(payload);÷ss
+    // //// console.log(payload);÷ss
     switch (type) {
         case forgotPasswordtype.GET_FORGOT_PASSWORD_START:
             return {

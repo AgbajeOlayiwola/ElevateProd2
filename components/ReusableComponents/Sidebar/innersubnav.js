@@ -1,13 +1,13 @@
+import Link from 'next/link';
 import React, { useState } from 'react';
 import styles from './styles.module.css';
-import Link from 'next/link';
 
 const Innersubnav = ({ item, subNav }) => {
     const [innersubNav, setInnerSubNav] = useState(false);
 
     const showInnerSubnav = ({ item }) => {
         setInnerSubNav((prev) => !prev);
-        // //console.log'clicked');
+        // //// console.log'clicked');
     };
     return (
         <>

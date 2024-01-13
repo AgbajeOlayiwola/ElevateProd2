@@ -24,7 +24,7 @@ const ConfirmLoan = ({ backward, comingFrom }) => {
     const { loanData } = useSelector((store) => store);
     const { loanRepayment } = useSelector((store) => store);
     const [alert, setAlert] = useState(false);
-    console.log(loanData);
+    // console.log(loanData);
     const loanDetails = [
         {
             id: 1,

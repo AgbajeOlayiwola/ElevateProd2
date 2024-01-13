@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import styles from './styles.module.css';
-import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { accountStatusData } from '../../../redux/actions/accountStatusAction';
+import styles from './styles.module.css';
 
 const ExistingAccount = () => {
     const { accountStatus, errorMessages } = useSelector(
@@ -25,10 +25,10 @@ const ExistingAccount = () => {
         dispatch(accountStatusData(userId));
     }, []);
     const newAccountTest1 = () => {
-        // //console.logaccountStatus);
+        // //// console.logaccountStatus);
         if (errorMessages) {
             //  setError(errorMessages);
-            // //console.logerrorMessages);
+            // //// console.logerrorMessages);
         } else if (accountStatus.message === 'Try Again') {
             if (count >= 5) {
                 router.push('/Verify/Waiting');

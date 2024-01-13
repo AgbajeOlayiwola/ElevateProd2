@@ -1,7 +1,7 @@
 import { getCookie } from 'cookies-next';
-import { forgotPasswordtype } from '../types/actionTypes';
-import apiRoutes from '../helper/apiRoutes';
 import axiosInstance from '../helper/apiClient';
+import apiRoutes from '../helper/apiRoutes';
+import { forgotPasswordtype } from '../types/actionTypes';
 //forgot password resolution start
 export const forgotPasswordStart = () => ({
     type: forgotPasswordtype.GET_FORGOT_PASSWORD_START
@@ -35,7 +35,7 @@ export const forgotPasswordData = (forgotPassworddata) => (dispatch) => {
         })
         .then((response) => {
             dispatch(forgotPasswordSuccess(response?.data?.message));
-            // //console.log(response);
+            // //// console.log(response);
         })
         .catch((error) =>
             dispatch(forgotPasswordError(error?.response?.data?.message))

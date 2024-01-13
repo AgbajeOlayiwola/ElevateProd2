@@ -625,12 +625,11 @@ export const authApi = createApi({
                 };
             }
         }),
-        virtualAccountTransLog: builder.mutation({
-            query: (body) => {
+        getVaHistory: builder.query({
+            query: () => {
                 return {
                     url: 'virtual-account-trans-log',
-                    method: 'post',
-                    body: {}
+                    method: 'get'
                 };
             }
         }),
@@ -1470,6 +1469,7 @@ export const {
     useVirtualAccountStatusMutation,
     useOrdrVirtualAccountMutation,
     useEnrollQrMutation,
+    useGetVaHistoryQuery,
     useFacematchithAccountnumberMutation,
     useAccountMiniStatementMutation,
     useAccountFullStatementMutation,

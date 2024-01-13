@@ -36,7 +36,7 @@ const Store = ({ children }) => {
 
         if (idParam) {
             // Do something with the idParam
-            console.log('ID parameter found:', idParam);
+            // console.log('ID parameter found:', idParam);
 
             // You can also convert the ID to a number if needed
             setID(idParam);
@@ -45,7 +45,7 @@ const Store = ({ children }) => {
             // For example, fetch data from an API using the ID
             // or update the component state based on the ID
         } else {
-            console.log('No ID parameter found in the URL');
+            // console.log('No ID parameter found in the URL');
         }
     }, []);
     useEffect(() => {

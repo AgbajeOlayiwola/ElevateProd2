@@ -119,7 +119,7 @@ const MoreAction = ({
 
     let newDate = dates?.split('T');
     let newTranDate = dateTrans?.split('T');
-    console.log(profile);
+    // console.log(profile);
     return (
         <>
             <ToastContainer />

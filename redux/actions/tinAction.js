@@ -1,7 +1,7 @@
 import { getCookie } from 'cookies-next';
+import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
 import { tinType } from '../types/actionTypes';
-import axiosInstance from '../helper/apiClient';
 export const getTinLoad = () => ({
     type: tinType.TIN_START
 });
@@ -31,7 +31,7 @@ export const getTinDetails = (tinData) => (dispatch) => {
             }
         })
         .then((response) => {
-            // //console.logresponse.data.data);
+            // //// console.logresponse.data.data);
             dispatch(getTinSuccess(response));
         })
         .catch((error) => dispatch(getTinError(error?.response)));

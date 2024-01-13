@@ -1,7 +1,6 @@
 import { getCookie } from 'cookies-next';
-import { setupProfile } from '../types/actionTypes';
 import apiRoutes from '../helper/apiRoutes';
-import axiosInstance from '../helper/apiClient';
+import { setupProfile } from '../types/actionTypes';
 export const setupProfileStart = () => ({
     type: setupProfile.PROFILESETUP_LOAD_START
 });
@@ -84,7 +83,7 @@ export const createProfileSetup = (profileData) => {
                 }
             })
             .catch((error) => {
-                // //console.log
+                // //// console.log
                 //     'profile setup dispatch',
                 //     error?.response.data.message
                 // );

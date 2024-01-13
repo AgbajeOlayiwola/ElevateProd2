@@ -1,10 +1,17 @@
 import React from 'react';
 import { BsArrowDownRight, BsArrowUpRight, BsDownload } from 'react-icons/bs';
 import { IoIosArrowRoundBack } from 'react-icons/io';
+import { useSelector } from 'react-redux';
+import { abbreviateNumber } from '../../../../utils/abreviateNumber';
 import AnalyticsData from '../../../ReusableComponents/AnalyticsData';
 import DropDown from '../../../ReusableComponents/DropDown';
 import styles from './styles.module.css';
+const getSymbolFromCurrency = require('currency-symbol-map');
+const countryToCurrency = require('country-to-currency');
 const StoreFrontAnalytics = ({ nextPage, prevPage }) => {
+    const affiliate = localStorage.getItem('affiliateCode');
+    const { storeFrontAnalytics } = useSelector((store) => store);
+
     return (
         <div>
             <div>
@@ -28,7 +35,16 @@ const StoreFrontAnalytics = ({ nextPage, prevPage }) => {
                                 <p className={styles.totalP}>
                                     Total received payment
                                 </p>
-                                <h1>₦567.6k</h1>
+                                <h1>
+                                    {getSymbolFromCurrency(
+                                        countryToCurrency[
+                                            affiliate?.substring(1)
+                                        ]
+                                    )}{' '}
+                                    {abbreviateNumber(
+                                        storeFrontAnalytics?.total_funds_from_store
+                                    )}
+                                </h1>
                                 <p className={styles.row}>
                                     <BsArrowUpRight /> 5%
                                 </p>
@@ -45,18 +61,24 @@ const StoreFrontAnalytics = ({ nextPage, prevPage }) => {
                                 upOrDown="up"
                                 percentage="5%"
                                 inflowOrOutflow="Total Inflow"
-                                amount="#567k"
+                                amount={
+                                    storeFrontAnalytics?.total_transaction_amount
+                                }
+                                isMoney={true}
                             />
                             <AnalyticsData
                                 symbol={<BsArrowDownRight />}
                                 upOrDown="down"
                                 percentage="5%"
-                                inflowOrOutflow="Total Outflow"
-                                amount="#567k"
+                                inflowOrOutflow="Total Store Funds"
+                                amount={
+                                    storeFrontAnalytics?.total_funds_from_store
+                                }
+                                isMoney={true}
                             />
                         </div>
                         <br />
-                        <div className={styles.inflowOutflowDiv}>
+                        {/* <div className={styles.inflowOutflowDiv}>
                             <AnalyticsData
                                 symbol={<BsArrowUpRight />}
                                 upOrDown="up"
@@ -71,74 +93,46 @@ const StoreFrontAnalytics = ({ nextPage, prevPage }) => {
                                 inflowOrOutflow="Total Outflow"
                                 amount="#567k"
                             />
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div className={styles.sentPayment}>
                     <p className={styles.topSelling}>Top selling Area</p>
                     <div>
-                        <div className={styles.areaFlex}>
-                            <p className={styles.area}>Mushin, Lagos</p>
-                            <p className={styles.area}>35.75%</p>
-                        </div>
-                        <div className={styles.underDiv}>
-                            <div className={styles.topDiv}></div>
-                        </div>
-                        <div className={styles.areaFlex}>
-                            <p className={styles.area}>Mushin, Lagos</p>
-                            <p className={styles.area}>35.75%</p>
-                        </div>
-                        <div className={styles.underDiv}>
-                            <div className={styles.topDiv}></div>
-                        </div>
-                        <div className={styles.areaFlex}>
-                            <p className={styles.area}>Mushin, Lagos</p>
-                            <p className={styles.area}>35.75%</p>
-                        </div>
-                        <div className={styles.underDiv}>
-                            <div className={styles.topDiv}></div>
-                        </div>
-                        <div className={styles.areaFlex}>
-                            <p className={styles.area}>Mushin, Lagos</p>
-                            <p className={styles.area}>35.75%</p>
-                        </div>
-                        <div className={styles.underDiv}>
-                            <div className={styles.topDiv}></div>
-                        </div>
+                        {storeFrontAnalytics?.top_selling_location.map(
+                            (item, index) => {
+                                return (
+                                    <div className={styles.areaFlex}>
+                                        <p className={styles.area}>
+                                            {item?.title}
+                                        </p>
+                                        <p className={styles.area}>
+                                            {item?.value}
+                                        </p>
+                                    </div>
+                                );
+                            }
+                        )}
                         <br />
                         <hr />
                     </div>
 
                     <p className={styles.topSelling}>Top selling Products</p>
                     <div>
-                        <div className={styles.areaFlex}>
-                            <p className={styles.area}>Mushin, Lagos</p>
-                            <p className={styles.area}>35.75%</p>
-                        </div>
-                        <div className={styles.underDiv}>
-                            <div className={styles.topDiv}></div>
-                        </div>
-                        <div className={styles.areaFlex}>
-                            <p className={styles.area}>Mushin, Lagos</p>
-                            <p className={styles.area}>35.75%</p>
-                        </div>
-                        <div className={styles.underDiv}>
-                            <div className={styles.topDiv}></div>
-                        </div>
-                        <div className={styles.areaFlex}>
-                            <p className={styles.area}>Mushin, Lagos</p>
-                            <p className={styles.area}>35.75%</p>
-                        </div>
-                        <div className={styles.underDiv}>
-                            <div className={styles.topDiv}></div>
-                        </div>
-                        <div className={styles.areaFlex}>
-                            <p className={styles.area}>Mushin, Lagos</p>
-                            <p className={styles.area}>35.75%</p>
-                        </div>
-                        <div className={styles.underDiv}>
-                            <div className={styles.topDiv}></div>
-                        </div>
+                        {storeFrontAnalytics?.top_selling_products.map(
+                            (item, index) => {
+                                return (
+                                    <div className={styles.areaFlex}>
+                                        <p className={styles.area}>
+                                            {item?.title}
+                                        </p>
+                                        <p className={styles.area}>
+                                            {item?.value}
+                                        </p>
+                                    </div>
+                                );
+                            }
+                        )}
                         <br />
                     </div>
                     <hr />

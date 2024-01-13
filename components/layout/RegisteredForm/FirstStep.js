@@ -24,7 +24,7 @@ const FirstStep = ({ setFormData, formData, action }) => {
         setOtpValues(newOtpValues);
         const myOtp = newOtpValues.join('');
         // Concatenate the values to form the OTP string;
-        // console.log('OTP:', myOtp);
+        // // console.log('OTP:', myOtp);
 
         if (value && inputIndex > length - 1) {
             const nextInput = otpInputs.current[inputIndex + 1];

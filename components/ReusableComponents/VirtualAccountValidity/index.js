@@ -12,7 +12,7 @@ const VirtualAccountValidity = ({ data }) => {
     const [countdown, setCountdown] = useState(30 * 60); // 30 minutes in seconds
     const [orderId, stOrdrId] = useState(data?.data?.oderId);
     const { profile } = useSelector((store) => store);
-    // console.log(data?.data?.oderId);
+    // // console.log(data?.data?.oderId);
     const [
         virtualAccountStatus,
         {

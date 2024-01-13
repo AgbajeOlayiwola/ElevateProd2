@@ -38,7 +38,7 @@ const ForgotPassword = ({ onSubmit, forgotPasswordErrorMessages, onMove }) => {
     ] = useForgotPasswordMutation();
 
     useEffect(() => {
-        console.log(forgotPasswordErr);
+        // console.log(forgotPasswordErr);
         if (forgotPasswordSuccess) {
             onMove();
         } else if (forgotPasswordErr) {

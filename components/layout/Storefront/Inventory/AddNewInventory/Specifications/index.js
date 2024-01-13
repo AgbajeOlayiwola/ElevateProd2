@@ -63,8 +63,8 @@ const Specifications = ({ ifIsEdit, backToInventories, saveANdContinue }) => {
 
     const handleSubmit = () => {
         // Handle submission of sizes and colors
-        console.log('Sizes:', sizes);
-        console.log('Colors:', colors);
+        // console.log('Sizes:', sizes);
+        // console.log('Colors:', colors);
         // Add logic to send data to the server or perform other actions
     };
     const initEditData = { specs: viewInventory?.specifications };

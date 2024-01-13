@@ -1,7 +1,7 @@
 import { getCookie } from 'cookies-next';
-import { resetOtpType } from '../types/actionTypes';
-import apiRoutes from '../helper/apiRoutes';
 import axiosInstance from '../helper/apiClient';
+import apiRoutes from '../helper/apiRoutes';
+import { resetOtpType } from '../types/actionTypes';
 //RESET OTP resolution start
 export const resetOtpStart = () => ({
     type: resetOtpType.RESET_OTP_START
@@ -23,7 +23,7 @@ export const resetOtpData = (resetOtpdata) => (dispatch) => {
         cookie = getCookie('existingToken');
     } else {
         cookie = getCookie('cookieToken');
-        //  //console.log(cookie);
+        //  //// console.log(cookie);
     }
     // dispatch(accountNumberLoadStart());
     axiosInstance
@@ -36,7 +36,7 @@ export const resetOtpData = (resetOtpdata) => (dispatch) => {
         })
         .then((response) => {
             dispatch(resetOtpSuccess(response));
-            // //console.logresponse);
+            // //// console.logresponse);
         })
         .catch((error) => dispatch(resetOtpError(error)));
 };

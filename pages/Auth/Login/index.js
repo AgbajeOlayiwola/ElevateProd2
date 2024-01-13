@@ -48,12 +48,12 @@ const Login = () => {
         }
     ] = useLoginAccountMutation();
     useEffect(() => {
-        console.log(loginAccountSuccess, loginAccountData, loginAccountErr);
+        // console.log(loginAccountSuccess, loginAccountData, loginAccountErr);
     }, [loginAccountSuccess, loginAccountErr, loginAccountData]);
 
     useEffect(() => {
         localStorage.setItem('affiliateCode', selectCountry?.affiliateCode);
-        console.log(loginAccountErr);
+        // console.log(loginAccountErr);
     }, []);
     const initSchema = yup.object().shape({
         email: yup
@@ -75,7 +75,7 @@ const Login = () => {
 
     useEffect(() => {
         if (loginAccountSuccess) {
-            console.log(
+            // console.log(
                 loginAccountData?.data?.user?.hasVerifiedEmail,
                 'loaded up'
             );
@@ -222,7 +222,7 @@ const Login = () => {
                 handleNavIn(loginAccountData);
                 dispatch(setToken(loginAccountData?.data?.token));
             }
-            console.log(loginAccountData, 'check check');
+            // console.log(loginAccountData, 'check check');
         }
     }, [loginAccountSuccess]);
 

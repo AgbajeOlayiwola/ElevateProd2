@@ -41,12 +41,12 @@ const ExistingMultiStep = () => {
 
         if (idParam) {
             // Do something with the idParam
-            console.log('ID parameter found:', idParam);
+            // console.log('ID parameter found:', idParam);
 
             const id = parseInt(idParam, 10);
             setPage(id);
         } else {
-            console.log('No ID parameter found in the URL');
+            // console.log('No ID parameter found in the URL');
         }
     }, []);
 
@@ -55,7 +55,7 @@ const ExistingMultiStep = () => {
         const countryData = affiliateCountries.filter(
             (country) => country.affiliateCode === affiliate
         );
-        console.log(countryData);
+        // console.log(countryData);
 
         // Use forEach to update state for each countryData item
         countryData.forEach((country, index) => {

@@ -43,8 +43,9 @@
     gap: 30px;
 }
 .paySelect {
-    width: 45%;
+    width: 42%;
     display: flex;
+    justify-content: space-between;
     gap: 12px;
 }
 
@@ -208,11 +209,13 @@
 }
 .dropDiv {
     display: flex;
+    justify-content: space-between;
     gap: 12px;
     width: 50%;
 }
 .dropDivs {
     display: flex;
+    justify-content: space-between;
     gap: 12px;
     width: 30%;
 }

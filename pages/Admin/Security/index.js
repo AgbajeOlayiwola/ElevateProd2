@@ -158,7 +158,7 @@ const Security = () => {
     useEffect(() => {
         if (changePasswordErr) {
             showErrorPassToastMessage();
-            console.log(changePasswordErr);
+            // console.log(changePasswordErr);
         }
     }, [changePasswordErr]);
     const renderForm = () => {

@@ -1,15 +1,15 @@
-import React, { useState, useRef, useEffect } from 'react';
-import styles from './styles.module.css';
-import EditSvg from '../editSvg';
+import React, { useEffect, useRef, useState } from 'react';
 import { MdCancel } from 'react-icons/md';
-import exportAsImage from '../../../utils/exportAsImage';
 import { useDispatch, useSelector } from 'react-redux';
+import exportAsImage from '../../../utils/exportAsImage';
+import EditSvg from '../editSvg';
+import styles from './styles.module.css';
 
-import CloseBtnSvg from '../ClosebtnSvg';
-import Loader from '../Loader';
 import { getDisputCategoryGen } from '../../../redux/actions/getDisputeInfoAction';
 import { getDisputCategorySubGen } from '../../../redux/actions/getSubDisputeCategoryAction';
 import { lodgeDisputeSubGen } from '../../../redux/actions/lodgeDisputeAction';
+import CloseBtnSvg from '../ClosebtnSvg';
+import Loader from '../Loader';
 const TransactionDets = ({
     paymentDirection,
     transactionAmmount,
@@ -35,21 +35,15 @@ const TransactionDets = ({
     const [disputeType, setDisputeType] = useState();
     const [loading, setLoading] = useState(false);
     const [selectedDisputeType, setSelectedDisputeType] = useState();
-    const [
-        selectedDisputSubCategory,
-        setSelectedDisputeSubCategory
-    ] = useState();
+    const [selectedDisputSubCategory, setSelectedDisputeSubCategory] =
+        useState();
     const [selectedDisputeCategory, setSelectedDisputeCategory] = useState();
     const [complaintCategory, setComplaintCategory] = useState();
     const exportRef = useRef();
-    const {
-        getDisputCategorySuccess,
-        getDisputCategoryErrorMessage
-    } = useSelector((state) => state.getDisputeCategoryReducer);
-    const {
-        getDisputCategorySubSuccess,
-        getDisputCategoryErrorSubMessage
-    } = useSelector((state) => state.getDisputeSubCategoryReducer);
+    const { getDisputCategorySuccess, getDisputCategoryErrorMessage } =
+        useSelector((state) => state.getDisputeCategoryReducer);
+    const { getDisputCategorySubSuccess, getDisputCategoryErrorSubMessage } =
+        useSelector((state) => state.getDisputeSubCategoryReducer);
     const { lodgeDisputeSuccess, lodgeDisputeErrorSubMessage } = useSelector(
         (state) => state.lodgeDisputeReducer
     );
@@ -58,14 +52,14 @@ const TransactionDets = ({
         setDisputeType(event.target.value);
         if (getDisputCategorySuccess) {
             setComplaintCategory(getDisputCategorySuccess);
-            //console.log(getDisputCategorySuccess);
+            //// console.log(getDisputCategorySuccess);
         }
     };
     const complainCateFunction = (event) => {
         dispatch(getDisputCategorySubGen(event.target.value, disputeType));
         setSelectedDisputeCategory(event.target.value);
         if (getDisputCategorySubSuccess) {
-            //console.log(getDisputCategorySubSuccess);
+            //// console.log(getDisputCategorySubSuccess);
         }
     };
     const complaintSubVateFunction = (event) => {
@@ -126,7 +120,7 @@ const TransactionDets = ({
     let newDate = dateTrans?.split('T');
     let newTranDate = dateTrans?.split('T');
 
-    //  //console.log(disputeType);
+    //  //// console.log(disputeType);
     return (
         <div>
             <div className={styles.deadlines}>

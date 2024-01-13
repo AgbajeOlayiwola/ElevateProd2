@@ -14,8 +14,8 @@ export default async function handler(req, res) {
         'Cache-Control': 'no-cache'
     };
 
-    console.log('URL::', url);
-    console.log('Headers::', headers);
+    // console.log('URL::', url);
+    // console.log('Headers::', headers);
 
     try {
         const response = await apiCallInit(headers).post(
@@ -24,10 +24,10 @@ export default async function handler(req, res) {
             fetchConfig
         );
         const data = response.data;
-        console.log('Data from InitializeSmileIdTokenCall::' + data);
+        // console.log('Data from InitializeSmileIdTokenCall::' + data);
         res.status(200).json(data);
     } catch (e) {
-        console.log(`API: ${e?.name}, ${e?.message}`);
+        // console.log(`API: ${e?.name}, ${e?.message}`);
         res.status(500).json({ message: 'Error fetching token' });
     }
 }

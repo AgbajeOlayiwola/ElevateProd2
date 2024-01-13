@@ -1,4 +1,4 @@
-import { createAccount, deleteAccountType } from '../types/actionTypes';
+import { deleteAccountType } from '../types/actionTypes';
 
 const initialState = {
     isLoading: false,
@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const deleteAccountReducer = (state = initialState, { type, payload }) => {
-    // //console.log(payload);÷ss
+    // //// console.log(payload);÷ss
     switch (type) {
         case deleteAccountType.DELETEACCOUNT_LOAD_START:
             return {

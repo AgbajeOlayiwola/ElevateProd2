@@ -47,18 +47,18 @@ const MakePaymentSecond = ({
     const [otpValue, setOtpValue] = useState('');
     const affiliate = localStorage.getItem('affiliateCode');
     const dispatch = useDispatch();
-    console.log(transfer);
+    // console.log(transfer);
     const handleOtpChange = (otp) => {
         setOtpValue(otp);
     };
-    console.log(otpValue);
+    // console.log(otpValue);
     const transferFunction = (e) => {
         e.preventDefault();
         const data = {
             ...transfer,
             transactionPin: otpValue
         };
-        console.log(data);
+        // console.log(data);
         singleTransfer(data);
     };
     const [
@@ -124,7 +124,7 @@ const MakePaymentSecond = ({
             transactionPin: otpValue,
             transactions: transactionsWithoutAccountNumber
         };
-        console.log(data);
+        // console.log(data);
         bulkTransfer(data);
     };
     const [totalAmount, setTotalAmount] = useState();
@@ -185,9 +185,9 @@ const MakePaymentSecond = ({
             showBulkErrorToastMessage();
         }
     }, [bulkTransferErr]);
-    console.log('Total Amount:', transfer);
+    // console.log('Total Amount:', transfer);
 
-    // console.log(transfer);
+    // // console.log(transfer);
     const [
         createTxBeneficiary,
         {

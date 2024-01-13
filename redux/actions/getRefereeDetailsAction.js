@@ -1,7 +1,7 @@
 import { getCookie } from 'cookies-next';
-import { reffereeType } from '../types/actionTypes';
-import apiRoutes from '../helper/apiRoutes';
 import axiosInstance from '../helper/apiClient';
+import apiRoutes from '../helper/apiRoutes';
+import { reffereeType } from '../types/actionTypes';
 export const getRefereeLoad = () => ({
     type: reffereeType.REFEREE_START
 });
@@ -31,7 +31,7 @@ export const getReffereeDetails = (refereeData) => (dispatch) => {
             }
         })
         .then((response) => {
-            // //console.logresponse.data.data);
+            // //// console.logresponse.data.data);
             dispatch(getReffereeSuccess(response));
         })
         .catch((error) => dispatch(getReffereeError(error?.response)));

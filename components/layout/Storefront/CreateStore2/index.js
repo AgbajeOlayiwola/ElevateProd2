@@ -180,7 +180,7 @@ const CreateStore2 = ({ nextPage }) => {
         const ll = await getLatLng(result[0]);
 
         setCoordinate(ll);
-        console.log(coordinate);
+        // console.log(coordinate);
     };
     return (
         <>

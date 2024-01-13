@@ -120,7 +120,7 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
                         : 'id',
                 phoneNumber: `${formData?.countryCode}${value?.phoneNumber}`
             };
-            console.log(data);
+            // console.log(data);
             profileSetUpUnregisteredBusiness(data);
         }
     };
@@ -148,7 +148,7 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
             showToastMessage();
         }
     }, [registeredSetupErr]);
-    console.log(profileSetUpUnregisteredBusinessErr);
+    // console.log(profileSetUpUnregisteredBusinessErr);
     const showToasErrortMessage = () => {
         toast.error(profileSetUpUnregisteredBusinessErr?.data?.message, {
             position: toast.POSITION.TOP_RIGHT,
@@ -285,7 +285,7 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
                                                     'bvn',
                                                     value?.target?.value
                                                 ),
-                                                    console.log(value);
+                                                    // console.log(value);
                                             }}
                                             // maxLength={11}
                                         />

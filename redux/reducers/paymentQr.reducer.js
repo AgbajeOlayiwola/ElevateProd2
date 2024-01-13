@@ -1,4 +1,4 @@
-import { accountNumber, paymentQrType, qrInfoType } from '../types/actionTypes';
+import { paymentQrType } from '../types/actionTypes';
 
 const initialState = {
     isLoading: false,
@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const paymentQrReducer = (state = initialState, { type, payload }) => {
-    // //console.log(payload);÷ss
+    // //// console.log(payload);÷ss
     switch (type) {
         case paymentQrType.PAYMENT_QR_START:
             return {

@@ -1,7 +1,7 @@
 import { getCookie } from 'cookies-next';
-import { generateQrType } from '../types/actionTypes';
-import apiRoutes from '../helper/apiRoutes';
 import axiosInstance from '../helper/apiClient';
+import apiRoutes from '../helper/apiRoutes';
+import { generateQrType } from '../types/actionTypes';
 export const generateQrCodeLoad = () => ({
     type: generateQrType.GENERATE_QR_START
 });
@@ -30,7 +30,7 @@ export const generateQrCodeDetails = (generateQrCodeData) => (dispatch) => {
             }
         })
         .then((response) => {
-            // //console.logresponse.data.data);
+            // //// console.logresponse.data.data);
             dispatch(generateQrCodeSuccess(response));
         })
         .catch((error) => dispatch(generateQrCodeError(error)));

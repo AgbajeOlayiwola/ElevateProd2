@@ -1,7 +1,7 @@
 import { getCookie } from 'cookies-next';
-import { uploadMemartType } from '../types/actionTypes';
-import apiRoutes from '../helper/apiRoutes';
 import axiosInstance from '../helper/apiClient';
+import apiRoutes from '../helper/apiRoutes';
+import { uploadMemartType } from '../types/actionTypes';
 //upload  uploadMemart start
 export const memartStart = () => ({
     type: uploadMemartType.GET_MEMART_START
@@ -34,7 +34,7 @@ export const memartData = (memartdata) => (dispatch) => {
         })
         .then((response) => {
             dispatch(memartSuccess(response));
-            // //console.logresponse);
+            // //// console.logresponse);
         })
         .catch((error) =>
             dispatch(memartError(error?.response?.data?.message))

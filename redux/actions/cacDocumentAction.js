@@ -1,7 +1,7 @@
 import { getCookie } from 'cookies-next';
+import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
 import { cacDocummentType } from '../types/actionTypes';
-import axiosInstance from '../helper/apiClient';
 export const getCacDocumentLoad = () => ({
     type: cacDocummentType.CAC_DOCUMENT_START
 });
@@ -31,7 +31,7 @@ export const getCacDocumentDetails = (cacDocumentData) => (dispatch) => {
             }
         })
         .then((response) => {
-            // //console.logresponse.data.data);
+            // //// console.logresponse.data.data);
             dispatch(getCacDocumentSuccess(response));
         })
         .catch((error) => dispatch(getCacDocumentError(error?.response)));

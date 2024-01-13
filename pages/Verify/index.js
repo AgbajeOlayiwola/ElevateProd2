@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { ButtonComp, Messagesvg } from '../../components';
-import styles from './styles.module.css';
-import { useRouter } from 'next/router';
 import axios from 'axios';
-import Loading from './Loading';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 import Failed from './Failed';
-import Success from '../../components/ReusableComponents/Success';
+import Loading from './Loading';
+import styles from './styles.module.css';
 const Verify = () => {
     const router = useRouter();
     const [activeBtn, setActiveBtn] = useState(true);
@@ -20,7 +18,7 @@ const Verify = () => {
 
     useEffect(() => {
         var token = query['token'];
-        // //console.log'hello', token);
+        // //// console.log'hello', token);
         if (!isReady) return;
         if (token) {
             axios
@@ -33,14 +31,14 @@ const Verify = () => {
                     }
                 )
                 .then((response) => {
-                    // //console.logresponse.data.message);
+                    // //// console.logresponse.data.message);
                     setRes(response.data.message);
                     if (response.data.message) {
                         router.push('/Auth/Login');
                     }
                 })
                 .catch((error) => {
-                    // //console.logerror.response.data.statusCode);
+                    // //// console.logerror.response.data.statusCode);
                     setResErros(error.response.data.statusCode);
                 });
         }
