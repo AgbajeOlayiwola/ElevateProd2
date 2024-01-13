@@ -79,6 +79,7 @@ a {
 * {
     box-sizing: border-box;
 }
+<<<<<<< HEAD
 label {
     font-family: 'Inter';
     font-style: normal;
@@ -96,12 +97,15 @@ label {
     width: 34vw;
     padding: 30px 20px;
 } */
+=======
+>>>>>>> e715675f ('reuble-component')
 select {
     border-radius: var(--global-select-borderRadius);
     background-color: var(--global-select-backgroundColor);
     padding: var(--global-select-padding);
     border-color: var(--global-select-borderColor);
     color: var(--global-select-color);
+<<<<<<< HEAD
     cursor: pointer;
     outline: none;
     font-size: 14px;
@@ -137,12 +141,17 @@ input[type='number']::-webkit-outer-spin-button {
     color: #dcdcdc;
     opacity: 1; /* Firefox */
 }
+=======
+}
+
+>>>>>>> e715675f ('reuble-component')
 button {
     padding: var(--global-button-padding);
     color: var(--global-button-color);
     background-color: var(--global-button-backgroundColor);
     border: var(--global-button-border);
     border-radius: var(--global-button-borderRadius);
+<<<<<<< HEAD
     margin-top: 16px;
     width: 100%;
     cursor: pointer;
@@ -213,4 +222,6 @@ table {
     left: 50;
     background: #f5f6fa;
     z-index: 10009999;
+=======
+>>>>>>> e715675f ('reuble-component')
 }

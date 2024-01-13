@@ -1,0 +1,76 @@
+.cover {
+    display: flex;
+    align-items: center;
+}
+.form {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #3e3e3e;
+}
+.elevatenow {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 44px;
+    color: #005b82;
+}
+.select {
+    font-size: 14px;
+    font-weight: 800;
+    width: 100%;
+    margin-top: 0.844rem;
+}
+.selectI {
+    font-size: 14px;
+    font-weight: 800;
+    width: 50%;
+    margin-top: 0.844rem;
+}
+.form:nth-child(1) {
+    width: 100%;
+}
+.form:nth-child(2) {
+    width: 30%;
+}
+
+.form div label {
+    margin-bottom: 3%;
+}
+.sectionI {
+    width: 50%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+.sectionI ::before {
+    background-color: rgb(0 0 0 / 71%);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(4px);
+}
+.topLeft {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url('/Assets/Images/WomanWithMac.png');
+}
+.topRight {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url('/Assets/Images/Clothe.png');
+}
+.bottomleft {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url('/Assets/Images/Barber.png');
+}
+.bottomRight {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url('/Assets/Images/Equipment.png');
+}
+.sectionII {
+    padding-left: 2%;
+    width: 50%;
+}
