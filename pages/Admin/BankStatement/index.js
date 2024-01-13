@@ -12,6 +12,7 @@ import {
     useAccountFullStatementMutation,
     useAccountMiniStatementMutation
 } from '../../../redux/api/authApi';
+import { createFormatter } from '../../../utils/formatter/formatter';
 import styles from './styles.module.css';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
@@ -183,7 +184,7 @@ const BankStatments = () => {
             showErrorToastMessage();
         }
     }, [accountMiniStatementErr]);
-
+    const formater = createFormatter(affiliate);
     return (
         <div className={styles.statementCover}>
             <ToastContainer />
@@ -333,10 +334,8 @@ const BankStatments = () => {
                     <h2>
                         {getSymbolFromCurrency(
                             countryToCurrency[`${affiliate?.substring(1)}`]
-                        )}
-                        {parseFloat(balance)
-                            .toFixed(2)
-                            .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                        )}{' '}
+                        {formater?.format(Number(balance))}
                     </h2>
                 </div>
                 <div>
@@ -348,10 +347,8 @@ const BankStatments = () => {
                             {' '}
                             {getSymbolFromCurrency(
                                 countryToCurrency[`${affiliate?.substring(1)}`]
-                            )}
-                            {parseFloat(inflow)
-                                .toFixed(2)
-                                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                            )}{' '}
+                            {formater?.format(Number(inflow))}
                         </h2>
                     ) : (
                         <h2>
@@ -375,10 +372,8 @@ const BankStatments = () => {
                             {' '}
                             {getSymbolFromCurrency(
                                 countryToCurrency[`${affiliate?.substring(1)}`]
-                            )}
-                            {parseFloat(outflow)
-                                .toFixed(2)
-                                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                            )}{' '}
+                            {formater?.format(Number(outflow))}
                         </h2>
                     ) : (
                         <h2>

@@ -376,11 +376,8 @@ const SelectBillerForms = ({
                                                         item?.productCode
                                                 );
                                             if (selBiller) {
-                                                // // console.log(selBiller?.prod);
                                                 setCurrency(selBiller?.ccy);
-                                                // console.log(
-                                                    selBiller?.amountType
-                                                );
+
                                                 if (selBiller?.amount) {
                                                     setArryAmaount(
                                                         selBiller?.amount.split(

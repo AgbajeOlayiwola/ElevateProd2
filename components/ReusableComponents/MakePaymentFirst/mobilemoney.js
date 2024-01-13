@@ -313,9 +313,7 @@ const MobileMoney = ({ firstTitle, closeAction }) => {
                                                             setBillerId(
                                                                 selBiller?.id
                                                             );
-                                                            // console.log(
-                                                                selBiller?.amountType
-                                                            );
+
                                                             if (
                                                                 selBiller?.amount
                                                             ) {
