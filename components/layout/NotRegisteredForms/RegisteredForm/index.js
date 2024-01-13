@@ -284,8 +284,7 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
                                                 setFieldValue(
                                                     'bvn',
                                                     value?.target?.value
-                                                ),
-                                                    // console.log(value);
+                                                );
                                             }}
                                             // maxLength={11}
                                         />

@@ -75,11 +75,6 @@ const Login = () => {
 
     useEffect(() => {
         if (loginAccountSuccess) {
-            // console.log(
-                loginAccountData?.data?.user?.hasVerifiedEmail,
-                'loaded up'
-            );
-
             dispatch(setProfile(loginAccountData));
             if (loginAccountData?.data?.user?.hasSetTransactionPin === 'N') {
                 dispatch(setPinned(false));
