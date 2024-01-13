@@ -342,9 +342,6 @@ const AirtimeOrData = ({
                                                                 item?.code
                                                         );
                                                     if (selBiller) {
-                                                        // console.log(
-                                                            selBiller?.amountType
-                                                        );
                                                         if (selBiller?.amount) {
                                                             setArryAmaount(
                                                                 selBiller?.amount.split(
