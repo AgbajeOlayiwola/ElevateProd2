@@ -206,11 +206,7 @@ const BulkTransfer = ({
     ]);
 
     const addFormFields = (formik) => {
-<<<<<<< HEAD
-        console.log('Button clicked');
-=======
         // console.log('Button clicked');
->>>>>>> 573d3178b7138ee75de948da6f0ee5fefb219f74
         setFormFields([
             ...formFields,
             {
@@ -240,11 +236,7 @@ const BulkTransfer = ({
             ...prevTransactions,
             newTransaction
         ]);
-<<<<<<< HEAD
-        console.log(transactionsArray);
-=======
         // console.log(transactionsArray);
->>>>>>> 573d3178b7138ee75de948da6f0ee5fefb219f74
         setAccountName('');
     };
     useEffect(() => {
@@ -253,11 +245,7 @@ const BulkTransfer = ({
 
     // const handleAccountNumberChange = (index) => {
     //     const updatedFormFields = [...formFields];
-<<<<<<< HEAD
-    //     // console.log(updatedFormFields);
-=======
     //     // // console.log(updatedFormFields);
->>>>>>> 573d3178b7138ee75de948da6f0ee5fefb219f74
     //     updatedFormFields[index].accountName =
     //         accountInquiryData?.data?.accountName;
     //     formRef?.current?.setFieldValue(
@@ -371,13 +359,9 @@ const BulkTransfer = ({
                             >
                                 Delete
                             </p>
-<<<<<<< HEAD
-                            <p className={styles.save}></p>
-=======
                             <p className={styles.save}>
                                 <FaAngleDoubleDown />
                             </p>
->>>>>>> 573d3178b7138ee75de948da6f0ee5fefb219f74
                         </div>
                         <hr />
                     </>

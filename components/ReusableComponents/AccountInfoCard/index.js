@@ -202,24 +202,11 @@ const AccountsInfoCard = ({ userProfileData }) => {
                                                                   )}`
                                                               ]
                                                           )}
-<<<<<<< HEAD
-                                                          {account?.availableBal ===
-                                                          0
-                                                              ? '0.00'
-                                                              : parseFloat(
-                                                                    account?.availableBal
-                                                                )
-                                                                    .toFixed(2)
-                                                                    .toLocaleString(
-                                                                        'en-US'
-                                                                    )}
-=======
                                                           {formater?.format(
                                                               Number(
                                                                   account?.availableBal
                                                               )
                                                           )}
->>>>>>> 573d3178b7138ee75de948da6f0ee5fefb219f74
                                                       </p>
                                                   )}
                                               </div>

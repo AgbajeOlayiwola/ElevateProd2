@@ -3,16 +3,10 @@ import Lottie from 'react-lottie';
 import { useDispatch } from 'react-redux';
 import { getDisputCategoryGen } from '../../../redux/actions/getDisputeInfoAction';
 import {
-<<<<<<< HEAD
-    useTransactionHistoryMutation,
-    useVirtualAccountTransLogMutation
-} from '../../../redux/api/authApi';
-=======
     useGetVaHistoryQuery,
     useTransactionHistoryMutation
 } from '../../../redux/api/authApi';
 import { createFormatter } from '../../../utils/formatter/formatter';
->>>>>>> 573d3178b7138ee75de948da6f0ee5fefb219f74
 import socialdata from '../../ReusableComponents/Lotties/loading.json';
 import CloseButton from '../CloseButtonSvg';
 import MoreAction from '../MoreAction';
@@ -43,19 +37,6 @@ const ReceivePaymentThird = ({
         }
     ] = useTransactionHistoryMutation();
 
-<<<<<<< HEAD
-    const [
-        virtualAccountTransLog,
-        {
-            data: virtualAccountTransLogData,
-            isLoading: virtualAccountTransLogLoad,
-            isSuccess: virtualAccountTransLogSuccess,
-            isError: virtualAccountTransLogFalse,
-            error: virtualAccountTransLogErr,
-            reset: virtualAccountTransLogReset
-        }
-    ] = useVirtualAccountTransLogMutation();
-=======
     const {
         data: vaData,
         refetch,
@@ -67,7 +48,6 @@ const ReceivePaymentThird = ({
         refetchOnMountOrArgChange: true
     });
     const affiliate = localStorage.getItem('affiliateCode');
->>>>>>> 573d3178b7138ee75de948da6f0ee5fefb219f74
     const [destinationTrue, setDestinationTrue] = useState(true);
     const [addnew, setAddnew] = useState(false);
     const [newAmount, setNewAmount] = useState('');
@@ -143,22 +123,7 @@ const ReceivePaymentThird = ({
                 }
             });
         } else if (title === 'View accounts') {
-<<<<<<< HEAD
-            virtualAccountTransLog();
-            transactionHistory({
-                limit: 12,
-                fromDate: '',
-                toDate: '',
-                order: 'DESC',
-                filter: {
-                    type: 'PUP',
-                    field: '',
-                    value: ''
-                }
-            });
-=======
             refetch();
->>>>>>> 573d3178b7138ee75de948da6f0ee5fefb219f74
         }
 
         getCurrentDate();
@@ -232,14 +197,8 @@ const ReceivePaymentThird = ({
                         <section className={styles.sectionI}></section>
                         <div className={styles.Tpwh}>
                             <div>
-<<<<<<< HEAD
-                                {/* { //console.log(trans)} */}
-                                {transactionHistoryLoad ||
-                                virtualAccountTransLogLoad ? (
-=======
                                 {/* { //// console.log(trans)} */}
                                 {transactionHistoryLoad || isFetching ? (
->>>>>>> 573d3178b7138ee75de948da6f0ee5fefb219f74
                                     <Lottie
                                         options={socialOptions}
                                         height={200}
