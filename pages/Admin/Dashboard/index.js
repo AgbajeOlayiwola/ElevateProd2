@@ -37,6 +37,7 @@ import StepThreeCompleteProfile1 from '../../../components/layout/NotRegisteredF
 import {
     useCreateTransactionPinMutation,
     useGetAcctBalsMutation,
+    useGetAllSToreFrontMutation,
     useGetIdMutation,
     useGetProfileMutation,
     useSetPrimaryAcctMutation,
@@ -45,6 +46,7 @@ import {
 } from '../../../redux/api/authApi';
 import { setAllAccountInfo } from '../../../redux/slices/allAccountInfoSlice';
 import { setProfile } from '../../../redux/slices/profile';
+import { setAllStars } from '../../../redux/slices/allStoresSlice';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
 function SampleNextArrow(props) {
@@ -157,11 +159,32 @@ const Dashboard = () => {
             reset: transactionHistoryReset
         }
     ] = useTransactionHistoryMutation();
+    const [
+        getAllSToreFront,
+        {
+            data: getAllSToreFrontData,
+            isLoading: getAllSToreFrontLoad,
+            isSuccess: getAllSToreFrontSuccess,
+            isError: getAllSToreFrontFalse,
+            error: getAllSToreFrontErr,
+            reset: getAllSToreFrontReset
+        }
+    ] = useGetAllSToreFrontMutation();
+
+    useEffect( () => {
+        if ( getAllSToreFrontSuccess ) {
+            dispatch( setAllStars( getAllSToreFrontData?.data ) );
+        }
+    }, [getAllSToreFrontSuccess] );
+    useEffect( () => {
+        getAllSToreFront( null );
+    }, [] );
     const showToastAddSuccessMessage = () => {
         toast.success('Account number successfully added', {
             position: toast.POSITION.TOP_RIGHT
         });
     };
+    
     const conditionalComponent = () => {
         switch (page) {
             case 0:

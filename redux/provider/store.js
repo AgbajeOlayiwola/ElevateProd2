@@ -47,6 +47,7 @@ import transferReducer from '../slices/transferSlice';
 import ussdDataReducer from '../slices/ussddataSlice';
 import viewInventoryReducer from '../slices/viewInventorySlice';
 import viewProductDataReducer from '../slices/viewProductSlice';
+import createInvoiceSlice from '../slices/createInvoiceSlice';
 const reducers = combineReducers({
     [authApi.reducerPath]: authApi.reducer,
     [docsApi.reducerPath]: docsApi.reducer,
@@ -81,7 +82,8 @@ const reducers = combineReducers({
     loanRequest: loanRequestReducer,
     loanRepayment: loanRepaymentReducer,
     loanData: loanDataReducer,
-    orderDetails: orderDetailsReducer
+    orderDetails: orderDetailsReducer,
+    createInvoiceSlice: createInvoiceSlice.reducer
 });
 
 const persistConfig = {
@@ -116,7 +118,8 @@ const persistConfig = {
         'loanScoring',
         'loanRepayment',
         'loanData',
-        'orderDetails'
+        'orderDetails',
+        'createInvoiceSlice'
     ]
 };
 

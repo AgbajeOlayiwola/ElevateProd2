@@ -4,13 +4,13 @@ import IconSearch from '../ReusableComponents/IconComponents/IconSearch';
 
 const filtersList = [
     'All',
-    'Paid(12)',
-    'Pending(12)',
-    'Draft(12)',
-    'Overdue(12)'
+    'Paid',
+    'Pending',
+    'Draft',
+    'Overdue'
 ];
 
-const InvoiceHeader = ( { title = 'Created invoices', showUtilze = true } ) => {
+const InvoiceHeader = ( { title = 'Created invoices', showUtilze = true, setSearchTerms } ) => {
     return (
         <div className={ styles.invoiceHeaderBg }>
             <div className={ styles.invoiceHeaderBoxContaniner } style={ { marginBottom: title === "Paid invoices" ? "18px" : 0 } }>
@@ -19,7 +19,7 @@ const InvoiceHeader = ( { title = 'Created invoices', showUtilze = true } ) => {
                     <div>
                         <IconSearch />
                     </div>
-                    <input placeholder="Search by title, amount or date" />
+                    <input placeholder="Search by title, amount or date" onChange={ ( e ) => setSearchTerms( e.target.value ) } />
                 </div>
             </div>
             { showUtilze && <>

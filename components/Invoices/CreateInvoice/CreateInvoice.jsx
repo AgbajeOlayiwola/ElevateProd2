@@ -7,6 +7,9 @@ import InventoryDetails from './InventoryDetails'
 import Product from './Product'
 import TaxDiscount from './TaxDiscount'
 import Review from './Review'
+
+
+
 const CreateInvoice = () => {
   const [page, setPage] = useState( 0 );
   const conditionalComponent = () => {

@@ -1,7 +1,16 @@
 import React from 'react';
-import { TableContainer, TbodyRow, Thead, TheadRow, TableBody, StatusFlexContainer, CircleBox, CustomText } from './InvoicesStyle';
-
-const InvoiceTable = () => {
+import {
+  TableContainer,
+  TbodyRow,
+  Thead,
+  TheadRow,
+  TableBody,
+  StatusFlexContainer,
+  CircleBox,
+  CustomText
+} from './InvoicesStyle';
+import moment from 'moment';
+const InvoiceTable = ( { data } ) => {
   return (
     <TableContainer>
       <Thead>
@@ -16,79 +25,55 @@ const InvoiceTable = () => {
         </TheadRow>
       </Thead>
       <TableBody>
-        <TbodyRow>
-          <td>1</td>
-          <td>12/12/2021</td>
-          <td colSpan={ 2 }>JND-AGS57</td>
-          <td colSpan={ 3 }>Isaac Akinyemi, Fortune Ekezie.</td>
-          <td>₵300,000</td>
-          <td colSpan={ 2 }>4</td>
-          <td>
-            <StatusFlexContainer>
-              <CircleBox CircleBox color="#F5A623"></CircleBox>
-              <CustomText color="#F5A623">Pending</CustomText>
-            </StatusFlexContainer>
-          </td>
-        </TbodyRow>
-        <TbodyRow>
-          <td>2</td>
-          <td>12/12/2021</td>
-          <td colSpan={ 2 }>JND-AGS57</td>
-          <td colSpan={ 3 }>Isaac Akinyemi, Fortune Ekezie.</td>
-          <td>₵300,000</td>
-          <td colSpan={ 2 }>10</td>
-          <td>
-            <StatusFlexContainer>
-              <CircleBox CircleBox color="#F5A623"></CircleBox>
-              <CustomText color="#F5A623">Pending</CustomText>
-            </StatusFlexContainer>
-          </td>
-        </TbodyRow>
-        <TbodyRow>
-          <td>3</td>
-          <td>12/12/2021</td>
-          <td colSpan={ 2 }>JND-AGS57</td>
-          <td colSpan={ 3 }>Isaac Akinyemi, Fortune Ekezie.</td>
-          <td>₵300,000</td>
-          <td colSpan={ 2 }>6</td>
-          <td>
-            <StatusFlexContainer>
-              <CircleBox CircleBox color="#F5A623"></CircleBox>
-              <CustomText color="#F5A623">Pending</CustomText>
-            </StatusFlexContainer>
-          </td>
-        </TbodyRow>
-        <TbodyRow>
-          <td>4</td>
-          <td>12/12/2021</td>
-          <td colSpan={ 2 }>JND-AGS57</td>
-          <td colSpan={ 3 }>Isaac Akinyemi, Fortune Ekezie.</td>
-          <td>₵300,000</td>
-          <td colSpan={ 2 }>6</td>
-          <td>
-            <StatusFlexContainer>
-              <CircleBox CircleBox color="#F5A623"></CircleBox>
-              <CustomText color="#F5A623">Pending</CustomText>
-            </StatusFlexContainer>
-          </td>
-        </TbodyRow>
-        <TbodyRow>
-          <td>5</td>
-          <td>12/12/2021</td>
-          <td colSpan={ 2 }>JND-AGS57</td>
-          <td colSpan={ 3 }>Isaac Akinyemi, Fortune Ekezie.</td>
-          <td>₵300,000</td>
-          <td colSpan={ 2 }>6</td>
-          <td>
-            <StatusFlexContainer>
-              <CircleBox CircleBox color="#F5A623"></CircleBox>
-              <CustomText color="#F5A623">Pending</CustomText>
-            </StatusFlexContainer>
-          </td>
-        </TbodyRow>
+        { data?.map( ( value, index ) => {
+          return (
+            <TbodyRow key={ index }>
+              <td>{ index + 1 }</td>
+              <td>
+                { ' ' }
+                { moment( value?.invoiceCreatedAt ).format( 'l' ) }
+              </td>
+              <td colSpan={ 2 }>{ value?.generatedID }</td>
+              <td colSpan={ 3 }>
+                { value?.customers?.map( ( data, index ) => {
+                  return (
+                    <React.Fragment key={ index }>
+                      { index > 0 && ', ' }
+                      { data?.customerName }
+                    </React.Fragment>
+                  );
+                } ) }
+              </td>
+              <td>₵{ value?.grandTotal }</td>
+              <td colSpan={ 2 }>{ value?.items.length }</td>
+              <td>
+                <StatusFlexContainer>
+                  <CircleBox
+                    CircleBox
+                    color={ getStatus( value.status ).color }
+                  ></CircleBox>
+                  <CustomText color={ getStatus( value.status ).color }>
+                    { value?.status }
+                  </CustomText>
+                </StatusFlexContainer>
+              </td>
+            </TbodyRow>
+          );
+        } ) }
       </TableBody>
     </TableContainer>
   );
 };
 
 export default InvoiceTable;
+const getStatus = ( status ) => {
+  if ( status === "paid" ) {
+    return { background: "#6CCF00", color: '#6CCF00' }
+  }
+  if ( status === "pending" ) {
+    return { background: "#F5A623", color: '#F5A623' }
+  }
+  if ( status === "overdue" ) {
+    return { background: "#FF0000", color: '#FF0000' }
+  }
+}
