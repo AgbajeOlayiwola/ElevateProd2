@@ -108,8 +108,8 @@ const Step1 = ({ saveANdContinue, ifIsEdit }) => {
 
     const handleSubmit = () => {
         // Handle submission of sizes and colors
-        console.log('Sizes:', sizes);
-        console.log('Colors:', colors);
+        // console.log('Sizes:', sizes);
+        // console.log('Colors:', colors);
         // Add logic to send data to the server or perform other actions
     };
     const initialSpecData = {
@@ -158,7 +158,7 @@ const Step1 = ({ saveANdContinue, ifIsEdit }) => {
         updatedSpec.splice(index, 1);
         setSpecsData({ ...specsData, specs: updatedSpec });
     };
-    console.log(specsData);
+    // console.log(specsData);
     return (
         <>
             <Formik
@@ -177,7 +177,7 @@ const Step1 = ({ saveANdContinue, ifIsEdit }) => {
                         discountPercentage: values?.discount,
                         color: colors
                     };
-                    console.log(data);
+                    // console.log(data);
                     dispatch(setAddInventory(data));
                     saveANdContinue();
                     setSubmitting(false);

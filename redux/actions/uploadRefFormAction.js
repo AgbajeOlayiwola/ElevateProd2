@@ -1,7 +1,7 @@
 import { getCookie } from 'cookies-next';
-import { uploadRefferenceFormType } from '../types/actionTypes';
-import apiRoutes from '../helper/apiRoutes';
 import axiosInstance from '../helper/apiClient';
+import apiRoutes from '../helper/apiRoutes';
+import { uploadRefferenceFormType } from '../types/actionTypes';
 //upload  refference form start
 export const uploadRefFormStart = () => ({
     type: uploadRefferenceFormType.GET_REFFERENCE_FORM_START
@@ -35,7 +35,7 @@ export const uploadRefFormData = (uploadrefformdata) => (dispatch) => {
         })
         .then((response) => {
             dispatch(uploadRefFormSuccess(response));
-            // //console.logresponse);
+            // //// console.logresponse);
         })
         .catch((error) => dispatch(uploadRefFormError(error?.response)));
 };

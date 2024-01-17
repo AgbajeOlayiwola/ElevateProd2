@@ -63,7 +63,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
         setFile(e.target.files[0]);
         setFileName(e.target.files[0].name);
 
-        // //console.logformData.type);
+        // //// console.logformData.type);
     };
     const [phoneNumer, setPhoneNumer] = useState();
 

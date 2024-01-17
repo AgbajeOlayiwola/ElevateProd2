@@ -1,7 +1,7 @@
 import { getCookie } from 'cookies-next';
-import { addressVerificationType } from '../types/actionTypes';
-import apiRoutes from '../helper/apiRoutes';
 import axiosInstance from '../helper/apiClient';
+import apiRoutes from '../helper/apiRoutes';
+import { addressVerificationType } from '../types/actionTypes';
 export const getAddressStatusLoad = () => ({
     type: addressVerificationType.ADDRESS_VERIFICATION_START
 });
@@ -31,7 +31,7 @@ export const getAddressStatusDetails = () => (dispatch) => {
             }
         })
         .then((response) => {
-            // //console.logresponse.data.data);
+            // //// console.logresponse.data.data);
             dispatch(getAddressStatusSuccess(response));
         })
         .catch((error) => dispatch(getAddressStatusError(error?.response)));

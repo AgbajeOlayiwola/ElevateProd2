@@ -19,7 +19,7 @@ const Cart = () => {
         setNumber(val);
     };
     const nextStep = () => {
-        console.log('clicked');
+        // console.log('clicked');
         setPage(1);
     };
     const multi = () => {

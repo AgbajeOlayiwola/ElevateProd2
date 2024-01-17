@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import styles from './styles.module.css';
+import React, { useEffect, useState } from 'react';
 import MoreAction from '../MoreAction';
+import styles from './styles.module.css';
 
 const TableDetail = ({
     direction,
@@ -43,7 +43,7 @@ const TableDetail = ({
     const handleWindowResize = () => {
         setWidth(window.innerWidth);
         setHeight(window.innerHeight);
-        console.log(width);
+        // console.log(width);
     };
 
     useEffect(() => {

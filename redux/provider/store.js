@@ -41,6 +41,7 @@ import orderDetailsReducer from '../slices/orderDetails';
 import pinnedReducer from '../slices/pinned';
 import profileReducer from '../slices/profile';
 import resetPasswordReducer from '../slices/resetpasswordslice';
+import storeFrontAnalyticsRducer from '../slices/storFrontAnalyticsSlice';
 import storeSliceReducer from '../slices/storeSlice';
 import tokenReducer from '../slices/tokenSlice';
 import transferReducer from '../slices/transferSlice';

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import styles from './styles.module.css';
+import React, { useEffect, useState } from 'react';
 import Lottie from 'react-lottie';
 import animationData from '../../ReusableComponents/Lotties/qr.json';
+import styles from './styles.module.css';
 const QrInput = ({ type, data }) => {
     const [qrData, setQrData] = useState();
     const defaultOptions = {
@@ -16,7 +16,7 @@ const QrInput = ({ type, data }) => {
         setQrData(`data:image/png;base64,${data}`?.split(' ')?.join(''));
     }, [data]);
 
-    //  //console.log(qrData);
+    //  //// console.log(qrData);
     return (
         <div className={styles.qrInp}>
             <Lottie options={defaultOptions} height={200} width={200} />

@@ -12,5 +12,5 @@ app.use(
 );
 
 app.listen(3002, () => {
-    console.log('running on 3002');
+    // console.log('running on 3002');
 });

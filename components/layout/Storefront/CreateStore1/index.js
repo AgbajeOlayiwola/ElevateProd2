@@ -64,7 +64,7 @@ const CreateStore1 = ({ nextPage }) => {
                         useBusinessContact: false,
                         color: 'rogbiv'
                     };
-                    console.log(data);
+                    // console.log(data);
                     dispatch(setCreateStore(data));
                     nextPage();
                     setSubmitting(false);

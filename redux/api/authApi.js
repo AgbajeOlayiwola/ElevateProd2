@@ -1395,9 +1395,9 @@ export const authApi = createApi( {
                     body
                 };
             }
-        } ),
-        createDebit: builder.mutation( {
-            query: ( body ) => {
+        }),
+        createDebit: builder.mutation({
+            query: (body) => {
                 return {
                     url: 'card-request',
                     method: 'post',
@@ -1470,6 +1470,7 @@ export const {
     useVirtualAccountStatusMutation,
     useOrdrVirtualAccountMutation,
     useEnrollQrMutation,
+    useGetVaHistoryQuery,
     useFacematchithAccountnumberMutation,
     useAccountMiniStatementMutation,
     useAccountFullStatementMutation,

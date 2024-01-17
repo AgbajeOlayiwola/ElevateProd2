@@ -83,7 +83,7 @@ const LivenessForAccount = ({
         facematchithAccountnumber(faceMMatchData);
     }, [webcamRef]);
 
-    console.log(moreAccountNumberDetails);
+    // console.log(moreAccountNumberDetails);
 
     const showToastMessage = () => {
         toast.error(facematchithAccountnumberErr?.data?.message, {

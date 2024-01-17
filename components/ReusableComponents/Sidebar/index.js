@@ -60,7 +60,7 @@ const Sidebar = ({ showSubnav }) => {
     const handleWindowResize = () => {
         setWidth(window.innerWidth);
         setHeight(window.innerHeight);
-        console.log(width);
+        // console.log(width);
     };
 
     useEffect(() => {

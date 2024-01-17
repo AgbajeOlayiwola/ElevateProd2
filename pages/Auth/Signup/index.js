@@ -1,27 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import 'slick-carousel/slick/slick.css';
 import {
-    ButtonComp,
     Gearsvg,
     HomeSvg,
-    Scalesvg,
-    SpaceshipSvg,
     Languages,
-    Countries
+    Scalesvg,
+    SpaceshipSvg
 } from '../../../components';
-import styles from './styles.module.css';
-import { useRouter } from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
-import Image from 'next/image';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import Logo from '../../../components/ReusableComponents/ReusableSvgComponents/LogoSvg';
-import { loadCountry } from '../../../redux/actions/getCountriesAction';
+import ElevateLogo from '../../../components/ReusableComponents/Ellevate';
 import ExistingProfileSetup from '../../../components/ReusableComponents/ExistingUserSignup';
 import NewUser from '../../../components/ReusableComponents/NewUser';
-import { affiliateCountries } from '../../../components/ReusableComponents/Data';
+import Logo from '../../../components/ReusableComponents/ReusableSvgComponents/LogoSvg';
 import SignupDefault from '../../../components/ReusableComponents/SignUpDefault';
-import ElevateLogo from '../../../components/ReusableComponents/Ellevate';
 import LanguageSelect from '../../../components/layout/LandingPageCompoenets/Nav/languageSelect';
+import styles from './styles.module.css';
 
 // Modal.setAppElement('#yourAppElement');
 const SignUp = () => {
@@ -97,9 +91,9 @@ const SignUp = () => {
                         selectCountry={selectCountry}
                         selectedOption={selectedOption}
                         onSelectChange={handleSelectChange}
-                        // onclicked={() => {console.log('test')}
+                        // onclicked={() => {// console.log('test')}
                         onclicked={() => {
-                            console.log(selectedOption);
+                            // console.log(selectedOption);
                             setSelectedOption('No');
                         }}
                     />
@@ -111,9 +105,9 @@ const SignUp = () => {
                         selectCountry={selectCountry}
                         selectedOption={selectedOption}
                         onSelectChange={handleSelectChange}
-                        // onclicked={() => {console.log('test')}
+                        // onclicked={() => {// console.log('test')}
                         onclicked={() => {
-                            console.log(selectedOption);
+                            // console.log(selectedOption);
                             setSelectedOption('No');
                         }}
                     />
@@ -123,9 +117,9 @@ const SignUp = () => {
                     <SignupDefault
                         selectedOption={selectedOption}
                         onSelectChange={handleSelectChange}
-                        // onclicked={() => {console.log('test')}
+                        // onclicked={() => {// console.log('test')}
                         onclicked={() => {
-                            console.log(selectedOption);
+                            // console.log(selectedOption);
                             setSelectedOption('No');
                         }}
                     />

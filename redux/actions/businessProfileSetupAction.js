@@ -1,4 +1,5 @@
 import { getCookie } from 'cookies-next';
+import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
 import { setupBusProfile } from '../types/actionTypes';
 import {
@@ -7,7 +8,6 @@ import {
     setupProfileError,
     setupProfileSucces
 } from './profileSetupAction';
-import axiosInstance from '../helper/apiClient';
 //business profile setup action start
 export const setupBusProfileStart = (busErrorMessages) => ({
     type: setupBusProfile.BUS_PROFILESETUP_LOAD_START,
@@ -63,7 +63,7 @@ export const createBusProfileSetup = (businessProfileData) => {
             .then((response) => {
                 dispatch(setupProfileSucces(response?.data));
 
-                // //console.log'data from Business profile', response.data);
+                // //// console.log'data from Business profile', response.data);
                 if (response?.data?.message === 'Success') {
                     const cookie = getCookie('cookieToken');
                     setTimeout(() => {
@@ -91,7 +91,7 @@ export const createBusProfileSetup = (businessProfileData) => {
                 }
             })
             .catch((error) => {
-                // //console.log
+                // //// console.log
                 //     'profile setup dispatch',
                 //     error?.response.data.message
                 // );

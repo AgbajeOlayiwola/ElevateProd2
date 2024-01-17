@@ -1,5 +1,5 @@
 export function processObjects(original, array) {
-    console.log(array);
+    // console.log(array);
     return array.map((fieldObj) => {
         const fieldName = fieldObj?.fieldName;
         const dataType = fieldObj?.dataType;

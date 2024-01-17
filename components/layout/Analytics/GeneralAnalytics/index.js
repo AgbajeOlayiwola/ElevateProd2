@@ -6,6 +6,7 @@ import {
     useTransactionsSummaryMutation
 } from '../../../../redux/api/authApi';
 import { setanalyticsData } from '../../../../redux/slices/analyticsData';
+import { setStorefrontAnalytics } from '../../../../redux/slices/storFrontAnalyticsSlice';
 import { abbreviateNumber } from '../../../../utils/abreviateNumber';
 import AnalyticsData from '../../../ReusableComponents/AnalyticsData';
 import DropDown from '../../../ReusableComponents/DropDown';
@@ -88,7 +89,12 @@ const GeneralAnalytics = ({ nextPage, nextStore }) => {
                 })
             );
         }
-    }, [transactionsSummarySuccess]);
+        if (storefrontAnalyticsSummarySuccess) {
+            dispatch(
+                setStorefrontAnalytics(storefrontAnalyticsSummaryData?.data)
+            );
+        }
+    }, [transactionsSummarySuccess, storefrontAnalyticsSummarySuccess]);
     const colors = ['#3A5207', '#69940D', '#6CCF00', '#C4D344'];
 
     return (
@@ -144,7 +150,7 @@ const GeneralAnalytics = ({ nextPage, nextStore }) => {
                             </div>
                             <div className={styles.analDiv}>
                                 {filterData?.map((item, index) => {
-                                    console.log(item);
+                                    // console.log(item);
                                     return (
                                         <div
                                             key={index}
@@ -215,7 +221,7 @@ const GeneralAnalytics = ({ nextPage, nextStore }) => {
                                 </div>
                                 <div className={styles.analDiv}>
                                     {secFilterData?.map((item, index) => {
-                                        console.log(item);
+                                        // console.log(item);
                                         return (
                                             <div
                                                 key={index}

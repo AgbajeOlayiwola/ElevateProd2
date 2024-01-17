@@ -40,7 +40,7 @@ const StepTwoBVNAuthenticator = ({
 
         // Concatenate the values to form the OTP string
         const myOtp = newOtpValues.join('');
-        // console.log('OTP:', otpString);
+        // // console.log('OTP:', otpString);
 
         if (value && inputIndex > length - 1) {
             const nextInput = otpInputs.current[inputIndex + 1];
@@ -103,7 +103,7 @@ const StepTwoBVNAuthenticator = ({
     };
     const clicked = (e) => {
         e.preventDefault();
-        console.log('clicked');
+        // console.log('clicked');
         const data = {
             otp: otpData
         };
@@ -111,7 +111,7 @@ const StepTwoBVNAuthenticator = ({
     };
     const handlePhoneChange = (e) => {
         e.preventDefault();
-        console.log('clicked');
+        // console.log('clicked');
         const data = {
             phoneNumber: `${formData?.countryCode}${newPhone}`
         };
@@ -120,7 +120,7 @@ const StepTwoBVNAuthenticator = ({
 
     useEffect(() => {
         if (verifyOtpSuccess || verifyOtpErr) {
-            console.log('otp Error');
+            // console.log('otp Error');
             nextStep();
         }
     }, [verifyOtpSuccess, verifyOtpErr]);

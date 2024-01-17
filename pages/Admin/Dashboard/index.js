@@ -107,7 +107,7 @@ const Dashboard = () => {
     const affiliate = localStorage.getItem('affiliateCode');
     const [balance, setBalance] = useState(0.0);
     const { profile } = useSelector((store) => store);
-    console.log(profile);
+    // console.log(profile);
     const [isCopied, setIsCopied] = useState(false);
     const [acctNumber, setAcctNumber] = useState('');
     const [currency, setCurrency] = useState();
@@ -310,7 +310,7 @@ const Dashboard = () => {
         // Set the current path value by looking at the browser's location object.
         storage.setItem('currentPath', globalThis.location.pathname);
         setPreviousRoute(prevPath);
-        // //console.log(prevPath);
+        // //// console.log(prevPath);
     }
     const [pinCondition, setPinCondition] = useState();
     const current = new Date();
@@ -326,7 +326,7 @@ const Dashboard = () => {
     const handleWindowResize = () => {
         setWidth(window.innerWidth);
         setHeight(window.innerHeight);
-        console.log(width);
+        // console.log(width);
     };
     const types = (type) => {
         setOutType(type);
@@ -451,6 +451,7 @@ const Dashboard = () => {
             setTransactions(filteredTransactions);
         }
     }, [transactionHistorySuccess]);
+    const formater = createFormatter(affiliate);
 
     return (
         <div className={styles.statementCover}>
@@ -522,10 +523,12 @@ const Dashboard = () => {
                                     {transactionsSummaryLoad ? (
                                         <Loader />
                                     ) : (
-                                        parseFloat(
-                                            transactionsSummaryData?.data
-                                                ?.total_outflow || 0
-                                        ).toLocaleString('en-US')
+                                        formater?.format(
+                                            Number(
+                                                transactionsSummaryData?.data
+                                                    ?.total_outflow
+                                            )
+                                        )
                                     )}
                                 </p>
                             </div>
@@ -537,10 +540,12 @@ const Dashboard = () => {
                                     {transactionsSummaryLoad ? (
                                         <Loader />
                                     ) : (
-                                        parseFloat(
-                                            transactionsSummaryData?.data
-                                                ?.total_inflow || 0
-                                        ).toLocaleString('en-US')
+                                        formater?.format(
+                                            Number(
+                                                transactionsSummaryData?.data
+                                                    ?.total_inflow
+                                            )
+                                        )
                                     )}
                                 </p>
                             </div>
@@ -552,10 +557,12 @@ const Dashboard = () => {
                                     {transactionsSummaryLoad ? (
                                         <Loader />
                                     ) : (
-                                        parseFloat(
-                                            transactionsSummaryData?.data
-                                                ?.total_transaction_amount || 0
-                                        ).toLocaleString('en-US')
+                                        formater?.format(
+                                            Number(
+                                                transactionsSummaryData?.data
+                                                    ?.total_transaction_amount
+                                            )
+                                        )
                                     )}
                                 </p>
                             </div>
@@ -835,13 +842,9 @@ const Dashboard = () => {
                                                     <h1>********</h1>
                                                 ) : (
                                                     <h1>
-                                                        {balance === '0.0'
-                                                            ? '0.00'
-                                                            : parseFloat(
-                                                                  balance
-                                                              ).toLocaleString(
-                                                                  'en-US'
-                                                              )}
+                                                        {formater?.format(
+                                                            Number(balance)
+                                                        )}
                                                     </h1>
                                                 )}
                                                 <Visbility
@@ -996,18 +999,11 @@ const Dashboard = () => {
                                                                     </p>
                                                                 ) : (
                                                                     <p>
-                                                                        {account?.availableBal ===
-                                                                        '0.0'
-                                                                            ? '0.00'
-                                                                            : parseFloat(
-                                                                                  account?.availableBal
-                                                                              )
-                                                                                  .toFixed(
-                                                                                      2
-                                                                                  )
-                                                                                  .toLocaleString(
-                                                                                      'en-US'
-                                                                                  )}
+                                                                        {formater?.format(
+                                                                            Number(
+                                                                                account?.availableBal
+                                                                            )
+                                                                        )}
                                                                     </p>
                                                                 )}
                                                             </div>
@@ -1172,6 +1168,7 @@ const Dashboard = () => {
                                                                     )}
                                                                 </p>
                                                             </div>
+
                                                             <div
                                                                 className={
                                                                     styles.type
@@ -1179,7 +1176,7 @@ const Dashboard = () => {
                                                             >
                                                                 <p>
                                                                     {
-                                                                        item?.beneficiary
+                                                                        item?.beneficiaryName
                                                                     }
                                                                 </p>
                                                             </div>

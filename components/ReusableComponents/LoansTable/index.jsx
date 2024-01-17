@@ -24,7 +24,7 @@ const LoansTable = ({ loads, data, repayloan }) => {
                 <p>DATE</p>
                 {/* <p>TITLE</p> */}
                 <p>AMOUNT</p>
-                <p>LOAN\ INTREST</p>
+                <p>LOAN\ INTEREST</p>
                 <p>TRANSACTION ID</p>
                 <p>STATUS</p>
             </div>

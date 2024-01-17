@@ -1,49 +1,45 @@
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import styles from './styles.module.css';
-import DounutComp from '../../components/ReusableComponents/Chart/Dougnut';
+import AccountUpgradeComponent from '../../components/ReusableComponents/AccountUpgradeComponent';
 import AccountUpgradeSingle from '../../components/ReusableComponents/AccountUpgradeSingle';
 import AddressSvg from '../../components/ReusableComponents/ReusableSvgComponents/AddressSvg';
 import BillSvg from '../../components/ReusableComponents/ReusableSvgComponents/BillSvg';
 import IdCard from '../../components/ReusableComponents/ReusableSvgComponents/IdCardSvg';
-import AccountUpgradeComponent from '../../components/ReusableComponents/AccountUpgradeComponent';
-import { useRouter } from 'next/router';
+import styles from './styles.module.css';
 // import { location } from '../../components/ReusableComponents/Data';
-import DirectorsSvg from '../../components/ReusableComponents/ReusableSvgComponents/DirectorsSvg';
-import SignatureRuleSvg from '../../components/ReusableComponents/ReusableSvgComponents/SignatureRuleSvg';
 import { useEffect } from 'react';
 import Iframe from 'react-iframe';
-import Modal from 'react-modal';
-import Link from 'next/link';
 import Lottie from 'react-lottie';
-import socialdata from '../../components/ReusableComponents/Lotties/loading.json';
+import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
+import socialdata from '../../components/ReusableComponents/Lotties/loading.json';
+import SignatureRuleSvg from '../../components/ReusableComponents/ReusableSvgComponents/SignatureRuleSvg';
 
-import 'react-tooltip/dist/react-tooltip.css';
 import { useForm } from 'react-hook-form';
-import Loader from '../../components/ReusableComponents/Loader';
-import Visbility from '../../components/ReusableComponents/Eyeysvg';
-import PaymentSuccess from '../../components/ReusableComponents/PopupStyle';
-import { ButtonComp } from '../../components';
 import { Tooltip } from 'react-tooltip';
+import 'react-tooltip/dist/react-tooltip.css';
 import withAuth from '../../components/HOC/withAuth';
-import { loadsetTransactionPin } from '../../redux/actions/setTransactionPinAction';
-import { getTinDetails } from '../../redux/actions/tinAction';
-import { checkStatusAction } from '../../redux/actions/checkStatusAction';
-import { getAddressStatusDetails } from '../../redux/actions/getAddressStatusAction';
-import { loadUserProfile } from '../../redux/actions/userProfileAction';
-import { shareDocumentsData } from '../../redux/actions/shareDocumentAction';
-import { loadprofilingQuestions } from '../../redux/actions/profilingQuestionAction';
-import { cacData } from '../../redux/actions/uploadCacDocumentAction';
-import { getUploadReffereeDetails } from '../../redux/actions/getUploadRefereeDetailsAction';
-import { getReffereeDetails } from '../../redux/actions/getRefereeDetailsAction';
+import Visbility from '../../components/ReusableComponents/Eyeysvg';
+import Loader from '../../components/ReusableComponents/Loader';
+import PaymentSuccess from '../../components/ReusableComponents/PopupStyle';
 import { getCacDocumentDetails } from '../../redux/actions/cacDocumentAction';
-import { uploadUtilityData } from '../../redux/actions/uploadUtilityAction';
-import { postvnin } from '../../redux/actions/vninAction';
+import { checkStatusAction } from '../../redux/actions/checkStatusAction';
+import { postEllevateProfilingDetails } from '../../redux/actions/ellevateProfilingAction';
+import { getAddressStatusDetails } from '../../redux/actions/getAddressStatusAction';
+import { getReffereeDetails } from '../../redux/actions/getRefereeDetailsAction';
+import { getUploadReffereeDetails } from '../../redux/actions/getUploadRefereeDetailsAction';
+import { loadprofilingQuestions } from '../../redux/actions/profilingQuestionAction';
+import { pushDocumentsData } from '../../redux/actions/pushDocumentAction';
+import { loadsetTransactionPin } from '../../redux/actions/setTransactionPinAction';
+import { shareDocumentsData } from '../../redux/actions/shareDocumentAction';
+import { statesData } from '../../redux/actions/statesAction';
+import { getTinDetails } from '../../redux/actions/tinAction';
+import { cacData } from '../../redux/actions/uploadCacDocumentAction';
 import { identificationDocData } from '../../redux/actions/uploadIdDocumentAction';
 import { uploadRefFormData } from '../../redux/actions/uploadRefFormAction';
-import { statesData } from '../../redux/actions/statesAction';
-import { pushDocumentsData } from '../../redux/actions/pushDocumentAction';
-import { postEllevateProfilingDetails } from '../../redux/actions/ellevateProfilingAction';
+import { uploadUtilityData } from '../../redux/actions/uploadUtilityAction';
+import { loadUserProfile } from '../../redux/actions/userProfileAction';
+import { postvnin } from '../../redux/actions/vninAction';
 
 const customStyles = {
     content: {
@@ -166,17 +162,12 @@ const AccountUpgrade = () => {
     const [fileNameI, setFileNameI] = useState();
     const [fileII, setFileII] = useState(null);
     const [fileNameII, setFileNameII] = useState();
-    const [identificationDocumentFile, setIdentificationDocument] = useState(
-        null
-    );
-    const [
-        identificationDocumentFileName,
-        setIdentificationDocumentName
-    ] = useState('');
-    const [
-        identificationBackDocument,
-        setIdentificationBackDocument
-    ] = useState(null);
+    const [identificationDocumentFile, setIdentificationDocument] =
+        useState(null);
+    const [identificationDocumentFileName, setIdentificationDocumentName] =
+        useState('');
+    const [identificationBackDocument, setIdentificationBackDocument] =
+        useState(null);
     const [
         identificationBackDocumentFileName,
         setIdentificationBackDocumentFileName
@@ -352,7 +343,7 @@ const AccountUpgrade = () => {
     } = useForm();
 
     const onSubmit = (data) => {
-        // //console.logdata);
+        // //// console.logdata);
         setLoading(true);
         dispatch(loadsetTransactionPin(data));
     };
@@ -361,7 +352,7 @@ const AccountUpgrade = () => {
             setUserProfileData(userProfile);
         }
 
-        // //console.log('upgrade check', accountUpgrade);
+        // //// console.log('upgrade check', accountUpgrade);
     }, [userProfile]);
     useEffect(() => {
         setMessage('');
@@ -378,7 +369,7 @@ const AccountUpgrade = () => {
             setTitle('First');
         }
     }, [link]);
-    // //console.log(link);
+    // //// console.log(link);
     const moveToDash = () => {
         setIsLoading(true);
         router.push('../Admin/Dashboard');
@@ -491,11 +482,11 @@ const AccountUpgrade = () => {
             setState(userProfile.state);
             setLocalGovernmane(userProfile.lga);
         }
-        // //console.log(userProfile);
+        // //// console.log(userProfile);
     }, [userProfile]);
     useEffect(() => {
         if (shareDocuments !== null) {
-            //  //console.log(shareDocuments);
+            //  //// console.log(shareDocuments);
 
             shareDocuments?.map((document) => {
                 if (document.documentType === 'UTILITY') {
@@ -621,7 +612,7 @@ const AccountUpgrade = () => {
             });
         }
     }, [shareDocuments]);
-    // //console.loguserProfile);
+    // //// console.loguserProfile);
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((position) => {
@@ -634,7 +625,7 @@ const AccountUpgrade = () => {
         setFile(e.target.files[0]);
         setFileName(e.target.files[0].name);
 
-        // //console.logfile);
+        // //// console.logfile);
     };
     const cacRegistration = () => {
         setLoading(true);
@@ -653,7 +644,7 @@ const AccountUpgrade = () => {
             setLoading(false);
             setCacStatus('done');
         } else if (cacErrorMessages !== null) {
-            //  //console.log(cacErrorMessages);
+            //  //// console.log(cacErrorMessages);
             setMessage(cacErrorMessages.data.message);
             setStatusbar('error');
             setOutcome(true);
@@ -669,7 +660,7 @@ const AccountUpgrade = () => {
             setLoading(false);
             setTinStatus('done');
         } else if (tinError !== null) {
-            //console.log(tinError);
+            //// console.log(tinError);
             // setMessage(cacErrorMessages.data.message);
             setStatusbar('error');
             setOutcome(true);
@@ -697,14 +688,14 @@ const AccountUpgrade = () => {
     const saveRefFile = (e) => {
         setFileI(e.target.files[0]);
         setFileNameI(e.target.files[0].name);
-        //  //console.log(e.target.files[0]);
+        //  //// console.log(e.target.files[0]);
     };
     const saveRefFileI = (e) => {
-        // //console.log(e.target.files[0]);
+        // //// console.log(e.target.files[0]);
 
         setFileII(e.target.files[0]);
         setFileNameII(e.target.files[0].name);
-        // //console.log(file);
+        // //// console.log(file);
     };
 
     const refereeFileUpload = () => {
@@ -720,7 +711,7 @@ const AccountUpgrade = () => {
         dispatch(getUploadReffereeDetails(uploadrefereeData));
     };
     useEffect(() => {
-        //  //console.log(UploadreffereeError);
+        //  //// console.log(UploadreffereeError);
 
         if (UploadreffereeSuccess !== null) {
             setMessage('Referee Form Uploaded');
@@ -729,7 +720,7 @@ const AccountUpgrade = () => {
             setLoading(false);
             setScumlStatus('done');
         } else if (UploadreffereeError !== null) {
-            // //console.log(scmulErrorMessages);
+            // //// console.log(scmulErrorMessages);
             setMessage(UploadreffereeError.data.message);
             setStatusbar('error');
             setOutcome(true);
@@ -750,7 +741,7 @@ const AccountUpgrade = () => {
             setLoading(false);
             setRefereeStatus('done');
         } else if (reffereeError !== null) {
-            // //console.log(scmulErrorMessages);
+            // //// console.log(scmulErrorMessages);
             setMessage(reffereeError.data.message);
             setStatusbar('error');
             setOutcome(true);
@@ -768,7 +759,7 @@ const AccountUpgrade = () => {
     //         form2: fileII
     //     };
     //     dispatch(getUploadReffereeDetails(uploadrefereeData));
-    //      //console.log();
+    //      //// console.log();
     //Refferee Upload End
 
     //SMUL Certyificate
@@ -792,7 +783,7 @@ const AccountUpgrade = () => {
             ('IdentificationDocument');
             setScumlStatus('done');
         } else if (scmulErrorMessages !== null) {
-            // //console.log(scmulErrorMessages);
+            // //// console.log(scmulErrorMessages);
             setMessage(scmulErrorMessages);
             setStatusbar('error');
             setOutcome(true);
@@ -827,7 +818,7 @@ const AccountUpgrade = () => {
         setMemtFileName(e.target.files[0].name);
     };
     const [active, setActive] = useState(false);
-    // //console.logco2file);
+    // //// console.logco2file);
     const cacDocumentUpload = () => {
         const cacDocData = {
             co2: co2file,
@@ -840,7 +831,7 @@ const AccountUpgrade = () => {
         dispatch(getCacDocumentDetails(cacDocData));
     };
     useEffect(() => {
-        //  //console.log(CacDocumentSuccess, CacDocumentError);
+        //  //// console.log(CacDocumentSuccess, CacDocumentError);
         if (CacDocumentSuccess !== null) {
             setMessage('Cac Document Updated Successfully');
             setStatusbar('success');
@@ -848,7 +839,7 @@ const AccountUpgrade = () => {
             setLoading(false);
             setScumlStatus('done');
         } else if (CacDocumentError !== null) {
-            // //console.log(scmulErrorMessages);
+            // //// console.log(scmulErrorMessages);
             setMessage(tinError.data.message);
             setStatusbar('error');
             setOutcome(true);
@@ -872,7 +863,7 @@ const AccountUpgrade = () => {
             utilityDocument: utilityFile
         };
         dispatch(uploadUtilityData(utilityThingd));
-        // //console.log'state', localState, localGovernment, utilityFile);
+        // //// console.log'state', localState, localGovernment, utilityFile);
     };
     useEffect(() => {
         if (utilityUpload !== null) {
@@ -888,8 +879,8 @@ const AccountUpgrade = () => {
             setOutcome(true);
             setLoading(false);
         }
-        // //console.logutilityUpload);
-        // //console.logutilityUplodaErrorMessages);
+        // //// console.logutilityUpload);
+        // //// console.logutilityUplodaErrorMessages);
     }, [utilityUpload, utilityUplodaErrorMessages]);
     //Utility Upload End
     const virtualNinSend = () => {
@@ -902,7 +893,7 @@ const AccountUpgrade = () => {
     };
     useEffect(() => {
         if (vninMSeccess) {
-            //  //console.log(vninMSeccess);
+            //  //// console.log(vninMSeccess);
             if (vninMSeccess.data.isCredentialsValid == true) {
                 setMessage(vninMSeccess?.message);
                 setStatusbar('success');
@@ -917,8 +908,8 @@ const AccountUpgrade = () => {
                 setLoading(false);
             }
         }
-        // //console.logutilityUpload);
-        // //console.logutilityUplodaErrorMessages);
+        // //// console.logutilityUpload);
+        // //// console.logutilityUplodaErrorMessages);
     }, [vninMSeccess, vninMError]);
 
     //Identification Upload
@@ -950,12 +941,12 @@ const AccountUpgrade = () => {
     };
     const onLoads = (fileStrings) => {
         setBackBase64Code(fileStrings);
-        //  //console.log('Back', backBase64Code);
+        //  //// console.log('Back', backBase64Code);
     };
 
     const onLoad = (fileString) => {
         setBase64Code(fileString);
-        //  //console.log(base64Code);
+        //  //// console.log(base64Code);
     };
     const IdentificationyUpload = () => {
         setLoading(true);
@@ -1070,7 +1061,7 @@ const AccountUpgrade = () => {
             setLoading(false);
         }
     }, [identification, identificationErrorMessages]);
-    // //console.logidentificationErrorMessages);
+    // //// console.logidentificationErrorMessages);
 
     //Identification Upload End
 
@@ -1085,7 +1076,7 @@ const AccountUpgrade = () => {
         const emailToshareData = {
             emailsToShare: [refoneemail, refoneno]
         };
-        // //console.logemailToshareData);
+        // //// console.logemailToshareData);
         dispatch(uploadRefFormData(emailToshareData));
     };
 
@@ -1615,7 +1606,7 @@ const AccountUpgrade = () => {
             }
         ]
     };
-    //  //console.log(pending);
+    //  //// console.log(pending);
 
     useEffect(() => {}, [shareDocuments]);
 
@@ -2214,7 +2205,7 @@ const AccountUpgrade = () => {
                                             />
                                         </div>
                                     </div>
-                                    {/* { //console.log(landMark)} */}
+                                    {/* { //// console.log(landMark)} */}
                                     <div className={styles.midCont}>
                                         <div className={styles.addressGroup}>
                                             <label>State</label>
@@ -2225,7 +2216,7 @@ const AccountUpgrade = () => {
                                                     setState(
                                                         event.target.value
                                                     );
-                                                    // //console.log(selstate);
+                                                    // //// console.log(selstate);
                                                 }}
                                             >
                                                 <option value="">
@@ -2312,7 +2303,7 @@ const AccountUpgrade = () => {
                                                     ? localGovernment?.map(
                                                           (item, index) => {
                                                               //   {
-                                                              //       // //console.log(
+                                                              //       // //// console.log(
                                                               //           item
                                                               //       );
                                                               //   }
@@ -2453,7 +2444,7 @@ const AccountUpgrade = () => {
                                     id=""
                                     onChange={(event) => {
                                         setUtilityType(event.target.value);
-                                        // //console.logselstate);
+                                        // //// console.logselstate);
                                     }}
                                 >
                                     <option value="NEPA_BILL">
@@ -2520,7 +2511,7 @@ const AccountUpgrade = () => {
                                                     setState(
                                                         event.target.value
                                                     );
-                                                    // //console.logselstate);
+                                                    // //// console.logselstate);
                                                 }}
                                             >
                                                 <option value={selstate}>
@@ -2978,7 +2969,7 @@ const AccountUpgrade = () => {
                                                     //     setProfileItemm(item)
                                                     // }
                                                 />
-                                                {/* { //console.log(profileItemm)} */}
+                                                {/* { //// console.log(profileItemm)} */}
                                                 <label>{item}</label>
                                             </div>
                                         );

@@ -9,7 +9,7 @@
 //         setHeight(document.documentElement.scrollHeight);
 //     }, []);
 
-//     // //console.log(height);
+//     // //// console.log(height);
 //
 
 //     const mainOverlay = {
@@ -36,17 +36,13 @@
 // };
 
 // export default DashLayout;
-import React from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 // import withAuth from '../../HOC/withAuth';
+import { useRouter } from 'next/router';
 import { Navbar, Sidebar } from '../../index';
 import styles from './styles.module.css';
-import Idle from 'react-idle';
-import { useRouter } from 'next/router';
 
-import { useDispatch, useSelector } from 'react-redux';
-import withAuth from '../../HOC/withAuth';
+import { useDispatch } from 'react-redux';
 const DashLayout = ({
     children,
     page,

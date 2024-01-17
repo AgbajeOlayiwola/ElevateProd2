@@ -98,7 +98,7 @@ const MobileMoney = ({ firstTitle, closeAction }) => {
     useEffect(() => {
         mobiNetworks();
     }, []);
-    console.log(mobiNetworksData);
+    // console.log(mobiNetworksData);
 
     const showSuccessToastMessage = () => {
         toast.success('Mobile money payment Successfull', {
@@ -132,7 +132,7 @@ const MobileMoney = ({ firstTitle, closeAction }) => {
                 }
             ]
         };
-        console.log(data);
+        // console.log(data);
         billerValidation(data);
     };
     return (
@@ -313,9 +313,7 @@ const MobileMoney = ({ firstTitle, closeAction }) => {
                                                             setBillerId(
                                                                 selBiller?.id
                                                             );
-                                                            console.log(
-                                                                selBiller?.amountType
-                                                            );
+
                                                             if (
                                                                 selBiller?.amount
                                                             ) {

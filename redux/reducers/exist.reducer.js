@@ -6,7 +6,7 @@ const initialState = {
 };
 
 const existReducer = (state = initialState, { type, payload }) => {
-    // //console.log(payload);÷ss
+    // //// console.log(payload);÷ss
     switch (type) {
         case existingBusnessSetup.EXISTING_BUSINESS_START:
             return {

@@ -1,7 +1,7 @@
 import { getCookie } from 'cookies-next';
-import { qrInfoType } from '../types/actionTypes';
-import apiRoutes from '../helper/apiRoutes';
 import axiosInstance from '../helper/apiClient';
+import apiRoutes from '../helper/apiRoutes';
+import { qrInfoType } from '../types/actionTypes';
 export const getQrInfoLoad = () => ({
     type: qrInfoType.QR_INFO_START
 });
@@ -31,7 +31,7 @@ export const getQrInfoDetails = (QrInfoData) => (dispatch) => {
             }
         })
         .then((response) => {
-            // //console.logresponse.data.data);
+            // //// console.logresponse.data.data);
             dispatch(getQrInfoSuccess(response));
         })
         .catch((error) => dispatch(getQrInfoError(error?.response)));

@@ -4,7 +4,11 @@ const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
 const LoansDetails = ({ amount, loansDetails, children }) => {
     const affiliate = localStorage.getItem('affiliateCode');
+<<<<<<< HEAD
     // console.log(amount);
+=======
+    // // console.log(amount);
+>>>>>>> 573d3178b7138ee75de948da6f0ee5fefb219f74
     return (
         <div className={styles.loanDetailsCont}>
             <div className={styles.loanDetailsHead}>

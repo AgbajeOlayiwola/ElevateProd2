@@ -143,7 +143,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     useEffect(() => {
         if (getProfileSuccess) {
             setProfile(getProfileData);
-            console.log(getProfileData);
+            // console.log(getProfileData);
             setDateOfBirh(getProfileData?.user?.dateOfBirth);
         }
     }, [getProfileSuccess]);

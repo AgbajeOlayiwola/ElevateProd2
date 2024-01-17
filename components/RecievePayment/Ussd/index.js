@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import styles from './styles.module.css';
+import React, { useEffect, useState } from 'react';
 import Lottie from 'react-lottie';
 import animationData from '../../ReusableComponents/Lotties/call.json';
+import styles from './styles.module.css';
 const USSDInput = () => {
     const defaultOptions = {
         loop: true,
@@ -17,7 +17,7 @@ const USSDInput = () => {
     const handleWindowResize = () => {
         setWidth(window.innerWidth);
         setHeight(window.innerHeight);
-        //  //console.log(width);
+        //  //// console.log(width);
     };
     useEffect(() => {
         setWidth(window.innerWidth);

@@ -47,6 +47,7 @@
     "otp-input-react": "^0.3.0",
     "react": "18.2.0",
     "react-chartjs-2": "^4.3.1",
+    "react-countup": "^6.5.0",
     "react-credit-card-input": "^1.1.5",
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "18.2.0",

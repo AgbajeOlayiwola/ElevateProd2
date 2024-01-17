@@ -5,7 +5,7 @@ import Close from '../Close';
 import StorePopup from '../StorePopup';
 import styles from './styles.module.css';
 
-const LoansHeader = ({ state, status, action }) => {
+const LoansHeader = ({ state, status, action, filter }) => {
     const router = useRouter();
     const [popup, setPopup] = useState(false);
 
@@ -30,7 +30,7 @@ const LoansHeader = ({ state, status, action }) => {
                     <button>Loan top-up</button>
                     <button>Liquidate loan</button>
                 </div>
-            ) : status === 'request granted' ? (
+            ) : filter?.length <= 0 ? (
                 <button
                     onClick={() => {
                         router.push('/Admin/Loans/Request');
@@ -38,15 +38,15 @@ const LoansHeader = ({ state, status, action }) => {
                 >
                     Request loan
                 </button>
-            ) : (
-                <button
-                    onClick={() => {
-                        setPopup(true);
-                    }}
-                >
-                    Confirm eligibility
-                </button>
-            )}
+            ) : null
+            // <button
+            //     onClick={() => {
+            //         setPopup(true);
+            //     }}
+            // >
+            //     Confirm eligibility
+            // </button>
+            }
             {popup ? (
                 <StorePopup type={true} overlay={popup}>
                     <div className={styles.loanEligible}>

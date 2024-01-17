@@ -1,4 +1,3 @@
-import { postEllevateProfilingDetails } from '../actions/actions';
 import { postEllevateProfilling } from '../types/actionTypes';
 
 const initialState = {
@@ -8,7 +7,7 @@ const initialState = {
 };
 
 const postEllevateReducer = (state = initialState, { type, payload }) => {
-    // //console.log(payload);÷ss
+    // //// console.log(payload);÷ss
     switch (type) {
         case postEllevateProfilling.POST_ELLEVATE_PROFILLING_START:
             return {

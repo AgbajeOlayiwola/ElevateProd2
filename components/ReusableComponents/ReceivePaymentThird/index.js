@@ -3,9 +3,16 @@ import Lottie from 'react-lottie';
 import { useDispatch } from 'react-redux';
 import { getDisputCategoryGen } from '../../../redux/actions/getDisputeInfoAction';
 import {
+<<<<<<< HEAD
     useTransactionHistoryMutation,
     useVirtualAccountTransLogMutation
 } from '../../../redux/api/authApi';
+=======
+    useGetVaHistoryQuery,
+    useTransactionHistoryMutation
+} from '../../../redux/api/authApi';
+import { createFormatter } from '../../../utils/formatter/formatter';
+>>>>>>> 573d3178b7138ee75de948da6f0ee5fefb219f74
 import socialdata from '../../ReusableComponents/Lotties/loading.json';
 import CloseButton from '../CloseButtonSvg';
 import MoreAction from '../MoreAction';
@@ -36,6 +43,7 @@ const ReceivePaymentThird = ({
         }
     ] = useTransactionHistoryMutation();
 
+<<<<<<< HEAD
     const [
         virtualAccountTransLog,
         {
@@ -47,11 +55,24 @@ const ReceivePaymentThird = ({
             reset: virtualAccountTransLogReset
         }
     ] = useVirtualAccountTransLogMutation();
+=======
+    const {
+        data: vaData,
+        refetch,
+        isFetching,
+        isSuccess,
+        isError
+    } = useGetVaHistoryQuery(null, {
+        refetchOnFocus: true,
+        refetchOnMountOrArgChange: true
+    });
+    const affiliate = localStorage.getItem('affiliateCode');
+>>>>>>> 573d3178b7138ee75de948da6f0ee5fefb219f74
     const [destinationTrue, setDestinationTrue] = useState(true);
     const [addnew, setAddnew] = useState(false);
     const [newAmount, setNewAmount] = useState('');
     const dispatch = useDispatch();
-
+    const [transactions, setTransactions] = useState();
     const [dateState, setDateState] = useState(false);
     const [time, setTime] = useState();
     const [tableDetails, setTableDetails] = useState([]);
@@ -71,10 +92,16 @@ const ReceivePaymentThird = ({
             preserveAspectRatio: 'xMidYMid slice'
         }
     };
+    const [virtualData, setVirtualData] = useState();
+
+    //     , {
+    //       refetchOnFocus: true,
+    //       refetchOnMountOrArgChange: true
+    //   }
 
     useEffect(() => {
         dispatch(getDisputCategoryGen('Complaint'));
-        //console.log(getDisputCategOryTypeSuccess);
+        //// console.log(getDisputCategOryTypeSuccess);
 
         if (title === 'View all Qr Links') {
             setTransactionType('QR_PAYMENT');
@@ -116,6 +143,7 @@ const ReceivePaymentThird = ({
                 }
             });
         } else if (title === 'View accounts') {
+<<<<<<< HEAD
             virtualAccountTransLog();
             transactionHistory({
                 limit: 12,
@@ -128,10 +156,38 @@ const ReceivePaymentThird = ({
                     value: ''
                 }
             });
+=======
+            refetch();
+>>>>>>> 573d3178b7138ee75de948da6f0ee5fefb219f74
         }
 
         getCurrentDate();
     }, [transactionType]);
+    useEffect(() => {
+        if (transactionHistorySuccess || isSuccess) {
+            if (title === 'View accounts') {
+                const updatedData = vaData?.data?.map((item) => {
+                    if (item?.accountTimeoutStatus === 'TRANS_IN_PROGRESS') {
+                        return { ...item, accountTimeoutStatus: 'PENDING' };
+                    } else if (
+                        item.accountTimeoutStatus === 'TRANS_COMPLETED'
+                    ) {
+                        return { ...item, accountTimeoutStatus: 'SUCCESS' };
+                    } else {
+                        return { ...item, accountTimeoutStatus: 'FAILED' };
+                    }
+                });
+                const rebase = updatedData?.map((item) => ({
+                    ...item
+                    // transactionDate: moment(item?.transactionDate).format('MMM DD, YYYY'),
+                }));
+                setTransactions(rebase);
+            } else {
+                setTransactions(transactionHistoryData?.data);
+            }
+        }
+    }, [transactionHistorySuccess, isSuccess]);
+
     const [dispute, setDispute] = useState();
 
     const getCurrentDate = () => {
@@ -148,7 +204,7 @@ const ReceivePaymentThird = ({
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
-
+    const formater = createFormatter(affiliate);
     return (
         <div>
             <Overlay overlay={overlay}>
@@ -176,16 +232,21 @@ const ReceivePaymentThird = ({
                         <section className={styles.sectionI}></section>
                         <div className={styles.Tpwh}>
                             <div>
+<<<<<<< HEAD
                                 {/* { //console.log(trans)} */}
                                 {transactionHistoryLoad ||
                                 virtualAccountTransLogLoad ? (
+=======
+                                {/* { //// console.log(trans)} */}
+                                {transactionHistoryLoad || isFetching ? (
+>>>>>>> 573d3178b7138ee75de948da6f0ee5fefb219f74
                                     <Lottie
                                         options={socialOptions}
                                         height={200}
                                         width={200}
                                     />
                                 ) : transactionHistoryData?.data?.length ===
-                                  0 ? (
+                                      0 || vaData?.data?.length === 0 ? (
                                     <div className={styles.transactionBody}>
                                         <div>
                                             <p>
@@ -194,130 +255,137 @@ const ReceivePaymentThird = ({
                                         </div>
                                     </div>
                                 ) : trans == null ? (
-                                    transactionHistoryData?.data?.map(
-                                        (data, index) => {
-                                            return (
-                                                <>
+                                    transactions?.map((data, index) => {
+                                        return (
+                                            <>
+                                                <div
+                                                    key={index}
+                                                    className={styles.indxDiv}
+                                                >
+                                                    <div>
+                                                        <p>
+                                                            {title ===
+                                                            'View accounts'
+                                                                ? data?.amount
+                                                                : data?.transactionAmount}
+                                                        </p>
+                                                        <p>
+                                                            {title ===
+                                                            'View accounts'
+                                                                ? data?.serviceProviderName
+                                                                : data?.transactionType}
+                                                        </p>
+                                                    </div>
                                                     <div
-                                                        key={index}
                                                         className={
-                                                            styles.indxDiv
+                                                            styles.statusMoreFlex
                                                         }
                                                     >
                                                         <div>
-                                                            <p>
-                                                                {
-                                                                    data?.transactionAmount
+                                                            <p
+                                                                className={
+                                                                    data?.transactionStatus ===
+                                                                    'FAILED'
+                                                                        ? styles.failed
+                                                                        : data?.transactionStatus ===
+                                                                          'PENDING'
+                                                                        ? styles.pending
+                                                                        : styles.success
                                                                 }
+                                                            >
+                                                                {title ===
+                                                                'View accounts'
+                                                                    ? data?.accountTimeoutStatus
+                                                                    : data?.transactionStatus}
                                                             </p>
                                                             <p>
                                                                 {
-                                                                    data?.transactionType
-                                                                }
-                                                            </p>
-                                                        </div>
-                                                        <div
-                                                            className={
-                                                                styles.statusMoreFlex
-                                                            }
-                                                        >
-                                                            <div>
-                                                                <p
-                                                                    className={
-                                                                        data?.transactionStatus ===
-                                                                        'FAILED'
-                                                                            ? styles.failed
-                                                                            : data?.transactionStatus ===
-                                                                              'PENDING'
-                                                                            ? styles.pending
-                                                                            : styles.success
-                                                                    }
-                                                                >
-                                                                    {
-                                                                        data?.transactionStatus
-                                                                    }
-                                                                </p>
-                                                                <p>
-                                                                    {
-                                                                        data?.transactionDate
-                                                                    }
-                                                                </p>
-                                                            </div>
-                                                            <MoreAction
-                                                                transactionStatus={
-                                                                    data?.transactionStatus
-                                                                }
-                                                                transactionDate={
                                                                     data?.transactionDate
                                                                 }
-                                                                sender={
-                                                                    data?.sourceAccount
-                                                                }
-                                                                transactionTitle={data?.transactionType.replace(
-                                                                    '_',
-                                                                    ' '
-                                                                )}
-                                                                transactionAmount={parseFloat(
-                                                                    data?.transactionAmount
-                                                                ).toLocaleString(
-                                                                    'en-US'
-                                                                )}
-                                                            />
+                                                            </p>
                                                         </div>
+                                                        <MoreAction
+                                                            transactionStatus={
+                                                                title ===
+                                                                'View accounts'
+                                                                    ? data?.accountTimeoutStatus
+                                                                    : data?.transactionStatus
+                                                            }
+                                                            transactionDate={
+                                                                title ===
+                                                                'View accounts'
+                                                                    ? data?.requestDate
+                                                                    : data?.transactionDate
+                                                            }
+                                                            sender={
+                                                                data?.sourceAccount
+                                                            }
+                                                            transactionTitle={
+                                                                title ===
+                                                                'View accounts'
+                                                                    ? 'Virtual Account'
+                                                                    : data?.transactionType?.replace(
+                                                                          '_',
+                                                                          ' '
+                                                                      )
+                                                            }
+                                                            transactionAmount={formater?.format(
+                                                                Number(
+                                                                    title ===
+                                                                        'View accounts'
+                                                                        ? data?.amount
+                                                                        : data?.transactionAmount
+                                                                )
+                                                            )}
+                                                        />
                                                     </div>
-                                                    <hr />
-                                                    <br />
-                                                </>
-                                            );
-                                        }
-                                    )
-                                ) : (
-                                    transactionHistoryData?.data?.map(
-                                        (data, index) => {
-                                            return (
-                                                <div key={index}>
-                                                    <TransactionDets
-                                                        key={index}
-                                                        beneficiary={
-                                                            data?.transactionStatus
-                                                        }
-                                                        accountId={
-                                                            data?.sourceAccountId
-                                                        }
-                                                        disputes={dispute}
-                                                        type={
-                                                            data?.transactionType
-                                                        }
-                                                        narration={
-                                                            data?.narration
-                                                        }
-                                                        transactionId={
-                                                            data?.transactionId
-                                                        }
-                                                        sender={data?.sender}
-                                                        destinationBank={
-                                                            data?.destinationBank
-                                                        }
-                                                        paymentDirection={
-                                                            data?.paymentDirection
-                                                        }
-                                                        transactionAmmount={
-                                                            data?.transactionAmount
-                                                        }
-                                                        transactionStatus={
-                                                            data?.transactionStatus
-                                                        }
-                                                        transactionTitle={
-                                                            data?.transactionTitle
-                                                        }
-                                                        dateTrans={
-                                                            data?.transactionDate
-                                                        }
-                                                    />
                                                 </div>
-                                            );
-                                        }
-                                    )
+                                                <hr />
+                                                <br />
+                                            </>
+                                        );
+                                    })
+                                ) : (
+                                    transactions?.map((data, index) => {
+                                        return (
+                                            <div key={index}>
+                                                <TransactionDets
+                                                    key={index}
+                                                    beneficiary={
+                                                        data?.transactionStatus
+                                                    }
+                                                    accountId={
+                                                        data?.sourceAccountId
+                                                    }
+                                                    disputes={dispute}
+                                                    type={data?.transactionType}
+                                                    narration={data?.narration}
+                                                    transactionId={
+                                                        data?.transactionId
+                                                    }
+                                                    sender={data?.sender}
+                                                    destinationBank={
+                                                        data?.destinationBank
+                                                    }
+                                                    paymentDirection={
+                                                        data?.paymentDirection
+                                                    }
+                                                    transactionAmmount={
+                                                        data?.transactionAmount
+                                                    }
+                                                    transactionStatus={
+                                                        data?.transactionStatus
+                                                    }
+                                                    transactionTitle={
+                                                        data?.transactionTitle
+                                                    }
+                                                    dateTrans={
+                                                        data?.transactionDate
+                                                    }
+                                                />
+                                            </div>
+                                        );
+                                    })
                                 )}
                             </div>
                         </div>

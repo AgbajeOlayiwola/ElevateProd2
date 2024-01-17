@@ -86,7 +86,7 @@ const Loading = () => {
         const data = {
             token: otpData
         };
-        console.log(data);
+        // console.log(data);
         verifyEmail(data);
     };
 

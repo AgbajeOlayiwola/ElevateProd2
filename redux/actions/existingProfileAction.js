@@ -1,7 +1,7 @@
 import { setCookie } from 'cookies-next';
+import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
 import { existingUserProfile } from '../types/actionTypes';
-import axiosInstance from '../helper/apiClient';
 //existingUserProfile action
 export const existingUserProfileLoadStart = () => ({
     type: existingUserProfile.EXISTINGUSERPROFILE_LOAD_START
@@ -27,7 +27,7 @@ export const existingUserProfileData = (data) => (dispatch) => {
                 secure: 'true'
             });
             dispatch(existingUserProfileLoadSuccess(response));
-            //console.log(response);
+            //// console.log(response);
         })
         .catch((error) => dispatch(existingUserProfileLoadError(error)));
 };

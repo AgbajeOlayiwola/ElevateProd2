@@ -129,7 +129,7 @@ const AirtimeOrData = ({
     useEffect(() => {
         if (airNetworksSuccess) {
             setNetworkData(airNetworksData?.data);
-            console.log(airNetworksData?.data?.networks);
+            // console.log(airNetworksData?.data?.networks);
         }
     }, [airNetworksSuccess]);
     const { allAccountInfo } = useSelector((store) => store);
@@ -199,7 +199,7 @@ const AirtimeOrData = ({
                             // validateOnChange={true}
                             initialValues={initialValues}
                             onSubmit={(values, { setSubmitting }) => {
-                                // console.log(values);
+                                // // console.log(values);
                                 const data = {
                                     // transactionReference: '',
                                     transactionAmount: values?.ammount,
@@ -221,7 +221,7 @@ const AirtimeOrData = ({
                                     transactionPin: otpValue,
                                     description: 'jhgfd'
                                 };
-                                console.log(data);
+                                // console.log(data);
                                 airtimeTopup(data);
                                 // nextPage();
                                 setSubmitting(false);
@@ -342,9 +342,6 @@ const AirtimeOrData = ({
                                                                 item?.code
                                                         );
                                                     if (selBiller) {
-                                                        console.log(
-                                                            selBiller?.amountType
-                                                        );
                                                         if (selBiller?.amount) {
                                                             setArryAmaount(
                                                                 selBiller?.amount.split(

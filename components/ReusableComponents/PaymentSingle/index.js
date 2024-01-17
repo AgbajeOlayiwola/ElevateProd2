@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './styles.module.css';
 import styled from 'styled-components';
+import styles from './styles.module.css';
 
 const StyledP = styled.p`
     font-size: 14px;
@@ -36,7 +36,7 @@ const PaymentSingle = ({
                         <StyledP
                             textColor={textColor}
                             onClick={(e) => {
-                                // //console.loge.target);
+                                // //// console.loge.target);
                             }}
                         >
                             {text1}

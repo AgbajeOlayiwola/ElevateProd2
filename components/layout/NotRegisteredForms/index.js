@@ -25,7 +25,7 @@ const ProfileSetups = ({ comingFrom }) => {
 
         if (idParam) {
             // Do something with the idParam
-            console.log('ID parameter found:', idParam);
+            // console.log('ID parameter found:', idParam);
 
             // You can also convert the ID to a number if needed
             const id = parseInt(idParam, 10);
@@ -35,7 +35,7 @@ const ProfileSetups = ({ comingFrom }) => {
             // For example, fetch data from an API using the ID
             // or update the component state based on the ID
         } else {
-            console.log('No ID parameter found in the URL');
+            // console.log('No ID parameter found in the URL');
         }
     }, []);
 
@@ -54,7 +54,7 @@ const ProfileSetups = ({ comingFrom }) => {
         const countryData = affiliateCountries.filter(
             (country) => country.affiliateCode === affiliate
         );
-        console.log(countryData);
+        // console.log(countryData);
 
         // Use forEach to update state for each countryData item
         countryData.forEach((country, index) => {
@@ -118,12 +118,9 @@ const ProfileSetups = ({ comingFrom }) => {
                 );
         }
     };
-    // useEffect(() => {
-    //     // //console.log(errorMessages, otpErrorMessages);
-    // }, []);
 
     function regsiteredBus() {
-        //  //console.log(formData.tinNumber);
+        //  //// console.log(formData.tinNumber);
         setLoads((prev) => !prev);
         const businessProfileData = {
             bvnNumber: formData.bvNumber,
@@ -133,7 +130,6 @@ const ProfileSetups = ({ comingFrom }) => {
             taxNumber: formData.tinNumber,
             registerationNumber: formData.rcnumber
         };
-        // setLoading((prev) => !prev);
 
         dispatch(createBusProfileSetup(businessProfileData));
     }
