@@ -5,6 +5,11 @@ import IconArrowBack from '../../ReusableComponents/IconComponents/IconArrowBack
 import { useRouter } from 'next/router'
 import InventoryDetails from './InventoryDetails'
 import Product from './Product'
+import TaxDiscount from './TaxDiscount'
+import Review from './Review'
+
+
+
 const CreateInvoice = () => {
   const [page, setPage] = useState( 0 );
   const conditionalComponent = () => {
@@ -14,11 +19,9 @@ const CreateInvoice = () => {
       case 1:
         return <Product nextPage={ () => setPage( 2 ) } />;
       case 2:
-        return <CreateStore2 nextPage={ () => setPage( 3 ) } />;
+        return <TaxDiscount nextPage={ () => setPage( 3 ) } />;
       case 3:
-        return <h1>Continue</h1>;
-      case 4:
-        return <h1>End</h1>;
+        return <Review />;
     }
   };
   const router = useRouter()
@@ -73,9 +76,9 @@ const CreateInvoice = () => {
           <hr className={ styles.hr } />
           <div>
             <div
-              onClick={ () => setPage( 3 ) }
+              onClick={ () => setPage( 2 ) }
               className={
-                page === 3
+                page === 2
                   ? styles.detBrand
                   : styles.detBrandInactive
               }

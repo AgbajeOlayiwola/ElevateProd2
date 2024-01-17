@@ -1,12 +1,12 @@
 import React from 'react';
 import styles from './styles.module.css';
 
-const Success = () => {
+const Success = ( { width = "257", height = "173" } ) => {
     return (
         <>
             <svg
-                width="257"
-                height="173"
+                width={ width }
+                height={ height }
                 viewBox="0 0 257 173"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"

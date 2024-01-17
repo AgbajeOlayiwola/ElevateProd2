@@ -109,8 +109,8 @@ export const StatusFlexContainer = styled.div`
     column-gap: 8px;
 `;
 export const CircleBox = styled.div`
-    background-color: ${ ( props ) =>
-        props.color ? `${ props.color }` : '#BF4F74' };
+    background-color: ${( props ) =>
+        props.color ? `${ props.color }` : '#BF4F74'};
     box-shadow: 0px 0px 37px 0px rgba(157, 147, 147, 0.12);
     width: 8px;
     height: 8px;
@@ -123,7 +123,7 @@ export const CustomText = styled.p`
     margin: 0;
     font-weight: 500;
     line-height: normal;
-    color: ${ ( props ) => ( props.color ? `${ props.color }` : '#BF4F74' ) };
+    color: ${( props ) => ( props.color ? `${ props.color }` : '#BF4F74' )};
 `;
 export const FlexContainer = styled.div`
     display: flex;
@@ -139,6 +139,16 @@ export const FlexContainer = styled.div`
         font-weight: 600;
         line-height: normal;
         margin: 0;
+       
+    }
+    span {
+        color: #252525;
+        font-family: Inter;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 140%;
+         margin-top: 5px;
     }
 `;
 
@@ -197,7 +207,7 @@ export const InventoryDetailsBox = styled.section`
 export const Seperator = styled.div`
     height: 1px;
     background-color: #e4e4e4;
-    width: ${ ( props ) => ( props.width ? `${ props.width }%` : '100%' ) };
+    width: ${( props ) => ( props.width ? `${ props.width }%` : '100%' )};
 `;
 export const NotificationContainer = styled.section`
     display: flex;
@@ -240,11 +250,11 @@ export const SelectCustomer = styled.div`
     border-radius: 8px;
     background: #f4f4f4;
     &:after {
-        content: ${ ( props ) =>
+        content: ${( props ) =>
         props.hasPlaceholder === false
             ? `url("data:image/svg+xml,%3Csvg width='11' height='6' viewBox='0 0 11 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.6665 1L5.6665 5L9.6665 1' stroke='%230B0C7D' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");`
             : props.hasPlaceholder === undefined &&
-            `url("data:image/svg+xml,%3Csvg width='9' height='6' viewBox='0 0 9 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.33334 1.4001L4.53334 4.6001L7.73334 1.4001' stroke='%23A6AFC2' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A")` };
+        `url("data:image/svg+xml,%3Csvg width='9' height='6' viewBox='0 0 9 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.33334 1.4001L4.53334 4.6001L7.73334 1.4001' stroke='%23A6AFC2' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A")`};
         position: absolute;
         right: 15px;
         top: 15px;
@@ -380,31 +390,31 @@ export const UploadContainer = styled.div`
     width: 364px;
     height: 144px;
     background: rgba(0, 91, 130, 0.05);
-    img{
-        height:144px;
+    img {
+        height: 144px;
         width: 100%;
         object-fit: cover;
     }
 `;
 export const IconPencilContainer = styled.div`
-position: absolute;
-right: -4px;
-top: -6px;
-background-color: white;
-padding:2px ;
-border-radius: 50%;
-width: 36px;
-height: 36px;
-display: flex;
-align-items: center;
-justify-content: center;
-cursor: pointer;
+    position: absolute;
+    right: -4px;
+    top: -6px;
+    background-color: white;
+    padding: 2px;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 `;
 export const Flex = styled.section`
-display: flex;
-align-items: center;
-justify-content: center;
-`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
 export const BtnSpan = styled.span`
     color: var(--primary-deepBlue, #102572);
     font-family: Inter;

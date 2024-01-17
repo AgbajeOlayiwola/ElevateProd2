@@ -46,31 +46,31 @@ import {
 import { setAllAccountInfo } from '../../../redux/slices/allAccountInfoSlice';
 import { setProfile } from '../../../redux/slices/profile';
 import { createFormatter } from '../../../utils/formatter/formatter';
-const getSymbolFromCurrency = require('currency-symbol-map');
-const countryToCurrency = require('country-to-currency');
-function SampleNextArrow(props) {
+const getSymbolFromCurrency = require( 'currency-symbol-map' );
+const countryToCurrency = require( 'country-to-currency' );
+function SampleNextArrow( props ) {
     const { className, style, onClick } = props;
     return (
         <div
-            className={className}
-            style={{
+            className={ className }
+            style={ {
                 ...style,
                 display: 'block',
                 width: '63px',
                 fontSize: '35px',
                 boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.31)'
-            }}
-            onClick={onClick}
+            } }
+            onClick={ onClick }
         />
     );
 }
-function SamplePrevArrow(props) {
+function SamplePrevArrow( props ) {
     const { className, style, onClick } = props;
     return (
         <div
-            className={className}
-            style={{ ...style, display: 'none', background: 'green' }}
-            onClick={onClick}
+            className={ className }
+            style={ { ...style, display: 'none', background: 'green' } }
+            onClick={ onClick }
         />
     );
 }
@@ -89,11 +89,11 @@ const settings = {
 
 const Dashboard = () => {
     const dispatch = useDispatch();
-    const formatter = new Intl.NumberFormat('en-US', {
+    const formatter = new Intl.NumberFormat( 'en-US', {
         style: 'currency',
         currency: 'NGN',
         currencyDisplay: 'narrowSymbol'
-    });
+    } );
     const router = useRouter();
     const [outType, setOutType] = useState();
     const [time, setTime] = useState();
@@ -101,19 +101,19 @@ const Dashboard = () => {
     let success = 0;
     let pending = 0;
     let failed = 0;
-    const [accountUpgrade, setAccountUpgrade] = useState(true);
-    const [addAcct, setAddAcct] = useState(false);
-    const affiliate = localStorage.getItem('affiliateCode');
-    const [balance, setBalance] = useState(0.0);
-    const { profile } = useSelector((store) => store);
+    const [accountUpgrade, setAccountUpgrade] = useState( true );
+    const [addAcct, setAddAcct] = useState( false );
+    const affiliate = localStorage.getItem( 'affiliateCode' );
+    const [balance, setBalance] = useState( 0.0 );
+    const { profile } = useSelector( ( store ) => store );
     // console.log(profile);
-    const [isCopied, setIsCopied] = useState(false);
-    const [acctNumber, setAcctNumber] = useState('');
+    const [isCopied, setIsCopied] = useState( false );
+    const [acctNumber, setAcctNumber] = useState( '' );
     const [currency, setCurrency] = useState();
     const [copyAcctInfo, setCopyAcctInfo] = useState();
-    const [alert, setAlert] = useState(false);
+    const [alert, setAlert] = useState( false );
     //olayiwola agbje ola_199x
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState( 0 );
     const [
         getAcctBals,
         {
@@ -159,17 +159,17 @@ const Dashboard = () => {
         }
     ] = useTransactionHistoryMutation();
     const showToastAddSuccessMessage = () => {
-        toast.success('Account number successfully added', {
+        toast.success( 'Account number successfully added', {
             position: toast.POSITION.TOP_RIGHT
-        });
+        } );
     };
     const conditionalComponent = () => {
-        switch (page) {
+        switch ( page ) {
             case 0:
                 return (
                     <SelectOption
-                        moveToAddNew={() => setPage(1)}
-                        moveToAddExisting={() => setPage(2)}
+                        moveToAddNew={ () => setPage( 1 ) }
+                        moveToAddExisting={ () => setPage( 2 ) }
                     />
                 );
             case 1:
@@ -185,64 +185,64 @@ const Dashboard = () => {
             case 2:
                 return (
                     <AddExistinAccount
-                        id={getIdData?.data?.customerId}
-                        close={() => {
-                            setAddAcct((prev) => !prev),
+                        id={ getIdData?.data?.customerId }
+                        close={ () => {
+                            setAddAcct( ( prev ) => !prev ),
                                 showToastAddSuccessMessage();
-                        }}
+                        } }
                     />
                 );
         }
     };
 
-    useEffect(() => {
+    useEffect( () => {
         getAcctBals();
-        transactionsSummary(null);
-    }, []);
-    useEffect(() => {
-        if (setPrimaryAcctSuccess) {
+        transactionsSummary( null );
+    }, [] );
+    useEffect( () => {
+        if ( setPrimaryAcctSuccess ) {
             getAcctBals();
         }
-    }, [setPrimaryAcctSuccess]);
+    }, [setPrimaryAcctSuccess] );
 
-    useEffect(() => {
-        if (getAcctBalsSuccess) {
+    useEffect( () => {
+        if ( getAcctBalsSuccess ) {
             setAcctNumber(
                 getAcctBalsData?.data
-                    .filter((account) => account?.isPrimaryAccount === 'Y') // Filter by primary flag
-                    .map((account) => account.accountNo)
-                    .filter(Boolean)
+                    .filter( ( account ) => account?.isPrimaryAccount === 'Y' ) // Filter by primary flag
+                    .map( ( account ) => account.accountNo )
+                    .filter( Boolean )
             );
             setCurrency(
                 getAcctBalsData?.data
-                    .filter((account) => account?.isPrimaryAccount === 'Y') // Filter by primary flag
-                    .map((account) => account.currency)
-                    .filter(Boolean)
+                    .filter( ( account ) => account?.isPrimaryAccount === 'Y' ) // Filter by primary flag
+                    .map( ( account ) => account.currency )
+                    .filter( Boolean )
             );
             setBalance(
                 getAcctBalsData?.data
-                    .filter((account) => account?.isPrimaryAccount === 'Y') // Filter by primary flag
-                    .map((account) => account?.availableBal)
-                    .filter(Boolean)
+                    .filter( ( account ) => account?.isPrimaryAccount === 'Y' ) // Filter by primary flag
+                    .map( ( account ) => account?.availableBal )
+                    .filter( Boolean )
             );
-            dispatch(setAllAccountInfo(getAcctBalsData?.data));
+            dispatch( setAllAccountInfo( getAcctBalsData?.data ) );
         }
-        if (acctNumber) {
-            getId({
+        if ( acctNumber ) {
+            getId( {
                 accountNo: acctNumber[0]
-            });
+            } );
         }
-    }, [getAcctBalsSuccess]);
+    }, [getAcctBalsSuccess] );
     const showToastCustomerErroMessage = () => {
-        toast.error('Error retrieving customer ID', {
+        toast.error( 'Error retrieving customer ID', {
             position: toast.POSITION.TOP_RIGHT
-        });
+        } );
     };
-    useEffect(() => {
-        if (getIdErr) {
+    useEffect( () => {
+        if ( getIdErr ) {
             showToastCustomerErroMessage();
         }
-    }, [getIdErr]);
+    }, [getIdErr] );
 
     const socialOptions = {
         loop: true,
@@ -258,60 +258,58 @@ const Dashboard = () => {
         let month = newDate.getMonth() + 1;
         let year = newDate.getFullYear();
         setTime(
-            `${year}-${month < 10 ? `0${month}` : `${month}`}-${
-                date < 10 ? `0${date}` : `${date}`
+            `${ year }-${ month < 10 ? `0${ month }` : `${ month }` }-${ date < 10 ? `0${ date }` : `${ date }`
             }`
         );
     };
-    const getDateXDaysAgo = (numOfDays, date = new Date()) => {
+    const getDateXDaysAgo = ( numOfDays, date = new Date() ) => {
         const daysAgo = new Date();
 
-        daysAgo.setDate(date.getDate() - numOfDays);
+        daysAgo.setDate( date.getDate() - numOfDays );
         let dates = daysAgo.getDate();
         let month = daysAgo.getMonth() + 1;
         let year = daysAgo.getFullYear();
         setRangeDate(
-            `${year}-${month < 10 ? `0${month}` : `${month}`}-${
-                dates < 10 ? `0${dates}` : `${dates}`
+            `${ year }-${ month < 10 ? `0${ month }` : `${ month }` }-${ dates < 10 ? `0${ dates }` : `${ dates }`
             }`
         );
     };
 
-    const [previousRoute, setPreviousRoute] = useState('');
-    useEffect(() => storePathValues, [router.asPath]);
+    const [previousRoute, setPreviousRoute] = useState( '' );
+    useEffect( () => storePathValues, [router.asPath] );
     function storePathValues() {
         const storage = globalThis?.sessionStorage;
-        if (!storage) return;
+        if ( !storage ) return;
         // Set the previous path as the value of the current path.
-        var prevPath = storage.getItem('currentPath');
-        storage.setItem('prevPath', prevPath);
+        var prevPath = storage.getItem( 'currentPath' );
+        storage.setItem( 'prevPath', prevPath );
         // Set the current path value by looking at the browser's location object.
-        storage.setItem('currentPath', globalThis.location.pathname);
-        setPreviousRoute(prevPath);
+        storage.setItem( 'currentPath', globalThis.location.pathname );
+        setPreviousRoute( prevPath );
         // //// console.log(prevPath);
     }
     const [pinCondition, setPinCondition] = useState();
     const current = new Date();
 
-    const copyAccountNumber = () => {};
-    const [overlay, setOverlay] = useState(false);
+    const copyAccountNumber = () => { };
+    const [overlay, setOverlay] = useState( false );
     const openAddAccountModal = () => {
-        setOverlay(true);
+        setOverlay( true );
     };
     // resize the screen
-    const [width, setWidth] = useState(0);
-    const [height, setHeight] = useState(0);
+    const [width, setWidth] = useState( 0 );
+    const [height, setHeight] = useState( 0 );
     const handleWindowResize = () => {
-        setWidth(window.innerWidth);
-        setHeight(window.innerHeight);
+        setWidth( window.innerWidth );
+        setHeight( window.innerHeight );
         // console.log(width);
     };
-    const types = (type) => {
-        setOutType(type);
+    const types = ( type ) => {
+        setOutType( type );
     };
-    useEffect(() => {
-        setPinCondition(profile?.user?.hasSetTransactionPin);
-        transactionHistory({
+    useEffect( () => {
+        setPinCondition( profile?.user?.hasSetTransactionPin );
+        transactionHistory( {
             limit: 30,
             fromDate: '',
             toDate: '',
@@ -321,16 +319,16 @@ const Dashboard = () => {
                 field: '',
                 value: ''
             }
-        });
-    }, []);
+        } );
+    }, [] );
 
-    useEffect(() => {
-        setWidth(window.innerWidth);
-        setHeight(window.innerHeight);
+    useEffect( () => {
+        setWidth( window.innerWidth );
+        setHeight( window.innerHeight );
         handleWindowResize();
-        window.addEventListener('resize', handleWindowResize);
-        return () => window.removeEventListener('resize', handleWindowResize);
-    }, [width]);
+        window.addEventListener( 'resize', handleWindowResize );
+        return () => window.removeEventListener( 'resize', handleWindowResize );
+    }, [width] );
 
     // resize the screen
     const [
@@ -366,118 +364,118 @@ const Dashboard = () => {
             reset: getProfileReset
         }
     ] = useGetProfileMutation();
-    const [otpValue, setOtpValue] = useState('');
+    const [otpValue, setOtpValue] = useState( '' );
 
-    const handleOtpChange = (otp) => {
-        setOtpValue(otp);
+    const handleOtpChange = ( otp ) => {
+        setOtpValue( otp );
     };
     const showToastTransactionPinSuccessMessage = () => {
-        toast.success('Transaction Pin Created', {
+        toast.success( 'Transaction Pin Created', {
             position: toast.POSITION.TOP_RIGHT
-        });
+        } );
     };
-    useEffect(() => {
-        getProfile(null);
-    }, []);
-    useEffect(() => {
-        if (getProfileSuccess) {
-            dispatch(setProfile(getProfileData));
+    useEffect( () => {
+        getProfile( null );
+    }, [] );
+    useEffect( () => {
+        if ( getProfileSuccess ) {
+            dispatch( setProfile( getProfileData ) );
         }
-    }, [getProfileSuccess]);
+    }, [getProfileSuccess] );
     const showToastAccountBalsrErroMessage = () => {
-        toast.error('Error retrieving account balance', {
+        toast.error( 'Error retrieving account balance', {
             position: toast.POSITION.TOP_RIGHT
-        });
+        } );
     };
-    useEffect(() => {
-        if (getAcctBalsErr) {
+    useEffect( () => {
+        if ( getAcctBalsErr ) {
             showToastAccountBalsrErroMessage();
         }
-    }, [getAcctBalsErr]);
-    useEffect(() => {
-        if (createTransactionPinSuccess) {
+    }, [getAcctBalsErr] );
+    useEffect( () => {
+        if ( createTransactionPinSuccess ) {
             showToastTransactionPinSuccessMessage();
-            setPinCondition('Y');
-            getProfile(null);
+            setPinCondition( 'Y' );
+            getProfile( null );
         }
-    }, [createTransactionPinSuccess]);
-    useEffect(() => {
-        if (getProfileSuccess) {
-            dispatch(setProfile(getProfileData));
+    }, [createTransactionPinSuccess] );
+    useEffect( () => {
+        if ( getProfileSuccess ) {
+            dispatch( setProfile( getProfileData ) );
         }
-    }, [getProfileSuccess]);
+    }, [getProfileSuccess] );
 
-    const handleSubmit = (e) => {
+    const handleSubmit = ( e ) => {
         e.preventDefault();
-        createTransactionPin({
+        createTransactionPin( {
             transactionPin: otpValue
-        });
+        } );
     };
-    const [transactions, setTransactions] = useState([]);
+    const [transactions, setTransactions] = useState( [] );
     const billPayments = [
         'BILLPAYMENT',
         'SINGLE_TRANSFER',
         'BULK_TRANSFER',
         'AIRTIME_TOPUP'
     ];
-    useEffect(() => {
-        if (transactionHistoryData?.data) {
+    useEffect( () => {
+        if ( transactionHistoryData?.data ) {
             const filteredTransactions = transactionHistoryData.data.filter(
-                (item) => !billPayments.includes(item?.transactionType)
+                ( item ) => !billPayments.includes( item?.transactionType )
             );
 
-            setTransactions(filteredTransactions);
+            setTransactions( filteredTransactions );
         }
-    }, [transactionHistorySuccess]);
-    const formater = createFormatter(affiliate);
+    }, [transactionHistorySuccess] );
+    const formater = createFormatter( affiliate );
 
     return (
-        <div className={styles.statementCover}>
+        <div className={ styles.statementCover }>
             <ToastContainer />
-            {addAcct ? (
-                <div className={styles.overlay}>
-                    <div className={styles.overlayBg}>
-                        <div className={styles.back}>
+            { addAcct ? (
+                <div className={ styles.overlay }>
+                    <div className={ styles.overlayBg }>
+                        <div className={ styles.back }>
                             <p>
                                 <FaArrowLeftLong
-                                    style={{ cursor: 'pointer' }}
-                                    onClick={() => setPage(0)}
+                                    style={ { cursor: 'pointer' } }
+                                    onClick={ () => setPage( 0 ) }
                                 />
                             </p>
                             <p
-                                onClick={() => {
-                                    setAddAcct((prev) => !prev), setPage(0);
-                                }}
+                                onClick={ () => {
+                                    setAddAcct( ( prev ) => !prev ), setPage( 0 );
+                                } }
                             >
-                                <MdCancel style={{ cursor: 'pointer' }} />{' '}
+                                <MdCancel style={ { cursor: 'pointer' } } />{ ' ' }
                             </p>
                         </div>
-                        {conditionalComponent()}
+                        { conditionalComponent() }
                     </div>
                 </div>
-            ) : null}
-            {pinCondition === 'N' ? (
-                <div className={styles.overlay}>
-                    <form onSubmit={handleSubmit} className={styles.handleForm}>
-                        <div className={styles.inner}>
-                            <div className={styles.inn}>
-                                {createTransactionPinErr ? (
-                                    <p className={styles.error}>
+            ) : null }
+            { pinCondition === 'N' ? (
+                <div className={ styles.overlay }>
+                    <form onSubmit={ handleSubmit } className={ styles.handleForm }>
+                        <div className={ styles.inner }>
+                            <div className={ styles.inn }>
+                                { createTransactionPinErr ? (
+                                    <p className={ styles.error }>
                                         Error Setting Transaction Pin
                                     </p>
-                                ) : null}
+                                ) : null }
                                 <h3>Create a transaction pin</h3>
-                                <div className={styles.trans}>
+                                <div className={ styles.trans }>
                                     <OtpInput
-                                        onOtpChange={handleOtpChange}
-                                        otpfields={6}
+                                        onOtpChange={ handleOtpChange }
+                                        otpfields={ 6 }
                                     />
                                 </div>
                                 <ButtonComp
                                     text="Create Transaction Pin"
                                     type="submit"
-                                    disabled={true}
-                                    active={'active'}
+                                    disabled={ true }
+                                    active={ 'active' }
                                     loads={
                                         getProfileLoad ||
                                         createTransactionPinLoad
@@ -487,18 +485,18 @@ const Dashboard = () => {
                         </div>
                     </form>
                 </div>
-            ) : null}
-            {/* <Levelup account={userProfileData} /> */}
-            <div className={styles.cove}>
-                <section className={styles.sectionI}>
-                    <div className={styles.Tpwh}>
-                        <div className={styles.Tpwhflex}>
+            ) : null }
+            {/* <Levelup account={userProfileData} /> */ }
+            <div className={ styles.cove }>
+                <section className={ styles.sectionI }>
+                    <div className={ styles.Tpwh }>
+                        <div className={ styles.Tpwhflex }>
                             <div>
                                 <TotalCollections />
                                 <p>Total Outflow</p>
-                                <p className={styles.Success}>
-                                    {currency}{' '}
-                                    {transactionsSummaryLoad ? (
+                                <p className={ styles.Success }>
+                                    { currency }{ ' ' }
+                                    { transactionsSummaryLoad ? (
                                         <Loader />
                                     ) : (
                                         formater?.format(
@@ -507,15 +505,15 @@ const Dashboard = () => {
                                                     ?.total_outflow
                                             )
                                         )
-                                    )}
+                                    ) }
                                 </p>
                             </div>
                             <div>
                                 <TotalPendingCollections />
                                 <p>Total Inflow</p>
-                                <p className={styles.pending}>
-                                    {currency}{' '}
-                                    {transactionsSummaryLoad ? (
+                                <p className={ styles.pending }>
+                                    { currency }{ ' ' }
+                                    { transactionsSummaryLoad ? (
                                         <Loader />
                                     ) : (
                                         formater?.format(
@@ -524,15 +522,15 @@ const Dashboard = () => {
                                                     ?.total_inflow
                                             )
                                         )
-                                    )}
+                                    ) }
                                 </p>
                             </div>
                             <div>
                                 <TotlaCollctionsSvg />
                                 <p>Total Transaction</p>
-                                <p className={styles.filed}>
-                                    {currency}{' '}
-                                    {transactionsSummaryLoad ? (
+                                <p className={ styles.filed }>
+                                    { currency }{ ' ' }
+                                    { transactionsSummaryLoad ? (
                                         <Loader />
                                     ) : (
                                         formater?.format(
@@ -541,80 +539,80 @@ const Dashboard = () => {
                                                     ?.total_transaction_amount
                                             )
                                         )
-                                    )}
+                                    ) }
                                 </p>
                             </div>
                         </div>
                     </div>
 
-                    <div className={styles.otherTrans}>
+                    <div className={ styles.otherTrans }>
                         <p>Quick Transaction</p>
                     </div>
-                    <div className={styles.divCover}>
+                    <div className={ styles.divCover }>
                         <Link
-                            href={{
+                            href={ {
                                 pathname: '/Admin/Payment',
                                 query: { id: 'Single Transfer' }
-                            }}
+                            } }
                         >
-                            <div className={styles.dinCLass}>
-                                <div className={styles.svg}>
+                            <div className={ styles.dinCLass }>
+                                <div className={ styles.svg }>
                                     <SingleTrans />
                                 </div>
-                                <p className={styles.name}>Single Transfer</p>
+                                <p className={ styles.name }>Single Transfer</p>
                             </div>
                         </Link>
                         <Link
-                            href={{
+                            href={ {
                                 pathname: '/Admin/Payment',
                                 query: { id: 'airtime or data' }
-                            }}
+                            } }
                         >
-                            <div className={styles.dinCLass}>
-                                <div className={styles.svg}>
+                            <div className={ styles.dinCLass }>
+                                <div className={ styles.svg }>
                                     <PhoneSvg />
                                 </div>
-                                <p className={styles.name}> Airtime & Data</p>
+                                <p className={ styles.name }> Airtime & Data</p>
                             </div>
                         </Link>
                         <Link
-                            href={{
+                            href={ {
                                 pathname: '/Admin/Payment',
                                 query: { id: 'bills payment' }
-                            }}
+                            } }
                         >
-                            <div className={styles.dinCLass}>
-                                <div className={styles.svg}>
+                            <div className={ styles.dinCLass }>
+                                <div className={ styles.svg }>
                                     <BillSvg />
                                 </div>
-                                <p className={styles.name}>Bills Payment</p>
+                                <p className={ styles.name }>Bills Payment</p>
                             </div>
                         </Link>
                         <Link
-                            href={{
+                            href={ {
                                 pathname: '/Admin/Payment',
                                 query: { id: 'Bulk Transfer' }
-                            }}
+                            } }
                         >
-                            <div className={styles.dinCLass}>
-                                <div className={styles.svg}>
+                            <div className={ styles.dinCLass }>
+                                <div className={ styles.svg }>
                                     <BulkTransfer2 />
                                 </div>
-                                <p className={styles.name}>Bulk Transfer</p>
+                                <p className={ styles.name }>Bulk Transfer</p>
                             </div>
                         </Link>
                     </div>
-                    <div className={styles.btmI}>
-                        <div className={styles.btmItop}>
-                            <h2 className={styles.transP}>
+                    <div className={ styles.btmI }>
+                        <div className={ styles.btmItop }>
+                            <h2 className={ styles.transP }>
                                 Collection Transactions
                             </h2>
 
-                            {transactionHistoryData ? (
-                                transactions?.map((item, index) => {
+                            { transactionHistoryData ? (
+                                transactions?.map( ( item, index ) => {
                                     return (
                                         <>
-                                            {width >= 950 ? (
+                                            { width >= 950 ? (
                                                 <div>
                                                     <div
                                                         className={
@@ -631,12 +629,12 @@ const Dashboard = () => {
                                                                     <p>Self</p>
                                                                 ) : ( */}
                                                             <p>
-                                                                {item?.transactionType.replace(
+                                                                { item?.transactionType.replace(
                                                                     '_',
                                                                     ' '
-                                                                )}
+                                                                ) }
                                                             </p>
-                                                            {/* )} */}
+                                                            {/* )} */ }
                                                         </div>
                                                         <div
                                                             className={
@@ -644,24 +642,24 @@ const Dashboard = () => {
                                                             }
                                                         >
                                                             <p>
-                                                                {currency}{' '}
-                                                                {formater?.format(
+                                                                { currency }{ ' ' }
+                                                                { formater?.format(
                                                                     Number(
                                                                         item?.transactionAmount
                                                                     )
-                                                                )}
+                                                                ) }
                                                             </p>
                                                         </div>
 
                                                         <div
                                                             className={
                                                                 item.transactionStatus ===
-                                                                'PENDING'
+                                                                    'PENDING'
                                                                     ? styles.pending
                                                                     : item.transactionStatus ===
-                                                                      'FAILED'
-                                                                    ? styles.failed
-                                                                    : styles.success
+                                                                        'FAILED'
+                                                                        ? styles.failed
+                                                                        : styles.success
                                                             }
                                                         >
                                                             <div
@@ -677,7 +675,7 @@ const Dashboard = () => {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <hr className={styles.hr} />
+                                                    <hr className={ styles.hr } />
                                                 </div>
                                             ) : (
                                                 <>
@@ -693,7 +691,7 @@ const Dashboard = () => {
                                                                 }
                                                             >
                                                                 <p>
-                                                                    {' '}
+                                                                    { ' ' }
                                                                     {
                                                                         item?.beneficiary
                                                                     }
@@ -705,10 +703,10 @@ const Dashboard = () => {
                                                                         styles.mobileP
                                                                     }
                                                                 >
-                                                                    {item?.transactionType.replace(
+                                                                    { item?.transactionType.replace(
                                                                         '_',
                                                                         ' '
-                                                                    )}
+                                                                    ) }
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -720,12 +718,12 @@ const Dashboard = () => {
                                                             <div
                                                                 className={
                                                                     item.transactionStatus ===
-                                                                    'PENDING'
+                                                                        'PENDING'
                                                                         ? styles.pending
                                                                         : item.transactionStatus ===
-                                                                          'FAILED'
-                                                                        ? styles.failed
-                                                                        : styles.success
+                                                                            'FAILED'
+                                                                            ? styles.failed
+                                                                            : styles.success
                                                                 }
                                                             >
                                                                 <div>
@@ -749,11 +747,11 @@ const Dashboard = () => {
                                                                             {
                                                                                 currency
                                                                             }
-                                                                            {parseFloat(
+                                                                            { parseFloat(
                                                                                 item.transactionAmount
                                                                             ).toLocaleString(
                                                                                 'en-US'
-                                                                            )}
+                                                                            ) }
                                                                         </p>
                                                                     </div>
                                                                 </div>
@@ -775,16 +773,16 @@ const Dashboard = () => {
                                                         </Link>
                                                     </div>
                                                 </>
-                                            )}
+                                            ) }
                                         </>
                                     );
-                                })
+                                } )
                             ) : (
-                                <div className={styles.transactionSvg}>
+                                <div className={ styles.transactionSvg }>
                                     <TransactionSvg />
                                     <p>No transactions have been done</p>
                                 </div>
-                            )}
+                            ) }
 
                             {/* {dateState === false ? (
                                 <div className={styles.transactionBody}>
@@ -800,37 +798,37 @@ const Dashboard = () => {
                             ) : ( */}
 
                             <div>
-                                <div className={styles.transaction}></div>
+                                <div className={ styles.transaction }></div>
 
-                                <hr className={styles.hr} />
+                                <hr className={ styles.hr } />
                             </div>
                         </div>
                     </div>
                 </section>
-                <section className={styles.sectionII}>
-                    <div className={styles.moneyCont}>
-                        <div className={styles.card}>
-                            <div className={styles.cardRight}>
-                                <div className={styles.moneyBody}>
-                                    <div className={styles.moneybodyDiv}>
+                <section className={ styles.sectionII }>
+                    <div className={ styles.moneyCont }>
+                        <div className={ styles.card }>
+                            <div className={ styles.cardRight }>
+                                <div className={ styles.moneyBody }>
+                                    <div className={ styles.moneybodyDiv }>
                                         <div>
-                                            <div className={styles.cardMone}>
-                                                {currency}
-                                                {outType ? (
+                                            <div className={ styles.cardMone }>
+                                                { currency }
+                                                { outType ? (
                                                     <h1>********</h1>
                                                 ) : (
                                                     <h1>
-                                                        {formater?.format(
-                                                            Number(balance)
-                                                        )}
+                                                        { formater?.format(
+                                                            Number( balance )
+                                                        ) }
                                                     </h1>
-                                                )}
+                                                ) }
                                                 <Visbility
                                                     color="green"
-                                                    typeSet={types}
+                                                    typeSet={ types }
                                                 />
                                             </div>
-                                            <p className={styles.avail}>
+                                            <p className={ styles.avail }>
                                                 Available Balance
                                             </p>
                                         </div>
@@ -842,11 +840,11 @@ const Dashboard = () => {
                                             >
                                                 Account Number
                                             </p>
-                                            <div className={styles.assctDrop}>
-                                                <p>{acctNumber}</p>
+                                            <div className={ styles.assctDrop }>
+                                                <p>{ acctNumber }</p>
 
                                                 <div>
-                                                    {isCopied ? (
+                                                    { isCopied ? (
                                                         <div
                                                             className={
                                                                 styles.coppied
@@ -854,18 +852,18 @@ const Dashboard = () => {
                                                         >
                                                             Copied!
                                                         </div>
-                                                    ) : null}
+                                                    ) : null }
                                                 </div>
-                                                {alert ? (
+                                                { alert ? (
                                                     <p>Copied to Clipboard</p>
                                                 ) : (
                                                     <div
-                                                        onClick={() => {
+                                                        onClick={ () => {
                                                             {
                                                                 navigator.clipboard
                                                                     .writeText(
-                                                                        `Account Name -${profile?.user?.lastName} ${profile?.user?.firstName}
-        Account No. - ${acctNumber}
+                                                                        `Account Name -${ profile?.user?.lastName } ${ profile?.user?.firstName }
+        Account No. - ${ acctNumber }
         Bank Name - Ecobank `
                                                                     )
                                                                     .then(
@@ -884,7 +882,7 @@ const Dashboard = () => {
                                                                         }
                                                                     );
                                                             }
-                                                        }}
+                                                        } }
                                                     >
                                                         <IoMdCopy
                                                             className={
@@ -892,54 +890,54 @@ const Dashboard = () => {
                                                             }
                                                         />
                                                     </div>
-                                                )}
+                                                ) }
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div className={styles.recMak}>
-                                    {/* <RecievePaymentBtn /> */}
+                                <div className={ styles.recMak }>
+                                    {/* <RecievePaymentBtn /> */ }
                                     <MakePaymentBtn />
                                 </div>
                             </div>
-                            <div className={styles.bagMoney}>
+                            <div className={ styles.bagMoney }>
                                 <img src="/Assets/Images/bagmoney.png" />
                             </div>
                         </div>
 
-                        <div className={styles.otherAccounts}>
+                        <div className={ styles.otherAccounts }>
                             <div>
                                 <h2>Other Accounts</h2>
-                                {/* <p>scroll</p> */}
+                                {/* <p>scroll</p> */ }
                             </div>
 
-                            <Overlay overlay={overlay}>
+                            <Overlay overlay={ overlay }>
                                 <Addaccounts
-                                    close={() => {
-                                        setOverlay(false);
-                                    }}
+                                    close={ () => {
+                                        setOverlay( false );
+                                    } }
                                 />
                                 <Addaccounts
-                                    close={() => {
-                                        setOverlay(false);
-                                    }}
+                                    close={ () => {
+                                        setOverlay( false );
+                                    } }
                                 />
                             </Overlay>
-                            <div className={styles.accountsALl}>
-                                {getAcctBalsLoad ? (
+                            <div className={ styles.accountsALl }>
+                                { getAcctBalsLoad ? (
                                     <Loader />
                                 ) : (
                                     <>
-                                        {getAcctBalsData?.data
+                                        { getAcctBalsData?.data
                                             .filter(
-                                                (account) => account.accountNo
+                                                ( account ) => account.accountNo
                                             )
                                             .filter(
-                                                (account) =>
+                                                ( account ) =>
                                                     account?.isPrimaryAccount !==
                                                     'Y'
                                             )
-                                            .map((account) => {
+                                            .map( ( account ) => {
                                                 return (
                                                     <>
                                                         <div
@@ -948,13 +946,13 @@ const Dashboard = () => {
                                                             }
                                                         >
                                                             <p
-                                                                onClick={(
+                                                                onClick={ (
                                                                     e
                                                                 ) => {
                                                                     setCopyAcctInfo(
                                                                         account?.accountNo
                                                                     );
-                                                                }}
+                                                                } }
                                                             >
                                                                 {
                                                                     account?.accountNo
@@ -971,23 +969,23 @@ const Dashboard = () => {
                                                                         account?.currency
                                                                     }
                                                                 </p>
-                                                                {outType ? (
+                                                                { outType ? (
                                                                     <p>
                                                                         ******
                                                                     </p>
                                                                 ) : (
                                                                     <p>
-                                                                        {formater?.format(
+                                                                        { formater?.format(
                                                                             Number(
                                                                                 account?.availableBal
                                                                             )
-                                                                        )}
+                                                                        ) }
                                                                     </p>
-                                                                )}
+                                                                ) }
                                                             </div>
                                                         </div>
-                                                        {account?.isPrimaryAccount ===
-                                                        'Y' ? (
+                                                        { account?.isPrimaryAccount ===
+                                                            'Y' ? (
                                                             <div
                                                                 className={
                                                                     styles.success
@@ -998,30 +996,30 @@ const Dashboard = () => {
                                                         ) : (
                                                             <div>
                                                                 <FaRegCircle
-                                                                    style={{
+                                                                    style={ {
                                                                         cursor: 'pointer'
-                                                                    }}
-                                                                    onClick={() => {
+                                                                    } }
+                                                                    onClick={ () => {
                                                                         setPrimaryAcct(
                                                                             {
                                                                                 accountNo:
                                                                                     account?.accountNo
                                                                             }
                                                                         );
-                                                                    }}
+                                                                    } }
                                                                 />
                                                             </div>
-                                                        )}
+                                                        ) }
                                                     </>
                                                 );
-                                            })}
+                                            } ) }
 
-                                        <hr className={styles.accountHr} />
+                                        <hr className={ styles.accountHr } />
                                     </>
-                                )}
+                                ) }
                                 <div
-                                    className={styles.addAccount}
-                                    onClick={setAddAcct}
+                                    className={ styles.addAccount }
+                                    onClick={ setAddAcct }
                                 >
                                     Add Account
                                 </div>
@@ -1029,51 +1027,51 @@ const Dashboard = () => {
                         </div>
                     </div>
 
-                    <Slider {...settings}>
-                        <div className={styles.sliderImage}>
+                    <Slider { ...settings }>
+                        <div className={ styles.sliderImage }>
                             <img
                                 src="/Assets/Images/2.png"
-                                width={250}
-                                height={100}
+                                width={ 250 }
+                                height={ 100 }
                             />
                         </div>
-                        <div className={styles.sliderImage}>
+                        <div className={ styles.sliderImage }>
                             <img
                                 src="/Assets/Images/3.png"
-                                width={250}
-                                height={100}
+                                width={ 250 }
+                                height={ 100 }
                             />
                         </div>
-                        <div className={styles.sliderImage}>
+                        <div className={ styles.sliderImage }>
                             <img
                                 src="/Assets/Images/4.png"
-                                width={250}
-                                height={100}
+                                width={ 250 }
+                                height={ 100 }
                             />
                         </div>
-                        <div className={styles.sliderImage}>
+                        <div className={ styles.sliderImage }>
                             <img
                                 src="/Assets/Images/5.png"
-                                width={250}
-                                height={100}
+                                width={ 250 }
+                                height={ 100 }
                             />
                         </div>
                     </Slider>
-                    <div className={styles.btm}>
-                        <div className={styles.btmII}>
-                            <div className={styles.btmIIp}>
+                    <div className={ styles.btm }>
+                        <div className={ styles.btmII }>
+                            <div className={ styles.btmIIp }>
                                 <p>Payment Transactions</p>
                             </div>
 
-                            {transactionHistoryLoad ? (
+                            { transactionHistoryLoad ? (
                                 <Lottie
-                                    options={socialOptions}
-                                    height={200}
-                                    width={200}
+                                    options={ socialOptions }
+                                    height={ 200 }
+                                    width={ 200 }
                                 />
                             ) : (
-                                transactionHistoryData?.data.map((item) => {
-                                    if (item.transactionStatus === 'SUCCESS') {
+                                transactionHistoryData?.data.map( ( item ) => {
+                                    if ( item.transactionStatus === 'SUCCESS' ) {
                                         success += 1;
                                     } else if (
                                         item.transactionStatus === 'PENDING'
@@ -1084,31 +1082,31 @@ const Dashboard = () => {
                                     ) {
                                         failed += 1;
                                     }
-                                })
-                            )}
+                                } )
+                            ) }
                             <TransactionStatus
-                                success={success}
-                                failed={failed}
-                                pending={pending}
+                                success={ success }
+                                failed={ failed }
+                                pending={ pending }
                             />
-                            {transactionHistoryData?.data?.length == 0 ? (
-                                <div className={styles.transactionBody}>
-                                    <div className={styles.transactionSvg}>
+                            { transactionHistoryData?.data?.length == 0 ? (
+                                <div className={ styles.transactionBody }>
+                                    <div className={ styles.transactionSvg }>
                                         <TransactionSvg />
                                         <p>No transactions have been done</p>
                                     </div>
                                 </div>
                             ) : (
                                 transactionHistoryData?.data
-                                    ?.filter((item) =>
+                                    ?.filter( ( item ) =>
                                         billPayments.includes(
                                             item.transactionType
                                         )
                                     )
-                                    ?.map((item, index) => {
+                                    ?.map( ( item, index ) => {
                                         return (
                                             <>
-                                                {width >= 950 ? (
+                                                { width >= 950 ? (
                                                     <div>
                                                         <div
                                                             className={
@@ -1125,12 +1123,12 @@ const Dashboard = () => {
                                                                     <p>Self</p>
                                                                 ) : ( */}
                                                                 <p>
-                                                                    {item?.transactionType.replace(
+                                                                    { item?.transactionType.replace(
                                                                         '_',
                                                                         ' '
-                                                                    )}
+                                                                    ) }
                                                                 </p>
-                                                                {/* )} */}
+                                                                {/* )} */ }
                                                             </div>
                                                             <div
                                                                 className={
@@ -1138,12 +1136,12 @@ const Dashboard = () => {
                                                                 }
                                                             >
                                                                 <p>
-                                                                    {currency}{' '}
-                                                                    {formater?.format(
+                                                                    { currency }{ ' ' }
+                                                                    { formater?.format(
                                                                         Number(
                                                                             item?.transactionAmount
                                                                         )
-                                                                    )}
+                                                                    ) }
                                                                 </p>
                                                             </div>
 
@@ -1168,12 +1166,12 @@ const Dashboard = () => {
                                                             <div
                                                                 className={
                                                                     item.transactionStatus ===
-                                                                    'PENDING'
+                                                                        'PENDING'
                                                                         ? styles.pending
                                                                         : item.transactionStatus ===
-                                                                          'FAILED'
-                                                                        ? styles.failed
-                                                                        : styles.success
+                                                                            'FAILED'
+                                                                            ? styles.failed
+                                                                            : styles.success
                                                                 }
                                                             >
                                                                 <div
@@ -1209,7 +1207,7 @@ const Dashboard = () => {
                                                                     }
                                                                 >
                                                                     <p>
-                                                                        {' '}
+                                                                        { ' ' }
                                                                         {
                                                                             item?.beneficiary
                                                                         }
@@ -1221,10 +1219,10 @@ const Dashboard = () => {
                                                                             styles.mobileP
                                                                         }
                                                                     >
-                                                                        {item?.transactionType.replace(
+                                                                        { item?.transactionType.replace(
                                                                             '_',
                                                                             ' '
-                                                                        )}
+                                                                        ) }
                                                                     </p>
                                                                 </div>
                                                             </div>
@@ -1236,12 +1234,12 @@ const Dashboard = () => {
                                                                 <div
                                                                     className={
                                                                         item.transactionStatus ===
-                                                                        'PENDING'
+                                                                            'PENDING'
                                                                             ? styles.pending
                                                                             : item.transactionStatus ===
-                                                                              'FAILED'
-                                                                            ? styles.failed
-                                                                            : styles.success
+                                                                                'FAILED'
+                                                                                ? styles.failed
+                                                                                : styles.success
                                                                     }
                                                                 >
                                                                     <div>
@@ -1264,12 +1262,12 @@ const Dashboard = () => {
                                                                             <p>
                                                                                 {
                                                                                     currency
-                                                                                }{' '}
-                                                                                {parseFloat(
+                                                                                }{ ' ' }
+                                                                                { parseFloat(
                                                                                     item.transactionAmount
                                                                                 ).toLocaleString(
                                                                                     'en-US'
-                                                                                )}
+                                                                                ) }
                                                                             </p>
                                                                         </div>
                                                                     </div>
@@ -1291,11 +1289,11 @@ const Dashboard = () => {
                                                             </Link>
                                                         </div>
                                                     </>
-                                                )}
+                                                ) }
                                             </>
                                         );
-                                    })
-                            )}
+                                    } )
+                            ) }
                         </div>
                     </div>
                 </section>

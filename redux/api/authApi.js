@@ -3,43 +3,43 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 // https://cheffieapp.com/api/v1/authentication/user/
 const baseUrl = 'https://eidev.ecobank.com:7505/smeapp-service/';
 
-export const authApi = createApi({
+export const authApi = createApi( {
     reducerPath: 'authApi',
-    baseQuery: fetchBaseQuery({
+    baseQuery: fetchBaseQuery( {
         baseUrl,
         credentials: 'same-origin',
         // mode: 'no-cors',
 
-        prepareHeaders: (headers, { getState }) => {
+        prepareHeaders: ( headers, { getState } ) => {
             const token = getState().token;
-            headers.set('Accept', 'application/json'),
-                headers.set('Content-Type', 'application/json');
+            headers.set( 'Accept', 'application/json' ),
+                headers.set( 'Content-Type', 'application/json' );
             // Set Content-Type here
             // Add other allowed headers here
             headers.set(
                 'x-affiliate-code',
-                localStorage.getItem('affiliateCode')
+                localStorage.getItem( 'affiliateCode' )
             );
 
-            if (token) {
-                headers.set('Authorization', `Bearer ${token}`);
+            if ( token ) {
+                headers.set( 'Authorization', `Bearer ${ token }` );
             }
             return headers;
         }
-    }),
+    } ),
     // Add the middleware to your API
 
-    endpoints: (builder) => ({
-        loginAccount: builder.mutation({
-            query: (body) => {
+    endpoints: ( builder ) => ( {
+        loginAccount: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'login',
                     method: 'POST',
                     body
                 };
             }
-        }),
-        getAccountNo: builder.mutation({
+        } ),
+        getAccountNo: builder.mutation( {
             query: () => {
                 return {
                     url: 'get-account-no',
@@ -47,8 +47,8 @@ export const authApi = createApi({
                     body: {}
                 };
             }
-        }),
-        getAccountStatus: builder.mutation({
+        } ),
+        getAccountStatus: builder.mutation( {
             query: () => {
                 return {
                     url: 'get-account-status',
@@ -56,108 +56,108 @@ export const authApi = createApi({
                     body: {}
                 };
             }
-        }),
+        } ),
 
-        register: builder.mutation({
-            query: (body) => {
+        register: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'register',
                     method: 'post',
                     body
                 };
             }
-        }),
-        profileSetUpUnregisteredBusiness: builder.mutation({
-            query: (body) => {
+        } ),
+        profileSetUpUnregisteredBusiness: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'unregistered-business',
                     method: 'post',
                     body
                 };
             }
-        }),
-        forgotPassword: builder.mutation({
-            query: (body) => {
+        } ),
+        forgotPassword: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'forgot-password',
                     method: 'post',
                     body
                 };
             }
-        }),
-        resetPassword: builder.mutation({
-            query: (body) => {
+        } ),
+        resetPassword: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'reset-password',
                     method: 'post',
                     body
                 };
             }
-        }),
-        resendEmailOtp: builder.mutation({
-            query: (body) => {
+        } ),
+        resendEmailOtp: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'resend-verification',
                     method: 'post',
                     body
                 };
             }
-        }),
-        verifyEmail: builder.mutation({
-            query: (body) => {
+        } ),
+        verifyEmail: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'verify-email',
                     method: 'post',
                     body
                 };
             }
-        }),
-        verifyOtp: builder.mutation({
-            query: (body) => {
+        } ),
+        verifyOtp: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'verify-otp',
                     method: 'post',
                     body
                 };
             }
-        }),
-        resendOtp: builder.mutation({
-            query: (body) => {
+        } ),
+        resendOtp: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'resend-otp',
                     method: 'post',
                     body
                 };
             }
-        }),
-        registeredSetup: builder.mutation({
-            query: (body) => {
+        } ),
+        registeredSetup: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'registered-business',
                     method: 'post',
                     body
                 };
             }
-        }),
-        unregisteredSetup: builder.mutation({
-            query: (body) => {
+        } ),
+        unregisteredSetup: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'unregistered-business',
                     method: 'post',
                     body
                 };
             }
-        }),
-        facematch: builder.mutation({
-            query: (body) => {
+        } ),
+        facematch: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'facematch-with-bvn',
                     method: 'post',
                     body
                 };
             }
-        }),
-        getCAC: builder.mutation({
+        } ),
+        getCAC: builder.mutation( {
             query: () => {
                 return {
                     url: 'cac-verification',
@@ -167,8 +167,8 @@ export const authApi = createApi({
                     }
                 };
             }
-        }),
-        getCategories: builder.mutation({
+        } ),
+        getCategories: builder.mutation( {
             query: () => {
                 return {
                     url: 'business-categories',
@@ -176,35 +176,35 @@ export const authApi = createApi({
                     body: {}
                 };
             }
-        }),
-        searchRC: builder.mutation({
-            query: (body) => {
+        } ),
+        searchRC: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'business-name',
                     method: 'post',
                     body
                 };
             }
-        }),
-        businessSetup: builder.mutation({
-            query: (body) => {
+        } ),
+        businessSetup: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'business-setup',
                     method: 'post',
                     body
                 };
             }
-        }),
-        updatePhone: builder.mutation({
-            query: (body) => {
+        } ),
+        updatePhone: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'user-update-phone',
                     method: 'post',
                     body
                 };
             }
-        }),
-        getProfile: builder.mutation({
+        } ),
+        getProfile: builder.mutation( {
             query: () => {
                 return {
                     url: 'user-profile',
@@ -212,85 +212,85 @@ export const authApi = createApi({
                     body: {}
                 };
             }
-        }),
-        vninVerification: builder.mutation({
+        } ),
+        vninVerification: builder.mutation( {
             query: () => {
                 return {
                     url: 'vNin-verification',
                     method: 'post'
                 };
             }
-        }),
-        ninVerification: builder.mutation({
+        } ),
+        ninVerification: builder.mutation( {
             query: () => {
                 return {
                     url: 'nin-verification',
                     method: 'post'
                 };
             }
-        }),
-        tinVerification: builder.mutation({
+        } ),
+        tinVerification: builder.mutation( {
             query: () => {
                 return {
                     url: 'tin-verification',
                     method: 'post'
                 };
             }
-        }),
-        bvnVerification: builder.mutation({
+        } ),
+        bvnVerification: builder.mutation( {
             query: () => {
                 return {
                     url: 'bvn-verification',
                     method: 'post'
                 };
             }
-        }),
-        documentVerification: builder.mutation({
+        } ),
+        documentVerification: builder.mutation( {
             query: () => {
                 return {
                     url: 'document-verification',
                     method: 'post'
                 };
             }
-        }),
+        } ),
 
-        bulkTransfer: builder.mutation({
-            query: (body) => {
+        bulkTransfer: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'payment-bulk-transfer',
                     method: 'post',
                     body
                 };
             }
-        }),
-        billerPayment: builder.mutation({
-            query: (body) => {
+        } ),
+        billerPayment: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'biller-payment',
                     method: 'post',
                     body
                 };
             }
-        }),
-        billerValidation: builder.mutation({
-            query: (body) => {
+        } ),
+        billerValidation: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'biller-validation',
                     method: 'post',
                     body
                 };
             }
-        }),
-        billerDetails: builder.mutation({
-            query: (body) => {
+        } ),
+        billerDetails: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'biller-details',
                     method: 'post',
                     body
                 };
             }
-        }),
-        airNetworks: builder.mutation({
+        } ),
+        airNetworks: builder.mutation( {
             query: () => {
                 return {
                     url: 'airtime-topup-networks',
@@ -298,153 +298,153 @@ export const authApi = createApi({
                     body: {}
                 };
             }
-        }),
-        mobiNetworks: builder.mutation({
-            query: (body) => {
+        } ),
+        mobiNetworks: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'mobilemoney-networks',
                     method: 'post',
                     body: {}
                 };
             }
-        }),
-        billerCategories: builder.mutation({
-            query: (body) => {
+        } ),
+        billerCategories: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'biller-categories',
                     method: 'post',
                     body: {}
                 };
             }
-        }),
-        billers: builder.mutation({
-            query: (body) => {
+        } ),
+        billers: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'billers',
                     method: 'post',
                     body
                 };
             }
-        }),
-        airtimeTopup: builder.mutation({
-            query: (body) => {
+        } ),
+        airtimeTopup: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'airtime-topup',
                     method: 'post',
                     body
                 };
             }
-        }),
-        mobileMoney: builder.mutation({
-            query: (body) => {
+        } ),
+        mobileMoney: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'mobilemoney',
                     method: 'post',
                     body
                 };
             }
-        }),
-        acctInquiry: builder.mutation({
+        } ),
+        acctInquiry: builder.mutation( {
             query: () => {
                 return {
                     url: 'account-inquiry',
                     method: 'post'
                 };
             }
-        }),
-        createIAcct: builder.mutation({
-            query: (body) => {
+        } ),
+        createIAcct: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'create-individual-account',
                     method: 'post',
                     body
                 };
             }
-        }),
-        createCAcct: builder.mutation({
-            query: (body) => {
+        } ),
+        createCAcct: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'corporate-account-creation',
                     method: 'post',
                     body
                 };
             }
-        }),
-        registerAccountNumber: builder.mutation({
-            query: (body) => {
+        } ),
+        registerAccountNumber: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'register-account-number',
                     method: 'post',
                     body
                 };
             }
-        }),
-        registerCard: builder.mutation({
-            query: (body) => {
+        } ),
+        registerCard: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'card-register',
                     method: 'post',
                     body
                 };
             }
-        }),
-        authOmnilite: builder.mutation({
-            query: (body) => {
+        } ),
+        authOmnilite: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'auth-omnilite',
                     method: 'post',
                     body
                 };
             }
-        }),
-        authEcobank: builder.mutation({
-            query: (body) => {
+        } ),
+        authEcobank: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'auth-ecobank-online',
                     method: 'post',
                     body
                 };
             }
-        }),
-        getMoreAccountNumberDetails: builder.mutation({
-            query: (body) => {
+        } ),
+        getMoreAccountNumberDetails: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'account-details',
                     method: 'post',
                     body
                 };
             }
-        }),
+        } ),
 
-        resendExisitingOtp: builder.mutation({
-            query: (body) => {
+        resendExisitingOtp: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'existing-resend-otp',
                     method: 'post',
                     body
                 };
             }
-        }),
+        } ),
 
-        verifyExistingOtp: builder.mutation({
-            query: (body) => {
+        verifyExistingOtp: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'existing-verify-otp',
                     method: 'post',
                     body
                 };
             }
-        }),
-        createExistingUserProfile: builder.mutation({
-            query: (body) => {
+        } ),
+        createExistingUserProfile: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'create-user-profile',
                     method: 'post',
                     body
                 };
             }
-        }),
-        getAcctBals: builder.mutation({
+        } ),
+        getAcctBals: builder.mutation( {
             query: () => {
                 return {
                     url: 'get-account-balance',
@@ -452,315 +452,316 @@ export const authApi = createApi({
                     body: {}
                 };
             }
-        }),
-        faceMatchWithoutBvn: builder.mutation({
-            query: (body) => {
+        } ),
+        faceMatchWithoutBvn: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'facematch',
                     method: 'post',
                     body
                 };
             }
-        }),
-        paymentbanklist: builder.mutation({
-            query: (body) => {
+        } ),
+        paymentbanklist: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'payment-banklist',
                     method: 'post',
                     body: {}
                 };
             }
-        }),
-        accountInquiry: builder.mutation({
-            query: (body) => {
+        } ),
+        accountInquiry: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'account-inquiry',
                     method: 'post',
                     body
                 };
             }
-        }),
-        singleTransfer: builder.mutation({
-            query: (body) => {
+        } ),
+        singleTransfer: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'payment-single-transfer',
                     method: 'post',
                     body
                 };
             }
-        }),
-        verifyTransactionPin: builder.mutation({
-            query: (body) => {
+        } ),
+        verifyTransactionPin: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'user-verify-transaction-pin',
                     method: 'post',
                     body
                 };
             }
-        }),
-        updateTransactionPin: builder.mutation({
-            query: (body) => {
+        } ),
+        updateTransactionPin: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'user-update-transaction-pin',
                     method: 'post',
                     body
                 };
             }
-        }),
+        } ),
 
-        createTransactionPin: builder.mutation({
-            query: (body) => {
+        createTransactionPin: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'user-create-transaction-pin',
                     method: 'post',
                     body
                 };
             }
-        }),
-        getRelationshipManager: builder.mutation({
-            query: (body) => {
+        } ),
+        getRelationshipManager: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'get-relationship-manager',
                     method: 'post',
                     body
                 };
             }
-        }),
-        physicalQr: builder.mutation({
-            query: (body) => {
+        } ),
+        physicalQr: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'physical-qr',
                     method: 'post',
                     body: {}
                 };
             }
-        }),
-        dynamicQr: builder.mutation({
-            query: (body) => {
+        } ),
+        dynamicQr: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'dynamic-qr',
                     method: 'post',
                     body
                 };
             }
-        }),
-        ussdRefference: builder.mutation({
-            query: (body) => {
+        } ),
+        ussdRefference: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'ussd-reference',
                     method: 'post',
                     body
                 };
             }
-        }),
-        ordrVirtualAccount: builder.mutation({
-            query: (body) => {
+        } ),
+        ordrVirtualAccount: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'virtual-account-order',
                     method: 'post',
                     body
                 };
             }
-        }),
-        virtualAccountStatus: builder.mutation({
-            query: (body) => {
+        } ),
+        virtualAccountStatus: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'virtual-account-trans-status',
                     method: 'post',
                     body
                 };
             }
-        }),
-        changePassword: builder.mutation({
-            query: (body) => {
+        } ),
+        changePassword: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'user-change-password',
                     method: 'post',
                     body
                 };
             }
-        }),
-        accountMiniStatement: builder.mutation({
-            query: (body) => {
+        } ),
+        accountMiniStatement: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'account-mini-statement',
                     method: 'post',
                     body
                 };
             }
-        }),
-        accountFullStatement: builder.mutation({
-            query: (body) => {
+        } ),
+        accountFullStatement: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'account-full-statement',
                     method: 'post',
                     body
                 };
             }
-        }),
-        facematchithAccountnumber: builder.mutation({
-            query: (body) => {
+        } ),
+        facematchithAccountnumber: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'facematch-with-accountnumber',
                     method: 'post',
                     body
                 };
             }
-        }),
-        enrollQr: builder.mutation({
-            query: (body) => {
+        } ),
+        enrollQr: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'enroll-qr',
                     method: 'post',
                     body
                 };
             }
-        }),
-        disputeHistory: builder.mutation({
-            query: (body) => {
+        } ),
+        disputeHistory: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'dispute-history',
                     method: 'post',
                     body
                 };
             }
-        }),
-        getVaHistory: builder.query({
-            query: () => {
+        } ),
+        virtualAccountTransLog: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'virtual-account-trans-log',
-                    method: 'get'
+                    method: 'post',
+                    body: {}
                 };
             }
-        }),
+        } ),
 
-        transactionHistory: builder.mutation({
-            query: (body) => {
+        transactionHistory: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'transactions-history',
                     method: 'post',
                     body
                 };
             }
-        }),
-        createUserBeneficiary: builder.mutation({
-            query: (body) => {
+        } ),
+        createUserBeneficiary: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'create-user-beneficiary',
                     method: 'post',
                     body
                 };
             }
-        }),
-        deleteUserBeneficiary: builder.mutation({
-            query: (body) => {
+        } ),
+        deleteUserBeneficiary: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'delete-user-beneficiary',
                     method: 'post',
                     body
                 };
             }
-        }),
-        deleteUserBeneficiary: builder.mutation({
-            query: (body) => {
+        } ),
+        deleteUserBeneficiary: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'delete-user-beneficiary',
                     method: 'post',
                     body
                 };
             }
-        }),
-        getUserBeneficiary: builder.mutation({
-            query: (body) => {
+        } ),
+        getUserBeneficiary: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'get-user-beneficiary',
                     method: 'post',
                     body
                 };
             }
-        }),
-        logisticsGigStations: builder.mutation({
-            query: (body) => {
+        } ),
+        logisticsGigStations: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'logistics-gig-stations',
                     method: 'post',
                     body
                 };
             }
-        }),
-        logisticsGigCaptureShipment: builder.mutation({
-            query: (body) => {
+        } ),
+        logisticsGigCaptureShipment: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'logistics-gig-capture-shipment',
                     method: 'post',
                     body
                 };
             }
-        }),
-        logisticsGigShipmentPrice: builder.mutation({
-            query: (body) => {
+        } ),
+        logisticsGigShipmentPrice: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'logistics-gig-shipment-price',
                     method: 'post',
                     body
                 };
             }
-        }),
-        transactionsSummary: builder.mutation({
-            query: (body) => {
+        } ),
+        transactionsSummary: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'transactions-summary',
                     method: 'post',
                     body: {}
                 };
             }
-        }),
-        paymentFetchtransactionfee: builder.mutation({
-            query: (body) => {
+        } ),
+        paymentFetchtransactionfee: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'payment-fetchtransactionfee',
                     method: 'post',
                     body
                 };
             }
-        }),
-        loanScoring: builder.mutation({
-            query: (body) => {
+        } ),
+        loanScoring: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'loan-scoring',
                     method: 'post',
                     body
                 };
             }
-        }),
-        loanRepaymnt: builder.mutation({
-            query: (body) => {
+        } ),
+        loanRepaymnt: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'loan-repayment',
                     method: 'post',
                     body
                 };
             }
-        }),
-        loanBooking: builder.mutation({
-            query: (body) => {
+        } ),
+        loanBooking: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'loan-booking',
                     method: 'post',
                     body
                 };
             }
-        }),
-        loanBalance: builder.mutation({
-            query: (body) => {
+        } ),
+        loanBalance: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'loan-balance',
                     method: 'post',
                     body
                 };
             }
-        }),
-        getLoans: builder.mutation({
+        } ),
+        getLoans: builder.mutation( {
             query: () => {
                 return {
                     url: 'get-loans',
@@ -768,8 +769,8 @@ export const authApi = createApi({
                     body: {}
                 };
             }
-        }),
-        freezeAcct: builder.mutation({
+        } ),
+        freezeAcct: builder.mutation( {
             query: () => {
                 return {
                     url: 'user-freeze-transactions',
@@ -777,8 +778,8 @@ export const authApi = createApi({
                     body: {}
                 };
             }
-        }),
-        unfreezeAcct: builder.mutation({
+        } ),
+        unfreezeAcct: builder.mutation( {
             query: () => {
                 return {
                     url: 'users-unfreeze-transactions',
@@ -786,44 +787,44 @@ export const authApi = createApi({
                     body: {}
                 };
             }
-        }),
-        creatStorefront: builder.mutation({
-            query: (body) => {
+        } ),
+        creatStorefront: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'create-storefront',
                     method: 'post',
                     body
                 };
             }
-        }),
-        deletStorefront: builder.mutation({
-            query: (body) => {
+        } ),
+        deletStorefront: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'delete-storefront',
                     method: 'post',
                     body
                 };
             }
-        }),
-        deletAllStorefront: builder.mutation({
-            query: (body) => {
+        } ),
+        deletAllStorefront: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'delete-all-storefronts',
                     method: 'post',
                     body
                 };
             }
-        }),
-        getStoreFront: builder.mutation({
-            query: (body) => {
+        } ),
+        getStoreFront: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'get-store',
                     method: 'post',
                     body
                 };
             }
-        }),
-        getAllSToreFront: builder.mutation({
+        } ),
+        getAllSToreFront: builder.mutation( {
             query: () => {
                 return {
                     url: 'get-all-storefronts',
@@ -831,44 +832,44 @@ export const authApi = createApi({
                     body: {}
                 };
             }
-        }),
-        makeDfaultStoreFront: builder.mutation({
-            query: (body) => {
+        } ),
+        makeDfaultStoreFront: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'default-storefront',
                     method: 'post',
                     body
                 };
             }
-        }),
-        updateStoreFront: builder.mutation({
-            query: (body) => {
+        } ),
+        updateStoreFront: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'update-storefront',
                     method: 'post',
                     body
                 };
             }
-        }),
-        makeEnable: builder.mutation({
-            query: (body) => {
+        } ),
+        makeEnable: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'make-enable',
                     method: 'post',
                     body
                 };
             }
-        }),
-        updateFaqs: builder.mutation({
-            query: (body) => {
+        } ),
+        updateFaqs: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'update-faqs',
                     method: 'post',
                     body
                 };
             }
-        }),
-        getFaqs: builder.mutation({
+        } ),
+        getFaqs: builder.mutation( {
             query: () => {
                 return {
                     url: 'get-faqs',
@@ -876,244 +877,244 @@ export const authApi = createApi({
                     body: {}
                 };
             }
-        }),
-        createeInventory: builder.mutation({
-            query: (body) => {
+        } ),
+        createeInventory: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'create-inventory',
                     method: 'post',
                     body
                 };
             }
-        }),
-        updateInventory: builder.mutation({
-            query: (body) => {
+        } ),
+        updateInventory: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'update-inventory',
                     method: 'post',
                     body
                 };
             }
-        }),
-        getInventoriesByCategory: builder.mutation({
-            query: (body) => {
+        } ),
+        getInventoriesByCategory: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'inventories-by-category',
                     method: 'post',
                     body
                 };
             }
-        }),
-        getInventoriesByCollection: builder.mutation({
-            query: (body) => {
+        } ),
+        getInventoriesByCollection: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'inventories-by-collection',
                     method: 'post',
                     body
                 };
             }
-        }),
-        getAllInventoriesById: builder.mutation({
-            query: (body) => {
+        } ),
+        getAllInventoriesById: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'inventories-by-storeid',
                     method: 'post',
                     body
                 };
             }
-        }),
-        deleteAllInventories: builder.mutation({
-            query: (body) => {
+        } ),
+        deleteAllInventories: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'delete-all-inventories',
                     method: 'post',
                     body
                 };
             }
-        }),
-        deleteByInventoryid: builder.mutation({
-            query: (body) => {
+        } ),
+        deleteByInventoryid: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'delete-by-inventoryid',
                     method: 'post',
                     body
                 };
             }
-        }),
-        getInventory: builder.mutation({
-            query: (body) => {
+        } ),
+        getInventory: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'get-inventory',
                     method: 'post',
                     body
                 };
             }
-        }),
+        } ),
 
-        getAllCollections: builder.mutation({
-            query: (body) => {
+        getAllCollections: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'get-all-collections',
                     method: 'post',
                     body
                 };
             }
-        }),
-        getAllCategory: builder.mutation({
-            query: (body) => {
+        } ),
+        getAllCategory: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'get-all-categories',
                     method: 'post',
                     body
                 };
             }
-        }),
-        createCategory: builder.mutation({
-            query: (body) => {
+        } ),
+        createCategory: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'create-category',
                     method: 'post',
                     body
                 };
             }
-        }),
-        createCollection: builder.mutation({
-            query: (body) => {
+        } ),
+        createCollection: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'create-collection',
                     method: 'post',
                     body
                 };
             }
-        }),
-        deleteAllCollection: builder.mutation({
-            query: (body) => {
+        } ),
+        deleteAllCollection: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'delete-all-collections',
                     method: 'post',
                     body
                 };
             }
-        }),
-        deleteCollection: builder.mutation({
-            query: (body) => {
+        } ),
+        deleteCollection: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'delete-collection',
                     method: 'post',
                     body
                 };
             }
-        }),
-        getCollection: builder.mutation({
-            query: (body) => {
+        } ),
+        getCollection: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'get-collection',
                     method: 'post',
                     body
                 };
             }
-        }),
-        updateCollction: builder.mutation({
-            query: (body) => {
+        } ),
+        updateCollction: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'update-collection',
                     method: 'post',
                     body
                 };
             }
-        }),
+        } ),
 
-        deleteAllCatgories: builder.mutation({
-            query: (body) => {
+        deleteAllCatgories: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'delete-all-categories',
                     method: 'post',
                     body
                 };
             }
-        }),
-        deleteCategory: builder.mutation({
-            query: (body) => {
+        } ),
+        deleteCategory: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'delete-category',
                     method: 'post',
                     body
                 };
             }
-        }),
-        getCategory: builder.mutation({
-            query: (body) => {
+        } ),
+        getCategory: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'get-category',
                     method: 'post',
                     body
                 };
             }
-        }),
-        updateCategory: builder.mutation({
-            query: (body) => {
+        } ),
+        updateCategory: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'update-category',
                     method: 'post',
                     body
                 };
             }
-        }),
-        verifyAccount: builder.mutation({
-            query: (body) => {
+        } ),
+        verifyAccount: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'account-inquiry',
                     method: 'post',
                     body
                 };
             }
-        }),
-        addAccount: builder.mutation({
-            query: (body) => {
+        } ),
+        addAccount: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'add-account',
                     method: 'post',
                     body
                 };
             }
-        }),
-        getId: builder.mutation({
-            query: (body) => {
+        } ),
+        getId: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'get-customerid',
                     method: 'post',
                     body
                 };
             }
-        }),
-        setPrimaryAcct: builder.mutation({
-            query: (body) => {
+        } ),
+        setPrimaryAcct: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'set-primary-account',
                     method: 'post',
                     body
                 };
             }
-        }),
-        storelinkGetStore: builder.mutation({
-            query: (body) => {
+        } ),
+        storelinkGetStore: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'storelink-get-store',
                     method: 'post',
                     body
                 };
             }
-        }),
-        addCart: builder.mutation({
-            query: (body) => {
+        } ),
+        addCart: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'add-cart',
                     method: 'post',
                     body
                 };
             }
-        }),
-        storefrontAnalyticsSummary: builder.mutation({
+        } ),
+        storefrontAnalyticsSummary: builder.mutation( {
             query: () => {
                 return {
                     url: 'storefront-analytics-summary',
@@ -1121,64 +1122,64 @@ export const authApi = createApi({
                     body: {}
                 };
             }
-        }),
-        logDisputeCase: builder.mutation({
-            query: (body) => {
+        } ),
+        logDisputeCase: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'log-dispute-case',
                     method: 'post',
                     body
                 };
             }
-        }),
+        } ),
 
-        viewOrder: builder.mutation({
-            query: (body) => {
+        viewOrder: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'view-order',
                     method: 'post',
                     body
                 };
             }
-        }),
+        } ),
 
-        createOrder: builder.mutation({
-            query: (body) => {
+        createOrder: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'create-order',
                     method: 'post',
                     body
                 };
             }
-        }),
-        viewOrderByStatus: builder.mutation({
-            query: (body) => {
+        } ),
+        viewOrderByStatus: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'view-orders-by-status',
                     method: 'post',
                     body
                 };
             }
-        }),
-        shipOrder: builder.mutation({
-            query: (body) => {
+        } ),
+        shipOrder: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'ship-order',
                     method: 'post',
                     body
                 };
             }
-        }),
-        logisticsnableProviders: builder.mutation({
-            query: (body) => {
+        } ),
+        logisticsnableProviders: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'logistics-enable-provider',
                     method: 'post',
                     body
                 };
             }
-        }),
-        getTxBeneficiary: builder.mutation({
+        } ),
+        getTxBeneficiary: builder.mutation( {
             query: () => {
                 return {
                     url: 'get-user-beneficiary',
@@ -1186,26 +1187,26 @@ export const authApi = createApi({
                     body: {}
                 };
             }
-        }),
-        deleteTxBeneficiary: builder.mutation({
-            query: (body) => {
+        } ),
+        deleteTxBeneficiary: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'delete-user-beneficiary',
                     method: 'post',
                     body
                 };
             }
-        }),
-        createTxBeneficiary: builder.mutation({
-            query: (body) => {
+        } ),
+        createTxBeneficiary: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'create-user-beneficiary',
                     method: 'post',
                     body
                 };
             }
-        }),
-        getPhoneBeneficiary: builder.mutation({
+        } ),
+        getPhoneBeneficiary: builder.mutation( {
             query: () => {
                 return {
                     url: 'get-phone-beneficiary',
@@ -1213,181 +1214,181 @@ export const authApi = createApi({
                     body: {}
                 };
             }
-        }),
-        deletePhoneBeneficiary: builder.mutation({
-            query: (body) => {
+        } ),
+        deletePhoneBeneficiary: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'delete-phone-beneficiary',
                     method: 'post',
                     body
                 };
             }
-        }),
-        createPhoneBeneficiary: builder.mutation({
-            query: (body) => {
+        } ),
+        createPhoneBeneficiary: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'create-phone-beneficiary',
                     method: 'post',
                     body
                 };
             }
-        }),
-        getLoans: builder.mutation({
-            query: (body) => {
+        } ),
+        getLoans: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'get-loans',
                     method: 'post',
                     body: {}
                 };
             }
-        }),
-        logisticsDisableProvider: builder.mutation({
-            query: (body) => {
+        } ),
+        logisticsDisableProvider: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'logistics-disable-provider',
                     method: 'post',
                     body: {}
                 };
             }
-        }),
-        logisticsEnableProvider: builder.mutation({
-            query: (body) => {
+        } ),
+        logisticsEnableProvider: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'logistics-enable-provider',
                     method: 'post',
                     body: {}
                 };
             }
-        }),
-        createInvoice: builder.mutation({
-            query: (body) => {
+        } ),
+        createInvoice: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'create-e-invoice',
                     method: 'post',
                     body
                 };
             }
-        }),
-        getInvoice: builder.mutation({
-            query: (body) => {
+        } ),
+        getInvoice: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'get-e-invoice',
                     method: 'post',
                     body
                 };
             }
-        }),
-        markInvoice: builder.mutation({
-            query: (body) => {
+        } ),
+        markInvoice: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'invoice-mark-paid',
                     method: 'post',
                     body
                 };
             }
-        }),
-        getAllInvoice: builder.mutation({
-            query: (body) => {
+        } ),
+        getAllInvoice: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'get-e-invoices',
                     method: 'post',
                     body
                 };
             }
-        }),
-        deleteInvoice: builder.mutation({
-            query: (body) => {
+        } ),
+        deleteInvoice: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'delete-e-invoice',
                     method: 'post',
                     body
                 };
             }
-        }),
-        invoiceStats: builder.mutation({
-            query: (body) => {
+        } ),
+        invoiceStats: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'overview-stats',
                     method: 'post',
                     body
                 };
             }
-        }),
-        createCustomer: builder.mutation({
-            query: (body) => {
+        } ),
+        createCustomer: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'create-customer',
                     method: 'post',
                     body
                 };
             }
-        }),
-        getAllCustomers: builder.mutation({
-            query: (body) => {
+        } ),
+        getAllCustomers: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'get-all-customers',
                     method: 'post',
                     body
                 };
             }
-        }),
-        deleteAllCustomers: builder.mutation({
-            query: (body) => {
+        } ),
+        deleteAllCustomers: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'delete-all-customers',
                     method: 'post',
                     body
                 };
             }
-        }),
-        deleteCustomer: builder.mutation({
-            query: (body) => {
+        } ),
+        deleteCustomer: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'customer-delete-all',
                     method: 'post',
                     body
                 };
             }
-        }),
-        getCustomer: builder.mutation({
-            query: (body) => {
+        } ),
+        getCustomer: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'get-customer',
                     method: 'post',
                     body
                 };
             }
-        }),
-        editCustomer: builder.mutation({
-            query: (body) => {
+        } ),
+        editCustomer: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'customer-edit',
                     method: 'post',
                     body
                 };
             }
-        }),
+        } ),
 
-        unblockCard: builder.mutation({
-            query: (body) => {
+        unblockCard: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'unblock-card',
                     method: 'post',
                     body
                 };
             }
-        }),
-        blockCard: builder.mutation({
-            query: (body) => {
+        } ),
+        blockCard: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'block-card',
                     method: 'post',
                     body
                 };
             }
-        }),
-        getDebitCards: builder.mutation({
-            query: (body) => {
+        } ),
+        getDebitCards: builder.mutation( {
+            query: ( body ) => {
                 return {
                     url: 'get-debitcard',
                     method: 'post',
@@ -1403,15 +1404,15 @@ export const authApi = createApi({
                     body
                 };
             }
-        })
+        } )
         // logistics-disable-provider
         // logistics-enable-provider
         // lo~gistics-gig-capture-shipment
         // logistics-gig-shipment-price
         // logistics-gig-stations
         // logistics-providers
-    })
-});
+    } )
+} );
 
 export const {
     useVirtualAccountTransLogMutation,
@@ -1531,5 +1532,7 @@ export const {
     useBusinessSetupMutation,
     useCreateIAcctMutation,
     useCreateCAcctMutation,
-    useGetAccountStatusMutation
+    useGetAccountStatusMutation,
+    useGetAllInvoiceMutation,
+    useGetAllCustomersMutation,
 } = authApi;

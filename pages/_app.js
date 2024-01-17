@@ -10,7 +10,7 @@ import 'aos/dist/aos.css';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Providers } from '../redux/provider';
 import { persistor } from '../redux/provider/store';
-const LoadingScreen = () => {
+export const LoadingScreen = () => {
     const socialOptions = {
         loop: true,
         autoplay: true,
