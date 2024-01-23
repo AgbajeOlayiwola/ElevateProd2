@@ -561,9 +561,10 @@ const InventoryDetails = ( { nextPage } ) => {
             >
               <p>Customer’s details</p>
               <FlexBadgeContainer>
-                { inventoryInfo.customerIds?.map( ( value ) => {
+                { inventoryInfo.customerIds?.map( ( value, index ) => {
                   return (
                     <BadgeCard
+                      key={ value.index }
                       title={ capitalizeFirstLetter(
                         value?.name
                       ) }
@@ -644,8 +645,8 @@ const InventoryDetails = ( { nextPage } ) => {
               onChange={ ( e ) => handleSearch( e ) }
             />
             <ScrollAreas height={ 300 }>
-              { Object.keys( groupedData ).map( ( letter ) => (
-                <CustomerListContainer>
+              { Object.keys( groupedData ).map( ( letter, index ) => (
+                <CustomerListContainer key={ index }>
                   <TitleAlphabet>{ letter }</TitleAlphabet>
                   { groupedData[letter].map( ( item, index ) => (
                     <CustomerListContainerFlex
