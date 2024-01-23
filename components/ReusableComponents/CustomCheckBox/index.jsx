@@ -23,14 +23,19 @@ const CustomCheckBox = ( {
 
 export default CustomCheckBox;
 export const CheckBoxContainerGrand = styled.div`
+position: relative;
+    z-index:200;
   & input[type="checkbox"] {
     position: absolute;
-    opacity: 0;
+    opacity: 0.1;
     padding: 0;
     min-width: 20px;
     min-height: 20px;
     width: 20px;
     height: 20px;
+    z-index:200;
+    background: white;
+    appearance: none;
   }
 `;
 
@@ -46,7 +51,7 @@ export const CheckBoxContainer = styled.div`
   min-height: 20px;
   width: 20px;
   height: 20px;
-  z-index: 100;
+  z-index: 0;
   &.isWhite {
     background-color: white;
   }
@@ -58,5 +63,5 @@ export const RoundedChecked = styled.div`
   cursor: pointer;
   min-height: 12px;
   border-radius: 2px;
-  z-index: 1000;
+  position: absolute;
 `;

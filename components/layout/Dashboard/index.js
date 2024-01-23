@@ -36,13 +36,16 @@
 // };
 
 // export default DashLayout;
-import React, { useState } from 'react';
-// import withAuth from '../../HOC/withAuth';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Navbar, Sidebar } from '../../index';
 import styles from './styles.module.css';
-
 import { useDispatch } from 'react-redux';
+import {
+    useGetStoreFrontMutation,
+} from '../../../redux/api/authApi';
+import { setStoreSlice } from '../../../redux/slices/storeSlice';
+
 const DashLayout = ({
     children,
     page,
@@ -57,6 +60,23 @@ const DashLayout = ({
     const [userProfileData, setUserProfileData] = useState([]);
     const dispatch = useDispatch();
     const router = useRouter();
+    const [
+        getStoreFront,
+        {
+            data: getStoreFrontData,
+            isLoading: getStoreFrontLoad,
+            isSuccess: getStoreFrontSuccess,
+            isError: getStoreFrontFalse,
+            error: getStoreFrontErr,
+            reset: getStoreFrontReset
+        }
+    ] = useGetStoreFrontMutation();
+    useEffect( () => {
+        if ( getStoreFrontSuccess ) {
+            dispatch( setStoreSlice( getStoreFrontData?.data ) );
+            nextStep();
+        }
+    }, [getStoreFrontSuccess] );
     return (
         <>
             {router.pathname.includes('Admin') ? (
