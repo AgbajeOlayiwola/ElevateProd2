@@ -15,7 +15,8 @@ const createInvoiceSlice = createSlice( {
       businessEmailAddress: '',
       businessPhoneNumber: '',
       useExistingBusiness: false,
-      showBusinessAccount: false
+      showBusinessAccount: false,
+      customerIds: []
     },
     UserPrivacyInfoDetail: {
       userPassword: '',

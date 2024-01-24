@@ -17,18 +17,16 @@ import {
   SubTitleContactContainer,
   SubTitleContact,
   Circle,
-  VStack,
   SaveAndContinueFlex,
-  SaveAsDraft,
   BtnSpanFlex,
   FlexBadgeContainer,
   BtnSpan,
   Flex,
-  UploadContainer
 } from '../InvoicesStyle';
 import IconHint from '../../ReusableComponents/IconComponents/IconHint';
-import { toast } from 'react-toastify';
-import CustomCheckBox from '../../ReusableComponents/CustomCheckBox';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import CustomCheckBox, { CheckBoxContainer, CheckBoxContainerGrand, RoundedChecked } from '../../ReusableComponents/CustomCheckBox';
 import { UploadPlaceholder } from '../../ReusableComponents/UploadPlaceholder';
 import Modal from '../../ReusableComponents/Modal';
 import BadgeCard from '../../ReusableComponents/BadgeCard';
@@ -39,10 +37,10 @@ import { Formik } from 'formik';
 import { toBase64 } from '../../../utils/base64';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../../utils/hooks';
-import { useGetAllCustomersMutation } from '../../../redux/api/authApi';
-import { userInventoryDetails, } from '../../../redux/slices/createInvoiceSlice';
+import { useCreateCustomerMutation, useGetAllCustomersMutation } from '../../../redux/api/authApi';
+import { userInventoryDetails } from '../../../redux/slices/createInvoiceSlice';
 import { ScrollAreas } from './Product';
-
+import { useSearchRCMutation } from '../../../redux/api/cacApi';
 
 const initSchema = yup.object().shape( {
   invoiceTitle: yup.string().required( 'Invoice title is required' ),
@@ -51,12 +49,21 @@ const initSchema = yup.object().shape( {
   invoiceDescription: yup.string().optional(),
   businessLogo: yup.string().required( 'Business logo is required' ),
   businessName: yup.string().required( 'Business name is required' ),
-  businessEmailAddress: yup.string().email( 'Enter a valid email' ).required( "Email address is required" ),
+  businessEmailAddress: yup
+    .string()
+    .email( 'Enter a valid email' )
+    .required( 'Email address is required' ),
   businessPhoneNumber: yup.string().required( 'Phone number is required' )
 } );
-
+function capitalizeFirstLetter( str ) {
+  return str.charAt( 0 ).toUpperCase() + str.slice( 1 );
+}
 const InventoryDetails = ( { nextPage } ) => {
   const [showAddCustomer, setShowAddCustomer] = useState( '' );
+  const [createCustomer, setCreateCustomer] = useState( { phoneNumber: "", emailAddress: '', name: '' } )
+  const [allCustomerList, setAllCustomerList] = useState( [] );
+  const [useExistingBusinessDetails, setUseExistingBusinessDetails] =
+    useState( false );
   const [searchQuery, setSearchQuery] = useState( '' );
   const currentStage = useAppSelector( ( state ) => state.Stage );
   const inventoryInfo = useAppSelector(
@@ -75,6 +82,7 @@ const InventoryDetails = ( { nextPage } ) => {
     useExistingBusiness: inventoryInfo.useExistingBusiness,
     showBusinessAccount: inventoryInfo.showBusinessAccount
   };
+
   const [
     getAllCustomer,
     {
@@ -84,28 +92,142 @@ const InventoryDetails = ( { nextPage } ) => {
       isError: isErrorInvoice
     }
   ] = useGetAllCustomersMutation();
-  const storedFrontId = localStorage.getItem( "storedFrontId" )
+  const [
+    searchRC,
+    { data: RCdata, isLoading: isLoadingRC, isError: isErrorRC }
+  ] = useSearchRCMutation();
+
+  const [createCustomers, { data: createCustomerData, isLoading: isLoadingCreateCustmoer, isError: isErrorCreateCustomer, isSuccess: isSuccessCreateCustomer, }] = useCreateCustomerMutation()
+
+  const storedFrontId = localStorage.getItem( 'storedFrontId' );
   useEffect( () => {
     getAllCustomer( {
-      storeFrontId: JSON.parse( storedFrontId ) || "",
+      storeFrontId: JSON.parse( storedFrontId ) || ''
     } );
-
+    searchRC( {
+      registrationNumber: 'ECO_123'
+    } );
   }, [] );
-  const spread = allCustomers ? [...allCustomers?.data] : []
-  const sortedData = spread.sort( ( a, b ) => a.name.localeCompare( b.name ) );
-  const filteredData = sortedData?.filter( ( item ) =>
-    item.name.toLowerCase().includes( searchQuery.toLowerCase() )
+  const handleChangeCustomer = ( e ) => {
+    const { name, value } = e.target;
+
+    setCreateCustomer( ( prevValues ) => ( {
+      ...prevValues,
+      [name]: value
+    } ) );
+  }
+  const spreadIsCheckedAdded = allCustomers
+    ? [
+      ...allCustomers.data.map( ( customer ) => ( {
+        ...customer,
+        isChecked: false
+      } ) )
+    ]
+    : [];
+  const sortedData = spreadIsCheckedAdded.sort( ( a, b ) =>
+    a.name.localeCompare( b.name )
   );
+
+
+  useEffect( () => {
+    if ( isSuccessCreateCustomer ) {
+      setAllCustomerList( sortedData );
+      toast.info( "Customer Added", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 3000, // Close the toast after 3 seconds
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        type: "success"
+      } );
+      setShowAddCustomer( "" )
+    }
+    if ( isErrorCreateCustomer ) {
+      setAllCustomerList( sortedData );
+      toast.info( "Failed to add new customer", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 3000, // Close the toast after 3 seconds
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        type: "error"
+      } );
+    }
+  }, [isSuccessInvoice, isErrorCreateCustomer] );
   const groupedData = {};
-  filteredData?.forEach( ( item ) => {
+  const handleSearch = ( e ) => {
+    if ( e.target.value !== '' ) {
+      const filteredData = allCustomerList?.filter( ( item ) =>
+        item.name.toLowerCase().includes( e.target.value.toLowerCase() )
+      );
+      setAllCustomerList( filteredData );
+      return;
+    } else {
+      setAllCustomerList( sortedData );
+    }
+  };
+
+  // console.log( uniqueData, allCustomerList )
+  allCustomerList?.forEach( ( item ) => {
     const firstLetter = item?.name?.trim().charAt( 0 ).toUpperCase();
     groupedData[firstLetter] = groupedData[firstLetter] || [];
-    console.log( item )
+
     groupedData[firstLetter].push( item );
   } );
+  const handleChange = ( selectedName, isChecked ) => {
+    const updatedData = allCustomerList.map( ( item ) => {
+      if ( item.id === selectedName ) {
+        // Create a new object with the updated isChecked property
+        return { ...item, isChecked: !isChecked };
+      }
+      return item;
+    } );
+    setAllCustomerList( updatedData );
+  };
+  const handleAddCustomer = () => {
+    const filterCustomer = allCustomerList.filter(
+      ( value ) => value.isChecked
+    );
+    dispatch(
+      userInventoryDetails( {
+        ...inventoryInfo,
+        customerIds: [...inventoryInfo.customerIds, ...filterCustomer]
+      } )
+    );
+    setShowAddCustomer( '' );
+    setAllCustomerList( sortedData )
+  };
+  const handleSubmitNewCustomer = async () => {
+    try {
+      await createCustomers( {
+        storeFrontId: JSON.parse( storedFrontId ) || '',
+        ...createCustomer
+      } )
+    } catch ( e ) {
+      console.log( e )
+    }
+  }
+  const handleRemoveCustomer = ( id ) => {
+    const remaining = inventoryInfo.customerIds.filter(
+      ( value ) => value.id !== id
+    );
+    dispatch(
+      userInventoryDetails( {
+        ...inventoryInfo,
+        customerIds: [...remaining]
+      } )
+    );
+    const resetCustomerListTooggleState = allCustomerList.map( ( value ) => {
+      return { ...value, isChecked: false };
+    } );
+    setAllCustomerList( resetCustomerListTooggleState );
+  };
 
   return (
     <>
+      <ToastContainer />
       <InventoryDetailsBox>
         <p>Invoice #ISC - 07971</p>
       </InventoryDetailsBox>
@@ -127,10 +249,8 @@ const InventoryDetails = ( { nextPage } ) => {
             useExistingBusiness: values.useExistingBusiness,
             showBusinessAccount: values.showBusinessAccount
           };
-          nextPage()
-          console.log( data );
+          nextPage();
           dispatch( userInventoryDetails( data ) );
-
           setSubmitting( false );
         } }
       >
@@ -140,6 +260,7 @@ const InventoryDetails = ( { nextPage } ) => {
           touched,
           handleChange,
           setFieldValue,
+          setValues,
           handleSubmit
         } ) => (
           <FormContainer>
@@ -158,7 +279,15 @@ const InventoryDetails = ( { nextPage } ) => {
                     )
                   }
                 />
-                <span style={ { color: 'red', fontWeight: 600, fontSize: 12 } }>{ errors.invoiceDate }</span>
+                <span
+                  style={ {
+                    color: 'red',
+                    fontWeight: 600,
+                    fontSize: 12
+                  } }
+                >
+                  { errors.invoiceDate }
+                </span>
               </div>
               <div className="second_date-col">
                 <label>Invoice due date</label>
@@ -173,9 +302,16 @@ const InventoryDetails = ( { nextPage } ) => {
                     )
                   }
                 />
-                <span style={ { color: 'red', fontWeight: 600, fontSize: 12 } }>{ errors.invoiceDueDate }</span>
+                <span
+                  style={ {
+                    color: 'red',
+                    fontWeight: 600,
+                    fontSize: 12
+                  } }
+                >
+                  { errors.invoiceDueDate }
+                </span>
               </div>
-
             </div>
             <NotificationContainer>
               <IconHint />
@@ -196,7 +332,15 @@ const InventoryDetails = ( { nextPage } ) => {
                   )
                 }
               />
-              <span style={ { color: 'red', fontWeight: 600, fontSize: 12 } }>{ errors.invoiceTitle }</span>
+              <span
+                style={ {
+                  color: 'red',
+                  fontWeight: 600,
+                  fontSize: 12
+                } }
+              >
+                { errors.invoiceTitle }
+              </span>
             </div>
             <div
               style={ { marginTop: '24px', marginBottom: '24px' } }
@@ -217,50 +361,121 @@ const InventoryDetails = ( { nextPage } ) => {
             </div>
             <Seperator width={ 70 } />
             <div className="biller">Biller/Vendor information</div>
-            <NotificationContainer style={ { marginTop: '14px' } }>
-              <CustomCheckBox isChecked={ true } /> Use existing
-              business information
-            </NotificationContainer>
+            { !isErrorRC && (
+              <NotificationContainer
+                style={ { marginTop: '14px' } }
+              >
+
+                <CheckBoxContainerGrand>
+                  <CheckBoxContainer
+                    checked={ useExistingBusinessDetails }
+                    className="isWhite"
+                  >
+                    <input type="checkbox" style={ { width: 40, height: 100 } } name="agreement" onChange={ ( event ) => {
+                      setUseExistingBusinessDetails( event.target.checked )
+                      if ( event?.target?.checked ) {
+                        setValues( {
+                          ...initialValues,
+                          businessName: RCdata?.data?.legal_name,
+                          businessPhoneNumber: RCdata?.data?.phone,
+                          businessEmailAddress: RCdata?.data?.email
+                        } )
+
+                      } else {
+                        setValues( {
+                          ...initialValues,
+                          businessName: "",
+                          businessPhoneNumber: "",
+                          businessEmailAddress: ""
+                        } )
+                      }
+                    } } />
+                    <RoundedChecked checked={ useExistingBusinessDetails }></RoundedChecked>
+                  </CheckBoxContainer>
+                </CheckBoxContainerGrand>{ ' ' }
+                Use existing business information
+              </NotificationContainer>
+            ) }
+
+
             <Flex>
               { inventoryInfo?.businessLogo === '' ? (
                 <UploadPlaceholder
                   name="businessLogo"
                   handleUpload={ async ( e ) => {
                     const maxSize = 5 * 1024 * 1024; // 5MB
-                    const allowedTypes = ['image/png', 'image/jpeg'];
-                    const { size = 0 } = e.target.files?.[0] || {};
-                    if ( e.target.files && e.target.files.length ) {
-                      if ( e.target.files.length > 0 && size <= maxSize ) {
+                    const allowedTypes = [
+                      'image/png',
+                      'image/jpeg'
+                    ];
+                    const { size = 0 } =
+                      e.target.files?.[0] || {};
+                    if (
+                      e.target.files &&
+                      e.target.files.length
+                    ) {
+                      if (
+                        e.target.files.length > 0 &&
+                        size <= maxSize
+                      ) {
                         if (
                           e.target.files?.[0] &&
-                          allowedTypes.includes( e.target.files?.[0].type ) &&
+                          allowedTypes.includes(
+                            e.target.files?.[0].type
+                          ) &&
                           size <= maxSize
                         ) {
-                          const base64 = await toBase64( e.target.files[0] )
+                          const base64 =
+                            await toBase64(
+                              e.target.files[0]
+                            );
                           setFieldValue(
                             'businessLogo',
                             base64
-                          )
-                          dispatch( userInventoryDetails( { ...inventoryInfo, businessLogo: base64 } ) )
+                          );
+                          dispatch(
+                            userInventoryDetails( {
+                              ...inventoryInfo,
+                              businessLogo: base64
+                            } )
+                          );
                         }
                       } else {
-                        toast.error( 'Sorry! File is larger than 5MB', {
-                          position: toast.POSITION.TOP_CENTER
-                        } );
+                        toast.error(
+                          'Sorry! File is larger than 5MB',
+                          {
+                            position:
+                              toast.POSITION
+                                .TOP_CENTER
+                          }
+                        );
                       }
                     }
-                  }
-                  }
+                  } }
                 />
               ) : (
                 <Previewer
                   imageURL={ `${ inventoryInfo?.businessLogo }` }
-                  onClick={ () => dispatch( userInventoryDetails( { ...inventoryInfo, businessLogo: "" } ) ) }
+                    onClick={ () =>
+                      dispatch(
+                        userInventoryDetails( {
+                          ...inventoryInfo,
+                          businessLogo: ''
+                        } )
+                      )
+                    }
                 />
               ) }
-
             </Flex>
-            <span style={ { color: 'red', fontWeight: 600, fontSize: 12 } }>{ errors.businessLogo }</span>
+            <span
+              style={ {
+                color: 'red',
+                fontWeight: 600,
+                fontSize: 12
+              } }
+            >
+              { errors.businessLogo }
+            </span>
             <div
               style={ { marginTop: '24px', marginBottom: '24px' } }
             >
@@ -277,7 +492,15 @@ const InventoryDetails = ( { nextPage } ) => {
                   )
                 }
               />
-              <span style={ { color: 'red', fontWeight: 600, fontSize: 12 } }>{ errors.businessName }</span>
+              <span
+                style={ {
+                  color: 'red',
+                  fontWeight: 600,
+                  fontSize: 12
+                } }
+              >
+                { errors.businessName }
+              </span>
             </div>
             <div
               style={ { marginTop: '24px', marginBottom: '24px' } }
@@ -295,7 +518,15 @@ const InventoryDetails = ( { nextPage } ) => {
                   )
                 }
               />
-              <span style={ { color: 'red', fontWeight: 600, fontSize: 12 } }>{ errors.businessEmailAddress }</span>
+              <span
+                style={ {
+                  color: 'red',
+                  fontWeight: 600,
+                  fontSize: 12
+                } }
+              >
+                { errors.businessEmailAddress }
+              </span>
             </div>
 
             <div
@@ -314,7 +545,15 @@ const InventoryDetails = ( { nextPage } ) => {
                   )
                 }
               />
-              <span style={ { color: 'red', fontWeight: 600, fontSize: 12 } }>{ errors.businessPhoneNumber }</span>
+              <span
+                style={ {
+                  color: 'red',
+                  fontWeight: 600,
+                  fontSize: 12
+                } }
+              >
+                { errors.businessPhoneNumber }
+              </span>
             </div>
             <Seperator width={ 70 } />
             <div
@@ -322,22 +561,50 @@ const InventoryDetails = ( { nextPage } ) => {
             >
               <p>Customer’s details</p>
               <FlexBadgeContainer>
-                {/* <BadgeCard title={ 'Isaac Akinyemi' } />
-                <BadgeCard title={ ' Fortune Ekezie' } />
-                <BadgeCard title={ 'Bolaji Stephen' } /> */}
+                { inventoryInfo.customerIds?.map( ( value, index ) => {
+                  return (
+                    <BadgeCard
+                      key={ value.index }
+                      title={ capitalizeFirstLetter(
+                        value?.name
+                      ) }
+                      onClick={ () =>
+                        handleRemoveCustomer( value.id )
+                      }
+                    />
+                  );
+                } ) }
               </FlexBadgeContainer>
-              {/* <BtnSpanFlex>
-                <IconPlus />
-                <BtnSpan>Add customer</BtnSpan>
-              </BtnSpanFlex> */}
-              <label>Select a customer</label>
-              <SelectCustomer
-                onClick={ () =>
-                  setShowAddCustomer( 'Select customer' )
-                }
-              >
-                Select a customer
-              </SelectCustomer>
+              { inventoryInfo.customerIds.length >= 1 && (
+                <BtnSpanFlex>
+                  <IconPlus />
+                  <BtnSpan
+                    onClick={ () =>
+                      setShowAddCustomer(
+                        'Select customer'
+                      )
+                    }
+                  >
+                    Add customer
+                  </BtnSpan>
+                </BtnSpanFlex>
+              ) }
+
+              { !inventoryInfo.customerIds.length >= 1 && (
+                <>
+                  <label>Select a customer</label>
+                  <SelectCustomer
+                    onClick={ () =>
+                      setShowAddCustomer(
+                        'Select customer'
+                      )
+                    }
+                  >
+                    Select a customer
+                  </SelectCustomer>
+                </>
+              ) }
+
               <CreatNewCustomer
                 onClick={ () =>
                   setShowAddCustomer( 'Add customer' )
@@ -347,63 +614,93 @@ const InventoryDetails = ( { nextPage } ) => {
               </CreatNewCustomer>
             </div>
             <SaveAndContinueFlex>
-              <p>Not creating now?</p>
-              <button style={ { width: 176, marginTop: 0 } } onClick={ handleSubmit } type='submit'>
+              <p style={ { visibility: 'hidden' } }>
+                Not creating now?
+              </p>
+              <button
+                style={ { width: 176, marginTop: 0 } }
+                onClick={ handleSubmit }
+                type="submit"
+              >
                 Save and Continue
               </button>
             </SaveAndContinueFlex>
           </FormContainer>
         ) }
-
       </Formik>
 
-      { showAddCustomer === 'Select customer' && (
-        <Modal size={ 'medium' } onClose={ () => setShowAddCustomer( '' ) }>
-          <SelectCustomerText>Select a customer</SelectCustomerText>
-          <SubText>You can select more than one customer</SubText>
-          <InputWrapper
-            placeholder="...Search for a customer"
-            hasPlaceholder={ false }
-            value={ searchQuery }
-            onChange={ ( e ) => setSearchQuery( e.target.value ) }
-          />
-          <ScrollAreas height={ 300 }>
-            { Object.keys( groupedData ).map( ( letter ) => (
-              <CustomerListContainer>
-                <TitleAlphabet>{ letter }</TitleAlphabet>
-                { groupedData[letter].map( ( item, index ) => (
-                  <CustomerListContainerFlex key={ index } style={ { margingTop: 10 } }>
-                    <CustomCheckBox isChecked={ true } />
-                    <div>
-                      <TitleName>{ item?.name }</TitleName>
-                      <div
-                        style={ {
-                          display: 'flex',
-                          alignItems: 'center',
-                          columnGap: '4px',
-                          marginTop: '4px'
-                        } }
-                      >
-                        <SubtitleMail>
-                          { item?.emailAddress }
-                        </SubtitleMail>
-                        <SubTitleContactContainer>
-                          <Circle></Circle>
-                          <SubTitleContact>
-                            { item?.phoneNumber }
-                          </SubTitleContact>
-                        </SubTitleContactContainer>
+      <>
+        { showAddCustomer === 'Select customer' && (
+          <Modal
+            size={ 'medium' }
+            onClose={ () => setShowAddCustomer( '' ) }
+          >
+            <SelectCustomerText>
+              Select a customer
+            </SelectCustomerText>
+            <SubText>You can select more than one customer</SubText>
+            <InputWrapper
+              placeholder="...Search for a customer"
+              hasPlaceholder={ false }
+              onChange={ ( e ) => handleSearch( e ) }
+            />
+            <ScrollAreas height={ 300 }>
+              { Object.keys( groupedData ).map( ( letter, index ) => (
+                <CustomerListContainer key={ index }>
+                  <TitleAlphabet>{ letter }</TitleAlphabet>
+                  { groupedData[letter].map( ( item, index ) => (
+                    <CustomerListContainerFlex
+                      key={ index }
+                      style={ { margingTop: 10, marginBottom: 10 } }
+                    >
+                      <CustomCheckBox
+                        isChecked={ item.isChecked }
+                        handleChange={ () =>
+                          handleChange(
+                            item?.id,
+                            item.isChecked
+                          )
+                        }
+                      />
+                      <div>
+                        <TitleName>
+                          { capitalizeFirstLetter( item?.name ) }
+                        </TitleName>
+                        <div
+                          style={ {
+                            display: 'flex',
+                            alignItems: 'center',
+                            columnGap: '4px',
+                            marginTop: '4px'
+                          } }
+                        >
+                          <SubtitleMail>
+                            { item?.emailAddress }
+                          </SubtitleMail>
+                          <SubTitleContactContainer>
+                            <Circle></Circle>
+                            <SubTitleContact>
+                              { item?.phoneNumber }
+                            </SubTitleContact>
+                          </SubTitleContactContainer>
+                        </div>
                       </div>
-                    </div>
-                  </CustomerListContainerFlex>
-                ) ) }
+                    </CustomerListContainerFlex>
+                  ) ) }
+                </CustomerListContainer>
+              ) ) }
+            </ScrollAreas>
+            <button
+              style={ { marginTop: 40 } }
+              onClick={ handleAddCustomer }
 
-              </CustomerListContainer>
-            ) ) }
-          </ScrollAreas>
-          <button style={ { marginTop: 40 } }>Add customer</button>
-        </Modal>
-      ) }
+            >
+              Add customer
+            </button>
+          </Modal>
+        ) }
+      </>
+
       { showAddCustomer === 'Add customer' && (
         <Modal size={ 'medium' } onClose={ () => setShowAddCustomer( '' ) }>
           <SelectCustomerText>
@@ -413,27 +710,32 @@ const InventoryDetails = ( { nextPage } ) => {
             <label>Customer’s name</label>
             <input
               type="text"
+              name="name"
               placeholder="Enter customer’s name"
+              onChange={ handleChangeCustomer }
             />
           </div>
           <div style={ { marginTop: '24px', marginBottom: '24px' } }>
             <label>Customer’s email address</label>
             <input
               type="text"
+              name="emailAddress"
               placeholder="Enter customer’s email address"
+              onChange={ handleChangeCustomer }
             />
           </div>
           <div style={ { marginTop: '24px', marginBottom: '24px' } }>
             <label>Customer’s phone number</label>
             <input
               type="text"
+              name="phoneNumber"
               placeholder="Enter customer’s phone number"
+              onChange={ handleChangeCustomer }
             />
           </div>
-          <button style={ { marginTop: 16 } }>Add customer</button>
+          <button style={ { marginTop: 16 } } type='submit' onClick={ handleSubmitNewCustomer } disabled={ createCustomer.emailAddress === "" || createCustomer.name === "" || createCustomer.phoneNumber === "" } >{ isLoadingCreateCustmoer ? "Loading..." : "Add customer" }</button>
         </Modal>
       ) }
-
     </>
   );
 };
